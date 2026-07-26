@@ -1,0 +1,4 @@
+tool: ali1688_product_request
+name: ali1688_product_request — 查询1688平台产品详情
+arguments:
+  product_id: '123456789'

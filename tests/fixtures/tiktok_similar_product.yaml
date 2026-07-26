@@ -1,0 +1,31 @@
+tool: tiktok_similar_product
+name: tiktok_similar_product — 查询产品在Tiktok平台上的相似产品，可用于分析此类产品的
+arguments:
+  product_name: air fryer
+category: tiktok
+test_cases:
+- name: normal_valid_product
+  args:
+    tool_name: tiktok_similar_product
+    arguments:
+      site: US
+      productId: '1234567890'
+  expect:
+    status: success
+- name: edge_gb_product
+  args:
+    tool_name: tiktok_similar_product
+    arguments:
+      site: GB
+      productId: '9999999999'
+  expect:
+    status: success
+- name: error_missing_productId
+  args:
+    tool_name: tiktok_similar_product
+    arguments:
+      site: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

@@ -1,0 +1,31 @@
+tool: keyword_trend
+name: keyword_trend — 查询亚马逊电商平台上热搜关键词历史趋势，支持搜索量、搜索排名
+arguments:
+  keyword: yoga mat
+category: amazon
+test_cases:
+- name: normal_valid_keyword
+  args:
+    tool_name: keyword_trend
+    arguments:
+      amzSite: US
+      keyword: kitchen storage
+  expect:
+    status: success
+- name: edge_uk_keyword
+  args:
+    tool_name: keyword_trend
+    arguments:
+      amzSite: UK
+      keyword: yoga pants
+  expect:
+    status: success
+- name: error_missing_keyword
+  args:
+    tool_name: keyword_trend
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

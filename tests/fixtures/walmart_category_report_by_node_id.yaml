@@ -1,0 +1,4 @@
+tool: walmart_category_report_by_node_id
+name: walmart_category_report_by_node_id — 查询沃尔玛电商平台**指定类目**的**实时**销量Top1
+arguments:
+  node_id: '1064954'

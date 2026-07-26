@@ -1,0 +1,28 @@
+tool: category_tree
+name: category_tree — 查询亚马逊电商平台产品类目结构
+arguments: {}
+category: amazon
+test_cases:
+- name: normal_valid_node
+  args:
+    tool_name: category_tree
+    arguments:
+      amzSite: US
+      nodeId: '1040668'
+  expect:
+    status: success
+- name: edge_uk_node
+  args:
+    tool_name: category_tree
+    arguments:
+      amzSite: UK
+      nodeId: '0'
+  expect:
+    status: success
+- name: error_missing_nodeId
+  args:
+    tool_name: category_tree
+    arguments:
+      amzSite: US
+  expect:
+    status: success

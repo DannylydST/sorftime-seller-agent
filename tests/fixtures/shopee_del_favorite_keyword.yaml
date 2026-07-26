@@ -1,0 +1,4 @@
+tool: shopee_del_favorite_keyword
+name: shopee_del_favorite_keyword — 删除我的Shopee平台关键词词库中收藏的指定关键词
+arguments:
+  keyword: yoga mat

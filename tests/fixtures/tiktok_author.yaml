@@ -1,0 +1,31 @@
+tool: tiktok_author
+name: tiktok_author — 按产品名称搜索相关带货达人
+arguments:
+  author_id: test
+category: tiktok
+test_cases:
+- name: normal_valid_author
+  args:
+    tool_name: tiktok_author
+    arguments:
+      site: US
+      authorId: '1234567890'
+  expect:
+    status: success
+- name: edge_gb_author
+  args:
+    tool_name: tiktok_author
+    arguments:
+      site: GB
+      authorId: '9999999999'
+  expect:
+    status: success
+- name: error_missing_authorId
+  args:
+    tool_name: tiktok_author
+    arguments:
+      site: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

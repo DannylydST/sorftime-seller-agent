@@ -1,0 +1,4 @@
+tool: temu_shop_request
+name: temu_shop_request — 查询Temu卖家（店铺）详情
+arguments:
+  shop_id: test

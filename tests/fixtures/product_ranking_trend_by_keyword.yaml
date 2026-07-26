@@ -1,0 +1,32 @@
+tool: product_ranking_trend_by_keyword
+name: product_ranking_trend_by_keyword — 亚马逊电商平台产品在指定关键词下曝光的排名趋势，按曝光时间倒
+arguments:
+  asin: B08N5WRWNW
+  keyword: yoga mat
+category: amazon
+test_cases:
+- name: normal_valid_keyword
+  args:
+    tool_name: product_ranking_trend_by_keyword
+    arguments:
+      amzSite: US
+      keyword: kitchen storage
+  expect:
+    status: success
+- name: edge_uk_keyword
+  args:
+    tool_name: product_ranking_trend_by_keyword
+    arguments:
+      amzSite: UK
+      keyword: yoga pants
+  expect:
+    status: success
+- name: error_missing_keyword
+  args:
+    tool_name: product_ranking_trend_by_keyword
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

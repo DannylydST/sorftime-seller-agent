@@ -1,0 +1,4 @@
+tool: walmart_product_detail_by_product_id
+name: walmart_product_detail_by_product_id — 查询沃尔玛电商平台上产品的详情数据
+arguments:
+  product_id: '123456789'

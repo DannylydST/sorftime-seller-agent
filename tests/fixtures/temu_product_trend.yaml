@@ -1,0 +1,4 @@
+tool: temu_product_trend
+name: temu_product_trend — 查询产品历史趋势数据，将返回按月统计的销量趋势、按月统计的累
+arguments:
+  product_id: '123456789'

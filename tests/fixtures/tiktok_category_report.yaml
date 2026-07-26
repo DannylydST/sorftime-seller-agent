@@ -1,0 +1,25 @@
+tool: tiktok_category_report
+name: tiktok_category_report — 查询Tiktok电商平台**指定类目**的类目数据报告
+arguments:
+  node_id: '1064954'
+category: tiktok
+test_cases:
+- name: normal_us_category
+  args:
+    site: US
+    categoryId: '12345'
+  expect:
+    status: success
+- name: edge_gb_category
+  args:
+    site: GB
+    categoryId: '0'
+  expect:
+    status: success
+- name: error_missing_categoryId
+  args:
+    site: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

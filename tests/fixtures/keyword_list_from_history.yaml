@@ -1,0 +1,28 @@
+tool: keyword_list_from_history
+name: keyword_list_from_history — 查询亚马逊电商平台上历史日期的热搜关键词榜，按周搜索量排序
+arguments:
+  date: test
+category: amazon
+test_cases:
+- name: normal_basic
+  args:
+    tool_name: keyword_list_from_history
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+- name: edge_uk
+  args:
+    tool_name: keyword_list_from_history
+    arguments:
+      amzSite: UK
+  expect:
+    status: success
+- name: error_invalid_param
+  args:
+    tool_name: keyword_list_from_history
+    arguments:
+      amzSite: US
+      invalid_param: true
+  expect:
+    status: success

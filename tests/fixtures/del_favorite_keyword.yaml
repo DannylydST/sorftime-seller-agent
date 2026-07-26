@@ -1,0 +1,31 @@
+tool: del_favorite_keyword
+name: del_favorite_keyword — 删除我的亚马逊平台关键词词库中收藏的指定关键词
+arguments:
+  keyword: yoga mat
+category: amazon
+test_cases:
+- name: normal_delete
+  args:
+    tool_name: del_favorite_keyword
+    arguments:
+      amzSite: US
+      keyword: kitchen storage
+  expect:
+    status: success
+- name: edge_uk
+  args:
+    tool_name: del_favorite_keyword
+    arguments:
+      amzSite: UK
+      keyword: yoga pants
+  expect:
+    status: success
+- name: error_missing_keyword
+  args:
+    tool_name: del_favorite_keyword
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

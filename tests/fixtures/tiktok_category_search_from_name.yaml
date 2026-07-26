@@ -1,0 +1,4 @@
+tool: tiktok_category_search_from_name
+name: tiktok_category_search_from_name — Search related categories on t
+arguments:
+  name: test

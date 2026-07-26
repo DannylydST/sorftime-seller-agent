@@ -1,0 +1,4 @@
+tool: ali1688_product_search_from_image
+name: ali1688_product_search_from_image — 按图片搜1688平台产品
+arguments:
+  image_url: test

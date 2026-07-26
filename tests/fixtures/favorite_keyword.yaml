@@ -1,0 +1,31 @@
+tool: favorite_keyword
+name: favorite_keyword — 在我的亚马逊平台关键词词库中添加关键词收藏
+arguments:
+  keyword: yoga mat
+category: amazon
+test_cases:
+- name: normal_add_favorite
+  args:
+    tool_name: favorite_keyword
+    arguments:
+      amzSite: US
+      keyword: kitchen storage
+  expect:
+    status: success
+- name: edge_uk_keyword
+  args:
+    tool_name: favorite_keyword
+    arguments:
+      amzSite: UK
+      keyword: yoga pants
+  expect:
+    status: success
+- name: error_missing_keyword
+  args:
+    tool_name: favorite_keyword
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

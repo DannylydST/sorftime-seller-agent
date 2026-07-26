@@ -1,0 +1,4 @@
+tool: walmart_keyword_search_results
+name: walmart_keyword_search_results — 查询沃尔玛电商平台上热搜关键词近15日的搜索结果自然位产品清
+arguments:
+  keyword: yoga mat

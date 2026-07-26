@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+
+# Environment & secrets
+.env
+*.key
+credentials/
+
+# Sync backups (auto-generated)
+.sync-backups/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Claude Code local config
+.claude/settings.local.json
+
+# Mac metadata
+__MACOSX/
+._*
+
+# Compiled Python
+*.pyc

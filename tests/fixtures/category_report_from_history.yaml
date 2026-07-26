@@ -1,0 +1,30 @@
+tool: category_report_from_history
+name: category_report_from_history — 查询亚马逊电商平台**指定类目**的**指定历史时间段**销
+arguments:
+  start_date: test
+  end_date: test
+  node_id: '1064954'
+category: amazon
+test_cases:
+- name: normal_basic
+  args:
+    tool_name: category_report_from_history
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+- name: edge_uk
+  args:
+    tool_name: category_report_from_history
+    arguments:
+      amzSite: UK
+  expect:
+    status: success
+- name: error_invalid_param
+  args:
+    tool_name: category_report_from_history
+    arguments:
+      amzSite: US
+      invalid_param: true
+  expect:
+    status: success

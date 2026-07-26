@@ -1,0 +1,31 @@
+tool: tiktok_category_name_search
+name: tiktok_category_name_search — 按名称搜索Tiktok上相关类目市场，返回类目市场名称和no
+arguments:
+  search_name: kitchen storage
+category: tiktok
+test_cases:
+- name: normal_valid_name
+  args:
+    tool_name: tiktok_category_name_search
+    arguments:
+      site: US
+      name: beauty
+  expect:
+    status: success
+- name: edge_gb_name
+  args:
+    tool_name: tiktok_category_name_search
+    arguments:
+      site: GB
+      name: fashion
+  expect:
+    status: success
+- name: error_missing_name
+  args:
+    tool_name: tiktok_category_name_search
+    arguments:
+      site: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

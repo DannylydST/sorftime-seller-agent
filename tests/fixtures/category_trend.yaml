@@ -1,0 +1,31 @@
+tool: category_trend
+name: category_trend — 查询亚马逊电商平台细分类目市场趋势数据，基于类目Top100
+arguments:
+  node_id: '1064954'
+category: amazon
+test_cases:
+- name: normal_valid_node
+  args:
+    tool_name: category_trend
+    arguments:
+      amzSite: US
+      nodeId: '1040668'
+  expect:
+    status: success
+- name: edge_uk_node
+  args:
+    tool_name: category_trend
+    arguments:
+      amzSite: UK
+      nodeId: '0'
+  expect:
+    status: success
+- name: error_missing_nodeId
+  args:
+    tool_name: category_trend
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

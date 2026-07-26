@@ -1,0 +1,31 @@
+tool: category_search_from_product_name
+name: category_search_from_product_name — 指定产品品类名称（如空气炸锅、手机充电宝）搜索亚马逊电商平台
+arguments:
+  product_name: air fryer
+category: amazon
+test_cases:
+- name: normal_valid_name
+  args:
+    tool_name: category_search_from_product_name
+    arguments:
+      amzSite: US
+      productName: kitchen storage organizer
+  expect:
+    status: success
+- name: edge_uk_name
+  args:
+    tool_name: category_search_from_product_name
+    arguments:
+      amzSite: UK
+      productName: yoga mat
+  expect:
+    status: success
+- name: error_missing_productName
+  args:
+    tool_name: category_search_from_product_name
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

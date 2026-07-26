@@ -1,0 +1,31 @@
+tool: category_keywords
+name: category_keywords — 查询亚马逊电商平台细分类目市场的核心关键词
+arguments:
+  node_id: '1064954'
+category: amazon
+test_cases:
+- name: normal_valid_node
+  args:
+    tool_name: category_keywords
+    arguments:
+      amzSite: US
+      nodeId: '1040668'
+  expect:
+    status: success
+- name: edge_uk_node
+  args:
+    tool_name: category_keywords
+    arguments:
+      amzSite: UK
+      nodeId: '0'
+  expect:
+    status: success
+- name: error_missing_nodeId
+  args:
+    tool_name: category_keywords
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

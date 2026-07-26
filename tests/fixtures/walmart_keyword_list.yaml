@@ -1,0 +1,5 @@
+tool: walmart_keyword_list
+name: walmart_keyword_list — 查询沃尔玛电商平台上实时热搜关键词榜，按月搜索量排序
+arguments:
+  rank_min: 1
+  rank_max: 1

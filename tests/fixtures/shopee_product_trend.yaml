@@ -1,0 +1,4 @@
+tool: shopee_product_trend
+name: shopee_product_trend — 支持产品五大维度历史趋势：星级、评论数、价格、累计销量、近3
+arguments:
+  product_id: '123456789'

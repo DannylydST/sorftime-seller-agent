@@ -1,0 +1,25 @@
+tool: competitor_product_keywords
+name: competitor_product_keywords — 获取亚马逊电商平台产品的竞品在各核心关键词下的曝光位置，这里
+arguments:
+  asin: B08N5WRWNW
+category: amazon
+test_cases:
+- name: normal_valid_asin
+  args:
+    amzSite: US
+    asin: B0DPQ772T9
+  expect:
+    status: success
+- name: edge_uk_asin
+  args:
+    amzSite: UK
+    asin: B08N5WRWNW
+  expect:
+    status: success
+- name: error_missing_asin
+  args:
+    amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

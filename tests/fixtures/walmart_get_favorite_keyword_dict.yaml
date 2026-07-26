@@ -1,0 +1,3 @@
+tool: walmart_get_favorite_keyword_dict
+name: walmart_get_favorite_keyword_dict — 查询我的沃尔玛平台关键词词库的收藏夹列表
+arguments: {}

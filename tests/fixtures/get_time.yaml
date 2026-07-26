@@ -1,0 +1,20 @@
+tool: get_time
+name: get_time — 获取当前时间
+arguments: {}
+category: other
+test_cases:
+- name: normal
+  args: {}
+  expect:
+    status: success
+- name: edge_with_extra_fields_ignored
+  args:
+    foo: bar
+  expect:
+    status: success
+- name: error_invalid_type
+  args: invalid
+  expect:
+    status: success
+    must_contain_text:
+    - error

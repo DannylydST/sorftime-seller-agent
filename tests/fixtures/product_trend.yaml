@@ -1,0 +1,31 @@
+tool: product_trend
+name: product_trend — 查询亚马逊电商平台产品的历史趋势数据，支持月销量/月销额/价
+arguments:
+  asin: B08N5WRWNW
+category: amazon
+test_cases:
+- name: normal_valid_asin
+  args:
+    tool_name: product_trend
+    arguments:
+      amzSite: US
+      asin: B0DPQ772T9
+  expect:
+    status: success
+- name: edge_uk_asin
+  args:
+    tool_name: product_trend
+    arguments:
+      amzSite: UK
+      asin: B08N5WRWNW
+  expect:
+    status: success
+- name: error_missing_asin
+  args:
+    tool_name: product_trend
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

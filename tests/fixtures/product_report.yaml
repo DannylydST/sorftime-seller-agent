@@ -1,0 +1,31 @@
+tool: product_report
+name: product_report — 亚马逊平台上单个产品分析报告
+arguments:
+  asin: B08N5WRWNW
+category: amazon
+test_cases:
+- name: normal_valid_asin
+  args:
+    tool_name: product_report
+    arguments:
+      amzSite: US
+      asin: B0DPQ772T9
+  expect:
+    status: success
+- name: edge_uk_asin
+  args:
+    tool_name: product_report
+    arguments:
+      amzSite: UK
+      asin: B08N5WRWNW
+  expect:
+    status: success
+- name: error_missing_asin
+  args:
+    tool_name: product_report
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

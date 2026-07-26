@@ -1,0 +1,25 @@
+tool: keyword_search_results
+name: keyword_search_results — 查询亚马逊电商平台上热搜关键词搜索结果自然位产品清单
+arguments:
+  keyword: yoga mat
+category: amazon
+test_cases:
+- name: normal_kitchen_storage
+  args:
+    amzSite: US
+    keyword: kitchen storage
+  expect:
+    status: error_or_empty
+- name: edge_uk_keyword
+  args:
+    amzSite: UK
+    keyword: yoga pants
+  expect:
+    status: error_or_empty
+- name: error_missing_keyword
+  args:
+    amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

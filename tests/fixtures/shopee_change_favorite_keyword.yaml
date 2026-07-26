@@ -1,0 +1,5 @@
+tool: shopee_change_favorite_keyword
+name: shopee_change_favorite_keyword — 移动我的Shopee平台关键词词库中收藏的关键词到指定收藏夹
+arguments:
+  keyword: yoga mat
+  to_dict: test

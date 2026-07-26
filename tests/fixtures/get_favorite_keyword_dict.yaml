@@ -1,0 +1,27 @@
+tool: get_favorite_keyword_dict
+name: get_favorite_keyword_dict — 查询我的亚马逊平台关键词词库的收藏夹列表
+arguments: {}
+category: amazon
+test_cases:
+- name: normal_basic
+  args:
+    tool_name: get_favorite_keyword_dict
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+- name: edge_uk
+  args:
+    tool_name: get_favorite_keyword_dict
+    arguments:
+      amzSite: UK
+  expect:
+    status: success
+- name: error_invalid_param
+  args:
+    tool_name: get_favorite_keyword_dict
+    arguments:
+      amzSite: US
+      invalid_param: true
+  expect:
+    status: success

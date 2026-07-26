@@ -1,0 +1,23 @@
+tool: potential_product
+name: potential_product — 搜索亚马逊电商平台上的潜力产品
+arguments: {}
+category: amazon
+test_cases:
+- name: normal_with_searchName
+  args:
+    amzSite: US
+    searchName: kitchen storage
+  expect:
+    status: success
+- name: edge_no_searchName
+  args:
+    amzSite: DE
+  expect:
+    status: success
+- name: error_missing_amzSite
+  args:
+    searchName: yoga pants
+  expect:
+    status: success
+    must_contain_text:
+    - 请指定查询的站点

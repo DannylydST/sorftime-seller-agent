@@ -1,0 +1,4 @@
+tool: shopee_favorite_keyword
+name: shopee_favorite_keyword — 在我的Shopee平台关键词词库中添加关键词收藏
+arguments:
+  keyword: yoga mat

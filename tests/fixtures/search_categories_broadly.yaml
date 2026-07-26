@@ -1,0 +1,28 @@
+tool: search_categories_broadly
+name: search_categories_broadly — 基于多维度约束，广泛的搜索符合条件的细分类目（品类）市场，用
+arguments: {}
+category: amazon
+test_cases:
+- name: normal_valid_name
+  args:
+    tool_name: search_categories_broadly
+    arguments:
+      amzSite: US
+      name: kitchen
+  expect:
+    status: success
+- name: edge_uk_name
+  args:
+    tool_name: search_categories_broadly
+    arguments:
+      amzSite: UK
+      name: electronics
+  expect:
+    status: success
+- name: error_missing_name
+  args:
+    tool_name: search_categories_broadly
+    arguments:
+      amzSite: US
+  expect:
+    status: success

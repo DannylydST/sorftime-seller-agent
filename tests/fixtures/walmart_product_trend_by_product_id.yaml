@@ -1,0 +1,4 @@
+tool: walmart_product_trend_by_product_id
+name: walmart_product_trend_by_product_id — 查询沃尔玛电商平台产品的历史趋势数据，支持月销量/月销额/价
+arguments:
+  product_id: '123456789'

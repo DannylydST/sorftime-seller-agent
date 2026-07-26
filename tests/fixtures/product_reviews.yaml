@@ -1,0 +1,26 @@
+tool: product_reviews
+name: product_reviews — 查询亚马逊电商平台产品的近一年的用户留评，最多返回100条评
+arguments:
+  asin: B08N5WRWNW
+category: amazon
+test_cases:
+- name: normal_valid_asin
+  args:
+    amzSite: US
+    asin: B0DPQ772T9
+  expect:
+    status: success
+- name: edge_uk_asin
+  args:
+    amzSite: UK
+    asin: B08N5WRWNW
+  expect:
+    status: success
+- name: error_invalid_asin
+  args:
+    amzSite: US
+    asin: NOT-AN-ASIN
+  expect:
+    status: success
+    must_contain_text:
+    - 未找到

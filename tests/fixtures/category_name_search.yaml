@@ -1,0 +1,25 @@
+tool: category_name_search
+name: category_name_search — 基于名称查询亚马逊电商平台细分类目市场，返回相关细分类目的N
+arguments:
+  category_name: kitchen
+category: amazon
+test_cases:
+- name: normal_kitchen
+  args:
+    amzSite: US
+    name: kitchen
+  expect:
+    status: success
+- name: edge_uk_name
+  args:
+    amzSite: UK
+    name: electronics
+  expect:
+    status: success
+- name: error_missing_name
+  args:
+    amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

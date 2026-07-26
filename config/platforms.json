@@ -1,0 +1,118 @@
+{
+  "name": "Sorftime Explorer Config",
+  "version": "2.0.0",
+  "updated": "2026-03-31",
+
+  "session": {
+    "file": "{OPENCLAW_HOME}/tools/sorftime-scraper/sorftime-logged-in.json",
+    "maxAgeHours": 8,
+    "validationCommand": "cd {OPENCLAW_HOME}/tools/sorftime-scraper && ./retry-wrapper.sh \"https://seller.sorftime.com/home\" {temp_dir}/sorftime-check.txt",
+    "validityCheck": "grep -q 'seller.sorftime.com' {temp_dir}/sorftime-check.txt && echo valid || echo invalid"
+  },
+
+  "selectors": {
+    "coverDialog": ".cover-dialog, .not-purchased-dialog",
+    "headerLeftTrigger": ".header-left__l",
+    "sidebar": ".sorftimeAside-nav",
+    "sidebarList": ".sorftimeAside-nav__list"
+  },
+
+  "platforms": {
+    "amazon": {
+      "name": "Amazon 美国站",
+      "homeUrl": "https://seller.sorftime.com/home",
+      "modulePattern": "/home/{module}",
+      "sidebar": ".sorftimeAside-nav",
+      "sidebarItem": ".sorftimeAside-nav__list",
+      "status": "in_progress",
+      "currentProgress": {
+        "市场看板": "completed",
+        "产品看板": "completed",
+        "关键词看板": "in_progress"
+      },
+      "submodules": {
+        "选市场": ["按细分类目选市场", "Top100市场报告", "Top400市场报告", "关税影响指数", "消费需求选市场", "自营新品选市场", "低价商城选市场"],
+        "查市场": ["查细分类目市场", "查消费需求", "指定类目查询", "查ASIN相关细分市场", "按类目名称查询", "垂直市场挖掘", "热搜关键词查市场", "按类目树查询"],
+        "选产品": ["按细分类目选产品", "选低价商场产品"],
+        "查产品": ["查产品(综合页)", "按ASIN查", "按类目查", "按品牌查", "按卖家查", "按关键词查", "查关联产品", "查Listing动态", "类目Top1000", "包含词查产品", "按属性查产品"],
+        "实用工具": ["自定义产品报表", "专利侵权查询"],
+        "关键词趋势选品": ["热搜关键词选品", "历史热搜词"],
+        "查关键词": ["查关键词", "扩词", "下拉框词", "查类目相关词", "查关键词下热搜产品"],
+        "反查关键词": ["反查关键词", "ASIN反查关键词", "ASIN反查对比", "ASIN反查出单词", "查产品流量结构", "广告策略透视", "广告组策略", "曝光流量趋势"],
+        "关键词词库": ["关键词词库"]
+      }
+    },
+
+    "tiktok": {
+      "name": "TikTok Shop 美国站",
+      "homeUrl": "https://seller.sorftime.com/tiktok/home",
+      "modulePattern": "/tiktok/home/{module}",
+      "sidebar": ".sorftimeAside-nav",
+      "sidebarItem": ".sorftimeAside-nav__list",
+      "status": "completed",
+      "modules": {
+        "verified_href": [
+          {"name": "首页", "url": "/tiktok/home"},
+          {"name": "类目报告", "url": "/tiktok/home/flow"},
+          {"name": "产品看板", "url": "/tiktok/home/product"},
+          {"name": "卖家看板", "url": "/tiktok/home/seller"},
+          {"name": "品牌看板", "url": "/tiktok/home/brand"},
+          {"name": "畅销榜", "url": "/tiktok/home/bestseller"}
+        ],
+        "verified_click": [
+          {"name": "市场看板", "content": "选市场/多维度选市场/查市场"},
+          {"name": "达人看板", "content": "选达人/多维度选达人/查达人"},
+          {"name": "视频看板", "content": "选视频/热门带货视频/选标签"}
+        ]
+      }
+    },
+
+    "shopee": {
+      "name": "Shopee",
+      "homeUrl": "https://seller.sorftime.com/shopee",
+      "status": "pending"
+    },
+
+    "walmart": {
+      "name": "Walmart",
+      "homeUrl": "https://seller.sorftime.com/walmart",
+      "status": "pending"
+    },
+
+    "temu": {
+      "name": "TEMU",
+      "homeUrl": "https://seller.sorftime.com/temu",
+      "status": "pending"
+    },
+
+    "mercado": {
+      "name": "Mercado (巴西)",
+      "homeUrl": "https://seller.sorftime.com/mercado",
+      "status": "pending"
+    },
+
+    "1688": {
+      "name": "1688",
+      "homeUrl": "https://seller.sorftime.com/1688",
+      "status": "pending"
+    }
+  },
+
+  "automationTools": {
+    "playwright_cli": {
+      "session_load": "playwright-cli state-load {OPENCLAW_HOME}/tools/sorftime-scraper/sorftime-logged-in.json",
+      "session_save": "playwright-cli state-save {OPENCLAW_HOME}/tools/sorftime-scraper/sorftime-logged-in.json",
+      "goto": "playwright-cli goto \"{url}\"",
+      "eval": "playwright-cli eval \"() => { {script} }\"",
+      "retry_wrapper": "{OPENCLAW_HOME}/tools/sorftime-scraper/retry-wrapper.sh"
+    },
+    "kimi_webbridge": {
+      "daemon": "http://127.0.0.1:10086",
+      "healthCheck": "~/.kimi-webbridge/bin/kimi-webbridge status",
+      "note": "首选浏览器自动化工具，基于真实 Chrome + 登录态，支持 JS 执行和网络抓包"
+    },
+    "browse_now": {
+      "note": "备选降级选项，需要本地 Chrome 浏览器在线"
+    }
+  }
+}

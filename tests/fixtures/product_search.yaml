@@ -1,0 +1,26 @@
+tool: product_search
+name: product_search — 搜索亚马逊电商平台上的**实时**产品数据，默认按月销量倒序
+arguments: {}
+category: amazon
+test_cases:
+- name: normal_kitchen_storage
+  args:
+    amzSite: US
+    searchName: kitchen storage
+  expect:
+    status: success
+    must_contain_keys:
+    - 产品ASIN码
+- name: edge_with_filters
+  args:
+    amzSite: DE
+    searchName: yoga pants
+    price_range: '["15","35"]'
+    delivery_type: FBA
+  expect:
+    status: success
+- name: error_missing_searchName
+  args:
+    amzSite: US
+  expect:
+    status: success

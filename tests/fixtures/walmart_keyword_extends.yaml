@@ -1,0 +1,4 @@
+tool: walmart_keyword_extends
+name: walmart_keyword_extends — 查询沃尔玛电商平台上热搜关键词的延伸词关键词，可用于卖家查询
+arguments:
+  keyword: yoga mat

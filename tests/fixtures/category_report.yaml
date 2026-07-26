@@ -1,0 +1,25 @@
+tool: category_report
+name: category_report — 查询亚马逊电商平台**指定类目**的**实时**销量Top1
+arguments:
+  node_id: '1064954'
+category: amazon
+test_cases:
+- name: normal_us_node
+  args:
+    amzSite: US
+    nodeId: '1040668'
+  expect:
+    status: success
+- name: edge_uk_node
+  args:
+    amzSite: UK
+    nodeId: '0'
+  expect:
+    status: success
+- name: error_missing_nodeId
+  args:
+    amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

@@ -1,0 +1,27 @@
+tool: sorftime_raw_call
+category: other
+test_cases:
+  - name: normal_product_trend
+    args:
+      tool_name: product_trend
+      arguments:
+        amzSite: US
+        asin: B0DPQ772T9
+    expect:
+      status: success
+  - name: edge_keyword_trend
+    args:
+      tool_name: keyword_trend
+      arguments:
+        amzSite: UK
+        keyword: yoga pants
+    expect:
+      status: success
+  - name: error_missing_tool_name
+    args:
+      arguments:
+        amzSite: US
+        asin: B0DPQ772T9
+    expect:
+      status: success
+      must_contain_text: ["error"]

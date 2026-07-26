@@ -1,0 +1,4 @@
+tool: walmart_product_variation_sales_by_product_id
+name: walmart_product_variation_sales_by_product_id — Query the variation (child ite
+arguments:
+  product_id: '123456789'

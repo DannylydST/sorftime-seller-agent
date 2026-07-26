@@ -1,0 +1,3 @@
+tool: temu_product_search
+name: temu_product_search — 搜索Temu电商平台上的产品数据，支持多维度筛选，按月销量倒
+arguments: {}

@@ -1,0 +1,4 @@
+tool: product_customers_say
+name: 'product_customers_say — 查询亚马逊基于产品用户评论总结的Customers Say '
+arguments:
+  asin: B08N5WRWNW

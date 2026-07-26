@@ -1,0 +1,4 @@
+tool: walmart_del_favorite_keyword
+name: walmart_del_favorite_keyword — 删除我的沃尔玛平台关键词词库中收藏的指定关键词
+arguments:
+  keyword: yoga mat

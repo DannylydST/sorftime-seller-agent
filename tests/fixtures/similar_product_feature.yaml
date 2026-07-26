@@ -1,0 +1,25 @@
+tool: similar_product_feature
+name: similar_product_feature — 查询亚马逊平台上类目产品的特点
+arguments:
+  product_name: air fryer
+category: amazon
+test_cases:
+- name: normal_valid_asin
+  args:
+    amzSite: US
+    asin: B0DPQ772T9
+  expect:
+    status: success
+- name: edge_uk_asin
+  args:
+    amzSite: UK
+    asin: B08N5WRWNW
+  expect:
+    status: success
+- name: error_missing_asin
+  args:
+    amzSite: US
+  expect:
+    status: success
+    must_contain_text:
+    - error

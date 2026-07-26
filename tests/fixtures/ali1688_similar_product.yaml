@@ -1,0 +1,22 @@
+tool: ali1688_similar_product
+name: ali1688_similar_product — 通过1688平台找产品的采购货源。可用于分析产品的采购成本价
+arguments:
+  search_name: kitchen storage
+category: amazon
+test_cases:
+- name: normal_keyword
+  args:
+    keyword: yoga leggings high waisted buttery soft
+  expect:
+    status: success
+- name: edge_simple_keyword
+  args:
+    keyword: kitchen storage
+  expect:
+    status: success
+- name: error_missing_keyword
+  args: {}
+  expect:
+    status: success
+    must_contain_text:
+    - error

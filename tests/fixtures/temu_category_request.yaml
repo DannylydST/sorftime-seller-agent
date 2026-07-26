@@ -1,0 +1,4 @@
+tool: temu_category_request
+name: temu_category_request — 查询类目市场下的Best Seller产品，可用于类目数据分
+arguments:
+  node_id: '1064954'

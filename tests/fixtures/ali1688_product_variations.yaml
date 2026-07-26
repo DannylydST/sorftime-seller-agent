@@ -1,0 +1,4 @@
+tool: ali1688_product_variations
+name: ali1688_product_variations — 根据产品ID查找1688平台该产品子体数据
+arguments:
+  product_id: '123456789'

@@ -1,0 +1,28 @@
+tool: product_search_from_history
+name: product_search_from_history — 搜索亚马逊电商平台上的**历史**产品，用于查看历史时间段的
+arguments:
+  search_time: test
+category: amazon
+test_cases:
+- name: normal_basic
+  args:
+    tool_name: product_search_from_history
+    arguments:
+      amzSite: US
+  expect:
+    status: success
+- name: edge_uk
+  args:
+    tool_name: product_search_from_history
+    arguments:
+      amzSite: UK
+  expect:
+    status: success
+- name: error_invalid_param
+  args:
+    tool_name: product_search_from_history
+    arguments:
+      amzSite: US
+      invalid_param: true
+  expect:
+    status: success
