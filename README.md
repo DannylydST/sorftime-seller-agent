@@ -198,4 +198,4 @@ MIT © [DannylydST](https://github.com/DannylydST) · Sorftime Data Technology
 
 ---
 
-*Built for sellers. By a seller.*
+*Built for sellers. By sellers.*
