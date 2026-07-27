@@ -17,6 +17,10 @@ metadata:
 
 > One skill. Any AI agent. Instant marketplace intelligence for global sellers.
 
+## 🔴 Language Rule (Mandatory)
+
+**Match the user's language. Always.** If the user writes in English → respond in English. If the user writes in Chinese → respond in Chinese. Never mix. This overrides everything else in this skill.
+
 ## Core Positioning
 
 This skill is the **single unified entry point** for all Sorftime MCP capabilities. It integrates:
