@@ -3,7 +3,7 @@
 > **Turn any AI agent into your personal marketplace intelligence analyst.**
 >
 > Agent-agnostic, MCP-native design. Works with **Claude Code, Codex, Cursor, OpenClaw, Hermes, Pi** — any MCP-compatible AI agent.
-> Instant access to 86 marketplace analysis tools. Amazon · Walmart · TikTok Shop · Shopee · TEMU.
+> Instant access to 86 marketplace analysis tools. Amazon · Walmart · TikTok Shop · 1688 · Shopee · TEMU.
 >
 > **No dashboards. No exports. Just talk to your AI.**
 
