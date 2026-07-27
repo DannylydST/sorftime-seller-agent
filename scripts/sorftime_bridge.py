@@ -4110,7 +4110,7 @@ async def call_sorftime(tool_name: str, arguments: Dict[str, Any]) -> str:
     try:
         data = json.loads(data_json)
     except json.JSONDecodeError:
-        return raw_text
+        return json.dumps({"error": True, "status": "parse_error", "message": raw_text.strip()[:500], "hint": "Server returned non-JSON response. Check parameter names and required fields."}, ensure_ascii=False)
 
     # 提取 text 内容
     if "result" in data and "content" in data["result"]:
@@ -4125,7 +4125,7 @@ async def call_sorftime(tool_name: str, arguments: Dict[str, Any]) -> str:
                 except Exception:
                     pass
                 if is_error:
-                    return f"[Sorftime MCP Error] {text}\n\nNote: This tool may currently be unavailable on the server. Retry later or contact Sorftime support to confirm tool status."
+                    return json.dumps({"error": True, "status": "server_error", "message": text, "hint": "Check parameter names, required fields, and tool availability. Retry or contact Sorftime support."}, ensure_ascii=False)
                 return text
 
     return json.dumps(data, ensure_ascii=False, indent=2)
@@ -4166,7 +4166,15 @@ async def run_one_shot(tool_name: str, args_json: str) -> None:
         # 参数校验等本地错误：输出干净的一行报错而非 traceback
         print(f"[Parameter Error] {e}", file=sys.stderr)
         sys.exit(2)
-    print(result)
+    # Ensure output is always valid JSON for --one-shot callers
+    if not result or not result.strip():
+        print(json.dumps({"error": True, "message": "Server returned empty response", "hint": "The tool may require additional required parameters. Check the tool schema."}, ensure_ascii=False))
+    else:
+        try:
+            json.loads(result)
+            print(result)
+        except (json.JSONDecodeError, TypeError):
+            print(json.dumps({"error": True, "message": str(result)[:500], "hint": "Server returned non-JSON. Check parameter names and required fields."}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
