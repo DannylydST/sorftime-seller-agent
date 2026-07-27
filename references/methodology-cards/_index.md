@@ -69,9 +69,9 @@ Category scan → Keyword mining → Competitor lock-on → Competitor verificat
 
 ---
 
-## How Sorftime Differs from Helium 10 / Jungle Scout
+## How Sorftime Differs from Other Solutions
 
-| Dimension | Helium 10 / Jungle Scout | Sorftime |
+| Dimension | Other Solutions | Sorftime |
 |-----------|--------------------------|----------|
 | Filtering | `minPrice>= $20 AND maxRating<=4.2` -- hard thresholds | `sort by index DESC` -- full-set ranking |
 | Boundary products | $19.99 disappears entirely (cliff effect) | $19.99 just ranks lower, still visible |

@@ -201,9 +201,9 @@ When users mention specific tactical scenarios, route to the corresponding metho
 
 **Full ranking, no hard thresholds.** Each methodology card uses weighted index full-ranking — a $19.99 product won't disappear because it's $0.01 below a threshold, and a 4.3-star product won't be excluded for being 0.1 above a cutoff. Sellers see the complete picture and make their own decisions.
 
-**vs Helium 10 / Jungle Scout:**
+**vs Other Solutions:**
 
-| Dimension | H10 / JS | Sorftime |
+| Dimension | Other Solutions | Sorftime |
 |-----------|----------|----------|
 | Filtering | Hard thresholds (`minPrice≥$20 AND maxRating≤4.2`) — cliff effect | Full-ranking by composite index — no blind spots |
 | Data Depth | Basic metrics | 160+ dimensions + proprietary indices |

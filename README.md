@@ -38,7 +38,7 @@ python3 scripts/install.py
 
 ## 🤔 Why This Exists
 
-Amazon sellers spend **$29–$229/month** on tools like Helium 10 and Jungle Scout. You log into dashboards, click through menus, export CSV files, then switch to another tool for analysis.
+Amazon sellers spend **$29–$229/month** on marketplace research tools. You log into dashboards, click through menus, export CSV files, then switch to another tool for analysis.
 
 **Sorftime Seller Agent skips all that.** You talk to your AI assistant — any MCP-compatible agent — and it queries marketplace data directly, analyzes it with a framework of 20 proprietary methodology cards, and gives you actionable insights.
 
@@ -88,16 +88,16 @@ This skill is built as an **agent-agnostic MCP-native skill** from the ground up
 
 ## 🆚 How It Compares
 
-| | Helium 10 | Jungle Scout | **Sorftime Seller Agent** |
-|---|-----------|-------------|--------------------------|
-| **Interface** | GUI dashboards | GUI dashboards | **AI conversation** |
-| **Platforms** | Amazon only | Amazon only | **6 platforms** |
-| **Data depth** | Basic metrics | Basic metrics | **160+ dimensions + proprietary indices** |
-| **AI integration** | None | None | **MCP-native, agent-agnostic** |
-| **Works with** | GUI only | GUI only | **Claude Code · Codex · Cursor · OpenClaw · Hermes · Pi · any MCP agent** |
-| **Automation** | Manual workflows | Manual workflows | **Agent auto-execution** |
-| **Pricing** | $29–$229/mo | $29–$129/mo | **Free tier + paid** |
-| **Setup time** | 20+ min | 20+ min | **3 minutes** |
+| | Other Solutions | **Sorftime Seller Agent** |
+|---|-----------------|--------------------------|
+| **Interface** | GUI dashboards | **AI conversation** |
+| **Platforms** | Amazon only (typical) | **6 platforms** |
+| **Data depth** | Basic metrics | **160+ dimensions + proprietary indices** |
+| **AI integration** | None | **MCP-native, agent-agnostic** |
+| **Works with** | GUI only | **Claude Code · Codex · Cursor · OpenClaw · Hermes · Pi · any MCP agent** |
+| **Automation** | Manual workflows | **Agent auto-execution** |
+| **Pricing** | $29–$229/mo (typical) | **Free tier + paid** |
+| **Setup time** | 20+ min | **3 minutes** |
 
 ---
 
