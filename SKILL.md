@@ -544,7 +544,12 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
   1. `tiktok_category_search_from_name` with `name: "<keyword>"` → returns `[{node_id, category_name}]`
   2. `tiktok_category_report` with `node_id: "<from step 1>"` → full category report with Top 50 products
   Do NOT iterate letters brute-force. Ask the user what category they want, or use common keywords like "beauty", "home", "fashion", "electronics".
-- **Python API**: Use `from utils.mcp_client import call_tool, call_tool_json` to call tools programmatically. Do NOT try `import MCPClient` or `import mcp_client` — the module exports `call_tool(tool_name, arguments)` (returns str) and `call_tool_json(tool_name, arguments)` (returns parsed dict).
+- **Python API**: Prefer the bridge CLI (`python3 scripts/sorftime_bridge.py --one-shot <tool> '<json>'`) for one-off calls — it handles all path/env complexity. If you need programmatic access:
+  ```python
+  import sys; sys.path.insert(0, 'scripts')  # REQUIRED — utils is under scripts/
+  from utils.mcp_client import call_tool, call_tool_json
+  ```
+  `call_tool(name, args)` returns str. `call_tool_json(name, args)` returns parsed dict. Do NOT try `import MCPClient` or `import mcp_client` — those names don't exist. Never run `python3 -c "from utils..."` from outside the skill root directory.
 - Some Sorftime tools return Chinese narrative prefix before JSON — `utils/mcp_client.py` and `sorftime_bridge.py` handle this parsing
 - Requests beyond registered tool scope: `utils/mcp_client.py` auto-remaps deprecated tools or intercepts with alternatives
 - `mcporter` HTTP transport may intermittently break on large responses — complex queries prefer `--one-shot` main path
