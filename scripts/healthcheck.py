@@ -231,7 +231,7 @@ def check_schema_sync() -> dict:
         }
 
 
-def _print_human(checks: list[dict], overall_ok: bool):
+def _print_human(checks: list[dict], overall_ok: bool, has_warnings: bool):
     """Human-friendly output format"""
     print("=" * 50)
     print(" Sorftime Seller Agent Health Check")
@@ -239,9 +239,15 @@ def _print_human(checks: list[dict], overall_ok: bool):
     print()
 
     for c in checks:
-        icon = ICON_OK if c["status"] == "ok" else ICON_ERR
+        status = c["status"]
+        if status == "ok":
+            icon = ICON_OK
+        elif status == "warn":
+            icon = ICON_WARN
+        else:
+            icon = ICON_ERR
         print(f"  {icon} {c['name']:<18}  {c['detail']}")
-        if c["fix"]:
+        if c["fix"] and c["status"] == "error":
             for line in c["fix"].split("\n"):
                 print(f"      {ICON_INFO} {line}")
             print()
@@ -249,15 +255,22 @@ def _print_human(checks: list[dict], overall_ok: bool):
     print()
     print("=" * 50)
     if overall_ok:
-        print(f"  {ICON_OK} All checks passed! You're ready to get started.")
+        if has_warnings:
+            print(f"  {ICON_OK} Core checks passed. {ICON_WARN} Non-blocking: Schema may be stale, auto_sync when convenient.")
+        else:
+            print(f"  {ICON_OK} All checks passed! You're ready to get started.")
         print()
         print("  Try asking your AI:")
         print('    "Find blue ocean products in yoga mats"')
         print('    "Analyze ASIN B08N5WRWNW"')
         print('    "Calculate profit: price $29.99, cost $8.50"')
     else:
-        failed_count = sum(1 for c in checks if c["status"] != "ok")
-        print(f"  {ICON_ERR} Found {failed_count} issue(s). Follow the hints above to fix.")
+        error_count = sum(1 for c in checks if c["status"] == "error")
+        warn_count = sum(1 for c in checks if c["status"] == "warn")
+        parts = [f"{error_count} error(s)"]
+        if warn_count:
+            parts.append(f"{warn_count} warning(s)")
+        print(f"  {ICON_ERR} Found {", ".join(parts)}. Follow the hints above to fix.")
         print()
         print(f"  Re-run after fixing: python3 scripts/healthcheck.py")
     print("=" * 50)
@@ -277,7 +290,10 @@ def main():
         check_scripts(),
         check_schema_sync(),
     ]
-    overall_ok = all(c["status"] == "ok" for c in checks)
+    errors = [c for c in checks if c["status"] == "error"]
+    warnings = [c for c in checks if c["status"] == "warn"]
+    overall_ok = len(errors) == 0
+    has_warnings = len(warnings) > 0
 
     if args.json:
         # JSON mode: backward-compatible output format
@@ -289,7 +305,7 @@ def main():
         result = {"status": "ok" if overall_ok else "error", "checks": json_checks}
         print(json.dumps(result, indent=2, ensure_ascii=False))
     else:
-        _print_human(checks, overall_ok)
+        _print_human(checks, overall_ok, has_warnings)
 
     sys.exit(0 if overall_ok else 1)
 
