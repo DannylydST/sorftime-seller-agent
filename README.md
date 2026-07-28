@@ -164,6 +164,10 @@ That's it. Your AI agent can now access 86 marketplace intelligence tools.
 
 ## 🌍 Supported Platforms
 
+<p align="center">
+  <img src="assets/data-coverage.png" alt="Sorftime AI Data Supply Chain — 40+ Platforms · 160+ Dimensions · 9 Years of Seller Data" width="100%">
+</p>
+
 | Platform | Data Available | Coverage |
 |----------|---------------|----------|
 | **Amazon** | Products · Keywords · Categories · Reviews · Traffic · Trends · Profit | 14 sites |
