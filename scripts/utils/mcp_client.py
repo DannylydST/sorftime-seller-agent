@@ -163,6 +163,11 @@ def _validate_and_normalize_params(tool_name: str, arguments: dict) -> dict:
             f"Required: {sorted(required_params)}, provided: {sorted(normalized.keys())}"
         )
 
+    # Auto-fix "Unknow" site default (server-side typo — server rejects it)
+    if "site" in normalized and normalized["site"] in ("Unknow", "", None):
+        normalized["site"] = "US"
+        warnings.append("Parameter 'site': 'Unknow' default → auto-set to 'US'")
+
     if warnings:
         import sys as _sys
         print(f"⚠️  [{tool_name}] Parameter warnings:", file=_sys.stderr)
