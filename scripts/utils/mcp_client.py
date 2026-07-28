@@ -59,9 +59,12 @@ PARAM_ALIASES = {
     # Trend / time
     "trend_type":      ["product_trend_type", "trend_type"],
     "date":            ["search_time", "start_date", "date"],
-    # Shopee/TEMU: unified "name"
+    # Shopee/TEMU/TikTok: unified "name"
     "product_name":    ["keyword", "search_name", "category_name", "name", "product_name"],
     "category_name":   ["keyword", "search_name", "product_name", "name", "category_name"],
+    # TikTok category search uses bare "name" — common mismatch target
+    "name":            ["search_name", "category_name", "keyword", "product_name", "name"],
+    "search_name":     ["keyword", "category_name", "product_name", "name", "search_name"],
 }
 
 # Lazily loaded tool Schema cache
