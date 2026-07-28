@@ -540,6 +540,11 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - `potential_product` (Hidden Profit Index) `search_name` parameter is **optional**. Omit for **all-category cross-ranking**; include to filter within a keyword's search results. Return field is `potential_index`
 - Amazon keyword tools (`keyword_detail` / `keyword_extends` / `keyword_search_results`) use `keyword_support_site` for marketplace; all other Amazon tools use `amz_site`. **See the "MCP Parameter Name Traps" section above — parameter name mismatches are the #1 cause of call failures**
 - TikTok Shop currently does not provide `product_search`; direct search needs to `product_detail` or `category_report`
+- **TikTok category discovery workflow** (2-step, mandatory):
+  1. `tiktok_category_search_from_name` with `name: "<keyword>"` → returns `[{node_id, category_name}]`
+  2. `tiktok_category_report` with `node_id: "<from step 1>"` → full category report with Top 50 products
+  Do NOT iterate letters brute-force. Ask the user what category they want, or use common keywords like "beauty", "home", "fashion", "electronics".
+- **Python API**: Use `from utils.mcp_client import call_tool, call_tool_json` to call tools programmatically. Do NOT try `import MCPClient` or `import mcp_client` — the module exports `call_tool(tool_name, arguments)` (returns str) and `call_tool_json(tool_name, arguments)` (returns parsed dict).
 - Some Sorftime tools return Chinese narrative prefix before JSON — `utils/mcp_client.py` and `sorftime_bridge.py` handle this parsing
 - Requests beyond registered tool scope: `utils/mcp_client.py` auto-remaps deprecated tools or intercepts with alternatives
 - `mcporter` HTTP transport may intermittently break on large responses — complex queries prefer `--one-shot` main path
