@@ -5,6 +5,10 @@
 </p>
 <p align="center"><em>Backed by Sorftime's AI data supply chain — 9 years of firsthand seller experience, 40+ global marketplaces, 160+ data dimensions.</em></p>
 
+<p align="center">
+  <img src="assets/platform-logos.png" alt="Amazon · Walmart · TikTok Shop · Shopee · TEMU · 1688" width="100%">
+</p>
+
 > **Turn any AI agent into your personal marketplace intelligence analyst.**
 >
 > Agent-agnostic, MCP-native design. Works with **Claude Code, Codex, Cursor, OpenClaw, Hermes, Pi** — any MCP-compatible AI agent.
@@ -163,10 +167,6 @@ That's it. Your AI agent can now access 86 marketplace intelligence tools.
 ---
 
 ## 🌍 Supported Platforms
-
-<p align="center">
-  <img src="assets/platform-logos.png" alt="Amazon · Walmart · TikTok Shop · Shopee · TEMU · 1688" width="100%">
-</p>
 
 | Platform | Data Available | Coverage |
 |----------|---------------|----------|
