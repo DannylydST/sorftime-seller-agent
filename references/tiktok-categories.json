@@ -1,0 +1,18 @@
+{
+  "updated": "2026-07-28",
+  "site": "US",
+  "note": "TikTok Shop categories discovered via tiktok_category_search_from_name. Not exhaustive — Sorftime does not expose a 'list all categories' endpoint. Add new entries as discovered.",
+  "total": 6,
+  "categories": [
+    {"node_id": "601733", "name": "Skincare Tools"},
+    {"node_id": "700648", "name": "Beauty Supplement"},
+    {"node_id": "700650", "name": "Vitamins, Minerals & Wellness Supplements"},
+    {"node_id": "851984", "name": "Hair Brushes & Combs"},
+    {"node_id": "931720", "name": "Car Stickers"},
+    {"node_id": "951944", "name": "Beading & Jewelry Making"}
+  ],
+  "usage": {
+    "discover_more": "python3 scripts/sorftime_bridge.py --one-shot tiktok_category_search_from_name '{\"name\":\"<keyword>\",\"site\":\"US\"}'",
+    "get_report": "python3 scripts/sorftime_bridge.py --one-shot tiktok_category_report '{\"node_id\":\"<from above>\",\"site\":\"US\"}'"
+  }
+}
