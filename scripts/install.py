@@ -114,7 +114,7 @@ sys.path.insert(0, {repr(str(SKILL_DIR / "scripts"))})
 from sorftime_bridge import call_sorftime
 async def main():
     try:
-        r = await call_sorftime("get_time", {})
+        r = await call_sorftime("get_time", {{}})
         print(r)
     except Exception as e:
         print(f"ERROR: {e}")
