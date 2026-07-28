@@ -73,6 +73,10 @@ After:  "Find blue ocean yoga mat products" → results in 20 seconds
 
 ## 🤖 Agent-Friendly by Design
 
+<p align="center">
+  <img src="assets/agent-friendly-demo.gif" alt="Same skill running in Claude Code, Codex, Cursor, and OpenClaw — four agents, one Sorftime" width="100%">
+</p>
+
 This skill is built as an **agent-agnostic MCP-native skill** from the ground up. It's not a Claude Code plugin. It's not a wrapper around an API. It's a self-contained MCP bridge + intelligence layer that any MCP-compatible AI agent can load and use immediately.
 
 | Agent / IDE | How It Works | Setup |
