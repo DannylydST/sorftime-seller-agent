@@ -58,11 +58,15 @@ def install_deps():
         run([sys.executable, "-m", "venv", str(VENV_DIR)])
 
     pip = get_venv_pip()
-    result = run([str(pip), "install", "-q", "mcp", "httpx", "socksio", "pyyaml"])
+    req_file = SKILL_DIR / "requirements.txt"
+    if req_file.exists():
+        result = run([str(pip), "install", "-r", str(req_file)])
+    else:
+        result = run([str(pip), "install", "mcp", "httpx", "socksio", "pyyaml"])
     if result.returncode != 0:
         print(f"    ❌ Installation failed: {result.stderr}")
         sys.exit(1)
-    print("    ✅ mcp, httpx installed to virtual environment")
+    print("    ✅ Dependencies installed from requirements.txt")
 
 
 def detect_env() -> str:

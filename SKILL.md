@@ -487,7 +487,7 @@ Compares local `references/tool-matrix.md` against `scripts/sorftime_bridge.py`'
 | Platform | Marketplace Param | Product ID Param | Keyword Param | Category Param |
 |----------|-------------------|------------------|---------------|----------------|
 | Amazon | `amz_site` (US/UK/JP/DE/FR/ES/IT/CA/MX/AU/IN/SG) | `asin` | `search_name` | `node_id` |
-| TikTok | `site` | `product_id` | — | `category_id` |
+| TikTok | `site` | `product_id` | — | `node_id` (⚠️ not `category_id`) |
 | Shopee | `site` | `product_id` | — | `category_id` |
 | TEMU | `site` | `product_id` | — | `category_id` |
 | Walmart | `site` | `product_id` | `keyword` | `node_id` |
