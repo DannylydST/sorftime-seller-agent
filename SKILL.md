@@ -540,11 +540,11 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - `potential_product` (Hidden Profit Index) `search_name` parameter is **optional**. Omit for **all-category cross-ranking**; include to filter within a keyword's search results. Return field is `potential_index`
 - Amazon keyword tools (`keyword_detail` / `keyword_extends` / `keyword_search_results`) use `keyword_support_site` for marketplace; all other Amazon tools use `amz_site`. **See the "MCP Parameter Name Traps" section above — parameter name mismatches are the #1 cause of call failures**
 - TikTok Shop currently does not provide `product_search`; direct search needs to `product_detail` or `category_report`
-- **TikTok category discovery workflow** (2-step):
-  1. **FIRST**: Check `references/tiktok-categories.json` for pre-discovered categories — use directly, skip search
-  2. If the target category is not in the reference: `tiktok_category_search_from_name` with `name: "<keyword>"` + `site: "US"` → returns `[{node_id, category_name}]`
-  3. `tiktok_category_report` with `node_id: "<from reference or step 2>"` + `site: "US"` → full report
-  Do NOT iterate letters brute-force. Do NOT call without `site`.
+- **TikTok category discovery workflow** (auto-persisting):
+  1. **FIRST**: `python3 scripts/discover_tiktok.py --list` — shows all known categories
+  2. To find a specific category: `python3 scripts/discover_tiktok.py <keyword>` — searches TikTok, auto-saves new categories to `references/tiktok-categories.json`
+  3. To get a full report: `python3 scripts/discover_tiktok.py --report <name_or_node_id>` — discovers if needed, then fetches report
+  Do NOT iterate letters brute-force. Do NOT call tools without `site`.
 - **Python API**: Prefer the bridge CLI (`python3 scripts/sorftime_bridge.py --one-shot <tool> '<json>'`) for one-off calls — it handles all path/env complexity. If you need programmatic access:
   ```python
   import sys; sys.path.insert(0, 'scripts')  # REQUIRED — utils is under scripts/
