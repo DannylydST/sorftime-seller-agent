@@ -1,5 +1,10 @@
 # Sorftime Seller Agent
 
+<p align="center">
+  <img src="assets/hero-extension.png" alt="Sorftime — AI-Powered Marketplace Intelligence" width="100%">
+</p>
+<p align="center"><em>Backed by Sorftime's AI data supply chain — 9 years of firsthand seller experience, 40+ global marketplaces, 160+ data dimensions.</em></p>
+
 > **Turn any AI agent into your personal marketplace intelligence analyst.**
 >
 > Agent-agnostic, MCP-native design. Works with **Claude Code, Codex, Cursor, OpenClaw, Hermes, Pi** — any MCP-compatible AI agent.
