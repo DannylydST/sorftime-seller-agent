@@ -1,18 +1,928 @@
 {
-  "updated": "2026-07-28",
-  "site": "US",
-  "note": "TikTok Shop categories discovered via tiktok_category_search_from_name. Not exhaustive — Sorftime does not expose a 'list all categories' endpoint. Add new entries as discovered.",
-  "total": 6,
-  "categories": [
-    {"node_id": "601733", "name": "Skincare Tools"},
-    {"node_id": "700648", "name": "Beauty Supplement"},
-    {"node_id": "700650", "name": "Vitamins, Minerals & Wellness Supplements"},
-    {"node_id": "851984", "name": "Hair Brushes & Combs"},
-    {"node_id": "931720", "name": "Car Stickers"},
-    {"node_id": "951944", "name": "Beading & Jewelry Making"}
-  ],
-  "usage": {
-    "discover_more": "python3 scripts/sorftime_bridge.py --one-shot tiktok_category_search_from_name '{\"name\":\"<keyword>\",\"site\":\"US\"}'",
-    "get_report": "python3 scripts/sorftime_bridge.py --one-shot tiktok_category_report '{\"node_id\":\"<from above>\",\"site\":\"US\"}'"
+ "updated": "2026-07-28 20:08",
+ "site": "US",
+ "note": "TikTok Shop categories discovered via tiktok_category_search_from_name. Not exhaustive — Sorftime does not expose a 'list all categories' endpoint. Add new entries as discovered.",
+ "total": 229,
+ "categories": [
+  {
+   "node_id": "601733",
+   "name": "Skincare Tools"
+  },
+  {
+   "node_id": "700648",
+   "name": "Beauty Supplement"
+  },
+  {
+   "node_id": "700650",
+   "name": "Vitamins, Minerals & Wellness Supplements"
+  },
+  {
+   "node_id": "851984",
+   "name": "Hair Brushes & Combs"
+  },
+  {
+   "node_id": "931720",
+   "name": "Car Stickers"
+  },
+  {
+   "node_id": "951944",
+   "name": "Beading & Jewelry Making"
+  },
+  {
+   "node_id": "852880",
+   "category_name": "Makeup Brushes"
+  },
+  {
+   "node_id": "601537",
+   "category_name": "Makeup Tools"
+  },
+  {
+   "node_id": "601529",
+   "category_name": "Makeup Sets"
+  },
+  {
+   "node_id": "869000",
+   "category_name": "Pretend Play"
+  },
+  {
+   "node_id": "601440",
+   "category_name": "Make-up Bags"
+  },
+  {
+   "node_id": "601611",
+   "category_name": "Skin Care Kits"
+  },
+  {
+   "node_id": "601619",
+   "category_name": "Serums & Essences"
+  },
+  {
+   "node_id": "601615",
+   "category_name": "Moisturizers & Mists"
+  },
+  {
+   "node_id": "601492",
+   "category_name": "Body Moisturizers"
+  },
+  {
+   "node_id": "601609",
+   "category_name": "Facial Cleansers"
+  },
+  {
+   "node_id": "601469",
+   "category_name": "Shampoo & Conditioner"
+  },
+  {
+   "node_id": "601554",
+   "category_name": "Concealer & Foundation"
+  },
+  {
+   "node_id": "601534",
+   "category_name": "Lipstick & Lip Gloss"
+  },
+  {
+   "node_id": "601587",
+   "category_name": "Eyeliner & Lipliner"
+  },
+  {
+   "node_id": "601595",
+   "category_name": "Lip Treatments"
+  },
+  {
+   "node_id": "812432",
+   "category_name": "Human Hair Extensions & Pieces"
+  },
+  {
+   "node_id": "811920",
+   "category_name": "Human Hair Lace Front Wigs"
+  },
+  {
+   "node_id": "812944",
+   "category_name": "Synthetic Extensions & Pieces"
+  },
+  {
+   "node_id": "812816",
+   "category_name": "Synthetic Lace Front Wigs"
+  },
+  {
+   "node_id": "812304",
+   "category_name": "Human Hair Full Machine Wigs"
+  },
+  {
+   "node_id": "981512",
+   "category_name": "Hair Oils & Treatments"
+  },
+  {
+   "node_id": "700789",
+   "category_name": "Hair Styling Tools"
+  },
+  {
+   "node_id": "601516",
+   "category_name": "Hair Color"
+  },
+  {
+   "node_id": "855824",
+   "category_name": "Unisex Fragrance"
+  },
+  {
+   "node_id": "855952",
+   "category_name": "Women's Fragrance"
+  },
+  {
+   "node_id": "855696",
+   "category_name": "Men's Fragrance"
+  },
+  {
+   "node_id": "601218",
+   "category_name": "Men's Pants"
+  },
+  {
+   "node_id": "600477",
+   "category_name": "Home Fragrances"
+  },
+  {
+   "node_id": "700649",
+   "category_name": "Fitness Supplements"
+  },
+  {
+   "node_id": "2160400",
+   "category_name": "Herbal Supplements"
+  },
+  {
+   "node_id": "950664",
+   "category_name": "Pill Dispensers"
+  },
+  {
+   "node_id": "700554",
+   "category_name": "Crisps & Puffed Snacks"
+  },
+  {
+   "node_id": "946952",
+   "category_name": "Chewing & Bubble Gum"
+  },
+  {
+   "node_id": "700768",
+   "category_name": "Chocolate & Chocolate Snacks"
+  },
+  {
+   "node_id": "963464",
+   "category_name": "Gift Sets"
+  },
+  {
+   "node_id": "921992",
+   "category_name": "Popcorn"
+  },
+  {
+   "node_id": "921736",
+   "category_name": "Candy"
+  },
+  {
+   "node_id": "983304",
+   "category_name": "Specialty Kitchen Appliances"
+  },
+  {
+   "node_id": "600047",
+   "category_name": "Drinkware Accessories"
+  },
+  {
+   "node_id": "700612",
+   "category_name": "Coffee"
+  },
+  {
+   "node_id": "917512",
+   "category_name": "Hydration Powders"
+  },
+  {
+   "node_id": "916488",
+   "category_name": "Tea"
+  },
+  {
+   "node_id": "987912",
+   "category_name": "Calendars, Planners & Personal Organisers"
+  },
+  {
+   "node_id": "861064",
+   "category_name": "Tea-Making Tools"
+  },
+  {
+   "node_id": "917256",
+   "category_name": "Sports & Energy Drinks"
+  },
+  {
+   "node_id": "600032",
+   "category_name": "Vacuum Flasks"
+  },
+  {
+   "node_id": "852744",
+   "category_name": "Storage Bags"
+  },
+  {
+   "node_id": "600812",
+   "category_name": "Household Cleaners"
+  },
+  {
+   "node_id": "601493",
+   "category_name": "Bath & Shower"
+  },
+  {
+   "node_id": "600409",
+   "category_name": "Cleaning Cloths"
+  },
+  {
+   "node_id": "855048",
+   "category_name": "Sponges & Scouring Pads"
+  },
+  {
+   "node_id": "600157",
+   "category_name": "Blankets & Throws"
+  },
+  {
+   "node_id": "600165",
+   "category_name": "Sheets & Pillowcases"
+  },
+  {
+   "node_id": "808584",
+   "category_name": "Bedding Sets Collections"
+  },
+  {
+   "node_id": "808840",
+   "category_name": "Duvets & Sets"
+  },
+  {
+   "node_id": "809608",
+   "category_name": "Duvet Covers & Sets"
+  },
+  {
+   "node_id": "853512",
+   "category_name": "Bathing Accessories"
+  },
+  {
+   "node_id": "853256",
+   "category_name": "Bathroom Gadgets"
+  },
+  {
+   "node_id": "810888",
+   "category_name": "Towels"
+  },
+  {
+   "node_id": "945032",
+   "category_name": "Car Wash Accessories"
+  },
+  {
+   "node_id": "603573",
+   "category_name": "Golf"
+  },
+  {
+   "node_id": "893832",
+   "category_name": "Indoor Lighting"
+  },
+  {
+   "node_id": "893704",
+   "category_name": "Bulbs, Tubes & Strips"
+  },
+  {
+   "node_id": "894216",
+   "category_name": "Novelty Lighting"
+  },
+  {
+   "node_id": "806928",
+   "category_name": "Makeup Vanities"
+  },
+  {
+   "node_id": "600299",
+   "category_name": "Statues & Figurines"
+  },
+  {
+   "node_id": "982280",
+   "category_name": "Plaques & Signs"
+  },
+  {
+   "node_id": "605201",
+   "category_name": "Decoration"
+  },
+  {
+   "node_id": "832392",
+   "category_name": "Desk Organizers & Accessories"
+  },
+  {
+   "node_id": "600347",
+   "category_name": "Hooks & Shelves"
+  },
+  {
+   "node_id": "600009",
+   "category_name": "Festive Decorations"
+  },
+  {
+   "node_id": "855560",
+   "category_name": "Cards & Card Stock"
+  },
+  {
+   "node_id": "854280",
+   "category_name": "Candle Holders"
+  },
+  {
+   "node_id": "854152",
+   "category_name": "Candles"
+  },
+  {
+   "node_id": "856456",
+   "category_name": "Lighter Accessories"
+  },
+  {
+   "node_id": "843400",
+   "category_name": "Women's Tanks & Camis"
+  },
+  {
+   "node_id": "700653",
+   "category_name": "Pillows & Bed Wedges"
+  },
+  {
+   "node_id": "700699",
+   "category_name": "Stuffed Toys"
+  },
+  {
+   "node_id": "700661",
+   "category_name": "Cushions & Accessories"
+  },
+  {
+   "node_id": "845832",
+   "category_name": "Pajamas & Loungewear"
+  },
+  {
+   "node_id": "855944",
+   "category_name": "Party Bags & Gifts"
+  },
+  {
+   "node_id": "854024",
+   "category_name": "Hanging Decor"
+  },
+  {
+   "node_id": "983432",
+   "category_name": "Electric Blankets"
+  },
+  {
+   "node_id": "601226",
+   "category_name": "T-shirts"
+  },
+  {
+   "node_id": "601925",
+   "category_name": "Cases, Screen Protectors & Stickers"
+  },
+  {
+   "node_id": "910344",
+   "category_name": "Phone Holders & Mounts"
+  },
+  {
+   "node_id": "806544",
+   "category_name": "Music Boxes"
+  },
+  {
+   "node_id": "601990",
+   "category_name": "Headphones, Earphones & Accessories"
+  },
+  {
+   "node_id": "913416",
+   "category_name": "Audio & Video Accessories"
+  },
+  {
+   "node_id": "903560",
+   "category_name": "Men's Fanny Packs & Belt Bags"
+  },
+  {
+   "node_id": "931208",
+   "category_name": "Car Electrical Appliances"
+  },
+  {
+   "node_id": "930696",
+   "category_name": "Electronic Accessories"
+  },
+  {
+   "node_id": "941448",
+   "category_name": "Car Battery Repair Tools"
+  },
+  {
+   "node_id": "851472",
+   "category_name": "USB Chargers"
+  },
+  {
+   "node_id": "600621",
+   "category_name": "Storage Boxes & Bins"
+  },
+  {
+   "node_id": "845448",
+   "category_name": "Socks"
+  },
+  {
+   "node_id": "853128",
+   "category_name": "Hooks & Rails"
+  },
+  {
+   "node_id": "895368",
+   "category_name": "Wires & Cables"
+  },
+  {
+   "node_id": "862984",
+   "category_name": "Science & Technology Toys"
+  },
+  {
+   "node_id": "602029",
+   "category_name": "Speakers"
+  },
+  {
+   "node_id": "700740",
+   "category_name": "Indoor Recreation"
+  },
+  {
+   "node_id": "602080",
+   "category_name": "Wearable Accessories"
+  },
+  {
+   "node_id": "914056",
+   "category_name": "Fitness Trackers"
+  },
+  {
+   "node_id": "602083",
+   "category_name": "Smart Watches"
+  },
+  {
+   "node_id": "842512",
+   "category_name": "Car Cameras"
+  },
+  {
+   "node_id": "911752",
+   "category_name": "Security Cameras & Systems"
+  },
+  {
+   "node_id": "930440",
+   "category_name": "Video Surveillance"
+  },
+  {
+   "node_id": "842768",
+   "category_name": "Digital Cameras"
+  },
+  {
+   "node_id": "911240",
+   "category_name": "Video Camcorders"
+  },
+  {
+   "node_id": "999944",
+   "category_name": "Hunting"
+  },
+  {
+   "node_id": "601281",
+   "category_name": "Casual Dresses"
+  },
+  {
+   "node_id": "846088",
+   "category_name": "Nightdresses"
+  },
+  {
+   "node_id": "603654",
+   "category_name": "Sports & Outdoor Hats"
+  },
+  {
+   "node_id": "812688",
+   "category_name": "Synthetic Full Machine Wigs"
+  },
+  {
+   "node_id": "804744",
+   "category_name": "Dresses"
+  },
+  {
+   "node_id": "601265",
+   "category_name": "Blouses & Shirts"
+  },
+  {
+   "node_id": "601195",
+   "category_name": "Shirts"
+  },
+  {
+   "node_id": "803336",
+   "category_name": "Suits & Sets"
+  },
+  {
+   "node_id": "601277",
+   "category_name": "Pants"
+  },
+  {
+   "node_id": "601276",
+   "category_name": "Jeans"
+  },
+  {
+   "node_id": "601202",
+   "category_name": "Men's Jeans"
+  },
+  {
+   "node_id": "811528",
+   "category_name": "Sewing Accessories & Haberdashery"
+  },
+  {
+   "node_id": "804488",
+   "category_name": "Bottoms"
+  },
+  {
+   "node_id": "835720",
+   "category_name": "Sports Tops"
+  },
+  {
+   "node_id": "601302",
+   "category_name": "Women's T-shirts"
+  },
+  {
+   "node_id": "601295",
+   "category_name": "Hoodies & Sweatshirts"
+  },
+  {
+   "node_id": "601213",
+   "category_name": "Hoodies & Sweatshirts"
+  },
+  {
+   "node_id": "804232",
+   "category_name": "Tops"
+  },
+  {
+   "node_id": "836104",
+   "category_name": "Sports Bottoms"
+  },
+  {
+   "node_id": "601274",
+   "category_name": "Leggings"
+  },
+  {
+   "node_id": "844552",
+   "category_name": "Tights"
+  },
+  {
+   "node_id": "960264",
+   "category_name": "Tights"
+  },
+  {
+   "node_id": "601284",
+   "category_name": "Women's Knitwear"
+  },
+  {
+   "node_id": "601223",
+   "category_name": "Knitwear"
+  },
+  {
+   "node_id": "601267",
+   "category_name": "Jackets & Coats"
+  },
+  {
+   "node_id": "601197",
+   "category_name": "Jackets & Coats"
+  },
+  {
+   "node_id": "601296",
+   "category_name": "Women's Suits"
+  },
+  {
+   "node_id": "804360",
+   "category_name": "Coats & Jackets"
+  },
+  {
+   "node_id": "601262",
+   "category_name": "Bras"
+  },
+  {
+   "node_id": "601247",
+   "category_name": "Panties"
+  },
+  {
+   "node_id": "841352",
+   "category_name": "Men's Underwear"
+  },
+  {
+   "node_id": "802568",
+   "category_name": "Underwear"
+  },
+  {
+   "node_id": "803848",
+   "category_name": "Underwear"
+  },
+  {
+   "node_id": "804496",
+   "category_name": "Work & Safety Footwear"
+  },
+  {
+   "node_id": "900872",
+   "category_name": "Casual Trainers"
+  },
+  {
+   "node_id": "601357",
+   "category_name": "Casual Trainers"
+  },
+  {
+   "node_id": "603751",
+   "category_name": "Running Shoes"
+  },
+  {
+   "node_id": "836616",
+   "category_name": "Kids' Sport Shoes"
+  },
+  {
+   "node_id": "601409",
+   "category_name": "Women's Boots"
+  },
+  {
+   "node_id": "602787",
+   "category_name": "Shoes"
+  },
+  {
+   "node_id": "601376",
+   "category_name": "Men's Boots"
+  },
+  {
+   "node_id": "806152",
+   "category_name": "Boots"
+  },
+  {
+   "node_id": "901128",
+   "category_name": "Sandals & Flip Flops"
+  },
+  {
+   "node_id": "601405",
+   "category_name": "Slippers"
+  },
+  {
+   "node_id": "601374",
+   "category_name": "Slippers"
+  },
+  {
+   "node_id": "601364",
+   "category_name": "Sandals & Flip Flops"
+  },
+  {
+   "node_id": "806280",
+   "category_name": "Sandals & Flip Flops"
+  },
+  {
+   "node_id": "601446",
+   "category_name": "Backpacks"
+  },
+  {
+   "node_id": "601419",
+   "category_name": "Travel Bags"
+  },
+  {
+   "node_id": "603524",
+   "category_name": "Basketball"
+  },
+  {
+   "node_id": "601417",
+   "category_name": "Laptop Bags"
+  },
+  {
+   "node_id": "2158224",
+   "category_name": "Men's Fashion Backpacks"
+  },
+  {
+   "node_id": "601439",
+   "category_name": "Women's Crossbody & Shoulder Bags"
+  },
+  {
+   "node_id": "903176",
+   "category_name": "Women's Tote Bags"
+  },
+  {
+   "node_id": "601445",
+   "category_name": "Women's Handbags"
+  },
+  {
+   "node_id": "601444",
+   "category_name": "Women's Clutches & Wristlets"
+  },
+  {
+   "node_id": "601441",
+   "category_name": "Women's Wallets"
+  },
+  {
+   "node_id": "914184",
+   "category_name": "GPS, Finders & Accessories"
+  },
+  {
+   "node_id": "605280",
+   "category_name": "Necklaces"
+  },
+  {
+   "node_id": "907784",
+   "category_name": "Jewelry Sets"
+  },
+  {
+   "node_id": "955528",
+   "category_name": "Platinum & Carat Gold Necklaces & Pendants"
+  },
+  {
+   "node_id": "964872",
+   "category_name": "Non-natural Crystal Necklaces & Pendants"
+  },
+  {
+   "node_id": "959240",
+   "category_name": "Natural Crystal Necklaces & Pendants"
+  },
+  {
+   "node_id": "605302",
+   "category_name": "Frames & Glasses"
+  },
+  {
+   "node_id": "605268",
+   "category_name": "Earrings"
+  },
+  {
+   "node_id": "974216",
+   "category_name": "Artificial Gemstone Earrings"
+  },
+  {
+   "node_id": "955912",
+   "category_name": "Platinum & Carat Gold Earrings"
+  },
+  {
+   "node_id": "957576",
+   "category_name": "Silver Earrings"
+  },
+  {
+   "node_id": "605274",
+   "category_name": "Bracelets & Bangles"
+  },
+  {
+   "node_id": "965128",
+   "category_name": "Non-natural Crystal Bracelets & Anklets"
+  },
+  {
+   "node_id": "995080",
+   "category_name": "Jewelry Adjusters & Protectors"
+  },
+  {
+   "node_id": "973320",
+   "category_name": "Semiprecious Stone Bracelets & Anklets"
+  },
+  {
+   "node_id": "605304",
+   "category_name": "Sunglasses"
+  },
+  {
+   "node_id": "838408",
+   "category_name": "Cycling"
+  },
+  {
+   "node_id": "907016",
+   "category_name": "Glasses Cases & Accessories"
+  },
+  {
+   "node_id": "836744",
+   "category_name": "Sports Eyewear"
+  },
+  {
+   "node_id": "837768",
+   "category_name": "Exercise Machines"
+  },
+  {
+   "node_id": "999816",
+   "category_name": "Balance Training Equipment"
+  },
+  {
+   "node_id": "603084",
+   "category_name": "Yoga & Pilates"
+  },
+  {
+   "node_id": "994696",
+   "category_name": "Exercise Machine Accessories"
+  },
+  {
+   "node_id": "603288",
+   "category_name": "Boxing & Martial Arts"
+  },
+  {
+   "node_id": "819208",
+   "category_name": "Cat Toys"
+  },
+  {
+   "node_id": "864136",
+   "category_name": "Toy Tablets & Computers"
+  },
+  {
+   "node_id": "700700",
+   "category_name": "Model & Toy Vehicles"
+  },
+  {
+   "node_id": "823816",
+   "category_name": "Health Supplies"
+  },
+  {
+   "node_id": "926856",
+   "category_name": "Literature"
+  },
+  {
+   "node_id": "868360",
+   "category_name": "Puzzles"
+  },
+  {
+   "node_id": "989960",
+   "category_name": "Activity Books"
+  },
+  {
+   "node_id": "886920",
+   "category_name": "Tool Bags"
+  },
+  {
+   "node_id": "928520",
+   "category_name": "Crafts & DIY"
+  },
+  {
+   "node_id": "869512",
+   "category_name": "Building Toys"
+  },
+  {
+   "node_id": "866056",
+   "category_name": "Sports Toys"
+  },
+  {
+   "node_id": "810376",
+   "category_name": "Sofa Covers"
+  },
+  {
+   "node_id": "918408",
+   "category_name": "Pickled, Preserves and Jams"
+  },
+  {
+   "node_id": "600686",
+   "category_name": "Storage Baskets"
+  },
+  {
+   "node_id": "890120",
+   "category_name": "Diaper Bags"
+  },
+  {
+   "node_id": "929672",
+   "category_name": "Baby Diapering Products"
+  },
+  {
+   "node_id": "602296",
+   "category_name": "Baby Skincare"
+  },
+  {
+   "node_id": "888712",
+   "category_name": "Bottoms"
+  },
+  {
+   "node_id": "805000",
+   "category_name": "Socks"
+  },
+  {
+   "node_id": "810768",
+   "category_name": "Trophies, Medals & Awards"
+  },
+  {
+   "node_id": "869256",
+   "category_name": "Action & Toy Figures"
+  },
+  {
+   "node_id": "864520",
+   "category_name": "Ride-on Toys"
+  },
+  {
+   "node_id": "913288",
+   "category_name": "AV Receivers"
+  },
+  {
+   "node_id": "700790",
+   "category_name": "Manicure & Pedicure Tools"
+  },
+  {
+   "node_id": "952072",
+   "category_name": "Needlework"
+  },
+  {
+   "node_id": "802448",
+   "category_name": "Specialty Hand Tools"
+  },
+  {
+   "node_id": "951816",
+   "category_name": "Knitting & Crochet"
+  },
+  {
+   "node_id": "811656",
+   "category_name": "Sewing Machines"
+  },
+  {
+   "node_id": "988296",
+   "category_name": "Labels, Index Dividers & Stamps"
+  },
+  {
+   "node_id": "831880",
+   "category_name": "Notebooks & Paper"
+  },
+  {
+   "node_id": "600139",
+   "category_name": "Specialty Kitchen Utensils"
+  },
+  {
+   "node_id": "832264",
+   "category_name": "Accounting Supplies"
   }
+ ],
+ "usage": {
+  "discover_more": "python3 scripts/sorftime_bridge.py --one-shot tiktok_category_search_from_name '{\"name\":\"<keyword>\",\"site\":\"US\"}'",
+  "get_report": "python3 scripts/sorftime_bridge.py --one-shot tiktok_category_report '{\"node_id\":\"<from above>\",\"site\":\"US\"}'"
+ }
 }

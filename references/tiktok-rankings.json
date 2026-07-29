@@ -1,0 +1,2277 @@
+{
+ "updated": "2026-07-29 09:28 UTC",
+ "site": "US",
+ "total_leaves": 228,
+ "coverage_note": "Discovered via 96 probe keywords; not guaranteed exhaustive. Refresh with: python3 scripts/discover_tiktok.py --sweep",
+ "parent_ranking": [
+  {
+   "rank": 1,
+   "parent_category": "Women's Fashion",
+   "monthly_sales": 7331255,
+   "leaf_count": 36,
+   "top_3_children": [
+    "Bras",
+    "Casual Dresses",
+    "Sports Tops"
+   ]
+  },
+  {
+   "rank": 2,
+   "parent_category": "Beauty & Personal Care",
+   "monthly_sales": 6755303,
+   "leaf_count": 29,
+   "top_3_children": [
+    "Skin Care Kits",
+    "Serums & Essences",
+    "Moisturizers & Mists"
+   ]
+  },
+  {
+   "rank": 3,
+   "parent_category": "Other",
+   "monthly_sales": 2908138,
+   "leaf_count": 38,
+   "top_3_children": [
+    "Household Cleaners",
+    "Bath & Shower",
+    "Indoor Lighting"
+   ]
+  },
+  {
+   "rank": 4,
+   "parent_category": "Health & Wellness",
+   "monthly_sales": 2791838,
+   "leaf_count": 5,
+   "top_3_children": [
+    "Vitamins, Minerals & Wellness Supplements",
+    "Beauty Supplement",
+    "Fitness Supplements"
+   ]
+  },
+  {
+   "rank": 5,
+   "parent_category": "Home & Kitchen",
+   "monthly_sales": 1850048,
+   "leaf_count": 17,
+   "top_3_children": [
+    "Pillows & Bed Wedges",
+    "Frames & Glasses",
+    "Storage Boxes & Bins"
+   ]
+  },
+  {
+   "rank": 6,
+   "parent_category": "Bags & Luggage",
+   "monthly_sales": 1190486,
+   "leaf_count": 14,
+   "top_3_children": [
+    "Party Bags & Gifts",
+    "Women's Crossbody & Shoulder Bags",
+    "Storage Bags"
+   ]
+  },
+  {
+   "rank": 7,
+   "parent_category": "Accessories",
+   "monthly_sales": 980535,
+   "leaf_count": 4,
+   "top_3_children": [
+    "Sunglasses",
+    "Cases, Screen Protectors & Stickers",
+    "Sports & Outdoor Hats"
+   ]
+  },
+  {
+   "rank": 8,
+   "parent_category": "Jewelry & Accessories",
+   "monthly_sales": 922111,
+   "leaf_count": 14,
+   "top_3_children": [
+    "Necklaces",
+    "Beading & Jewelry Making",
+    "Earrings"
+   ]
+  },
+  {
+   "rank": 9,
+   "parent_category": "Sports & Outdoors",
+   "monthly_sales": 847673,
+   "leaf_count": 6,
+   "top_3_children": [
+    "Sports Bottoms",
+    "Exercise Machines",
+    "Sports & Energy Drinks"
+   ]
+  },
+  {
+   "rank": 10,
+   "parent_category": "Electronics",
+   "monthly_sales": 810662,
+   "leaf_count": 8,
+   "top_3_children": [
+    "Headphones, Earphones & Accessories",
+    "Phone Holders & Mounts",
+    "Security Cameras & Systems"
+   ]
+  },
+  {
+   "rank": 11,
+   "parent_category": "Shoes",
+   "monthly_sales": 745223,
+   "leaf_count": 11,
+   "top_3_children": [
+    "Sandals & Flip Flops",
+    "Slippers",
+    "Slippers"
+   ]
+  },
+  {
+   "rank": 12,
+   "parent_category": "Toys & Hobbies",
+   "monthly_sales": 741720,
+   "leaf_count": 9,
+   "top_3_children": [
+    "Science & Technology Toys",
+    "Building Toys",
+    "Stuffed Toys"
+   ]
+  },
+  {
+   "rank": 13,
+   "parent_category": "Food & Beverages",
+   "monthly_sales": 634148,
+   "leaf_count": 9,
+   "top_3_children": [
+    "Candy",
+    "Tea",
+    "Crisps & Puffed Snacks"
+   ]
+  },
+  {
+   "rank": 14,
+   "parent_category": "Arts, Crafts & Sewing",
+   "monthly_sales": 577136,
+   "leaf_count": 8,
+   "top_3_children": [
+    "Women's Knitwear",
+    "Labels, Index Dividers & Stamps",
+    "Knitwear"
+   ]
+  },
+  {
+   "rank": 15,
+   "parent_category": "Home & Garden",
+   "monthly_sales": 544542,
+   "leaf_count": 7,
+   "top_3_children": [
+    "Statues & Figurines",
+    "Festive Decorations",
+    "Hanging Decor"
+   ]
+  },
+  {
+   "rank": 16,
+   "parent_category": "Automotive",
+   "monthly_sales": 331288,
+   "leaf_count": 5,
+   "top_3_children": [
+    "Cards & Card Stock",
+    "Car Wash Accessories",
+    "Car Stickers"
+   ]
+  },
+  {
+   "rank": 17,
+   "parent_category": "Office & Stationery",
+   "monthly_sales": 278235,
+   "leaf_count": 4,
+   "top_3_children": [
+    "Notebooks & Paper",
+    "Calendars, Planners & Personal Organisers",
+    "Activity Books"
+   ]
+  },
+  {
+   "rank": 18,
+   "parent_category": "Furniture",
+   "monthly_sales": 64905,
+   "leaf_count": 1,
+   "top_3_children": [
+    "Sofa Covers"
+   ]
+  },
+  {
+   "rank": 19,
+   "parent_category": "Tools & Home Improvement",
+   "monthly_sales": 37193,
+   "leaf_count": 2,
+   "top_3_children": [
+    "Specialty Hand Tools",
+    "Tea-Making Tools"
+   ]
+  },
+  {
+   "rank": 20,
+   "parent_category": "Baby & Maternity",
+   "monthly_sales": 1779,
+   "leaf_count": 1,
+   "top_3_children": [
+    "Baby Skincare"
+   ]
+  }
+ ],
+ "leaf_ranking": [
+  {
+   "rank": 1,
+   "category": "Vitamins, Minerals & Wellness Supplements",
+   "node_id": "700650",
+   "monthly_sales": 1986619,
+   "avg_price": "$27.81",
+   "mom_pct": -2.15,
+   "parent_category": "Health & Wellness"
+  },
+  {
+   "rank": 2,
+   "category": "Bras",
+   "node_id": "601262",
+   "monthly_sales": 1043204,
+   "avg_price": "$24.97",
+   "mom_pct": 69.73,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 3,
+   "category": "Casual Dresses",
+   "node_id": "601281",
+   "monthly_sales": 699535,
+   "avg_price": "$22.01",
+   "mom_pct": 1042.64,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 4,
+   "category": "Sports Tops",
+   "node_id": "835720",
+   "monthly_sales": 618814,
+   "avg_price": "$26.18",
+   "mom_pct": 444.52,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 5,
+   "category": "Women's T-shirts",
+   "node_id": "601302",
+   "monthly_sales": 590165,
+   "avg_price": "$24.10",
+   "mom_pct": 512.79,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 6,
+   "category": "Skin Care Kits",
+   "node_id": "601611",
+   "monthly_sales": 555863,
+   "avg_price": "$53.42",
+   "mom_pct": 760.9,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 7,
+   "category": "Serums & Essences",
+   "node_id": "601619",
+   "monthly_sales": 508064,
+   "avg_price": "$32.41",
+   "mom_pct": 1514.39,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 8,
+   "category": "Pants",
+   "node_id": "601277",
+   "monthly_sales": 497233,
+   "avg_price": "$28.74",
+   "mom_pct": 705.82,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 9,
+   "category": "Women's Tanks & Camis",
+   "node_id": "843400",
+   "monthly_sales": 459577,
+   "avg_price": "$17.27",
+   "mom_pct": 547.57,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 10,
+   "category": "Moisturizers & Mists",
+   "node_id": "601615",
+   "monthly_sales": 456713,
+   "avg_price": "$27.91",
+   "mom_pct": 354.48,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 11,
+   "category": "Lipstick & Lip Gloss",
+   "node_id": "601534",
+   "monthly_sales": 426821,
+   "avg_price": "$18.22",
+   "mom_pct": 391.01,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 12,
+   "category": "T-shirts",
+   "node_id": "601226",
+   "monthly_sales": 420348,
+   "avg_price": "$29.99",
+   "mom_pct": 114.52,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 13,
+   "category": "Sunglasses",
+   "node_id": "605304",
+   "monthly_sales": 413429,
+   "avg_price": "$12.04",
+   "mom_pct": 99.73,
+   "parent_category": "Accessories"
+  },
+  {
+   "rank": 14,
+   "category": "Cases, Screen Protectors & Stickers",
+   "node_id": "601925",
+   "monthly_sales": 412855,
+   "avg_price": "$10.70",
+   "mom_pct": 160.53,
+   "parent_category": "Accessories"
+  },
+  {
+   "rank": 15,
+   "category": "Unisex Fragrance",
+   "node_id": "855824",
+   "monthly_sales": 404785,
+   "avg_price": "$29.89",
+   "mom_pct": 593.42,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 16,
+   "category": "Beauty Supplement",
+   "node_id": "700648",
+   "monthly_sales": 391766,
+   "avg_price": "$36.40",
+   "mom_pct": 20.8,
+   "parent_category": "Health & Wellness"
+  },
+  {
+   "rank": 17,
+   "category": "Sandals & Flip Flops",
+   "node_id": "901128",
+   "monthly_sales": 375647,
+   "avg_price": "$28.07",
+   "mom_pct": 597.11,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 18,
+   "category": "Hair Oils & Treatments",
+   "node_id": "981512",
+   "monthly_sales": 375106,
+   "avg_price": "$26.50",
+   "mom_pct": 45.54,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 19,
+   "category": "Panties",
+   "node_id": "601247",
+   "monthly_sales": 367642,
+   "avg_price": "$16.70",
+   "mom_pct": 211.51,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 20,
+   "category": "Eyeliner & Lipliner",
+   "node_id": "601587",
+   "monthly_sales": 356192,
+   "avg_price": "$13.15",
+   "mom_pct": 101.43,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 21,
+   "category": "Household Cleaners",
+   "node_id": "600812",
+   "monthly_sales": 352501,
+   "avg_price": "$18.93",
+   "mom_pct": 76.41,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 22,
+   "category": "Pillows & Bed Wedges",
+   "node_id": "700653",
+   "monthly_sales": 347120,
+   "avg_price": "$32.99",
+   "mom_pct": 147.1,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 23,
+   "category": "Shampoo & Conditioner",
+   "node_id": "601469",
+   "monthly_sales": 337832,
+   "avg_price": "$29.83",
+   "mom_pct": 42.0,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 24,
+   "category": "Sports Bottoms",
+   "node_id": "836104",
+   "monthly_sales": 337485,
+   "avg_price": "$24.98",
+   "mom_pct": 104.95,
+   "parent_category": "Sports & Outdoors"
+  },
+  {
+   "rank": 25,
+   "category": "Women's Knitwear",
+   "node_id": "601284",
+   "monthly_sales": 332951,
+   "avg_price": "$24.35",
+   "mom_pct": 408.66,
+   "parent_category": "Arts, Crafts & Sewing"
+  },
+  {
+   "rank": 26,
+   "category": "Headphones, Earphones & Accessories",
+   "node_id": "601990",
+   "monthly_sales": 329480,
+   "avg_price": "$28.78",
+   "mom_pct": 100.16,
+   "parent_category": "Electronics"
+  },
+  {
+   "rank": 27,
+   "category": "Pajamas & Loungewear",
+   "node_id": "845832",
+   "monthly_sales": 322624,
+   "avg_price": "$19.21",
+   "mom_pct": 99.92,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 28,
+   "category": "Women's Fragrance",
+   "node_id": "855952",
+   "monthly_sales": 317856,
+   "avg_price": "$26.01",
+   "mom_pct": 305.85,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 29,
+   "category": "Hydration Powders",
+   "node_id": "917512",
+   "monthly_sales": 315121,
+   "avg_price": "$23.49",
+   "mom_pct": -14.55,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 30,
+   "category": "Body Moisturizers",
+   "node_id": "601492",
+   "monthly_sales": 273449,
+   "avg_price": "$24.59",
+   "mom_pct": 107.49,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 31,
+   "category": "Frames & Glasses",
+   "node_id": "605302",
+   "monthly_sales": 270553,
+   "avg_price": "$9.69",
+   "mom_pct": 209.52,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 32,
+   "category": "Men's Fragrance",
+   "node_id": "855696",
+   "monthly_sales": 269084,
+   "avg_price": "$33.82",
+   "mom_pct": 516.22,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 33,
+   "category": "Necklaces",
+   "node_id": "605280",
+   "monthly_sales": 261623,
+   "avg_price": "$12.02",
+   "mom_pct": 555.91,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 34,
+   "category": "Jeans",
+   "node_id": "601276",
+   "monthly_sales": 261267,
+   "avg_price": "$37.45",
+   "mom_pct": 586.15,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 35,
+   "category": "Men's Pants",
+   "node_id": "601218",
+   "monthly_sales": 257266,
+   "avg_price": "$32.54",
+   "mom_pct": 1108.33,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 36,
+   "category": "Party Bags & Gifts",
+   "node_id": "855944",
+   "monthly_sales": 243053,
+   "avg_price": "$17.96",
+   "mom_pct": 101.77,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 37,
+   "category": "Women's Crossbody & Shoulder Bags",
+   "node_id": "601439",
+   "monthly_sales": 228088,
+   "avg_price": "$22.67",
+   "mom_pct": 727.82,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 38,
+   "category": "Blouses & Shirts",
+   "node_id": "601265",
+   "monthly_sales": 216860,
+   "avg_price": "$22.95",
+   "mom_pct": 172.49,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 39,
+   "category": "Concealer & Foundation",
+   "node_id": "601554",
+   "monthly_sales": 212286,
+   "avg_price": "$23.23",
+   "mom_pct": 174.53,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 40,
+   "category": "Storage Bags",
+   "node_id": "852744",
+   "monthly_sales": 209096,
+   "avg_price": "$20.66",
+   "mom_pct": 609.74,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 41,
+   "category": "Jackets & Coats",
+   "node_id": "601267",
+   "monthly_sales": 204921,
+   "avg_price": "$36.57",
+   "mom_pct": 257.61,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 42,
+   "category": "Bath & Shower",
+   "node_id": "601493",
+   "monthly_sales": 203742,
+   "avg_price": "$18.66",
+   "mom_pct": 64.48,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 43,
+   "category": "Exercise Machines",
+   "node_id": "837768",
+   "monthly_sales": 196286,
+   "avg_price": "$117.87",
+   "mom_pct": 89.69,
+   "parent_category": "Sports & Outdoors"
+  },
+  {
+   "rank": 44,
+   "category": "Candy",
+   "node_id": "921736",
+   "monthly_sales": 193374,
+   "avg_price": "$12.93",
+   "mom_pct": 43.75,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 45,
+   "category": "Notebooks & Paper",
+   "node_id": "831880",
+   "monthly_sales": 186944,
+   "avg_price": "$14.03",
+   "mom_pct": 327.12,
+   "parent_category": "Office & Stationery"
+  },
+  {
+   "rank": 46,
+   "category": "Fitness Supplements",
+   "node_id": "700649",
+   "monthly_sales": 186800,
+   "avg_price": "$43.21",
+   "mom_pct": 46.04,
+   "parent_category": "Health & Wellness"
+  },
+  {
+   "rank": 47,
+   "category": "Science & Technology Toys",
+   "node_id": "862984",
+   "monthly_sales": 186358,
+   "avg_price": "$27.10",
+   "mom_pct": 2023.5,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 48,
+   "category": "Human Hair Extensions & Pieces",
+   "node_id": "812432",
+   "monthly_sales": 184978,
+   "avg_price": "$50.82",
+   "mom_pct": 1534.37,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 49,
+   "category": "Home Fragrances",
+   "node_id": "600477",
+   "monthly_sales": 175199,
+   "avg_price": "$18.71",
+   "mom_pct": 39.25,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 50,
+   "category": "Manicure & Pedicure Tools",
+   "node_id": "700790",
+   "monthly_sales": 174403,
+   "avg_price": "$13.85",
+   "mom_pct": 174.92,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 51,
+   "category": "Beading & Jewelry Making",
+   "node_id": "951944",
+   "monthly_sales": 173030,
+   "avg_price": "$13.41",
+   "mom_pct": 437.19,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 52,
+   "category": "Indoor Lighting",
+   "node_id": "893832",
+   "monthly_sales": 171721,
+   "avg_price": "$28.38",
+   "mom_pct": 178.26,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 53,
+   "category": "Men's Underwear",
+   "node_id": "841352",
+   "monthly_sales": 171559,
+   "avg_price": "$23.60",
+   "mom_pct": 1161.74,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 54,
+   "category": "Human Hair Lace Front Wigs",
+   "node_id": "811920",
+   "monthly_sales": 169075,
+   "avg_price": "$80.94",
+   "mom_pct": 518.01,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 55,
+   "category": "Storage Boxes & Bins",
+   "node_id": "600621",
+   "monthly_sales": 161001,
+   "avg_price": "$20.10",
+   "mom_pct": 88.16,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 56,
+   "category": "Bracelets & Bangles",
+   "node_id": "605274",
+   "monthly_sales": 160995,
+   "avg_price": "$9.89",
+   "mom_pct": 357.55,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 57,
+   "category": "Earrings",
+   "node_id": "605268",
+   "monthly_sales": 160879,
+   "avg_price": "$7.64",
+   "mom_pct": 395.26,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 58,
+   "category": "Phone Holders & Mounts",
+   "node_id": "910344",
+   "monthly_sales": 159636,
+   "avg_price": "$13.28",
+   "mom_pct": 964.17,
+   "parent_category": "Electronics"
+  },
+  {
+   "rank": 59,
+   "category": "Building Toys",
+   "node_id": "869512",
+   "monthly_sales": 159422,
+   "avg_price": "$30.72",
+   "mom_pct": 403.93,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 60,
+   "category": "Blankets & Throws",
+   "node_id": "600157",
+   "monthly_sales": 158310,
+   "avg_price": "$25.14",
+   "mom_pct": 154.3,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 61,
+   "category": "Hair Styling Tools",
+   "node_id": "700789",
+   "monthly_sales": 154943,
+   "avg_price": "$13.67",
+   "mom_pct": 81.77,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 62,
+   "category": "Sheets & Pillowcases",
+   "node_id": "600165",
+   "monthly_sales": 153948,
+   "avg_price": "$24.96",
+   "mom_pct": 93.41,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 63,
+   "category": "Bathing Accessories",
+   "node_id": "853512",
+   "monthly_sales": 153532,
+   "avg_price": "$10.45",
+   "mom_pct": 68.98,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 64,
+   "category": "Makeup Brushes",
+   "node_id": "852880",
+   "monthly_sales": 151899,
+   "avg_price": "$19.64",
+   "mom_pct": 90.2,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 65,
+   "category": "Makeup Tools",
+   "node_id": "601537",
+   "monthly_sales": 148850,
+   "avg_price": "$11.00",
+   "mom_pct": 20.11,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 66,
+   "category": "Herbal Supplements",
+   "node_id": "2160400",
+   "monthly_sales": 147649,
+   "avg_price": "$27.96",
+   "mom_pct": 66.41,
+   "parent_category": "Health & Wellness"
+  },
+  {
+   "rank": 67,
+   "category": "Security Cameras & Systems",
+   "node_id": "911752",
+   "monthly_sales": 147535,
+   "avg_price": "$40.22",
+   "mom_pct": 868.08,
+   "parent_category": "Electronics"
+  },
+  {
+   "rank": 68,
+   "category": "Bulbs, Tubes & Strips",
+   "node_id": "893704",
+   "monthly_sales": 145806,
+   "avg_price": "$22.16",
+   "mom_pct": 281.14,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 69,
+   "category": "Lip Treatments",
+   "node_id": "601595",
+   "monthly_sales": 140416,
+   "avg_price": "$17.33",
+   "mom_pct": 119.06,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 70,
+   "category": "Hoodies & Sweatshirts",
+   "node_id": "601295",
+   "monthly_sales": 140127,
+   "avg_price": "$36.89",
+   "mom_pct": 49.9,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 71,
+   "category": "Specialty Kitchen Utensils",
+   "node_id": "600139",
+   "monthly_sales": 139847,
+   "avg_price": "$20.80",
+   "mom_pct": 1409.74,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 72,
+   "category": "Work & Safety Footwear",
+   "node_id": "804496",
+   "monthly_sales": 138991,
+   "avg_price": "$46.54",
+   "mom_pct": 1300.7,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 73,
+   "category": "Car Electrical Appliances",
+   "node_id": "931208",
+   "monthly_sales": 138315,
+   "avg_price": "$34.93",
+   "mom_pct": 665.31,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 74,
+   "category": "Novelty Lighting",
+   "node_id": "894216",
+   "monthly_sales": 137519,
+   "avg_price": "$22.14",
+   "mom_pct": 643.35,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 75,
+   "category": "Sports & Energy Drinks",
+   "node_id": "917256",
+   "monthly_sales": 136459,
+   "avg_price": "$32.17",
+   "mom_pct": 66.6,
+   "parent_category": "Sports & Outdoors"
+  },
+  {
+   "rank": 76,
+   "category": "Socks",
+   "node_id": "845448",
+   "monthly_sales": 134725,
+   "avg_price": "$12.17",
+   "mom_pct": 206.04,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 77,
+   "category": "Statues & Figurines",
+   "node_id": "600299",
+   "monthly_sales": 133213,
+   "avg_price": "$9.63",
+   "mom_pct": 90.99,
+   "parent_category": "Home & Garden"
+  },
+  {
+   "rank": 78,
+   "category": "Makeup Sets",
+   "node_id": "601529",
+   "monthly_sales": 132149,
+   "avg_price": "$35.59",
+   "mom_pct": 134.51,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 79,
+   "category": "Slippers",
+   "node_id": "601405",
+   "monthly_sales": 131411,
+   "avg_price": "$17.47",
+   "mom_pct": 221.64,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 80,
+   "category": "Nightdresses",
+   "node_id": "846088",
+   "monthly_sales": 120298,
+   "avg_price": "$14.17",
+   "mom_pct": 1092.37,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 81,
+   "category": "Tea",
+   "node_id": "916488",
+   "monthly_sales": 114483,
+   "avg_price": "$20.83",
+   "mom_pct": 50.1,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 82,
+   "category": "Hair Brushes & Combs",
+   "node_id": "851984",
+   "monthly_sales": 114470,
+   "avg_price": "$15.38",
+   "mom_pct": 616.24,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 83,
+   "category": "Vacuum Flasks",
+   "node_id": "600032",
+   "monthly_sales": 114162,
+   "avg_price": "$23.58",
+   "mom_pct": 840.46,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 84,
+   "category": "Speakers",
+   "node_id": "602029",
+   "monthly_sales": 110388,
+   "avg_price": "$41.29",
+   "mom_pct": 531.22,
+   "parent_category": "Electronics"
+  },
+  {
+   "rank": 85,
+   "category": "Synthetic Extensions & Pieces",
+   "node_id": "812944",
+   "monthly_sales": 110015,
+   "avg_price": "$19.28",
+   "mom_pct": 687.51,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 86,
+   "category": "Hooks & Rails",
+   "node_id": "853128",
+   "monthly_sales": 108402,
+   "avg_price": "$11.00",
+   "mom_pct": 880.13,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 87,
+   "category": "Pretend Play",
+   "node_id": "869000",
+   "monthly_sales": 107729,
+   "avg_price": "$37.74",
+   "mom_pct": 347.45,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 88,
+   "category": "Bathroom Gadgets",
+   "node_id": "853256",
+   "monthly_sales": 107050,
+   "avg_price": "$14.73",
+   "mom_pct": 99.49,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 89,
+   "category": "Wearable Accessories",
+   "node_id": "602080",
+   "monthly_sales": 105446,
+   "avg_price": "$14.22",
+   "mom_pct": 346.82,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 90,
+   "category": "Shirts",
+   "node_id": "601195",
+   "monthly_sales": 104731,
+   "avg_price": "$23.09",
+   "mom_pct": 120.0,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 91,
+   "category": "Women's Tote Bags",
+   "node_id": "903176",
+   "monthly_sales": 103204,
+   "avg_price": "$29.67",
+   "mom_pct": 547.86,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 92,
+   "category": "Stuffed Toys",
+   "node_id": "700699",
+   "monthly_sales": 102906,
+   "avg_price": "$18.68",
+   "mom_pct": 537.07,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 93,
+   "category": "Festive Decorations",
+   "node_id": "600009",
+   "monthly_sales": 100902,
+   "avg_price": "$22.72",
+   "mom_pct": 100.91,
+   "parent_category": "Home & Garden"
+  },
+  {
+   "rank": 94,
+   "category": "Facial Cleansers",
+   "node_id": "601609",
+   "monthly_sales": 100349,
+   "avg_price": "$19.44",
+   "mom_pct": 479.38,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 95,
+   "category": "Sports & Outdoor Hats",
+   "node_id": "603654",
+   "monthly_sales": 100282,
+   "avg_price": "$16.35",
+   "mom_pct": 492.33,
+   "parent_category": "Accessories"
+  },
+  {
+   "rank": 96,
+   "category": "Cards & Card Stock",
+   "node_id": "855560",
+   "monthly_sales": 97333,
+   "avg_price": "$9.27",
+   "mom_pct": 122.26,
+   "parent_category": "Automotive"
+  },
+  {
+   "rank": 97,
+   "category": "Labels, Index Dividers & Stamps",
+   "node_id": "988296",
+   "monthly_sales": 96506,
+   "avg_price": "$7.33",
+   "mom_pct": 209.97,
+   "parent_category": "Arts, Crafts & Sewing"
+  },
+  {
+   "rank": 98,
+   "category": "Hanging Decor",
+   "node_id": "854024",
+   "monthly_sales": 95614,
+   "avg_price": "$13.30",
+   "mom_pct": 1200.52,
+   "parent_category": "Home & Garden"
+  },
+  {
+   "rank": 99,
+   "category": "Hair Color",
+   "node_id": "601516",
+   "monthly_sales": 92781,
+   "avg_price": "$15.53",
+   "mom_pct": 78.88,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 100,
+   "category": "Cat Toys",
+   "node_id": "819208",
+   "monthly_sales": 91843,
+   "avg_price": "$13.31",
+   "mom_pct": 96.96,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 101,
+   "category": "Electronic Accessories",
+   "node_id": "930696",
+   "monthly_sales": 91767,
+   "avg_price": "$18.84",
+   "mom_pct": 132.78,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 102,
+   "category": "Make-up Bags",
+   "node_id": "601440",
+   "monthly_sales": 90317,
+   "avg_price": "$15.33",
+   "mom_pct": 294.38,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 103,
+   "category": "Women's Handbags",
+   "node_id": "601445",
+   "monthly_sales": 90245,
+   "avg_price": "$33.78",
+   "mom_pct": 448.54,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 104,
+   "category": "Casual Trainers",
+   "node_id": "900872",
+   "monthly_sales": 88687,
+   "avg_price": "$45.04",
+   "mom_pct": 518.55,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 105,
+   "category": "Men's Jeans",
+   "node_id": "601202",
+   "monthly_sales": 88648,
+   "avg_price": "$37.26",
+   "mom_pct": 554.66,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 106,
+   "category": "Synthetic Full Machine Wigs",
+   "node_id": "812688",
+   "monthly_sales": 87530,
+   "avg_price": "$25.79",
+   "mom_pct": 371.53,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 107,
+   "category": "Towels",
+   "node_id": "810888",
+   "monthly_sales": 87458,
+   "avg_price": "$18.01",
+   "mom_pct": 69.2,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 108,
+   "category": "Cycling",
+   "node_id": "838408",
+   "monthly_sales": 86879,
+   "avg_price": "$150.35",
+   "mom_pct": 106.64,
+   "parent_category": "Sports & Outdoors"
+  },
+  {
+   "rank": 109,
+   "category": "Jackets & Coats",
+   "node_id": "601197",
+   "monthly_sales": 85160,
+   "avg_price": "$38.42",
+   "mom_pct": 263.26,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 110,
+   "category": "Car Wash Accessories",
+   "node_id": "945032",
+   "monthly_sales": 84706,
+   "avg_price": "$16.04",
+   "mom_pct": 36.68,
+   "parent_category": "Automotive"
+  },
+  {
+   "rank": 111,
+   "category": "Crisps & Puffed Snacks",
+   "node_id": "700554",
+   "monthly_sales": 84131,
+   "avg_price": "$16.36",
+   "mom_pct": 303.02,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 112,
+   "category": "Video Surveillance",
+   "node_id": "930440",
+   "monthly_sales": 83953,
+   "avg_price": "$48.24",
+   "mom_pct": 13204.75,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 113,
+   "category": "Golf",
+   "node_id": "603573",
+   "monthly_sales": 83653,
+   "avg_price": "$33.71",
+   "mom_pct": 82.05,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 114,
+   "category": "Plaques & Signs",
+   "node_id": "982280",
+   "monthly_sales": 83360,
+   "avg_price": "$9.46",
+   "mom_pct": 99.75,
+   "parent_category": "Home & Garden"
+  },
+  {
+   "rank": 115,
+   "category": "Jewelry Sets",
+   "node_id": "907784",
+   "monthly_sales": 83352,
+   "avg_price": "$14.69",
+   "mom_pct": 282.75,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 116,
+   "category": "Hoodies & Sweatshirts",
+   "node_id": "601213",
+   "monthly_sales": 81631,
+   "avg_price": "$33.58",
+   "mom_pct": 116.79,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 117,
+   "category": "Drinkware Accessories",
+   "node_id": "600047",
+   "monthly_sales": 80674,
+   "avg_price": "$12.39",
+   "mom_pct": 1315.33,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 118,
+   "category": "Toy Tablets & Computers",
+   "node_id": "864136",
+   "monthly_sales": 79004,
+   "avg_price": "$33.78",
+   "mom_pct": 1194.72,
+   "parent_category": "Health & Wellness"
+  },
+  {
+   "rank": 119,
+   "category": "Casual Trainers",
+   "node_id": "601357",
+   "monthly_sales": 77430,
+   "avg_price": "$54.19",
+   "mom_pct": 395.68,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 120,
+   "category": "Car Stickers",
+   "node_id": "931720",
+   "monthly_sales": 74948,
+   "avg_price": "$8.37",
+   "mom_pct": 336.99,
+   "parent_category": "Automotive"
+  },
+  {
+   "rank": 121,
+   "category": "Synthetic Lace Front Wigs",
+   "node_id": "812816",
+   "monthly_sales": 73868,
+   "avg_price": "$56.41",
+   "mom_pct": 630.57,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 122,
+   "category": "Coffee",
+   "node_id": "700612",
+   "monthly_sales": 73070,
+   "avg_price": "$31.50",
+   "mom_pct": 2.69,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 123,
+   "category": "Leggings",
+   "node_id": "601274",
+   "monthly_sales": 72547,
+   "avg_price": "$29.11",
+   "mom_pct": 1058.9,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 124,
+   "category": "Specialty Kitchen Appliances",
+   "node_id": "983304",
+   "monthly_sales": 69370,
+   "avg_price": "$96.98",
+   "mom_pct": 93.19,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 125,
+   "category": "Decoration",
+   "node_id": "605201",
+   "monthly_sales": 68354,
+   "avg_price": "$9.32",
+   "mom_pct": 27.04,
+   "parent_category": "Home & Garden"
+  },
+  {
+   "rank": 126,
+   "category": "Calendars, Planners & Personal Organisers",
+   "node_id": "987912",
+   "monthly_sales": 66923,
+   "avg_price": "$17.36",
+   "mom_pct": 67.57,
+   "parent_category": "Office & Stationery"
+  },
+  {
+   "rank": 127,
+   "category": "Sofa Covers",
+   "node_id": "810376",
+   "monthly_sales": 64905,
+   "avg_price": "$17.83",
+   "mom_pct": -1.7,
+   "parent_category": "Furniture"
+  },
+  {
+   "rank": 128,
+   "category": "Women's Wallets",
+   "node_id": "601441",
+   "monthly_sales": 64075,
+   "avg_price": "$16.75",
+   "mom_pct": 441.4,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 129,
+   "category": "Cleaning Cloths",
+   "node_id": "600409",
+   "monthly_sales": 60435,
+   "avg_price": "$11.65",
+   "mom_pct": 1043.95,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 130,
+   "category": "Literature",
+   "node_id": "926856",
+   "monthly_sales": 59614,
+   "avg_price": "$25.43",
+   "mom_pct": 409.17,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 131,
+   "category": "Audio & Video Accessories",
+   "node_id": "913416",
+   "monthly_sales": 59215,
+   "avg_price": "$15.29",
+   "mom_pct": 42.07,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 132,
+   "category": "Backpacks",
+   "node_id": "601446",
+   "monthly_sales": 58987,
+   "avg_price": "$38.53",
+   "mom_pct": 633.85,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 133,
+   "category": "Balance Training Equipment",
+   "node_id": "999816",
+   "monthly_sales": 58434,
+   "avg_price": "$33.13",
+   "mom_pct": 242.52,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 134,
+   "category": "Glasses Cases & Accessories",
+   "node_id": "907016",
+   "monthly_sales": 57613,
+   "avg_price": "$16.18",
+   "mom_pct": 248.01,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 135,
+   "category": "Slippers",
+   "node_id": "601374",
+   "monthly_sales": 56570,
+   "avg_price": "$30.71",
+   "mom_pct": 200.81,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 136,
+   "category": "Human Hair Full Machine Wigs",
+   "node_id": "812304",
+   "monthly_sales": 55547,
+   "avg_price": "$59.92",
+   "mom_pct": 436.63,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 137,
+   "category": "Platinum & Carat Gold Necklaces & Pendants",
+   "node_id": "955528",
+   "monthly_sales": 55126,
+   "avg_price": "$37.44",
+   "mom_pct": 187.92,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 138,
+   "category": "Bedding Sets Collections",
+   "node_id": "808584",
+   "monthly_sales": 55043,
+   "avg_price": "$43.22",
+   "mom_pct": 624.63,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 139,
+   "category": "Sports Eyewear",
+   "node_id": "836744",
+   "monthly_sales": 53969,
+   "avg_price": "$16.56",
+   "mom_pct": 173.22,
+   "parent_category": "Accessories"
+  },
+  {
+   "rank": 140,
+   "category": "Yoga & Pilates",
+   "node_id": "603084",
+   "monthly_sales": 52727,
+   "avg_price": "$53.32",
+   "mom_pct": 534.2,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 141,
+   "category": "Puzzles",
+   "node_id": "868360",
+   "monthly_sales": 52552,
+   "avg_price": "$21.18",
+   "mom_pct": 202.68,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 142,
+   "category": "Sports Toys",
+   "node_id": "866056",
+   "monthly_sales": 50828,
+   "avg_price": "$46.93",
+   "mom_pct": 225.99,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 143,
+   "category": "Indoor Recreation",
+   "node_id": "700740",
+   "monthly_sales": 46902,
+   "avg_price": "$20.39",
+   "mom_pct": 669.39,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 144,
+   "category": "Exercise Machine Accessories",
+   "node_id": "994696",
+   "monthly_sales": 46729,
+   "avg_price": "$31.37",
+   "mom_pct": 128.18,
+   "parent_category": "Sports & Outdoors"
+  },
+  {
+   "rank": 145,
+   "category": "Model & Toy Vehicles",
+   "node_id": "700700",
+   "monthly_sales": 45209,
+   "avg_price": "$29.52",
+   "mom_pct": 236.3,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 146,
+   "category": "Fitness Trackers",
+   "node_id": "914056",
+   "monthly_sales": 43835,
+   "avg_price": "$44.65",
+   "mom_pct": 713.87,
+   "parent_category": "Sports & Outdoors"
+  },
+  {
+   "rank": 147,
+   "category": "Desk Organizers & Accessories",
+   "node_id": "832392",
+   "monthly_sales": 43590,
+   "avg_price": "$10.18",
+   "mom_pct": 75.0,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 148,
+   "category": "Knitwear",
+   "node_id": "601223",
+   "monthly_sales": 43450,
+   "avg_price": "$40.00",
+   "mom_pct": 205.1,
+   "parent_category": "Arts, Crafts & Sewing"
+  },
+  {
+   "rank": 149,
+   "category": "Women's Boots",
+   "node_id": "601409",
+   "monthly_sales": 43012,
+   "avg_price": "$54.76",
+   "mom_pct": 303.75,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 150,
+   "category": "Cushions & Accessories",
+   "node_id": "700661",
+   "monthly_sales": 42641,
+   "avg_price": "$21.29",
+   "mom_pct": 467.79,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 151,
+   "category": "Trophies, Medals & Awards",
+   "node_id": "810768",
+   "monthly_sales": 42298,
+   "avg_price": "$9.19",
+   "mom_pct": 220.78,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 152,
+   "category": "Hooks & Shelves",
+   "node_id": "600347",
+   "monthly_sales": 41699,
+   "avg_price": "$18.04",
+   "mom_pct": 30.88,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 153,
+   "category": "Smart Watches",
+   "node_id": "602083",
+   "monthly_sales": 40791,
+   "avg_price": "$41.81",
+   "mom_pct": 816.03,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 154,
+   "category": "Chewing & Bubble Gum",
+   "node_id": "946952",
+   "monthly_sales": 40780,
+   "avg_price": "$15.01",
+   "mom_pct": 379.26,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 155,
+   "category": "GPS, Finders & Accessories",
+   "node_id": "914184",
+   "monthly_sales": 39623,
+   "avg_price": "$24.22",
+   "mom_pct": 262.28,
+   "parent_category": "Automotive"
+  },
+  {
+   "rank": 156,
+   "category": "Sponges & Scouring Pads",
+   "node_id": "855048",
+   "monthly_sales": 39223,
+   "avg_price": "$10.99",
+   "mom_pct": 396.12,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 157,
+   "category": "Running Shoes",
+   "node_id": "603751",
+   "monthly_sales": 39198,
+   "avg_price": "$53.96",
+   "mom_pct": 127.17,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 158,
+   "category": "Needlework",
+   "node_id": "952072",
+   "monthly_sales": 38514,
+   "avg_price": "$10.02",
+   "mom_pct": 32.44,
+   "parent_category": "Arts, Crafts & Sewing"
+  },
+  {
+   "rank": 159,
+   "category": "Artificial Gemstone Earrings",
+   "node_id": "974216",
+   "monthly_sales": 37907,
+   "avg_price": "$21.02",
+   "mom_pct": 892.85,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 160,
+   "category": "Sandals & Flip Flops",
+   "node_id": "601364",
+   "monthly_sales": 37278,
+   "avg_price": "$38.24",
+   "mom_pct": 259.13,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 161,
+   "category": "Underwear",
+   "node_id": "802568",
+   "monthly_sales": 37047,
+   "avg_price": "$22.24",
+   "mom_pct": 320.18,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 162,
+   "category": "Women's Suits",
+   "node_id": "601296",
+   "monthly_sales": 36646,
+   "avg_price": "$51.84",
+   "mom_pct": 599.75,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 163,
+   "category": "Women's Clutches & Wristlets",
+   "node_id": "601444",
+   "monthly_sales": 35749,
+   "avg_price": "$35.17",
+   "mom_pct": 397.55,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 164,
+   "category": "Candle Holders",
+   "node_id": "854280",
+   "monthly_sales": 35052,
+   "avg_price": "$23.64",
+   "mom_pct": 98.2,
+   "parent_category": "Home & Garden"
+  },
+  {
+   "rank": 165,
+   "category": "Car Battery Repair Tools",
+   "node_id": "941448",
+   "monthly_sales": 34678,
+   "avg_price": "$68.91",
+   "mom_pct": 15.17,
+   "parent_category": "Automotive"
+  },
+  {
+   "rank": 166,
+   "category": "Storage Baskets",
+   "node_id": "600686",
+   "monthly_sales": 33937,
+   "avg_price": "$25.67",
+   "mom_pct": 47.07,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 167,
+   "category": "Action & Toy Figures",
+   "node_id": "869256",
+   "monthly_sales": 32185,
+   "avg_price": "$24.28",
+   "mom_pct": 214.83,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 168,
+   "category": "Duvets & Sets",
+   "node_id": "808840",
+   "monthly_sales": 32138,
+   "avg_price": "$75.81",
+   "mom_pct": -9.37,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 169,
+   "category": "Sewing Accessories & Haberdashery",
+   "node_id": "811528",
+   "monthly_sales": 31101,
+   "avg_price": "$9.39",
+   "mom_pct": 106.49,
+   "parent_category": "Arts, Crafts & Sewing"
+  },
+  {
+   "rank": 170,
+   "category": "Specialty Hand Tools",
+   "node_id": "802448",
+   "monthly_sales": 31072,
+   "avg_price": "$33.60",
+   "mom_pct": 119.26,
+   "parent_category": "Tools & Home Improvement"
+  },
+  {
+   "rank": 171,
+   "category": "Candles",
+   "node_id": "854152",
+   "monthly_sales": 28047,
+   "avg_price": "$17.23",
+   "mom_pct": 153.98,
+   "parent_category": "Home & Garden"
+  },
+  {
+   "rank": 172,
+   "category": "Tops",
+   "node_id": "804232",
+   "monthly_sales": 27724,
+   "avg_price": "$14.22",
+   "mom_pct": 136.71,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 173,
+   "category": "Platinum & Carat Gold Earrings",
+   "node_id": "955912",
+   "monthly_sales": 27432,
+   "avg_price": "$35.90",
+   "mom_pct": 218.31,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 174,
+   "category": "Shoes",
+   "node_id": "602787",
+   "monthly_sales": 27216,
+   "avg_price": "$13.86",
+   "mom_pct": 284.35,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 175,
+   "category": "Digital Cameras",
+   "node_id": "842768",
+   "monthly_sales": 26408,
+   "avg_price": "$35.99",
+   "mom_pct": 235.64,
+   "parent_category": "Electronics"
+  },
+  {
+   "rank": 176,
+   "category": "Travel Bags",
+   "node_id": "601419",
+   "monthly_sales": 25772,
+   "avg_price": "$45.62",
+   "mom_pct": 97.2,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 177,
+   "category": "Pickled, Preserves and Jams",
+   "node_id": "918408",
+   "monthly_sales": 24168,
+   "avg_price": "$19.68",
+   "mom_pct": 35.61,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 178,
+   "category": "Non-natural Crystal Bracelets & Anklets",
+   "node_id": "965128",
+   "monthly_sales": 23294,
+   "avg_price": "$8.74",
+   "mom_pct": 173.34,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 179,
+   "category": "Men's Fanny Packs & Belt Bags",
+   "node_id": "903560",
+   "monthly_sales": 23132,
+   "avg_price": "$26.92",
+   "mom_pct": 132.97,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 180,
+   "category": "Tights",
+   "node_id": "844552",
+   "monthly_sales": 22396,
+   "avg_price": "$11.97",
+   "mom_pct": 208.83,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 181,
+   "category": "Ride-on Toys",
+   "node_id": "864520",
+   "monthly_sales": 20417,
+   "avg_price": "$157.20",
+   "mom_pct": 56.45,
+   "parent_category": "Toys & Hobbies"
+  },
+  {
+   "rank": 182,
+   "category": "Video Camcorders",
+   "node_id": "911240",
+   "monthly_sales": 20248,
+   "avg_price": "$96.77",
+   "mom_pct": 1022.39,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 183,
+   "category": "Makeup Vanities",
+   "node_id": "806928",
+   "monthly_sales": 20075,
+   "avg_price": "$187.25",
+   "mom_pct": 605.62,
+   "parent_category": "Beauty & Personal Care"
+  },
+  {
+   "rank": 184,
+   "category": "Men's Boots",
+   "node_id": "601376",
+   "monthly_sales": 19676,
+   "avg_price": "$92.69",
+   "mom_pct": 525.83,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 185,
+   "category": "Dresses",
+   "node_id": "804744",
+   "monthly_sales": 19459,
+   "avg_price": "$19.92",
+   "mom_pct": -14.9,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 186,
+   "category": "Accounting Supplies",
+   "node_id": "832264",
+   "monthly_sales": 19268,
+   "avg_price": "$19.92",
+   "mom_pct": 4634.15,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 187,
+   "category": "Chocolate & Chocolate Snacks",
+   "node_id": "700768",
+   "monthly_sales": 17877,
+   "avg_price": "$21.82",
+   "mom_pct": 68.99,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 188,
+   "category": "Car Cameras",
+   "node_id": "842512",
+   "monthly_sales": 17082,
+   "avg_price": "$68.77",
+   "mom_pct": 146.99,
+   "parent_category": "Electronics"
+  },
+  {
+   "rank": 189,
+   "category": "Suits & Sets",
+   "node_id": "803336",
+   "monthly_sales": 16401,
+   "avg_price": "$18.35",
+   "mom_pct": 48.09,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 190,
+   "category": "Knitting & Crochet",
+   "node_id": "951816",
+   "monthly_sales": 16095,
+   "avg_price": "$18.44",
+   "mom_pct": 15.62,
+   "parent_category": "Arts, Crafts & Sewing"
+  },
+  {
+   "rank": 191,
+   "category": "Gift Sets",
+   "node_id": "963464",
+   "monthly_sales": 14883,
+   "avg_price": "$41.44",
+   "mom_pct": 169.72,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 192,
+   "category": "Basketball",
+   "node_id": "603524",
+   "monthly_sales": 14559,
+   "avg_price": "$50.29",
+   "mom_pct": 196.16,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 193,
+   "category": "Wires & Cables",
+   "node_id": "895368",
+   "monthly_sales": 13269,
+   "avg_price": "$36.90",
+   "mom_pct": 57.63,
+   "parent_category": "Electronics"
+  },
+  {
+   "rank": 194,
+   "category": "Activity Books",
+   "node_id": "989960",
+   "monthly_sales": 12873,
+   "avg_price": "$16.14",
+   "mom_pct": 211.09,
+   "parent_category": "Office & Stationery"
+  },
+  {
+   "rank": 195,
+   "category": "Lighter Accessories",
+   "node_id": "856456",
+   "monthly_sales": 12825,
+   "avg_price": "$20.64",
+   "mom_pct": 419.44,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 196,
+   "category": "Sewing Machines",
+   "node_id": "811656",
+   "monthly_sales": 12557,
+   "avg_price": "$73.27",
+   "mom_pct": 326.82,
+   "parent_category": "Arts, Crafts & Sewing"
+  },
+  {
+   "rank": 197,
+   "category": "Duvet Covers & Sets",
+   "node_id": "809608",
+   "monthly_sales": 12407,
+   "avg_price": "$34.10",
+   "mom_pct": 161.59,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 198,
+   "category": "Boxing & Martial Arts",
+   "node_id": "603288",
+   "monthly_sales": 12091,
+   "avg_price": "$37.82",
+   "mom_pct": -2.74,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 199,
+   "category": "Non-natural Crystal Necklaces & Pendants",
+   "node_id": "964872",
+   "monthly_sales": 11550,
+   "avg_price": "$20.37",
+   "mom_pct": 126.25,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 200,
+   "category": "Pill Dispensers",
+   "node_id": "950664",
+   "monthly_sales": 11495,
+   "avg_price": "$16.56",
+   "mom_pct": 4.7,
+   "parent_category": "Office & Stationery"
+  },
+  {
+   "rank": 201,
+   "category": "Jewelry Adjusters & Protectors",
+   "node_id": "995080",
+   "monthly_sales": 11387,
+   "avg_price": "$14.43",
+   "mom_pct": 729.96,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 202,
+   "category": "Hunting",
+   "node_id": "999944",
+   "monthly_sales": 9754,
+   "avg_price": "$50.48",
+   "mom_pct": 165.56,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 203,
+   "category": "Diaper Bags",
+   "node_id": "890120",
+   "monthly_sales": 9721,
+   "avg_price": "$33.28",
+   "mom_pct": 247.3,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 204,
+   "category": "Silver Earrings",
+   "node_id": "957576",
+   "monthly_sales": 9518,
+   "avg_price": "$20.97",
+   "mom_pct": -18.8,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 205,
+   "category": "Laptop Bags",
+   "node_id": "601417",
+   "monthly_sales": 9508,
+   "avg_price": "$39.37",
+   "mom_pct": 260.42,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 206,
+   "category": "Tool Bags",
+   "node_id": "886920",
+   "monthly_sales": 8600,
+   "avg_price": "$50.62",
+   "mom_pct": 414.66,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 207,
+   "category": "Socks",
+   "node_id": "805000",
+   "monthly_sales": 8554,
+   "avg_price": "$10.19",
+   "mom_pct": 293.83,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 208,
+   "category": "Kids' Sport Shoes",
+   "node_id": "836616",
+   "monthly_sales": 8317,
+   "avg_price": "$31.63",
+   "mom_pct": 156.62,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 209,
+   "category": "Bottoms",
+   "node_id": "804488",
+   "monthly_sales": 7510,
+   "avg_price": "$21.65",
+   "mom_pct": 13.41,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 210,
+   "category": "Underwear",
+   "node_id": "803848",
+   "monthly_sales": 7503,
+   "avg_price": "$17.61",
+   "mom_pct": 700.75,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 211,
+   "category": "USB Chargers",
+   "node_id": "851472",
+   "monthly_sales": 6864,
+   "avg_price": "$23.98",
+   "mom_pct": 1157.14,
+   "parent_category": "Electronics"
+  },
+  {
+   "rank": 212,
+   "category": "Tea-Making Tools",
+   "node_id": "861064",
+   "monthly_sales": 6121,
+   "avg_price": "$17.15",
+   "mom_pct": 144.94,
+   "parent_category": "Tools & Home Improvement"
+  },
+  {
+   "rank": 213,
+   "category": "Crafts & DIY",
+   "node_id": "928520",
+   "monthly_sales": 5962,
+   "avg_price": "$20.29",
+   "mom_pct": 360.03,
+   "parent_category": "Arts, Crafts & Sewing"
+  },
+  {
+   "rank": 214,
+   "category": "Popcorn",
+   "node_id": "921992",
+   "monthly_sales": 5591,
+   "avg_price": "$18.06",
+   "mom_pct": 584.33,
+   "parent_category": "Food & Beverages"
+  },
+  {
+   "rank": 215,
+   "category": "Baby Diapering Products",
+   "node_id": "929672",
+   "monthly_sales": 5426,
+   "avg_price": "$22.81",
+   "mom_pct": 471.76,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 216,
+   "category": "Sandals & Flip Flops",
+   "node_id": "806280",
+   "monthly_sales": 5112,
+   "avg_price": "$20.19",
+   "mom_pct": 1111.37,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 217,
+   "category": "Natural Crystal Necklaces & Pendants",
+   "node_id": "959240",
+   "monthly_sales": 4867,
+   "avg_price": "$21.54",
+   "mom_pct": 340.85,
+   "parent_category": "Jewelry & Accessories"
+  },
+  {
+   "rank": 218,
+   "category": "Music Boxes",
+   "node_id": "806544",
+   "monthly_sales": 3384,
+   "avg_price": "$33.03",
+   "mom_pct": 432.08,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 219,
+   "category": "AV Receivers",
+   "node_id": "913288",
+   "monthly_sales": 2382,
+   "avg_price": "$154.82",
+   "mom_pct": 169.15,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 220,
+   "category": "Electric Blankets",
+   "node_id": "983432",
+   "monthly_sales": 2259,
+   "avg_price": "$88.51",
+   "mom_pct": 796.43,
+   "parent_category": "Home & Kitchen"
+  },
+  {
+   "rank": 221,
+   "category": "Boots",
+   "node_id": "806152",
+   "monthly_sales": 1786,
+   "avg_price": "$37.99",
+   "mom_pct": 242.8,
+   "parent_category": "Shoes"
+  },
+  {
+   "rank": 222,
+   "category": "Baby Skincare",
+   "node_id": "602296",
+   "monthly_sales": 1779,
+   "avg_price": "$22.78",
+   "mom_pct": 62.32,
+   "parent_category": "Baby & Maternity"
+  },
+  {
+   "rank": 223,
+   "category": "Bottoms",
+   "node_id": "888712",
+   "monthly_sales": 1722,
+   "avg_price": "$17.33",
+   "mom_pct": -5.49,
+   "parent_category": "Other"
+  },
+  {
+   "rank": 224,
+   "category": "Coats & Jackets",
+   "node_id": "804360",
+   "monthly_sales": 1376,
+   "avg_price": "$25.80",
+   "mom_pct": 39.98,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 225,
+   "category": "Semiprecious Stone Bracelets & Anklets",
+   "node_id": "973320",
+   "monthly_sales": 945,
+   "avg_price": "$30.98",
+   "mom_pct": 116.25,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 226,
+   "category": "Tights",
+   "node_id": "960264",
+   "monthly_sales": 525,
+   "avg_price": "$12.70",
+   "mom_pct": 34.27,
+   "parent_category": "Women's Fashion"
+  },
+  {
+   "rank": 227,
+   "category": "Men's Fashion Backpacks",
+   "node_id": "2158224",
+   "monthly_sales": 447,
+   "avg_price": "$62.95",
+   "mom_pct": 159.88,
+   "parent_category": "Bags & Luggage"
+  },
+  {
+   "rank": 228,
+   "category": "Health Supplies",
+   "node_id": "823816",
+   "monthly_sales": 179,
+   "avg_price": "$53.25",
+   "mom_pct": 184.13,
+   "parent_category": "Other"
+  }
+ ]
+}
