@@ -121,7 +121,7 @@ async def main():
         r = await call_sorftime("get_time", {{}})
         print(r)
     except Exception as e:
-        print(f"ERROR: {e}")
+        print(f"ERROR: {{e}}")
 asyncio.run(main())
 """
     result = subprocess.run([str(python), "-c", test_code], capture_output=True, text=True, env=env, cwd=str(SKILL_DIR / "scripts"))
