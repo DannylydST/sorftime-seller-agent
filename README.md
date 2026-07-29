@@ -108,7 +108,7 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 ## 🤖 Agent-Friendly by Design
 
 <p align="center">
-  <img src="assets/agent-friendly-demo.gif" alt="Same skill running in Claude Code, Codex, Cursor, and OpenClaw — one skill, four AI agents, six marketplaces" width="100%">
+  <video src="assets/agent-friendly-demo-x.mp4" alt="Same skill running in Claude Code, Codex, Cursor, and OpenClaw — one skill, four AI agents, six marketplaces" width="100%" autoplay muted loop playsinline></video>
 </p>
 
 **Not a Claude Code plugin. Not an API wrapper.** A self-contained MCP bridge + intelligence layer that any MCP-compatible AI agent can load and use immediately.
