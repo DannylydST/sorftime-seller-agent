@@ -1,35 +1,35 @@
-# Sorftime Seller Agent
+# Sorftime Seller Agent — Free AI-Powered Amazon Product Research & Marketplace Intelligence
 
 <p align="center">
-  <img src="assets/hero-extension.png" alt="Sorftime — AI-Powered Marketplace Intelligence" width="100%">
+  <img src="assets/hero-extension.png" alt="Sorftime — AI-powered Amazon product research, competitor analysis, keyword research, and marketplace intelligence for 6 platforms" width="100%">
 </p>
-<p align="center"><em>Backed by Sorftime's AI data supply chain — 9 years of firsthand seller experience, 40+ global marketplaces, 160+ data dimensions.</em></p>
+<p align="center"><em>9 years of seller data · 40+ global marketplaces · 160+ data dimensions · Backed by Sorftime's AI data supply chain</em></p>
 
 <p align="center">
   <img src="assets/platform-logos.png" alt="Amazon · Walmart · TikTok Shop · Shopee · TEMU · 1688" width="100%">
 </p>
 
-> **Turn any AI agent into your personal marketplace intelligence analyst.**
+> **AI-powered product research, competitor analysis, and keyword intelligence for Amazon, Walmart, TikTok Shop, Shopee, TEMU, and 1688 sellers.**
 >
-> Agent-agnostic, MCP-native design. Works with **Claude Code, Codex, Cursor, OpenClaw, Hermes, Pi** — any MCP-compatible AI agent.
-> Instant access to 86 marketplace analysis tools. Amazon · Walmart · TikTok Shop · 1688 · Shopee · TEMU.
+> Open source. Free trial. Works with any MCP-compatible AI agent — Claude Code, Codex, Cursor, OpenClaw, and more.
 >
-> **No dashboards. No exports. Just talk to your AI.**
+> **Stop clicking through dashboards. Just talk to your AI.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)]()
 [![MCP](https://img.shields.io/badge/MCP-86%20tools-orange)]()
+[![Free Trial](https://img.shields.io/badge/Trial-Free-brightgreen)]()
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenClaw-purple)]()
 
 ---
 
 ## ⚡ Quick Start
 
-### 1. Get a free Sorftime account
-Visit [open-intl.sorftime.com](https://open-intl.sorftime.com) — sign up with **Google**, free trial credits included. Payment via PayPal when you need more.
+### 1. Create a free account
+[open-intl.sorftime.com](https://open-intl.sorftime.com) — sign up with **Google**, free trial credits included. PayPal for additional credits.
 
-### 2. Install the skill
+### 2. Install
 ```bash
 git clone https://github.com/DannylydST/sorftime-seller-agent.git
 cd sorftime-seller-agent
@@ -39,169 +39,188 @@ python3 scripts/install.py
 ### 3. Ask your AI
 ```
 "Find blue ocean products in yoga mats on Amazon US for a beginner"
-"Analyze this competitor: ASIN B08N5WRWNW"
-"Calculate my profit: price $29.99, cost $8.50, weight 1.2lb"
+"Analyze this Amazon competitor: ASIN B08N5WRWNW — traffic keywords, pricing, sales trend"
+"Calculate my Amazon FBA profit: price $29.99, cost $8.50, weight 1.2lb"
+"Pull Shopee MY phone case category Top 20 — who's selling, what prices, brand share"
+"Compare this product's price between Walmart and Amazon"
 ```
+
+---
+
+## 👤 Who Is This For
+
+| If you are a… | You can… |
+|---|---|
+| **Amazon FBA seller** | Product discovery, competitor reverse-ASIN, keyword research, profit calculator, listing audit, review mining |
+| **Walmart marketplace seller** | Category scanning, keyword ranking, product trend tracking, cross-platform price gap analysis (Walmart vs Amazon) |
+| **Shopee / TikTok Shop / TEMU seller** | Category research, market analysis, product trend monitoring, shop competitor intelligence |
+| **Dropshipper / arbitrage seller** | Cross-platform price comparison, 1688 factory sourcing, multi-marketplace opportunity scanning |
+| **E-commerce agency / VA** | Batch competitor analysis, keyword library building, automated monitoring for clients |
+
+---
+
+## 🧠 What You Can Do
+
+|     | Use Case | Example Prompt |
+|-----|----------|---------------|
+| 🔍 | **Amazon Product Research** | "Find blue ocean kitchen products under $30 on Amazon US for a beginner seller" |
+| 🎯 | **Competitor Analysis (Reverse ASIN)** | "Break down ASIN B08N5WRWNW — monthly sales, traffic keywords, pricing history, FBA fees" |
+| 🔑 | **Amazon Keyword Research** | "What are the best long-tail keywords for yoga mats? Show search volume and competition" |
+| 💰 | **Amazon FBA Profit Calculator** | "Calculate FBA profit: $29.99 selling price, $8.50 unit cost, 1.2lb weight" |
+| 📊 | **Market & Category Analysis** | "Analyze the blender category on Amazon US — brand monopoly, pricing trends, market gaps" |
+| 🏪 | **Shopee Market Research** | "Pull Shopee MY phone case category Top 20 — brands, pricing bands, shop types, sales distribution" |
+| 🛒 | **Walmart Product Research** | "Find blue ocean products on Walmart US under $25 with low review counts" |
+| 🎬 | **TikTok Shop Intelligence** | "Show me top-selling TikTok Shop US beauty products and their video authors" |
+| 📈 | **Automated Price & Sales Monitoring** | "Watch ASIN B08N5WRWNW and alert me when price drops below $15 or sales spike 50%" |
+| 🌏 | **Cross-Platform Arbitrage** | "Find products priced 30%+ higher on Walmart than Amazon US — low competition on Walmart side" |
 
 ---
 
 ## 🤔 Why This Exists
 
-Amazon sellers spend **$29–$229/month** on marketplace research tools. You log into dashboards, click through menus, export CSV files, then switch to another tool for analysis.
+Amazon sellers spend **$29–$229/month** on marketplace research tools. You log into dashboards, click through menus, export CSV files, then manually analyze in spreadsheets.
 
-**Sorftime Seller Agent skips all that.** You talk to your AI assistant — any MCP-compatible agent — and it queries marketplace data directly, analyzes it with a framework of 20 proprietary methodology cards, and gives you actionable insights.
+**Sorftime Seller Agent replaces that workflow with conversation.** Talk to your AI assistant — any MCP-compatible agent — and it queries marketplace data directly, analyzes it with 20 proprietary methodology frameworks, and returns actionable insights in seconds.
 
 ```
 Before: Log in → navigate → click → export → analyze manually  (15–30 min)
-After:  "Find blue ocean yoga mat products" → results in 20 seconds
+After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 seconds
 ```
 
 ---
 
-## 🧠 What It Can Do
+## 🆚 How It Compares
 
-|     | Capability | What You Say |
-|-----|-----------|--------------|
-| 🔍 | **Product Discovery** | "Find blue ocean kitchen products under $30" |
-| 🎯 | **Competitor Intelligence** | "Break down ASIN B08N5WRWNW — traffic, keywords, pricing" |
-| 🔑 | **Keyword Strategy** | "What are the best long-tail keywords for yoga mats?" |
-| 💰 | **Profit Analysis** | "Calculate seller profit: $29.99 price, $8.50 cost, 1.2lb" |
-| 📊 | **Market Intelligence** | "Analyze the blender category — monopoly, trends, gaps" |
-| 📈 | **Automated Monitoring** | "Watch this product and alert me when the price drops" |
+| | Traditional Seller Tools | **Sorftime Seller Agent** |
+|---|-------------------------|--------------------------|
+| **Interface** | GUI dashboards | **AI conversation (natural language)** |
+| **Platforms** | Amazon only (typical) | **6 platforms** — Amazon, Walmart, TikTok Shop, Shopee, TEMU, 1688 |
+| **Data depth** | Basic product metrics | **160+ dimensions + proprietary indices** (Hidden Profit, Blue Ocean, etc.) |
+| **AI integration** | None — manual operation | **MCP-native** — any AI agent can query and analyze |
+| **Works with** | Browser only | **Claude Code · Codex · Cursor · OpenClaw · Hermes · Pi · any MCP agent** |
+| **Automation** | Manual workflows | **Agent auto-execution** — scheduled monitoring, batch analysis |
+| **Pricing** | $29–$229/month | **Free trial + usage-based paid tiers** |
+| **Setup** | 20+ minutes | **Under 3 minutes** |
+| **Open source** | Closed source | **MIT license** — inspect, modify, contribute |
 
 ---
 
 ## 🤖 Agent-Friendly by Design
 
 <p align="center">
-  <img src="assets/agent-friendly-demo.gif" alt="Same skill running in Claude Code, Codex, Cursor, and OpenClaw — four agents, one Sorftime" width="100%">
+  <img src="assets/agent-friendly-demo.gif" alt="Same skill running in Claude Code, Codex, Cursor, and OpenClaw — one skill, four AI agents, six marketplaces" width="100%">
 </p>
 
-This skill is built as an **agent-agnostic MCP-native skill** from the ground up. It's not a Claude Code plugin. It's not a wrapper around an API. It's a self-contained MCP bridge + intelligence layer that any MCP-compatible AI agent can load and use immediately.
+**Not a Claude Code plugin. Not an API wrapper.** A self-contained MCP bridge + intelligence layer that any MCP-compatible AI agent can load and use immediately.
 
-| Agent / IDE | How It Works | Setup |
-|-------------|-------------|-------|
-| **Claude Code** | `mcporter` auto-detection, one-command install | < 3 min |
-| **Codex (OpenAI)** | Import as MCP server, natural language queries | < 5 min |
-| **Cursor** | MCP config snippet from `install.py`, auto-detected | < 3 min |
-| **OpenClaw** | Native skill directory support, auto-safeBin config | < 3 min |
-| **Hermes** | MCP server import, JSON config | < 5 min |
-| **Pi (Inflection)** | MCP endpoint registration | < 5 min |
-| **Any MCP Agent** | Standard MCP `tools/list` → `tools/call` protocol | < 5 min |
+| Agent / IDE | Setup |
+|-------------|-------|
+| **Claude Code** | Auto-detected by `mcporter`, one-command install — under 3 min |
+| **Codex (OpenAI)** | Import as MCP server — under 5 min |
+| **Cursor** | MCP config auto-generated by `install.py` — under 3 min |
+| **OpenClaw** | Native skill directory support — under 3 min |
+| **Hermes / Pi / any MCP agent** | Standard `tools/list` → `tools/call` protocol — under 5 min |
 
 **What makes it agent-agnostic:**
 
-- **MCP-first architecture** — Every capability is a standard MCP tool (86 tools, auto-synced with Sorftime's server)
-- **Zero agent-specific code** — No Claude-specific prompts, no Cursor-specific config. Pure MCP protocol
-- **Auto-detection** — `install.py` detects your environment and outputs the right config snippet
-- **Self-contained** — Ships with its own Python venv, bridge, cache, and schema store. No external deps beyond Python 3.10+
-- **Bilingual routing** — Understands English and Chinese input, routes to the right analysis pipeline regardless of which agent you use
-
----
-
-## 🆚 How It Compares
-
-| | Other Solutions | **Sorftime Seller Agent** |
-|---|-----------------|--------------------------|
-| **Interface** | GUI dashboards | **AI conversation** |
-| **Platforms** | Amazon only (typical) | **6 platforms** |
-| **Data depth** | Basic metrics | **160+ dimensions + proprietary indices** |
-| **AI integration** | None | **MCP-native, agent-agnostic** |
-| **Works with** | GUI only | **Claude Code · Codex · Cursor · OpenClaw · Hermes · Pi · any MCP agent** |
-| **Automation** | Manual workflows | **Agent auto-execution** |
-| **Pricing** | $29–$229/mo (typical) | **Free tier + paid** |
-| **Setup time** | 20+ min | **3 minutes** |
-
----
-
-## 📦 Installation
-
-**Prerequisites**: Python 3.10+ · A Sorftime account ([free signup](https://open-intl.sorftime.com)) · Any MCP-compatible AI agent
-
-```bash
-# Clone the repo
-git clone https://github.com/DannylydST/sorftime-seller-agent.git
-cd sorftime-seller-agent
-
-# One-click install (creates venv, installs deps, configures MCP)
-python3 scripts/install.py
-
-# Verify everything works
-python3 scripts/healthcheck.py
-```
-
-That's it. Your AI agent can now access 86 marketplace intelligence tools.
-
-**Platform support**: macOS · Linux · Windows (all Python 3.10+ environments)
+- **MCP-first architecture** — 86 tools, auto-synced with Sorftime server. Pure MCP protocol.
+- **Zero agent-specific code** — No Claude-only prompts. No Cursor-only config.
+- **Auto-detection** — `install.py` detects your environment and outputs the right config snippet.
+- **Self-contained** — Ships with its own Python venv, bridge, cache, and schema store. Python 3.10+ is the only dependency.
+- **Bilingual** — English and Chinese input, auto-routed to the right analysis pipeline.
 
 ---
 
 ## 💬 Example Conversations
 
-### Find products in an untapped niche
-> **You**: "Find blue ocean products in kitchen storage on Amazon US. I'm a beginner seller with $5K budget."
+### Amazon product discovery (blue ocean)
+> **You**: "Find blue ocean products in kitchen storage on Amazon US. Beginner seller, $5K budget."
 >
-> **Agent**: *[Scans Hidden Profit Index, filters by low competition, beginner-friendly categories]*
-> "Here are 5 opportunities with low brand concentration, <500 reviews on top listings, and healthy margins. #1: Under-sink organizers — 15K monthly searches, only 3 competitors with >100 reviews."
+> **Agent**: *[Hidden Profit Index scan + competition filter]*
+> "5 opportunities with low brand concentration, <500 reviews on top listings, healthy margins. #1: Under-sink organizers — 15K monthly searches, only 3 competitors with >100 reviews, estimated margin 35–42%."
 
-### Analyze a competitor
-> **You**: "Analyze ASIN B08N5WRWNW — give me their traffic keywords and pricing strategy."
+### Amazon competitor deep-dive (reverse ASIN)
+> **You**: "Reverse ASIN B08N5WRWNW — traffic keywords, pricing strategy, sales trend."
 >
-> **Agent**: *[Pulls ProductDetail, TrafficTerms, CompetitorKeywords]*
-> "Gaiam Yoga Block — 40K monthly sales, 4.7 stars, $18.99. Top 3 traffic keywords: 'yoga block' (52K), 'yoga blocks 2 pack' (28K), 'cork yoga block' (15K). FBA fee: $12.82. Threat assessment: medium."
+> **Agent**: *[ProductDetail + TrafficTerms + CompetitorKeywords]*
+> "Gaiam Yoga Block — 40K monthly sales, 4.7 stars, $18.99. Top traffic keywords: 'yoga block' (52K), 'yoga blocks 2 pack' (28K), 'cork yoga block' (15K). FBA fee: $12.82. Top competitor ASINs: B07XJ5YV8G, B09XMQ5J8W."
 
-### Calculate profitability
-> **You**: "I'm sourcing yoga mats at $8.50/piece. I want to sell at $29.99, weight 1.2lb. Should I?"
+### Amazon FBA profitability
+> **You**: "Sourcing yoga mats at $8.50. Selling at $29.99, 1.2lb. Worth it on Amazon FBA?"
 >
-> **Agent**: *[Runs Calculator with FBA fee estimate]*
+> **Agent**: *[FBA fee estimation + profit calculation]*
 > "Gross margin: 38%. Break-even: 9 units/day. Return rate sensitivity: profit stays positive up to 12% returns. Verdict: viable — proceed."
 
-### Research keywords
-> **You**: "What keywords should I target for a new yoga mat listing?"
+### Amazon keyword research
+> **You**: "Keyword strategy for a new yoga mat listing on Amazon US."
 >
-> **Agent**: *[KeywordDetail, KeywordExtends, KeywordSearchResults]*
-> "Top opportunities: 'extra thick yoga mat' (147K searches, low competition), 'non slip yoga mat' (98K), 'yoga mat with strap' (52K). Avoid 'yoga mat' (1.4M searches, saturated — dominated by Amazon Basics and Gaiam)."
+> **Agent**: *[KeywordDetail + KeywordExtends + KeywordSearchResults]*
+> "Top opportunities: 'extra thick yoga mat' (147K searches, low competition), 'non slip yoga mat' (98K), 'yoga mat with strap' (52K). Avoid 'yoga mat' (1.4M, saturated — Amazon Basics + Gaiam dominate)."
 
-### Cross-platform arbitrage
-> **You**: "Are there products selling higher on Walmart than Amazon?"
+### Shopee category market analysis
+> **You**: "Shopee Malaysia phone case market — Top 20 products, pricing bands, shop types."
 >
-> **Agent**: *[Cross-platform gap analysis using Sorftime dual-platform data]*
-> "Found 3 products with significant price gaps. 'Premium Yoga Block Set' — $34.99 on Walmart vs $24.99 on Amazon (40% premium). Only 3 sellers on Walmart vs 12 on Amazon."
+> **Agent**: *[shopee_category_request]*
+> "20 products, RM2.38–RM102.37. Ugreen Flagship Store leads with 3.5K monthly sales at RM13.90. 13 brands, all regular shops (no flagship in Top 20). 9/20 products under RM5 — low-end dominates."
+
+### Cross-platform arbitrage (Walmart vs Amazon)
+> **You**: "Find products selling 30%+ higher on Walmart than Amazon US."
+>
+> **Agent**: *[Cross-platform gap scan]*
+> "3 products with significant gaps. 'Premium Yoga Block Set' — $34.99 Walmart vs $24.99 Amazon (40% premium). Only 3 Walmart sellers vs 12 on Amazon — low competition entry point."
 
 ---
 
-## 🌍 Supported Platforms
+## 🌍 Supported Marketplaces
 
-| Platform | Data Available | Coverage |
-|----------|---------------|----------|
-| **Amazon** | Products · Keywords · Categories · Reviews · Traffic · Trends · Profit | 14 sites |
+| Platform | Data Available | Sites |
+|----------|---------------|-------|
+| **Amazon** | Products · Keywords · Categories · Reviews · Traffic · Trends · FBA Profit | 14 sites (US, GB, DE, FR, IT, ES, JP, CA, MX, AU, IN, AE, SA, BR) |
 | **Walmart** | Products · Keywords · Categories · Traffic · Trends · Variations | US |
-| **TikTok Shop** | Products · Categories · Authors · Videos · Trends | US |
-| **Shopee** | Products · Keywords · Categories · Shops · Trends | Multi-region |
-| **TEMU** | Products · Categories · Shops · Trends | Multi-region |
+| **TikTok Shop** | Products · Categories · Authors · Videos · Trends | 8 sites (US, GB, ID, JP, MY, PH, TH, VN) |
+| **Shopee** | Products · Keywords · Categories · Shops · Trends · Shop Intelligence | 8 sites (MY, PH, VN, TH, ID, SG, TW, BR) |
+| **TEMU** | Products · Categories · Shops · Trends | US, EU |
 | **1688** | Products · Variations · Similar items | CN |
+
+---
+
+## 📦 Installation
+
+**Prerequisites**: Python 3.10+ · [Free Sorftime account](https://open-intl.sorftime.com) · Any MCP-compatible AI agent
+
+```bash
+git clone https://github.com/DannylydST/sorftime-seller-agent.git
+cd sorftime-seller-agent
+python3 scripts/install.py     # One-click: venv, deps, MCP config
+python3 scripts/healthcheck.py # Verify
+```
+
+**Platforms**: macOS · Linux · Windows (Python 3.10+)
 
 ---
 
 ## 🙋 FAQ
 
 **Q: Is this official Sorftime?**
-Yes. Built by [@DannylydST](https://github.com/DannylydST) at Sorftime Data Technology. The skill connects to Sorftime's official MCP API ([open-intl.sorftime.com](https://open-intl.sorftime.com)).
+Yes. Built by [@DannylydST](https://github.com/DannylydST) at Sorftime Data Technology. Connects to Sorftime's official MCP API at [open-intl.sorftime.com](https://open-intl.sorftime.com).
 
-**Q: Do I need to pay?**
-New accounts get **free trial credits**. Paid plans available via PayPal when you need more.
+**Q: Is it really free?**
+New accounts get **free trial credits** — no credit card required. Paid usage-based tiers available via PayPal for higher-volume sellers and agencies.
 
-**Q: What AI tools work with this?**
-Any MCP-compatible agent — **Claude Code, Codex (OpenAI), Cursor, OpenClaw, Hermes, Pi**, and more. If your AI speaks MCP, it can use Sorftime. The `install.py` script auto-detects your environment.
+**Q: Which AI agents can I use?**
+Any MCP-compatible agent: **Claude Code, Codex (OpenAI), Cursor, OpenClaw, Hermes, Pi**, and more. `install.py` auto-detects your environment.
 
-**Q: How do I get my MCP Key?**
-Sign up at [open-intl.sorftime.com](https://open-intl.sorftime.com) → MCP page → copy Key.
+**Q: Where do I get my MCP Key?**
+[open-intl.sorftime.com](https://open-intl.sorftime.com) → sign up with Google → MCP page → copy your Key.
 
-**Q: Can I use this without an AI agent?**
-Yes — you can call the CLI tools directly: `python3 scripts/picker.py --keyword "yoga mat"`. But the full power comes from AI-driven analysis with the 20 methodology cards.
+**Q: Can I use this without an AI?**
+Yes — all CLI tools work standalone: `python3 scripts/picker.py --keyword "yoga mat"`. But AI-driven analysis with the 20 methodology cards unlocks the full value.
 
-**Q: What's included in the 20 methodology cards?**
-Proprietary analysis frameworks like **Hidden Profit Index, Blue Ocean Finder, Competitor Deep-Dive, Keyword Strategy** — full-ranking models that show you everything (no hard thresholds that hide borderline products). See `references/methodology-cards/`.
+**Q: What methodology cards are included?**
+**Hidden Profit Index, Blue Ocean Finder, Competitor Deep-Dive, Keyword Strategy, Cross-Platform Price Gap**, and 15 more. Full-ranking models — no hard thresholds that hide borderline opportunities. See `references/methodology-cards/`.
+
+**Q: Does this work for non-US Amazon marketplaces?**
+Yes — all 14 Amazon sites: US, GB, DE, FR, IT, ES, JP, CA, MX, AU, IN, AE, SA, BR. Plus Walmart US, 8 Shopee regions, 8 TikTok regions, TEMU US/EU, and 1688 CN.
 
 ---
 
@@ -211,4 +230,4 @@ MIT © [DannylydST](https://github.com/DannylydST) · Sorftime Data Technology
 
 ---
 
-*Built for sellers. By sellers.*
+*Built for sellers. By sellers. On 6 platforms.*
