@@ -486,11 +486,18 @@ Compares local `references/tool-matrix.md` against `scripts/sorftime_bridge.py`'
 
 | Platform | Marketplace Param | Product ID Param | Keyword Param | Category Param |
 |----------|-------------------|------------------|---------------|----------------|
-| Amazon | `amz_site` (US/UK/JP/DE/FR/ES/IT/CA/MX/AU/IN/SG) | `asin` | `search_name` | `node_id` |
-| TikTok | `site` | `product_id` | — | `node_id` (⚠️ not `category_id`) |
-| Shopee | `site` | `product_id` | — | `category_id` |
-| TEMU | `site` | `product_id` | — | `category_id` |
-| Walmart | `site` | `product_id` | `keyword` | `node_id` |
+| Amazon | `amz_site` (AE/AU/BR/CA/DE/ES/FR/GB/IN/IT/JP/MX/SA/US) | `asin` | `search_name` | `node_id` |
+| TikTok | `site` (US/GB/ID/JP/MY/PH/TH/VN) | `product_id` | — | `node_id` (⚠️ not `category_id`) |
+| Shopee | `site` (MY/PH/VN/TH/ID/SG/TW/BR) | `product_id` | — | `category_id` |
+| TEMU | `site` (US/EU) | `product_id` | — | `category_id` |
+| Walmart | — (US only, no site param) | `product_id` | `keyword` | `node_id` |
+| 1688 | — (China only) | `product_id` | — | — |
+
+**Amazon parameter name traps** (3 different names for "marketplace"):
+- `amz_site`: 19 tools (product_search, product_detail, category_report, potential_product, etc.)
+- `keyword_support_site`: 12 tools (keyword_detail, keyword_extends, keyword_search_results, keyword_list, etc.)
+- `site`: 1 tool — `product_customers_say` (⚠️ exception to the Amazon convention)
+- All 14 Amazon sites verified in schema; SG is NOT in the enum (contrary to older docs).
 
 ### Walmart Tool Usage Guide
 
@@ -538,7 +545,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - **Schema auto-sync**: `healthcheck.py` checks schema freshness. If it reports "Schema is X days old", run `python3 tests/auto_sync.py` to pull the latest tool list — the server may have added new tools. Sync updates `references/tool-matrix.md`, `sorftime_bridge.py` schemas, and `tests/fixtures/`. Recommended: weekly, or immediately when a tool call returns "tool not found"
 - When `SORFTIME_MCP_KEY` is not set, the bridge raises `RuntimeError` — configure the env var or run `install.py` first
 - `potential_product` (Hidden Profit Index) `search_name` parameter is **optional**. Omit for **all-category cross-ranking**; include to filter within a keyword's search results. Return field is `potential_index`
-- Amazon keyword tools (`keyword_detail` / `keyword_extends` / `keyword_search_results`) use `keyword_support_site` for marketplace; all other Amazon tools use `amz_site`. **See the "MCP Parameter Name Traps" section above — parameter name mismatches are the #1 cause of call failures**
+- Amazon keyword tools (`keyword_detail` / `keyword_extends` / `keyword_search_results`) use `keyword_support_site` for marketplace; all other Amazon tools use `amz_site`. **⚠️ Exception: `product_customers_say` uses `site`** (not `amz_site`), the only Amazon tool to do so. **See the "MCP Parameter Name Traps" section above — parameter name mismatches are the #1 cause of call failures**
 - TikTok Shop currently does not provide `product_search`; direct search needs to `product_detail` or `category_report`
 - **⚠️ TikTok has NO `category_tree` endpoint** (unlike Amazon/Shopee/TEMU). The two search tools (`tiktok_category_name_search` / `tiktok_category_search_from_name`) only discover **leaf-level** categories by keyword — they cannot enumerate top-level categories or traverse parent-child hierarchies. Exact-matching official top-level names (e.g. "Beauty & Personal Care") returns nothing or unrelated leaves. This is a known server-side gap. See `references/tiktok-rankings.json` for the pre-computed workaround.
 - **TikTok category discovery SOP** (always tier 1 first):
@@ -578,6 +585,14 @@ Core frequently-used tools:
 
 **Walmart core tools (14):**
 `walmart_keyword_search_results`, `walmart_keyword_detail`, `walmart_keyword_list`, `walmart_keyword_extends`, `walmart_product_detail_by_product_id`, `walmart_product_traffic_terms`, `walmart_product_trend_by_product_id`, `walmart_product_variation_sales_by_product_id`, `walmart_category_report_by_node_id`, `walmart_favorite_keyword`, `walmart_get_favorite_keyword`, `walmart_get_favorite_keyword_dict`, `walmart_change_favorite_keyword`, `walmart_del_favorite_keyword`
+
+> **Walmart is US-only**: none of the 15 Walmart tools have a `site` parameter — the marketplace is hardcoded to US. No parameter needed.
+>
+> **1688 is China-only**: 5 tools, no site parameter. Factory-direct sourcing only.
+>
+> **TEMU currently supports US + EU only** (2 sites). TEMU has the richest category-level filtering (40+ optional filter params on `temu_category_search`).
+>
+> **TikTok site availability varies**: 8 sites in the schema, but VN returns "No data available" for category searches. GB/JP/ID/MY/PH/TH/US confirmed working.
 
 ---
 
