@@ -2,39 +2,63 @@
 """
 Sorftime MCP Bridge
 将 Sorftime 的 HTTP MCP 端点桥接为本地 stdio MCP Server
+
+--one-shot mode: pure httpx HTTP call, does NOT import mcp (avoids Windows C-extension segfault).
+Server mode: imports mcp and runs stdio server.
 """
 
 import os
 import sys
 from pathlib import Path
 
-# 自动检测并重定向到 venv 中的 Python（如果当前环境没有 mcp）
-try:
-    import mcp
-except ImportError:
+_ONE_SHOT = "--one-shot" in sys.argv
+
+if _ONE_SHOT:
+    # ── One-shot path: no mcp import needed ──────────────────────
+    import asyncio
+    import json
+    import httpx
+    from typing import Any, Dict, List, Optional
+    from utils.env_config import load_env
     from utils.platform_utils import get_venv_python
 
-    venv_python = get_venv_python()
-    if venv_python.exists():
-        if sys.platform == "win32":
-            # On Windows, os.execv does not correctly pass environment variables; use execve
-            os.execve(str(venv_python), [str(venv_python), __file__] + sys.argv[1:], os.environ.copy())
+    # Stub mcp types — only referenced in function signatures, never called in --one-shot
+    class _MCPStub:
+        def __init__(self, *args, **kwargs): pass
+    Tool = _MCPStub
+    TextContent = _MCPStub
+    Server = _MCPStub
+    async def stdio_server(*args, **kwargs):
+        if False: yield  # pragma: no cover
+
+else:
+    # ── Server path: needs mcp, redirect to venv if missing ──────
+    try:
+        import mcp  # noqa: F401
+    except ImportError:
+        venv_python = None
+        try:
+            from utils.platform_utils import get_venv_python
+            venv_python = get_venv_python()
+        except Exception:
+            pass
+        if venv_python and venv_python.exists():
+            if sys.platform == "win32":
+                os.execve(str(venv_python), [str(venv_python), __file__] + sys.argv[1:], os.environ.copy())
+            else:
+                os.execv(str(venv_python), [str(venv_python), __file__] + sys.argv[1:])
         else:
-            os.execv(str(venv_python), [str(venv_python), __file__] + sys.argv[1:])
-    else:
-        print("ERROR: mcp module not found. Run install.py first to create the virtual environment.", file=sys.stderr)
-        sys.exit(1)
+            print("ERROR: mcp module not found. Run install.py first to create the virtual environment.", file=sys.stderr)
+            sys.exit(1)
 
-import asyncio
-import json
-from typing import Any, Dict, List, Optional
-
-import httpx
-from mcp.server import Server
-from mcp.server.stdio import stdio_server
-from mcp.types import TextContent, Tool
-
-from utils.env_config import load_env
+    import asyncio
+    import json
+    import httpx
+    from typing import Any, Dict, List, Optional
+    from mcp.server import Server
+    from mcp.server.stdio import stdio_server
+    from mcp.types import TextContent, Tool
+    from utils.env_config import load_env
 
 load_env()
 SORFTIME_MCP_URL = os.getenv("SORFTIME_MCP_URL", "https://mcp.sorftime.com")
