@@ -540,11 +540,12 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - `potential_product` (Hidden Profit Index) `search_name` parameter is **optional**. Omit for **all-category cross-ranking**; include to filter within a keyword's search results. Return field is `potential_index`
 - Amazon keyword tools (`keyword_detail` / `keyword_extends` / `keyword_search_results`) use `keyword_support_site` for marketplace; all other Amazon tools use `amz_site`. **See the "MCP Parameter Name Traps" section above — parameter name mismatches are the #1 cause of call failures**
 - TikTok Shop currently does not provide `product_search`; direct search needs to `product_detail` or `category_report`
-- **TikTok category discovery workflow** (auto-persisting):
-  1. **FIRST**: `python3 scripts/discover_tiktok.py --list` — shows all known categories
-  2. To find a specific category: `python3 scripts/discover_tiktok.py <keyword>` — searches TikTok, auto-saves new categories to `references/tiktok-categories.json`
-  3. To get a full report: `python3 scripts/discover_tiktok.py --report <name_or_node_id>` — discovers if needed, then fetches report
-  Do NOT iterate letters brute-force. Do NOT call tools without `site`.
+- **⚠️ TikTok has NO `category_tree` endpoint** (unlike Amazon/Shopee/TEMU). The two search tools (`tiktok_category_name_search` / `tiktok_category_search_from_name`) only discover **leaf-level** categories by keyword — they cannot enumerate top-level categories or traverse parent-child hierarchies. Exact-matching official top-level names (e.g. "Beauty & Personal Care") returns nothing or unrelated leaves. This is a known server-side gap. See `references/tiktok-rankings.json` for the pre-computed workaround.
+- **TikTok category discovery SOP** (always tier 1 first):
+  1. **TIER 1 (0s, 0 API calls)**: Read `references/tiktok-rankings.json` — pre-computed rankings of 228 leaf categories with monthly sales, MoM, avg price, and heuristic parent-category aggregation. Covers the vast majority of active categories. Use for: "top categories", "what's selling", market overview questions.
+  2. **TIER 2 (~1min, batch API)**: `python3 scripts/discover_tiktok.py --sweep` — parallel keyword scan to refresh or expand category coverage. Use when: rankings are stale (>7 days) or searching for a niche not in the rankings. Auto-persists to `references/tiktok-categories.json`.
+  3. **TIER 3 (per-call API)**: `python3 scripts/discover_tiktok.py <keyword>` — single-keyword search. Use for: targeted lookup of one specific category name. Do NOT use for broad discovery — TIER 2 is faster and more complete.
+  Anti-patterns: Do NOT iterate letters brute-force. Do NOT call tools without `site`. Do NOT expect exact-match top-level category names to work.
 - **Python API**: Prefer the bridge CLI (`python3 scripts/sorftime_bridge.py --one-shot <tool> '<json>'`) for one-off calls — it handles all path/env complexity. If you need programmatic access:
   ```python
   import sys; sys.path.insert(0, 'scripts')  # REQUIRED — utils is under scripts/
