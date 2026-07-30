@@ -263,26 +263,25 @@ def deduplicate(products: list[dict]) -> list[dict]:
 
 
 def main():
-    tool_results_dir = Path("/Users/ddclaw/.claude/projects/-Users-ddclaw--claude/0d612abb-9438-4621-a43b-3b1c1fa84057/tool-results")
-    files = [
-        "b866yrikw.txt",  # pet supplies
-        "b982lrayj.txt",  # kitchen gadget
-        "bbyrmnaw4.txt",  # storage organizer
-        "bjsiyqft7.txt",  # bathroom accessories
-        "bp5x9ei38.txt",  # car accessories
-        "br122lksc.txt",  # office supplies
-        "btuikgopt.txt",  # cleaning tool
-        "bxskqki7h.txt",  # garden tools
-    ]
+    # Default: ~/.sorftime-cache/tool-results/ — override with SORFTIME_CACHE_DIR
+    cache_root = Path(os.environ.get("SORFTIME_CACHE_DIR", Path.home() / ".sorftime-cache"))
+    tool_results_dir = cache_root / "tool-results"
+
+    if not tool_results_dir.exists():
+        print(f"Tool results directory not found: {tool_results_dir}", file=sys.stderr)
+        print("Place your tool result files (*.txt) in this directory, or set SORFTIME_CACHE_DIR.", file=sys.stderr)
+        sys.exit(1)
+
+    files = [f.name for f in sorted(tool_results_dir.glob("*.txt"))]
+    if not files:
+        print(f"No .txt files found in {tool_results_dir}", file=sys.stderr)
+        sys.exit(1)
 
     all_products = []
     for fname in files:
         fpath = tool_results_dir / fname
-        if not fpath.exists():
-            print(f"跳过: {fname} 不存在", file=sys.stderr)
-            continue
         prods = parse_products_from_file(fpath)
-        print(f"读取 {fname}: {len(prods)} 个产品", file=sys.stderr)
+        print(f"Read {fname}: {len(prods)} products", file=sys.stderr)
         all_products.extend(prods)
 
     print(f"总计: {len(all_products)} 个产品", file=sys.stderr)
