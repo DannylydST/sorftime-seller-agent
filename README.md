@@ -24,6 +24,16 @@
 
 ---
 
+## 🆕 What's New (July 30, 2026)
+
+- **1688 factory sourcing** — full toolchain verified. Multi-dimension supplier filtering, SKU breakdown, reverse image search.
+- **Shopee cross-border feasibility** — compare local vs cross-border seller density. Cohort analysis (new product survival rate). Keyword favorites management.
+- **Amazon + Walmart audit complete** — 21 additional tools verified. Product reviews, traffic terms, competitor keywords, variations all confirmed.
+- **Cross-platform command templates** — platform selection, price arbitrage, product migration workflows.
+- **[Full changelog →](CHANGELOG.md)**
+
+---
+
 ## ⚡ Quick Start
 
 ### 1. Create a free account
