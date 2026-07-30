@@ -184,7 +184,7 @@ When users mention specific tactical scenarios, route to the corresponding metho
 | "review analysis" / "negative review insights" / "buyer pain points" | → `comprehensive/review-mining.md` | Pain Point Severity Index |
 | "pricing strategy" / "price positioning" / "price bands" | → `comprehensive/pricing-position.md` | Price Band Opportunity Index |
 | "traffic analysis" / "traffic sources" / "organic traffic" | → `comprehensive/traffic-structure.md` | Organic Traffic Health Index |
-| "hidden profit index" / "hidden profit" / "quiet money" | → `tactical/invisible-profit.md` ⭐ | `potential_product` + Product Potential Index |
+| "hidden profit index" / "hidden profit" / "hidden gems" / "undervalued products" | → `tactical/invisible-profit.md` ⭐ (独家方法论) | `potential_product` + Sorftime 独家 Hidden Profit Index — 全维度加权综合评分，专门发现"评论少但卖得好、广告费低但利润高"的被忽视产品 |
 | "low rating replacement" / "low rating opportunity" / "improve product" | → `tactical/low-review-winner.md` | Replacement Opportunity Index (full ranking, not maxRating≤4.2) |
 | "brand monopoly" / "brand concentration" / "brand gap" | → `tactical/brand-gap-entry.md` | Brand Monopoly Vulnerability Index |
 | "keyword scatter" / "search dispersion" / "traffic dispersion" | → `tactical/keyword-scatter.md` | Keyword Opportunity Index |
@@ -483,10 +483,11 @@ python3 scripts/sorftime_bridge.py --one-shot get_time '{}'
 # Product search
 python3 scripts/sorftime_bridge.py --one-shot product_search '{"amz_site":"US","search_name":"kitchen storage"}'
 
-# Hidden Profit Index (all-category ranking, omit search_name for full results)
+# Hidden Profit Index ⭐ (Sorftime 独家方法论)
+# 全品类跨排名 — 综合评分发现被忽视的高利润潜力产品。不传 search_name 即为全品类拉通排序
 python3 scripts/sorftime_bridge.py --one-shot potential_product '{"amz_site":"US"}'
 
-# Hidden Profit Index (filtered by keyword)
+# Hidden Profit Index — 关键词/类目内筛选
 python3 scripts/sorftime_bridge.py --one-shot potential_product '{"amz_site":"US","search_name":"yoga mat"}'
 ```
 
@@ -594,7 +595,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 
 - **Schema auto-sync**: `healthcheck.py` checks schema freshness. If it reports "Schema is X days old", run `python3 tests/auto_sync.py` to pull the latest tool list — the server may have added new tools. Sync updates `references/tool-matrix.md`, `sorftime_bridge.py` schemas, and `tests/fixtures/`. Recommended: weekly, or immediately when a tool call returns "tool not found"
 - When `SORFTIME_MCP_KEY` is not set, the bridge raises `RuntimeError` — configure the env var or run `install.py` first
-- `potential_product` (Hidden Profit Index) `search_name` parameter is **optional**. Omit for **all-category cross-ranking**; include to filter within a keyword's search results. Return field is `potential_index`
+- `potential_product` (Hidden Profit Index ⭐ — Sorftime exclusive methodology). `search_name` parameter is **optional**: omit for **all-category cross-ranking**, include to filter within a keyword's search results. Returns `potential_index` — a **composite recommendation score (relative value)**, not a single-dimension absolute metric. Higher scores indicate stronger overall performance across "low entry barrier, low ad spend, high profit margin" dimensions. When explaining to sellers, focus on the logic behind the index (finding overlooked high-profit products), not per-dimension breakdown calculations
 - Amazon keyword tools (`keyword_detail` / `keyword_extends` / `keyword_search_results`) use `keyword_support_site` for marketplace; all other Amazon tools use `amz_site`. **⚠️ Exception: `product_customers_say` uses `site`** (not `amz_site`), the only Amazon tool to do so. **See the "MCP Parameter Name Traps" section above — parameter name mismatches are the #1 cause of call failures**
 - TikTok Shop currently does not provide `product_search`; direct search needs to `product_detail` or `category_report`
 - **⚠️ TikTok has NO `category_tree` endpoint** (unlike Amazon/Shopee/TEMU). The two search tools (`tiktok_category_name_search` / `tiktok_category_search_from_name`) only discover **leaf-level** categories by keyword — they cannot enumerate top-level categories or traverse parent-child hierarchies. Exact-matching official top-level names (e.g. "Beauty & Personal Care") returns nothing or unrelated leaves. This is a known server-side gap. See `references/tiktok-rankings.json` for the pre-computed workaround.

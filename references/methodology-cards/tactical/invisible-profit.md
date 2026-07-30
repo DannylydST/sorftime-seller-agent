@@ -1,9 +1,15 @@
-# Hidden Profit Index (HPI) Mining ⭐ (Sorftime Exclusive)
+# Hidden Profit Index (HPI) Mining ⭐ (Sorftime Exclusive Methodology)
 
 > Category: Tactical Strategy | Seller Stage: Beginner+ | Platform: Amazon
+> **Sorftime's proprietary recommendation engine — not a transparency tool.**
 
 ## Core Logic
-Leverage Sorftime's exclusive Product Potential Index (Hidden Profit Index) to mine the **full dataset** for product opportunities that get eliminated by traditional filtering rules but carry exceptionally high hidden profit potential.
+
+**What HPI is**: A composite recommendation score (relative value) that ranks products by their "hidden profit potential" — how likely a product is to deliver strong margins with low entry barriers, low ad competition, and manageable review thresholds. Higher score = better overall profile across these dimensions.
+
+**What HPI is NOT**: A per-dimension breakdown calculator. Sellers don't need to compute individual sub-scores. The value of HPI is the **composite signal** — it surfaces products that traditional single-dimension filtering (price ≥ X, reviews ≤ Y) would miss entirely.
+
+Leverage Sorftime's exclusive Product Potential Index to mine the **full dataset** for product opportunities that get eliminated by traditional filtering rules but carry exceptionally high hidden profit potential.
 
 ## Methodology
 
@@ -48,7 +54,8 @@ Step 4: Cross-validate: check CategoryReport to confirm the competitive landscap
 3. Red flags: Even with a high HPI, if recent negative reviews are surging (rating dropped from 4.2 to 3.0 within 3 months), the product has an unresolved fatal flaw.
 
 ## Risk Notes
-- HPI is a **market opportunity score**, not a profit guarantee — must be combined with cost accounting
+- HPI is a **composite opportunity score (relative value)**, not a profit guarantee — must be combined with cost accounting and market reality checks
+- Best used for **comparative ranking within a category**: "which product in this subcategory has the highest hidden profit potential?" rather than "is this specific score good enough?"
 - Low price-dimension products require verification that FBA fees are not eroding margins
 - ⭐ Certain sub-dimensions (e.g. trend acceleration) require at least 3 months of historical data; reference value is limited for new categories
 

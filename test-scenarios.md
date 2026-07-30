@@ -16,8 +16,8 @@
 
 ### S3: 隐赚指数
 **用户输入**: "全品类扫一遍隐赚指数排名"
-**预期**: 触发 → `sorftime_bridge.py --one-shot potential_product '{"amzSite":"US"}'` → 全品类拉通排序
-**验证点**: 不传 searchName 参数、解释隐赚指数含义
+**预期**: 触发 → `sorftime_bridge.py --one-shot potential_product '{"amz_site":"US"}'` → 全品类拉通排序
+**验证点**: 不传 search_name 参数、解释隐赚指数是 Sorftime 独家综合推荐分（相对值），而非逐个维度拆解
 
 ### S4: 季节性选品
 **用户输入**: "圣诞节相关的产品有什么好的切入机会"

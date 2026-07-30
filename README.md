@@ -92,7 +92,9 @@ python3 scripts/install.py
 
 Amazon sellers spend **$29–$229/month** on marketplace research tools. You log into dashboards, click through menus, export CSV files, then manually analyze in spreadsheets.
 
-**Sorftime Seller Agent replaces that workflow with conversation.** Talk to your AI assistant — any MCP-compatible agent — and it queries marketplace data directly, analyzes it with 20 proprietary methodology frameworks, and returns actionable insights in seconds.
+**Worse — most tools only show you what you ask for.** Filter by minimum reviews, filter by minimum price, sort by sales. A product with 13 reviews, 106 units/month, healthy margins, and zero ad competition gets filtered out before you ever see it. That's the product you should be looking at.
+
+**Sorftime Seller Agent replaces that workflow with conversation — and finds the products other tools hide from you.**
 
 ```
 Before: Log in → navigate → click → export → analyze manually  (15–30 min)
@@ -146,10 +148,10 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 ## 💬 Example Conversations
 
 ### Hidden Profit Index (Sorftime exclusive ⭐)
-> **You**: "Scan the yoga mat category on Amazon US — find products with high hidden profit potential."
+> **You**: "Show me products quietly making money on Amazon US — the ones other tools miss."
 >
-> **Agent**: *[potential_product + composite ranking]*
-> "Sorftime's Hidden Profit Index ranks products by a composite of low entry barriers, low ad spend competitiveness, and healthy margins. Top find: a non-slip mat with $29.99 price, 4.6 stars, only 13 reviews but 106 units/month — HPI 13.44. Low ad spend index, low review barrier. Products like this get filtered out by traditional tools' minimum-review thresholds."
+> **Agent**: *[potential_product — Hidden Profit Index scan]*
+> "Found a non-slip yoga mat: $29.99, 4.6 stars, **only 13 reviews, 106 units/month**. Near-zero ad competition. Price stable, category rank climbing. Every other tool filters this out because 'reviews < 50.' Hidden Profit Index: 13.44 — top of the category. Low barriers, healthy margins, real demand. The kind of product most sellers never see."
 
 ### Amazon product discovery (blue ocean)
 > **You**: "Find blue ocean products in kitchen storage on Amazon US. Beginner seller, $5K budget."
