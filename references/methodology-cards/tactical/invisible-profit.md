@@ -54,10 +54,25 @@ Step 4: Cross-validate: check CategoryReport to confirm the competitive landscap
 3. Red flags: Even with a high HPI, if recent negative reviews are surging (rating dropped from 4.2 to 3.0 within 3 months), the product has an unresolved fatal flaw.
 
 ## Risk Notes
+
+### HPI Score Limitations
 - HPI is a **composite opportunity score (relative value)**, not a profit guarantee — must be combined with cost accounting and market reality checks
 - Best used for **comparative ranking within a category**: "which product in this subcategory has the highest hidden profit potential?" rather than "is this specific score good enough?"
 - Low price-dimension products require verification that FBA fees are not eroding margins
 - ⭐ Certain sub-dimensions (e.g. trend acceleration) require at least 3 months of historical data; reference value is limited for new categories
+
+### ⚠️ High-Risk Category Exclusion (CRITICAL)
+
+**A high HPI score does NOT override category-level risk.** These categories must be excluded or flagged regardless of HPI:
+
+| Risk Tier | Categories | Why | Action |
+|-----------|-----------|-----|--------|
+| 🔴 **Hard Block** | Food, beverages, supplements, medical devices, baby food, pesticides, alcohol, functional cosmetics | Regulatory/compliance risk, potential account suspension | **Never recommend** |
+| 🟡 **Capital-Intensive** | Apparel, shoes, bags, jewelry, wigs, furniture, mattresses, large appliances | High return rates (5-30%), size/variant complexity, inventory risk | Flag prominently |
+| 🟠 **Operations-Complex** | Electronics, liquids, flammables, IP-licensed products, auto parts, glass/fragile items | Certification requirements, hazmat, IP infringement risk, shipping damage | Flag with warnings |
+| ⚠️ **Trap Signals** | Phone cases, screen protectors, holiday decorations, books/CDs/DVDs | Extreme competition, razor-thin margins, seasonal dead stock risk | Flag context |
+
+**Rule**: A soap dispenser (bathroom accessories) with HPI 13.68 is actionable. A supplement with HPI 20 is NOT. Always cross-check the category before presenting HPI results to sellers.
 
 ## Combo Strategy
 This Strategy → Low Rating Replacement (validate demand pain points) → Keyword Scatter (find traffic entry points) → Launch
