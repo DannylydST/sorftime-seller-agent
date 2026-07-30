@@ -213,6 +213,56 @@ When users mention specific tactical scenarios, route to the corresponding metho
 
 ---
 
+## 🛡️ Parameter Discipline (READ BEFORE ANY TOOL CALL)
+
+**The #1 recurring failure: guessing parameters instead of checking the schema.** This must stop.
+
+### Mandatory: Schema-First Protocol
+
+Before calling ANY Sorftime MCP tool, you MUST verify exactly 3 things:
+
+| # | Check | How |
+|---|-------|-----|
+| 1 | **Required parameters** | `grep -A30 '"<tool_name>"' scripts/sorftime_bridge.py` — read `required` array |
+| 2 | **Parameter names** (case-sensitive!) | Same grep — read `properties` keys. `node_id` ≠ `nodeId` ≠ `nodeid` |
+| 3 | **Enum values** | `amz_site` must be `"US"`/`"GB"`/`"DE"` etc., NOT `"amazon.com"` or `"美国"` |
+
+### Common Parameter Traps
+
+| Wrong (Agent guesses) | Correct (Schema says) | Tool affected |
+|------------------------|----------------------|---------------|
+| `"yoga US"` (free text) | `{"node_id":"3743561","amz_site":"US"}` | `category_keywords` |
+| `"yoga US 7月"` | `{"node_id":"3743561","start_date":"2026-07-01","end_date":"2026-07-31","amz_site":"US"}` | `category_report_from_history` |
+| `"amzSite":"US"` | `"amz_site":"US"` | Amazon tools |
+| `"site":"US"` | `"amz_site":"US"` | Amazon tools (not TikTok/Shopee) |
+| `"keywordSupportSite"` | `"amz_site"` (some tools), `"keyword_support_site"` (others) | Varies by tool |
+| Missing `node_id` entirely | `node_id` is required in `category_keywords`, `category_report`, etc. | Category tools |
+| Date `"2025H1"` | `"2025-01-01"` / `"2025-06-30"` (yyyy-MM-dd, max 40-day range) | `category_report_from_history` |
+
+### Quick Schema Lookup
+
+```bash
+# Dump any tool's full parameter spec in one line:
+python3 -c "
+import json, ast, sys
+src = open('scripts/sorftime_bridge.py').read()
+# Find the tool schema block
+start = src.index('\"name\": \"$TOOL_NAME\"')
+block = src[start:start+3000]
+# Parse out required params and properties
+print(block)
+"
+```
+
+### If a Tool Returns "No relevant data" or Code=10
+
+1. **DO NOT** conclude "the tool is broken" or "data doesn't exist"
+2. **DO** re-check the 3 schema checks above
+3. **DO** test with the exact parameters from a known-working call
+4. Only after verifying correct parameters 3 times → then escalate as possible data gap
+
+---
+
 ## Execution Principles
 
 1. **Identify first, then execute**: Complex requests → use `router.py` or `persona.py` to identify intent and seller stage, then route to methodology card

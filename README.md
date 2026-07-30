@@ -26,6 +26,7 @@
 
 ## 🆕 What's New (July 30, 2026)
 
+- **📚 Wiki now live** — [Exclusive Methodology](https://github.com/DannylydST/sorftime-seller-agent/wiki/Exclusive-Methodology): Hidden Profit Index, Low Price Index. [25 Sourcing Strategies](https://github.com/DannylydST/sorftime-seller-agent/wiki/Sourcing-Methodology): complete playbook across Market × Product × Keyword dimensions. Fully cross-linked with platform guides and glossary.
 - **1688 factory sourcing** — full toolchain verified. Multi-dimension supplier filtering, SKU breakdown, reverse image search.
 - **Shopee cross-border feasibility** — compare local vs cross-border seller density. Cohort analysis (new product survival rate). Keyword favorites management.
 - **Amazon + Walmart audit complete** — 21 additional tools verified. Product reviews, traffic terms, competitor keywords, variations all confirmed.
@@ -74,6 +75,7 @@ python3 scripts/install.py
 |     | Use Case | Example Prompt |
 |-----|----------|---------------|
 | 🔍 | **Amazon Product Research** | "Find blue ocean kitchen products under $30 on Amazon US for a beginner seller" |
+| 💎 | **Hidden Profit Index** ⭐ (独家) | "Scan the yoga mat category — surface products with high hidden profit potential that other tools miss" |
 | 🎯 | **Competitor Analysis (Reverse ASIN)** | "Break down ASIN B08N5WRWNW — monthly sales, traffic keywords, pricing history, FBA fees" |
 | 🔑 | **Amazon Keyword Research** | "What are the best long-tail keywords for yoga mats? Show search volume and competition" |
 | 💰 | **Amazon FBA Profit Calculator** | "Calculate FBA profit: $29.99 selling price, $8.50 unit cost, 1.2lb weight" |
@@ -105,7 +107,7 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 |---|-------------------------|--------------------------|
 | **Interface** | GUI dashboards | **AI conversation (natural language)** |
 | **Platforms** | Amazon only (typical) | **6 platforms** — Amazon, Walmart, TikTok Shop, Shopee, TEMU, 1688 |
-| **Data depth** | Basic product metrics | **160+ dimensions + proprietary indices** (Hidden Profit, Blue Ocean, etc.) |
+| **Data depth** | Basic product metrics | **160+ dimensions + 20 proprietary indices** including Hidden Profit Index ⭐ (独家), Blue Ocean Finder, and 17+ methodology cards |
 | **AI integration** | None — manual operation | **MCP-native** — any AI agent can query and analyze |
 | **Works with** | Browser only | **Claude Code · Codex · Cursor · OpenClaw · Hermes · Pi · any MCP agent** |
 | **Automation** | Manual workflows | **Agent auto-execution** — scheduled monitoring, batch analysis |
@@ -143,10 +145,16 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 
 ## 💬 Example Conversations
 
+### Hidden Profit Index (Sorftime exclusive ⭐)
+> **You**: "Scan the yoga mat category on Amazon US — find products with high hidden profit potential."
+>
+> **Agent**: *[potential_product + composite ranking]*
+> "Sorftime's Hidden Profit Index ranks products by a composite of low entry barriers, low ad spend competitiveness, and healthy margins. Top find: a non-slip mat with $29.99 price, 4.6 stars, only 13 reviews but 106 units/month — HPI 13.44. Low ad spend index, low review barrier. Products like this get filtered out by traditional tools' minimum-review thresholds."
+
 ### Amazon product discovery (blue ocean)
 > **You**: "Find blue ocean products in kitchen storage on Amazon US. Beginner seller, $5K budget."
 >
-> **Agent**: *[Hidden Profit Index scan + competition filter]*
+> **Agent**: *[category scan + competition filter]*
 > "5 opportunities with low brand concentration, <500 reviews on top listings, healthy margins. #1: Under-sink organizers — 15K monthly searches, only 3 competitors with >100 reviews, estimated margin 35–42%."
 
 ### Amazon competitor deep-dive (reverse ASIN)
