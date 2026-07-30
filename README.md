@@ -75,7 +75,7 @@ python3 scripts/install.py
 |     | Use Case | Example Prompt |
 |-----|----------|---------------|
 | 🔍 | **Amazon Product Research** | "Find blue ocean kitchen products under $30 on Amazon US for a beginner seller" |
-| 💎 | **Hidden Profit Index** ⭐ (独家) | "Scan the yoga mat category — surface products with high hidden profit potential that other tools miss" |
+| 💎 | **Hidden Profit Index** ⭐ | "Scan the yoga mat category — surface products with high hidden profit potential that other tools miss" |
 | 🎯 | **Competitor Analysis (Reverse ASIN)** | "Break down ASIN B08N5WRWNW — monthly sales, traffic keywords, pricing history, FBA fees" |
 | 🔑 | **Amazon Keyword Research** | "What are the best long-tail keywords for yoga mats? Show search volume and competition" |
 | 💰 | **Amazon FBA Profit Calculator** | "Calculate FBA profit: $29.99 selling price, $8.50 unit cost, 1.2lb weight" |
