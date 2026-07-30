@@ -20,6 +20,7 @@ All notable changes to Sorftime Seller Agent.
 - Windows segfault: deferred `import mcp` for `--one-shot` path (no longer crashes on Windows)
 - Windows `install.py` f-string escape: `{e}` → `{{e}}` in test_code template
 - README GIF rendering: restored original `<img>` tag (GitHub doesn't support `<video>` in READMEs)
+- `filter_50_products.py`: removed hardcoded developer path (`/Users/ddclaw/...`) — now uses `~/.sorftime-cache/tool-results/` with env var override
 
 ### Changed
 - README: seller-centric rewrite with "Who Is This For" + 10 use cases
