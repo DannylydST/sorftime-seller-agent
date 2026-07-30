@@ -22,6 +22,10 @@
 [![Free Trial](https://img.shields.io/badge/Trial-Free-brightgreen)]()
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenClaw-purple)]()
 
+<p align="center">
+  <img src="assets/company-intro.png" alt="Sorftime — The most comprehensive overseas e-commerce data company globally. 97% market segment coverage across global platforms. Real-time consumer trend insights from social media. Core philosophy: marketplace data reflects transactions that already happened, social media reveals demand that is brewing." width="100%">
+</p>
+
 ---
 
 ## 🆕 What's New (July 30, 2026)
