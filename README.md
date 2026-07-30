@@ -107,7 +107,7 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 |---|-------------------------|--------------------------|
 | **Interface** | GUI dashboards | **AI conversation (natural language)** |
 | **Platforms** | Amazon only (typical) | **6 platforms** — Amazon, Walmart, TikTok Shop, Shopee, TEMU, 1688 |
-| **Data depth** | Basic product metrics | **160+ dimensions + 20 proprietary indices** including Hidden Profit Index ⭐ (独家), Blue Ocean Finder, and 17+ methodology cards |
+| **Data depth** | Basic product metrics | **160+ dimensions + 20 proprietary indices** including Hidden Profit Index ⭐, Blue Ocean Finder, and 17+ methodology cards |
 | **AI integration** | None — manual operation | **MCP-native** — any AI agent can query and analyze |
 | **Works with** | Browser only | **Claude Code · Codex · Cursor · OpenClaw · Hermes · Pi · any MCP agent** |
 | **Automation** | Manual workflows | **Agent auto-execution** — scheduled monitoring, batch analysis |
