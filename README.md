@@ -234,6 +234,16 @@ Yes — all 14 Amazon sites: US, GB, DE, FR, IT, ES, JP, CA, MX, AU, IN, AE, SA,
 
 ---
 
+## 📖 Documentation
+
+- **[Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki)** — Platform guides, methodology cards, troubleshooting, glossary
+- **[SKILL.md](SKILL.md)** — Full skill reference: tools, parameters, gotchas
+- **[CHANGELOG.md](CHANGELOG.md)** — Version history
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** — How to contribute
+- **[SUPPORT.md](SUPPORT.md)** — Getting help
+
+---
+
 ## 📄 License
 
 MIT © [DannylydST](https://github.com/DannylydST) · Sorftime Data Technology
