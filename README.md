@@ -28,13 +28,13 @@
 
 ---
 
-## 🆕 What's New (July 30, 2026)
+## 🆕 What's New (July 31, 2026)
 
+- **🛡️ MCP 2.0 compatibility hardened** — `requirements.txt` now locks `mcp>=1.0.0,<2.0.0`. Bridge checks MCP version at startup and gives a clear fix command instead of cryptic errors. `install.py --upgrade` added for one-click dependency repair.
 - **📚 Wiki now live** — [Exclusive Methodology](https://github.com/DannylydST/sorftime-seller-agent/wiki/Exclusive-Methodology): Hidden Profit Index, Low Price Index. [25 Sourcing Strategies](https://github.com/DannylydST/sorftime-seller-agent/wiki/Sourcing-Methodology): complete playbook across Market × Product × Keyword dimensions. Fully cross-linked with platform guides and glossary.
 - **1688 factory sourcing** — full toolchain verified. Multi-dimension supplier filtering, SKU breakdown, reverse image search.
 - **Shopee cross-border feasibility** — compare local vs cross-border seller density. Cohort analysis (new product survival rate). Keyword favorites management.
 - **Amazon + Walmart audit complete** — 21 additional tools verified. Product reviews, traffic terms, competitor keywords, variations all confirmed.
-- **Cross-platform command templates** — platform selection, price arbitrage, product migration workflows.
 - **[Full changelog →](CHANGELOG.md)**
 
 ---
