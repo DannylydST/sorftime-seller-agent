@@ -60,6 +60,23 @@ else:
     from mcp.types import TextContent, Tool
     from utils.env_config import load_env
 
+    # ── MCP version guard: block 2.x on startup ──────────────────
+    try:
+        from importlib.metadata import version as _get_version
+        _mcp_version = _get_version("mcp")
+        _mcp_major = int(_mcp_version.split(".")[0])
+    except Exception:
+        _mcp_version = "unknown"
+        _mcp_major = 1  # assume safe
+    if _mcp_major >= 2:
+        print(
+            f"ERROR: MCP {_mcp_version} is not yet supported (breaking changes from 1.x).",
+            "Please run:  python3 scripts/install.py --upgrade",
+            "This will install mcp>=1.0.0,<2.0.0 into the virtual environment.",
+            sep="\n", file=sys.stderr,
+        )
+        sys.exit(1)
+
 load_env()
 SORFTIME_MCP_URL = os.getenv("SORFTIME_MCP_URL", "https://mcp.sorftime.com")
 SORFTIME_MCP_KEY = os.getenv("SORFTIME_MCP_KEY", "")
@@ -4173,7 +4190,7 @@ async def run_server() -> None:
             result = await call_sorftime(name, arguments)
         return [TextContent(type="text", text=result)]
 
-    async with stdio_server(server) as (read_stream, write_stream):
+    async with stdio_server() as (read_stream, write_stream):
         await server.run(read_stream, write_stream, server.create_initialization_options())
 
 

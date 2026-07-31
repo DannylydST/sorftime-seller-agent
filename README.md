@@ -258,6 +258,38 @@ Yes — all 14 Amazon sites: US, GB, DE, FR, IT, ES, JP, CA, MX, AU, IN, AE, SA,
 
 ---
 
+## 🔧 Maintenance
+
+### Dependencies
+
+This skill requires **MCP SDK 1.x** (not 2.x — breaking changes). The `requirements.txt` locks to `mcp>=1.0.0,<2.0.0`.
+
+```bash
+# If you hit "MCP 2.x is not yet supported" or AttributeError on startup:
+python3 scripts/install.py --upgrade
+
+# This force-reinstalls all dependencies at the correct versions.
+```
+
+### Updating
+
+```bash
+git pull                        # Pull latest skill updates
+python3 scripts/install.py      # Rebuild venv (if deps changed)
+python3 scripts/healthcheck.py  # Verify everything works
+```
+
+### Troubleshooting
+
+| Symptom | Solution |
+|---------|----------|
+| `AttributeError: 'Server' object has no attribute...` | `python3 scripts/install.py --upgrade` |
+| `MCP 2.x is not yet supported` | `python3 scripts/install.py --upgrade` |
+| `ModuleNotFoundError: mcp` | Run `python3 scripts/install.py` |
+| Connection test fails | Check MCP Key, network, firewall |
+
+---
+
 ## 📄 License
 
 MIT © [DannylydST](https://github.com/DannylydST) · Sorftime Data Technology

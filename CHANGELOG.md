@@ -4,6 +4,22 @@ All notable changes to Sorftime Seller Agent.
 
 ---
 
+## [2026-07-31]
+
+### Fixed
+- **MCP 2.0 compatibility hardening**: `requirements.txt` now locks `mcp>=1.0.0,<2.0.0` to prevent `pip install mcp` (defaults to 2.x) from silently breaking the skill. MCP 2.x has breaking API changes (`Server` → `MCPServer`, `stdio_server` signature change) that are not yet supported.
+- **stdio_server bug**: Fixed `stdio_server(server)` → `stdio_server()` in bridge startup (line 4176). The `server` object was being incorrectly passed as `stdin` parameter, which would fail on some MCP versions.
+- **Runtime MCP version guard**: Bridge now checks MCP version on startup via `importlib.metadata`. If 2.x is detected, prints a clear "MCP 2.x is not yet supported" error with the fix command (`python3 scripts/install.py --upgrade`), instead of cryptic `AttributeError` tracebacks.
+
+### Added
+- **install.py `--upgrade` flag**: `python3 scripts/install.py --upgrade` now force-reinstalls all dependencies (`--force-reinstall`). Used to downgrade from MCP 2.x to 1.x, or repair broken venv.
+- **README maintenance section**: Troubleshooting table for common dependency errors (MCP 2.x, AttributeError, ModuleNotFoundError), plus update/upgrade workflow.
+
+### Changed
+- **SKILL.md Gotchas**: Added MCP SDK version lock as first gotcha item.
+
+---
+
 ## [2026-07-30]
 
 ### Added

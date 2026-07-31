@@ -59,10 +59,13 @@ def install_deps():
 
     pip = get_venv_pip()
     req_file = SKILL_DIR / "requirements.txt"
+    install_cmd = [str(pip), "install"]
+    if args.upgrade:
+        install_cmd.append("--force-reinstall")
     if req_file.exists():
-        result = run([str(pip), "install", "-r", str(req_file)])
+        result = run(install_cmd + ["-r", str(req_file)])
     else:
-        result = run([str(pip), "install", "mcp", "httpx", "socksio", "pyyaml"])
+        result = run(install_cmd + ["mcp", "httpx", "socksio", "pyyaml"])
     if result.returncode != 0:
         print(f"    ❌ Installation failed: {result.stderr}")
         sys.exit(1)
@@ -201,6 +204,7 @@ def main():
     parser.add_argument("--key", type=str, default="", help="Provide Sorftime MCP Key directly, skip interactive input")
     parser.add_argument("--unattended", action="store_true", help="Unattended mode, output JSON results only")
     parser.add_argument("--skip-test", action="store_true", help="Skip connection test")
+    parser.add_argument("--upgrade", action="store_true", help="Force reinstall dependencies (use after mcp 2.x upgrade, or when dependencies break)")
     args = parser.parse_args()
 
     if not args.unattended:
