@@ -4,6 +4,14 @@ All notable changes to Sorftime Seller Agent.
 
 ---
 
+## [2026-08-03]
+
+### Added
+- **⚡ Loop & Goal Command Templates**: 58 battle-tested `/loop` and `/goal` automation recipes published to [Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates). Covers all seller stages (beginner/growing/pro) and platforms (Amazon/Walmart/TikTok/Shopee/1688), with dedicated Hidden Profit Index cross-filtering commands. Organized into 5 groups: Beginner (A), Growing (B), Professional (C), CLI Workflows (D), Operations (E).
+- **SKILL.md Loop Automation section**: New section with Wiki pointer + example command. Skill stays lean; recipes live in Wiki where they can be independently updated.
+
+---
+
 ## [2026-07-31]
 
 ### Fixed
