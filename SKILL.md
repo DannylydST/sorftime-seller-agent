@@ -289,8 +289,10 @@ Finds products with low ad dependency, low reviews, stable pricing, growing sale
 
 ```
 /goal Run HPI 5D verified shortlist for kitchen storage on Amazon US.
-Save checkpoint after each phase. Output ≥5 rows + TOP3 explanations.
-stop after 50 turns
+Save checkpoint after each phase. Output completeness gate: all table
+columns must have data — no TBD, no N/A. If any column empty, continue.
+Output ≥5 rows with all columns + TOP3 explanations + excluded list.
+stop after 70 turns
 ```
 
 **What it does automatically**: HPI ranking → safety filter → product_detail ×10 → product_trend (SalesVolume/Price/Rank) ×30 → product_traffic_terms ×10 → 1688 sourcing ×10 → category_report → review defect scan on TOP3 → 5-dimension scoring → verified table with risk flags → next steps.

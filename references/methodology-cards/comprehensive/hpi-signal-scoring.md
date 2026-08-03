@@ -70,11 +70,26 @@ Phase 8: product_reviews (TOP3 only) → defect keyword scan
 - BRAND_MONOPOLY: top3 brands > 60%
 - LOW_CONFIDENCE: reviews < 5
 
-### 6. Output
-Table: ASIN | Product | Price | Mo Sales | Reviews | ★ | FBA | Margin | Organic% | Rev Eff | Sales Trend | Price Trend | BSR Trend | 1688 Price | Score | Risk Flags
+### 6. Output Completeness Gate (before declaring done)
+
+Every column in the table MUST have data — no "TBD", no "N/A", no empty cells. Check each:
+
+| Column | Source | Missing = Phase Incomplete |
+|--------|--------|---------------------------|
+| 1688 Price | Phase 6 | Re-run Phase 6 for that ASIN |
+| Organic% | Phase 5 | Re-run Phase 5 for that ASIN |
+| Sales/Price/BSR Trend | Phase 4 | Re-run Phase 4 for that ASIN |
+| Risk Flags (AMZ_TRAP, BRAND_MONOPOLY) | Phase 7 | Re-run Phase 7 |
+| REVIEW_RED_FLAG | Phase 8 | Re-run Phase 8 for TOP3 |
+
+If any gate fails → continue processing, do not declare goal complete.
+
+### 7. Output Format
+
+Table: ASIN | Product | Price | Mo Sales | Reviews | ★ | FBA | Margin | Organic%(weighted) | Rev Eff(adj) | Sales Trend | Price Trend | BSR Trend | 1688 Price | Score | Risk Flags
 
 TOP3 product-by-product explanation with specific numbers applied.
-Include: Key Takeaways, Risk Flags table, Raw Trend Data appendix.
+Include: Key Takeaways, Risk Flags table, Raw Trend Data appendix, Excluded Products list with reasons.
 
 ---
 
@@ -82,8 +97,13 @@ Include: Key Takeaways, Risk Flags table, Raw Trend Data appendix.
 
 ```
 /goal Run HPI 5D verified shortlist for <category> on Amazon US.
-Save checkpoint after each phase. Output ≥5 rows + TOP3 explanations.
-stop after 50 turns
+Save checkpoint after each phase.
+Output completeness gate: all table columns must have data —
+no TBD, no N/A. If any column empty, continue processing.
+Output ≥5 rows with all columns + TOP3 explanations + excluded list.
+stop after 70 turns
 ```
 
-The skill handles all methodology, scoring, batching, and safety rules automatically.
+**70 turns minimum** — the 6 data sources per product (detail + 3× trend + traffic + 1688 = 6 calls × 10 products = 60 calls + category_report + review scan) require this. 50 turns was insufficient; the 1688 and review scan phases were consistently incomplete at 50.
+
+The skill handles all methodology, scoring, batching, safety rules, and completeness gating automatically.
