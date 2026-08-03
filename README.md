@@ -28,14 +28,22 @@
 
 ---
 
-## 🆕 What's New (July 31, 2026)
+## 🆕 What's New (August 3, 2026)
 
-- **🛡️ MCP 2.0 compatibility hardened** — `requirements.txt` now locks `mcp>=1.0.0,<2.0.0`. Bridge checks MCP version at startup and gives a clear fix command instead of cryptic errors. `install.py --upgrade` added for one-click dependency repair.
-- **📚 Wiki now live** — [Exclusive Methodology](https://github.com/DannylydST/sorftime-seller-agent/wiki/Exclusive-Methodology): Hidden Profit Index, Low Price Index. [25 Sourcing Strategies](https://github.com/DannylydST/sorftime-seller-agent/wiki/Sourcing-Methodology): complete playbook across Market × Product × Keyword dimensions. Fully cross-linked with platform guides and glossary.
-- **1688 factory sourcing** — full toolchain verified. Multi-dimension supplier filtering, SKU breakdown, reverse image search.
-- **Shopee cross-border feasibility** — compare local vs cross-border seller density. Cohort analysis (new product survival rate). Keyword favorites management.
-- **Amazon + Walmart audit complete** — 21 additional tools verified. Product reviews, traffic terms, competitor keywords, variations all confirmed.
+- **⚡ 58 Loop & Goal automation templates** — [Wiki page](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates) with battle-tested `/loop` and `/goal` commands for Claude Code. Beginner (8) → Growing (10) → Professional (10) → CLI Workflows (5) → Operations (3). Includes dedicated Hidden Profit Index cross-mining commands. Copy, paste your ASINs/keywords, run.
+- **📊 Hidden Profit Index demo commands verified** — 3 ready-to-use `/goal` and `/loop` commands tested on live Amazon US data. Category HPI TOP10, full-market blind scan, category × HPI cross-mining pipeline. All produce stable, reproducible output for demos and screenshots.
 - **[Full changelog →](CHANGELOG.md)**
+
+<details>
+<summary>July 31, 2026 updates</summary>
+
+- **🛡️ MCP 2.0 compatibility hardened** — `requirements.txt` now locks `mcp>=1.0.0,<2.0.0`. Bridge checks MCP version at startup with clear fix command.
+- **📚 Wiki now live** — [Exclusive Methodology](https://github.com/DannylydST/sorftime-seller-agent/wiki/Exclusive-Methodology), [25 Sourcing Strategies](https://github.com/DannylydST/sorftime-seller-agent/wiki/Sourcing-Methodology), platform guides, glossary.
+- **1688 factory sourcing** — full toolchain verified. Multi-dimension supplier filtering, SKU breakdown, reverse image search.
+- **Shopee cross-border feasibility** — local vs cross-border comparison, cohort analysis, keyword favorites.
+- **Amazon + Walmart audit** — 21 additional tools verified.
+
+</details>
 
 ---
 
