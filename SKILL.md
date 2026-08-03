@@ -162,6 +162,7 @@ If `install.py` returns `test_passed: false` or `status: error`:
 | "analyze this ASIN" / "competitor analysis" / "traffic keywords" | → Competitor Analysis | `analyst.py --mode competitor` |
 | "keyword research" / "long-tail keywords" / "search terms" | → Keyword Analysis | `analyst.py --mode keyword` |
 | "calculate profit" / "break-even" / "FBA fees" | → Profit Calculator | `calculator.py` |
+| "HPI verified shortlist" / "hidden gem scan" / "find products with low ads and low reviews" / "5-dimension product scoring" | → HPI 5D Workflow | Built-in: HPI ranking → detail → trend → traffic → 1688 → score (see § Workflow Templates) |
 | "monitor price" / "watch this product" / "daily report" | → Monitoring Engine | `monitor.py --mode add/daily/alert` |
 | "TikTok/TEMU/Shopee + analysis" | → Multi-Platform Router | `platform_router.py --platform <name>` |
 | "Walmart product discovery/analysis" | → Walmart Automation | `walmart_picker.py` / `walmart_analyst.py` |
@@ -196,6 +197,7 @@ When users mention specific tactical scenarios, route to the corresponding metho
 | "cross-platform price gap" / "Walmart vs Amazon" | → `tactical/cross-platform-gap.md` ⭐ | Cross-Platform Price Gap Index (Sorftime exclusive dual-platform) |
 | "listing optimization" / "poor listing" / "optimization takeover" | → `tactical/poor-listing-grab.md` | Listing Optimization Potential Index |
 | "price band gap" / "pricing sweet spot" | → `tactical/price-band-sweetspot.md` | Demand Density ÷ Competitor Density |
+| "HPI signal scoring" / "hidden gem verification" / "low ad low review high growth" / "5D scoring" | → `comprehensive/hpi-signal-scoring.md` ⭐ | 5-Dimension Composite (Ad Independence + Review Efficiency + Price Discipline + Sales Growth + BSR Momentum) |
 
 ### Methodology Core Principle (Differentiator vs Competitors)
 
@@ -274,6 +276,28 @@ Example — Weekly Hidden Profit Index refresh:
 /loop 7d Run Hidden Profit Index TOP20 for keywords "yoga mat"/"resistance bands".
       Compare with last week. Highlight top 3 fastest-rising products.
 ```
+
+---
+
+## Workflow Templates (Built-in)
+
+These workflows are baked into the skill — just trigger with a short goal command.
+
+### HPI 5D Verified Shortlist
+
+Finds products with low ad dependency, low reviews, stable pricing, growing sales, and climbing BSR. Full methodology: `references/methodology-cards/comprehensive/hpi-signal-scoring.md`
+
+```
+/goal Run HPI 5D verified shortlist for kitchen storage on Amazon US.
+Save checkpoint after each phase. Output ≥5 rows + TOP3 explanations.
+stop after 50 turns
+```
+
+**What it does automatically**: HPI ranking → safety filter → product_detail ×10 → product_trend (SalesVolume/Price/Rank) ×30 → product_traffic_terms ×10 → 1688 sourcing ×10 → category_report → review defect scan on TOP3 → 5-dimension scoring → verified table with risk flags → next steps.
+
+**What you control**: just the category name. The skill handles batching, checkpointing, scoring formulas, and safety gates.
+
+→ See also: [HPI 5D Scoring Card](references/methodology-cards/comprehensive/hpi-signal-scoring.md)
 
 ---
 
