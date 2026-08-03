@@ -30,8 +30,8 @@
 
 ## 🆕 What's New (August 3, 2026)
 
-- **⚡ 58 Loop & Goal automation templates** — [Wiki page](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates) with battle-tested `/loop` and `/goal` commands for Claude Code. Beginner (8) → Growing (10) → Professional (10) → CLI Workflows (5) → Operations (3). Includes dedicated Hidden Profit Index cross-mining commands. Copy, paste your ASINs/keywords, run.
-- **📊 Hidden Profit Index demo commands verified** — 3 ready-to-use `/goal` and `/loop` commands tested on live Amazon US data. Category HPI TOP10, full-market blind scan, category × HPI cross-mining pipeline. All produce stable, reproducible output for demos and screenshots.
+- **🧠 HPI 5D Signal Scoring workflow** — Built-in skill workflow. Finds products with low ad dependency, low reviews, stable pricing, growing sales, and climbing BSR. Run with one line: `/goal Run HPI 5D verified shortlist for kitchen storage on Amazon US. stop after 70 turns` — the skill handles methodology, batching, safety gates, and scoring automatically. 10 categories tested, 71 verified products. [Methodology card](https://github.com/DannylydST/sorftime-seller-agent/blob/main/references/methodology-cards/comprehensive/hpi-signal-scoring.md).
+- **⚡ 58 Loop & Goal templates** — [Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates) with ready-to-run commands. HPI verified shortlist, full-market blind scan, category cross-mining.
 - **[Full changelog →](CHANGELOG.md)**
 
 <details>

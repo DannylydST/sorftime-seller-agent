@@ -7,8 +7,16 @@ All notable changes to Sorftime Seller Agent.
 ## [2026-08-03]
 
 ### Added
-- **⚡ Loop & Goal Command Templates**: 58 battle-tested `/loop` and `/goal` automation recipes published to [Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates). Covers all seller stages (beginner/growing/pro) and platforms (Amazon/Walmart/TikTok/Shopee/1688), with dedicated Hidden Profit Index cross-filtering commands. Organized into 5 groups: Beginner (A), Growing (B), Professional (C), CLI Workflows (D), Operations (E).
-- **SKILL.md Loop Automation section**: New section with Wiki pointer + example command. Skill stays lean; recipes live in Wiki where they can be independently updated.
+- **⚡ Loop & Goal Command Templates**: 58 battle-tested `/loop` and `/goal` automation recipes published to [Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates).
+- **HPI 5D Signal Scoring Workflow**: Built-in workflow template with dedicated methodology card (`comprehensive/hpi-signal-scoring.md`). Replaces 4500-character goal commands with a single 150-character trigger. 5-dimension composite scoring (Ad Independence + Review Efficiency + Price Discipline + Sales Growth + BSR Momentum). Full pipeline: HPI ranking → safety filter → product_detail ×10 → product_trend ×30 → product_traffic_terms ×10 → 1688 (optional) → category_report → review scan → verified shortlist.
+- **23rd methodology card**: `comprehensive/hpi-signal-scoring.md` — 5D scoring formula, execution protocol (parallel batching + checkpoint per phase), safety gates, risk flags, output completeness gate.
+- **SKILL.md Workflow Templates section**: Built-in workflows with short goal triggers. Skill handles methodology, scoring, batching, and safety rules automatically.
+- **1688 SKU drill-down**: `ali1688_product_variations` enables SKU-level pricing beyond bait-pricing headlines.
+
+### Fixed
+- **1688 declared optional**: Not a completeness gate. COGS estimate used as fallback. 1688 inherent limitations documented (bait pricing, quality variability, MOQ mismatch). Bait-pricing compensation: 1688_low × 1.3.
+- **Turn count**: 50 → 70 turns (60+ API calls require it). Output completeness gate prevents premature goal completion.
+- **1688 Chinese keywords**: 1688 is a Chinese platform — must search with Chinese terms, not English.
 
 ---
 
