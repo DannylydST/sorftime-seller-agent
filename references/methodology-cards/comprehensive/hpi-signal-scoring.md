@@ -26,7 +26,10 @@
    Trend: stable/rising = 1.0 | slight decline(<5%/6mo) = 0.6 | significant = 0.2
    Margin check: (price - 0.35×price - fba_fee) / price
    If margin <20% → cap at 0.3 regardless of trend
-   If 1688 data available → use 1688_low × 1.4 as COGS
+   If 1688 data available: use 1688_low × 1.3 as COGS (×1.3 to adjust for bait-pricing — 
+1688 listings often show the cheapest variant, the actual target SKU can be 20-50% higher).
+If 1688 data unavailable: use price × 0.35 (standard) or price × 0.45 (heavy/bulky) as COGS.
+Both are estimates. Sellers must verify with actual supplier quotes.
 
 4. Sales Growth:
    Accelerating = 1.0 | steady = 0.7 | flat = 0.3 | declining = 0.1
@@ -52,11 +55,18 @@ Phase 1: potential_product (1 call, shared) → HPI ranking
 Phase 3: product_detail (1 per product) → price, FBA, reviews, BSR, brand, node_id
 Phase 4: product_trend × 3 (3 per product) → SalesVolume/Price/Rank 6-month history
 Phase 5: product_traffic_terms (1 per product) → organic vs ad keyword exposure
-Phase 6: ali1688_similar_product (1 per product) → 1688 price range. 
-**CRITICAL**: 1688 is a Chinese platform. Extract Chinese search keywords, not English. 
-Use the product's category in Chinese (e.g., "水槽下置物架" not "under sink organizer",
-"玻璃隔夜燕麦杯" not "glass overnight oats container"). If unsure of Chinese terms,
-search with both English AND Chinese keywords and merge results.
+Phase 6 (OPTIONAL): 1688 sourcing check. This is advisory only — NOT a gate.
+- Call ali1688_similar_product with Chinese search keywords (1688 is a Chinese platform).
+  Extract core product category in Chinese (e.g., "水槽下置物架" not "under sink organizer").
+- If results found: note the price range and top 3 supplier product_ids.
+- For SKU-level pricing: call ali1688_product_variations with product_id to drill into 
+  specific variant prices (1688 listings often show bait lowest-SKU prices).
+- If 0 results or tool errors: skip. Use COGS estimate instead. Do NOT block completion.
+
+**Why optional**: 1688 prices have inherent limitations — bait pricing (cheapest variant 
+listed as headline price), quality variability, MOQ mismatch. It is ONE data point for 
+supply validation, not the definitive answer. Sellers must verify with actual supplier 
+quotes regardless of what 1688 data shows.
 Phase 7: category_report (1 call, shared) → brand concentration, Amazon self-owned share
 Phase 8: product_reviews (TOP3 only) → defect keyword scan
 ```
@@ -80,7 +90,7 @@ Every column in the table MUST have data — no "TBD", no "N/A", no empty cells.
 
 | Column | Source | Missing = Phase Incomplete |
 |--------|--------|---------------------------|
-| 1688 Price | Phase 6 | Re-run Phase 6 for that ASIN |
+| 1688 Price | Phase 6 (OPTIONAL) | Skip — use COGS estimate. Not a gate. |
 | Organic% | Phase 5 | Re-run Phase 5 for that ASIN |
 | Sales/Price/BSR Trend | Phase 4 | Re-run Phase 4 for that ASIN |
 | Risk Flags (AMZ_TRAP, BRAND_MONOPOLY) | Phase 7 | Re-run Phase 7 |
