@@ -52,7 +52,11 @@ Phase 1: potential_product (1 call, shared) → HPI ranking
 Phase 3: product_detail (1 per product) → price, FBA, reviews, BSR, brand, node_id
 Phase 4: product_trend × 3 (3 per product) → SalesVolume/Price/Rank 6-month history
 Phase 5: product_traffic_terms (1 per product) → organic vs ad keyword exposure
-Phase 6: ali1688_similar_product (1 per product) → 1688 price range
+Phase 6: ali1688_similar_product (1 per product) → 1688 price range. 
+**CRITICAL**: 1688 is a Chinese platform. Extract Chinese search keywords, not English. 
+Use the product's category in Chinese (e.g., "水槽下置物架" not "under sink organizer",
+"玻璃隔夜燕麦杯" not "glass overnight oats container"). If unsure of Chinese terms,
+search with both English AND Chinese keywords and merge results.
 Phase 7: category_report (1 call, shared) → brand concentration, Amazon self-owned share
 Phase 8: product_reviews (TOP3 only) → defect keyword scan
 ```
