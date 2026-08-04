@@ -4215,7 +4215,38 @@ async def run_one_shot(tool_name: str, args_json: str) -> None:
             json.loads(result)
             print(result)
         except (json.JSONDecodeError, TypeError):
-            print(json.dumps({"error": True, "message": str(result)[:500], "hint": "Server returned non-JSON. Check parameter names and required fields."}, ensure_ascii=False))
+            # Not JSON — but may be valid structured text (e.g. product_trend "2024年08月=347,..." or product_detail key：value format)
+            text = str(result).strip()
+            # Try parsing as comma-separated key=value pairs (product_trend format)
+            if '=' in text and ('月=' in text or '年=' in text or ',' in text):
+                try:
+                    pairs = {}
+                    for part in text.split(','):
+                        part = part.strip()
+                        if '=' in part:
+                            k, v = part.split('=', 1)
+                            k = k.strip(); v = v.strip()
+                            try: pairs[k] = int(v)
+                            except ValueError:
+                                try: pairs[k] = float(v)
+                                except ValueError: pairs[k] = v
+                    if pairs:
+                        print(json.dumps({"data": pairs}, ensure_ascii=False))
+                        return
+                except Exception:
+                    pass
+            # Try parsing as key：value newline format (product_detail format)
+            if '：' in text:
+                try:
+                    from utils.mcp_client import _parse_kv_text
+                    parsed = _parse_kv_text(text)
+                    if parsed:
+                        print(json.dumps({"data": parsed}, ensure_ascii=False))
+                        return
+                except Exception:
+                    pass
+            # If nothing matched, output as raw text wrapped in JSON (NOT as error)
+            print(json.dumps({"data": text, "format": "raw_text", "hint": "Response is non-JSON text. Parsed as raw."}, ensure_ascii=False))
 
 
 if __name__ == "__main__":

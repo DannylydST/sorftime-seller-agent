@@ -288,9 +288,23 @@ def call_tool_json(tool_name: str, arguments: dict):
                 return json.loads(raw[i:])
             except json.JSONDecodeError:
                 continue
-    # Some tools return Chinese key-value text (e.g. product_detail)
+    # Some tools return Chinese key-value text (e.g. product_detail) — newline-separated 'key：value'
     if '：' in raw:
         parsed = _parse_kv_text(raw)
         if parsed:
             return parsed
+    # product_trend returns comma-separated 'key=value' pairs (e.g. "2024年08月=347,2024年09月=155,...")
+    if '=' in raw and ',' in raw:
+        pairs = {}
+        for part in raw.split(','):
+            part = part.strip()
+            if '=' in part:
+                k, v = part.split('=', 1)
+                k = k.strip(); v = v.strip()
+                try: pairs[k] = int(v)
+                except ValueError:
+                    try: pairs[k] = float(v)
+                    except ValueError: pairs[k] = v
+        if pairs:
+            return pairs
     raise RuntimeError(f"Cannot parse JSON from {tool_name} response. Raw response:\n{raw[:500]}")
