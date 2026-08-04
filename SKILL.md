@@ -300,6 +300,7 @@ PC(T31-45): Sorftime MCP ONLY has 1688 supply chain tools (5 endpoints). No Alib
   uk/de → ENGLISH keywords on 1688. Convert CNY→GBP/EUR. Add UK/EU import duty + VAT.
        COGS fallback: price × 0.35 (EU wholesale).
   WARNING for non-CN sellers: 1688 is a Chinese-language B2B platform. Results include Chinese titles, CNY prices, and China-based suppliers. Clearly label all 1688 data as [ESTIMATED: 1688 CN supplier, CNY→USD converted]. Recommend seller verify via Alibaba.com independently.
+  ⚠️ ALL 1688 DATA IS FOR REFERENCE ONLY. NOT definitive sourcing. Bait pricing, quality variability, MOQ mismatch, and currency conversion are inherent limitations. Every cost line in this phase MUST carry a disclaimer: "Verify with actual supplier quote before committing capital."
   Full landed cost PER COUNTRY. First-order qty=max(MOQ,30d×2.5).
 PD(T46-55): Full P&L→TrueNet. ADJUST TAX BY SELLER COUNTRY:
   cn → No US sales tax obligation (Amazon collects/remits). Return cost: disposal only (no domestic return address).
@@ -313,6 +314,10 @@ PE(T56-65): ADJUST RISK BY SELLER COUNTRY:
   +4-tier+monopoly+seasonal+review+platform risks.
 PD2(T66-80) MANDATORY: SPAWN 7 sub-agents IN PARALLEL as Seller Review Panel. Seat1(Peer: same stage+budget+model+COUNTRY)×2,Seat2(PeerAlt: same country, budget×0.8)×1,Seat3(Mentor: one stage up, SAME country)×1.5,Seat4(Conservative)×1,Seat5(Opportunity)×1,Seat6(PlatformSpec: platform+COUNTRY dynamics)×1.5,Seat7(FinAuditor: country-specific P&L, tax, duties)×1. Each:score5dim(0-10),vote GO/CAUTION/NO-GO with reasoning. GO=≥4/7 AND Seat6≠NO-GO. NOGO=≥4/7 OR Seat7 NO-GO with P&L evidence. Main agent FORBIDDEN from voting.
 PF(T81-95): Decision Table([VERIFIED]/[ESTIMATED]/[ASSUMED]/[UNAVAILABLE]), Panel record, TOP3, Risk Registry, Budget, First-Order Plan, Raw Data.
+  🚫 ANTI-ABSOLUTISM RULE: NEVER use absolute language in conclusions. BANNED phrases: "this product WILL succeed", "guaranteed profit", "100% safe", "definitely", "certainly", "no risk".
+  REQUIRED qualifiers: "based on available data", "estimates suggest", "historical trends indicate", "panel assessment is", "verify independently before committing capital".
+  The Executive Summary MUST include: "All supply chain data is from 1688 (Chinese B2B platform) and is FOR REFERENCE ONLY. Financial projections are ESTIMATES based on current API data. Verify with actual supplier quotes, freight forwarders, and a small-batch PPC test before committing your full budget."
+  Every GO verdict MUST be accompanied by: "Proceed to supplier negotiation and sample order. Do NOT commit full capital until [specific condition] is verified."
 PG(T96-100) MANDATORY: Output EXACT /loop command (NOT /goal):
   `/loop 30d /sorftime-seller-agent Check {ASIN} on {platform}: product_detail(price/BSR/reviews/rating) + product_trend(SalesVolume)30d. Alerts: sales<30%proj D60->re-evaluate, ACoS>150%est D45->pause, rating<4.3->QC, stock<30d->reorder.`
   Seat7(Financial Auditor) MUST return before final verdict — if timeout, retry with simplified P&L-only prompt.
