@@ -298,7 +298,8 @@ PG(T96-100) MANDATORY: Output EXACT /loop command (NOT /goal):
 Save checkpoint EVERY phase. stop after {N*35} turns (1 round≈35 turns: PA10+PB15+PC15+PD10+PE10+PD210+PF10+PG5). If {N}=1, stop at product verdict for the single category.
 
 DATA PERSISTENCE — ALL OUTPUTS MUST BE WRITTEN TO DISK:
-  Output directory: ~/Documents/sorftime/{date}-{category}-{platform}/
+  Output directory: ${SORFTIME_OUTPUT_DIR:-~/Documents/sorftime}/{date}-{category}-{platform}/
+  (SORFTIME_OUTPUT_DIR env var overrides default; falls back to ~/Documents/sorftime)
   Files to write after EVERY phase:
     PA: {dir}/01-discovery.json (raw potential_product response + filtered shortlist)
     PB: {dir}/02-verification.json (product_detail + trend + traffic + reviews per ASIN)
@@ -722,6 +723,7 @@ This skill is cross-platform compatible, supporting macOS / Linux / Windows.
 | `SORFTIME_HTTP_TIMEOUT` | MCP request timeout (seconds) | `30.0` |
 | `SORFTIME_SCHEMA_AUTO_SYNC` | Auto-sync Schema on startup | `false` |
 | `SORFTIME_PROXY` | HTTP proxy address | None |
+| `SORFTIME_OUTPUT_DIR` | Closed-Loop workflow output directory | `~/Documents/sorftime` (macOS/Linux), `%USERPROFILE%\Documents\sorftime` (Windows) |
 
 ### Migrating to a New Device
 

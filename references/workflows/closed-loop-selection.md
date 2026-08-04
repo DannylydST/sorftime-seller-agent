@@ -85,7 +85,11 @@ Generate a complete, copy-paste-ready `/loop` command with: 30/60/90-day checks 
 
 ## Data Persistence
 
-Every phase writes output to disk. Output directory: `~/Documents/sorftime/{date}-{category}-{platform}/`
+Every phase writes output to disk.
+
+Output directory: `${SORFTIME_OUTPUT_DIR:-~/Documents/sorftime}/{date}-{category}-{platform}/`
+
+Override via `SORFTIME_OUTPUT_DIR` env var. Falls back to `~/Documents/sorftime`.
 
 | File | Phase | Content |
 |------|-------|---------|
