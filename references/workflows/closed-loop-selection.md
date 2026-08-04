@@ -21,9 +21,11 @@ Ask: Budget, Platform, Stage, Model, **Seller Country**, Goal (Path 1 or 2). Con
 
 | Dimension | CN (Chinese cross-border) | US (US domestic) | UK (UK domestic) | DE (German domestic) |
 |-----------|--------------------------|------------------|------------------|----------------------|
-| Sourcing | 1688 (中文), cross-border | Alibaba.com / domestic wholesale | EU/UK suppliers | EU suppliers |
-| Logistics | Sea freight + duty + customs | Domestic ground shipping | UK import duty + 20% VAT | EU import duty + 19% VAT |
-| COGS | Lower (factory-direct) | Higher (wholesale markup) | Higher | Higher |
+| Sourcing | 1688 (中文) — native | 1688 (EN keywords) — CNY→USD | 1688 (EN keywords) — CNY→GBP | 1688 (EN keywords) — CNY→EUR |
+| Logistics | Sea freight + duty + customs | Sea freight + US duty (same as CN — importing from China) | Sea freight + UK duty + 20% VAT | Sea freight + EU duty + 19% VAT |
+| COGS | Lower (factory-direct, CNY native) | Same factory price, but CNY→USD conversion + labeling burden | Same, CNY→GBP | Same, CNY→EUR |
+| 1688 viability | ✅ Native experience | ⚠️ Works (verified: English keywords return 100 results), but all titles/descriptions in Chinese | ⚠️ Same limitations | ⚠️ Same limitations |
+| COGS fallback | 1688_low × 1.3 | price × 0.30 (higher US wholesale markup) | price × 0.35 (EU wholesale) | price × 0.35 (EU wholesale) |
 | Tax | Amazon collects/remits | Sales tax nexus | VAT registered (recover import VAT) | VAT registered |
 | Returns | Disposal only (no domestic address) | Restock/resell possible | 14-day mandatory withdrawal | 14-day mandatory withdrawal |
 | Compliance Risk | HIGH (unfamiliar FCC/FDA/CPC) | LOW | MEDIUM (UKCA) | MEDIUM (WEEE/GPSR/VerpackG) |

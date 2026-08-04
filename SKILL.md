@@ -291,11 +291,15 @@ P0(T1-3): ASK+CONFIRM budget, platform, stage, model, SELLER COUNTRY. Then RECOM
     → Seller unsure: run Path 2 then Path 1
 PA(T4-15): Path1=potential_product NO hard-threshold, safety AFTER rank, ≥10 products. Path2=category_report×N→11dim→top3 subcat→potential_product×node_id.
 PB(T16-30): PARALLEL product_detail×N, product_trend×N×3, product_traffic_terms×N. WARNING: read exposure_position NOT organic_searched_percentage. product_reviews×TOP3, category_report.
-PC(T31-45): ADJUST SOURCING BY SELLER COUNTRY:
-  cn → ali1688_similar_product (CHINESE keywords)×N. Cross-border landed cost.
-  us → Alibaba.com or domestic wholesale (ENGLISH keywords). Domestic shipping, no duty.
-  uk → EU/UK suppliers. UK import duty + 20% VAT (recoverable if VAT-registered).
-  de → EU suppliers. EU import duty + 19% VAT. WEEE/VerpackG registration costs.
+PC(T31-45): Sorftime MCP ONLY has 1688 supply chain tools (5 endpoints). No Alibaba.com, no domestic wholesale.
+  ALL sellers use ali1688_similar_product — but ADAPT BY COUNTRY:
+  cn → CHINESE keywords (e.g. "瑜伽垫"). CNY pricing is native. Cross-border freight+duty.
+  us → ENGLISH keywords work (verified: "yoga mat" returns 100 results). Results in Chinese with CNY pricing — convert CNY→USD at ~0.14 rate. NOTE: 1688 is a Chinese platform, not a domestic supplier.
+       COGS fallback if 1688 returns unsuitable: price × 0.30 (US wholesale markup is higher than CN factory).
+       Logistics: sea freight + US duty + customs (US sellers importing from China — same as CN seller).
+  uk/de → ENGLISH keywords on 1688. Convert CNY→GBP/EUR. Add UK/EU import duty + VAT.
+       COGS fallback: price × 0.35 (EU wholesale).
+  WARNING for non-CN sellers: 1688 is a Chinese-language B2B platform. Results include Chinese titles, CNY prices, and China-based suppliers. Clearly label all 1688 data as [ESTIMATED: 1688 CN supplier, CNY→USD converted]. Recommend seller verify via Alibaba.com independently.
   Full landed cost PER COUNTRY. First-order qty=max(MOQ,30d×2.5).
 PD(T46-55): Full P&L→TrueNet. ADJUST TAX BY SELLER COUNTRY:
   cn → No US sales tax obligation (Amazon collects/remits). Return cost: disposal only (no domestic return address).
