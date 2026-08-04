@@ -296,6 +296,21 @@ PG(T96-100) MANDATORY: Output EXACT /loop command (NOT /goal):
   Every panelist vote MUST include 2-3 sentence role-specific reasoning in the deliverable, not just the vote itself.
 
 Save checkpoint EVERY phase. stop after {N*35} turns (1 round≈35 turns: PA10+PB15+PC15+PD10+PE10+PD210+PF10+PG5). If {N}=1, stop at product verdict for the single category.
+
+DATA PERSISTENCE — ALL OUTPUTS MUST BE WRITTEN TO DISK:
+  Output directory: ~/Documents/sorftime/{date}-{category}-{platform}/
+  Files to write after EVERY phase:
+    PA: {dir}/01-discovery.json (raw potential_product response + filtered shortlist)
+    PB: {dir}/02-verification.json (product_detail + trend + traffic + reviews per ASIN)
+    PC: {dir}/03-supply-chain.json (ali1688 results + landed cost calculations)
+    PD: {dir}/04-financials.json (full P&L per product)
+    PE: {dir}/05-risks.json (risk matrix per product)
+    PD2: {dir}/06-panel-verdict.json (all 7 panelist votes + reasoning + final verdict)
+    PF: {dir}/07-deliverable.md (complete Go/No-Go Decision Table + TOP3 + risk registry + budget + first-order plan in Markdown)
+    PG: {dir}/08-monitoring.sh (copy-paste-ready /loop command)
+    {dir}/workflow-state.md (checkpoint — resume if interrupted)
+    {dir}/README.md (index: scenario params, execution summary, data freshness)
+  After PF: Write the deliverable AS A STANDALONE .md FILE that the seller can open and read independently of this conversation. The file must include ALL tables, panel votes, risk registry, and budget plan. No "see above" or "as discussed" references — fully self-contained.
 ```
 
 ---

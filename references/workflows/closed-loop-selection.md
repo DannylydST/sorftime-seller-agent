@@ -82,3 +82,22 @@ Generate a complete, copy-paste-ready `/loop` command with: 30/60/90-day checks 
 3. **Verdict from panel, not algorithm**: Phase D computes P&L as INPUT to Phase D2 panel, not as final verdict.
 4. **Checkpoint after every phase**: State saved to resume if interrupted.
 5. **Honest data**: UNAVAILABLE with reason > fabricated numbers.
+
+## Data Persistence
+
+Every phase writes output to disk. Output directory: `~/Documents/sorftime/{date}-{category}-{platform}/`
+
+| File | Phase | Content |
+|------|-------|---------|
+| `01-discovery.json` | PA | Raw API + filtered shortlist |
+| `02-verification.json` | PB | Detail + trend + traffic per ASIN |
+| `03-supply-chain.json` | PC | 1688 results + landed cost |
+| `04-financials.json` | PD | Full P&L per product |
+| `05-risks.json` | PE | Risk matrix per product |
+| `06-panel-verdict.json` | PD2 | All 7 votes + reasoning + verdict |
+| `07-deliverable.md` | PF | Self-contained Markdown deliverable |
+| `08-monitoring.sh` | PG | /loop command |
+| `workflow-state.md` | All | Resume-if-interrupted checkpoint |
+| `README.md` | All | Index + scenario params + data freshness |
+
+`07-deliverable.md` must be fully self-contained — readable standalone without the conversation context.
