@@ -15,7 +15,20 @@
 ## Phase Execution Protocol
 
 ### Phase 0: Seller Input Gate (Turns 1-3)
-Ask: Budget, Platform, Stage, Model, Goal (Path 1 or 2). Confirm before proceeding.
+Ask: Budget, Platform, Stage, Model, **Seller Country**, Goal (Path 1 or 2). Confirm before proceeding.
+
+**Seller Country is a first-class parameter** — it changes sourcing, logistics, tax, risk, and compliance:
+
+| Dimension | CN (Chinese cross-border) | US (US domestic) | UK (UK domestic) | DE (German domestic) |
+|-----------|--------------------------|------------------|------------------|----------------------|
+| Sourcing | 1688 (中文), cross-border | Alibaba.com / domestic wholesale | EU/UK suppliers | EU suppliers |
+| Logistics | Sea freight + duty + customs | Domestic ground shipping | UK import duty + 20% VAT | EU import duty + 19% VAT |
+| COGS | Lower (factory-direct) | Higher (wholesale markup) | Higher | Higher |
+| Tax | Amazon collects/remits | Sales tax nexus | VAT registered (recover import VAT) | VAT registered |
+| Returns | Disposal only (no domestic address) | Restock/resell possible | 14-day mandatory withdrawal | 14-day mandatory withdrawal |
+| Compliance Risk | HIGH (unfamiliar FCC/FDA/CPC) | LOW | MEDIUM (UKCA) | MEDIUM (WEEE/GPSR/VerpackG) |
+| IP Risk | HIGH (complaint vulnerability) | LOW | LOW | LOW |
+| Language | May need listing translation help | Native English | Native English | German required |
 
 ### Phase A: Discovery (Turns 4-15)
 - **Path 1 (HPI Product-First)**: `potential_product` with NO hard-threshold pre-filters. Safety-filter AFTER ranking. ≥10 products.

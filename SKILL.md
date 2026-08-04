@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime Seller Agent — Expert-level cross-border e-commerce data analysis and product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. A single skill that turns any MCP-enabled AI agent (Claude Code, OpenClaw, Cursor, Copilot) into a Sorftime marketplace intelligence expert. Covers product discovery, competitor analysis, keyword strategy, profit calculation, ASIN deep-dive, blue ocean finding, market intelligence, and more. Auto-adapts output for beginner, growing, and professional seller stages."
 trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/选品/竞品/关键词/利润/市场看板/ASIN/类目/蓝海/季节性/隐赚/货源/监控/closed-loop workflow/选品工作流/complete go-no-go/end-to-end product selection"
-version: 3.3.0
+version: 3.4.0
 user-invocable: true
 metadata:
   openclaw:
@@ -271,24 +271,43 @@ print(block)
 **Trigger**: "closed-loop workflow", "选品工作流", "complete go/no-go", "end-to-end product selection"
 
 ```
-/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for {category} on {platform}. Seller: {stage}, ${budget}, {model}. Rounds: {N}. Deliverable per acceptance criteria v3.0: confidence-labeled data, 7-member Seller Review Panel verdicts, Go/No-Go Decision Table, Risk Registry, First-Order Plan, copy-paste-ready /loop monitoring command.
+/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for {category} on {platform}. Seller: {stage}, ${budget}, {model}, country={cn|us|uk|de|other}. Rounds: {N}. Deliverable per acceptance criteria v3.0: confidence-labeled data, 7-member Seller Review Panel verdicts, Go/No-Go Decision Table, Risk Registry, First-Order Plan, copy-paste-ready /loop monitoring command.
 
 Rounds parameter: {N}=1 means test one category and stop. {N}=3 means scan 3 categories. Seller controls depth vs speed.
 
 MANDATORY PROTOCOL — DO NOT SKIP PHASES:
 
-P0(T1-3): ASK+CONFIRM budget, platform, stage, model. Then RECOMMEND path based on profile — but seller ALWAYS has final choice. Both paths are valid for any seller who wants a thorough scan.
+P0(T1-3): ASK+CONFIRM budget, platform, stage, model, SELLER COUNTRY. Then RECOMMEND path. Seller country is a FIRST-CLASS parameter — it changes sourcing defaults, logistics assumptions, tax treatment, risk profile, and compliance awareness. DO NOT assume all sellers are Chinese cross-border sellers.
+  Seller country options:
+    cn = Chinese cross-border seller → 1688 sourcing, cross-border freight+duty, lower COGS, higher compliance/IP risk
+    us = US domestic seller → Alibaba.com or domestic wholesale, domestic shipping, higher COGS, lower compliance risk
+    uk = UK domestic seller → EU/UK suppliers, UK duty+20% VAT, UKCA compliance
+    de = German domestic seller → EU suppliers, EU duty+19% VAT, WEEE/GPSR/VerpackG mandatory
+    other = Other (ask seller for sourcing preference + logistics details)
   Default recommendation (seller can say "Path 1", "Path 2", or "both"):
     → Path 1 fits best when: budget<$10K OR beginner OR arbitrage OR "I want one good product fast"
     → Path 2 fits best when: brand-owner OR factory OR professional OR "I need a category to build in"
-    → "Both": growing stage $10K+, or seller wants maximum coverage → Path 2 first (find winning categories) then Path 1 within each winner (find hidden gems)
+    → "Both": growing stage $10K+, or seller wants maximum coverage → Path 2 first then Path 1 within each winner
     → Seller unsure: run Path 2 then Path 1
 PA(T4-15): Path1=potential_product NO hard-threshold, safety AFTER rank, ≥10 products. Path2=category_report×N→11dim→top3 subcat→potential_product×node_id.
 PB(T16-30): PARALLEL product_detail×N, product_trend×N×3, product_traffic_terms×N. WARNING: read exposure_position NOT organic_searched_percentage. product_reviews×TOP3, category_report.
-PC(T31-45): ali1688(CHINESE keywords)×N. Full landed cost. First-order qty=max(MOQ,30d×2.5).
-PD(T46-55): Full P&L→TrueNet. DO NOT APPLY VERDICT.
-PE(T56-65): 4-tier+monopoly+seasonal+review+IP+compliance+platform risks.
-PD2(T66-80) MANDATORY: SPAWN 7 sub-agents IN PARALLEL as Seller Review Panel. Seat1(Peer)×2,Seat2(PeerAlt)×1,Seat3(Mentor)×1.5,Seat4(Conservative)×1,Seat5(Opportunity)×1,Seat6(PlatformSpec)×1.5,Seat7(FinAuditor)×1. Each:score5dim(0-10),vote GO/CAUTION/NO-GO with reasoning. GO=≥4/7 AND Seat6≠NO-GO. NOGO=≥4/7 OR Seat7 NO-GO with P&L evidence. Main agent FORBIDDEN from voting.
+PC(T31-45): ADJUST SOURCING BY SELLER COUNTRY:
+  cn → ali1688_similar_product (CHINESE keywords)×N. Cross-border landed cost.
+  us → Alibaba.com or domestic wholesale (ENGLISH keywords). Domestic shipping, no duty.
+  uk → EU/UK suppliers. UK import duty + 20% VAT (recoverable if VAT-registered).
+  de → EU suppliers. EU import duty + 19% VAT. WEEE/VerpackG registration costs.
+  Full landed cost PER COUNTRY. First-order qty=max(MOQ,30d×2.5).
+PD(T46-55): Full P&L→TrueNet. ADJUST TAX BY SELLER COUNTRY:
+  cn → No US sales tax obligation (Amazon collects/remits). Return cost: disposal only (no domestic return address).
+  us → Sales tax nexus consideration. Return cost: domestic return address, restock/resell possible.
+  uk/de → VAT registered: input VAT recoverable on import. Return cost: EU mandatory 14-day withdrawal.
+  DO NOT APPLY VERDICT.
+PE(T56-65): ADJUST RISK BY SELLER COUNTRY:
+  cn → HIGHER: compliance unfamiliarity (FCC/FDA/CPC), IP complaint vulnerability, account suspension risk, language barrier in customer service
+  us → LOWER: compliance familiarity, stronger IP enforcement access, domestic liability insurance available
+  uk/de → MEDIUM: product liability strict, WEEE/GPSR/UKCA mandatory, language-specific listing requirements
+  +4-tier+monopoly+seasonal+review+platform risks.
+PD2(T66-80) MANDATORY: SPAWN 7 sub-agents IN PARALLEL as Seller Review Panel. Seat1(Peer: same stage+budget+model+COUNTRY)×2,Seat2(PeerAlt: same country, budget×0.8)×1,Seat3(Mentor: one stage up, SAME country)×1.5,Seat4(Conservative)×1,Seat5(Opportunity)×1,Seat6(PlatformSpec: platform+COUNTRY dynamics)×1.5,Seat7(FinAuditor: country-specific P&L, tax, duties)×1. Each:score5dim(0-10),vote GO/CAUTION/NO-GO with reasoning. GO=≥4/7 AND Seat6≠NO-GO. NOGO=≥4/7 OR Seat7 NO-GO with P&L evidence. Main agent FORBIDDEN from voting.
 PF(T81-95): Decision Table([VERIFIED]/[ESTIMATED]/[ASSUMED]/[UNAVAILABLE]), Panel record, TOP3, Risk Registry, Budget, First-Order Plan, Raw Data.
 PG(T96-100) MANDATORY: Output EXACT /loop command (NOT /goal):
   `/loop 30d /sorftime-seller-agent Check {ASIN} on {platform}: product_detail(price/BSR/reviews/rating) + product_trend(SalesVolume)30d. Alerts: sales<30%proj D60->re-evaluate, ACoS>150%est D45->pause, rating<4.3->QC, stock<30d->reorder.`
