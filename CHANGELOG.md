@@ -4,6 +4,28 @@ All notable changes to Sorftime Seller Agent.
 
 ---
 
+## [2026-08-04]
+
+### Added
+- **🔄 Closed-Loop Product Selection Workflow (v3.3)**: Flagship end-to-end pipeline covering product discovery → supply chain → financial analysis → risk assessment → 7-member independent Seller Review Panel → Go/No-Go deliverable → post-launch monitoring. Dual-path architecture: Path 1 (HPI Product-First — individual product discovery via `potential_product` with no hard-threshold pre-filters) and Path 2 (Market-First — category panorama via `category_report` × N → 11-dimension composite scoring → product selection within winning subcategories). Auto-routing based on seller profile (budget/stage/model). One-command trigger: `/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for {category} on {platform}. Seller: {stage}, ${budget}, {model}.` Built-in workflow template in SKILL.md with full MANDATORY execution protocol.
+- **🤖 7-Member Independent Seller Review Panel (Phase D2)**: GO/CAUTION/NO-GO verdicts replaced algorithmic thresholds with 7 independent sub-agent reviewers. Panel composition: Seat1 Peer Match (×2), Seat2 Peer Alt (×1), Seat3 Mentor (×1.5), Seat4 Conservative (×1), Seat5 Opportunity (×1), Seat6 Platform Specialist (×1.5, veto power), Seat7 Financial Auditor (×1, veto power). Each scores 5 dimensions (0-10): Financial Viability, Competitive Position, Risk Tolerance Fit, Execution Feasibility, Opportunity Cost. Voting rules: GO ≥4/7 AND Seat6 ≠ NO-GO. NO-GO ≥4/7 OR Seat7 veto with P&L evidence. Panel may override algorithmic thresholds. Main agent FORBIDDEN from voting.
+- **💾 Data Persistence**: Every phase auto-writes output to `${SORFTIME_OUTPUT_DIR:-~/Documents/sorftime}/{date}-{category}-{platform}/`. 9 files per run: `01-discovery.json` through `08-monitoring.sh` plus `workflow-state.md` (checkpoint) and `README.md` (index). `07-deliverable.md` is a self-contained Markdown file — fully readable standalone.
+- **📊 6 Business Model Variants**: Private Label, Wholesale/Resale, Factory-Direct, Brand Owner (DTC→Amazon), Retail/Online Arbitrage, Dropshipping→FBA. Each with model-specific sourcing logic, P&L structure, and risk weights.
+- **🌍 7 Platform Adapters**: Amazon US/UK/DE, Walmart US, Shopee, TikTok Shop, TEMU. Platform-agnostic core with platform-specific P&L templates, fee schedules, and risk matrices.
+- **📋 Data Confidence Labeling**: Every data cell carries [VERIFIED]/[ESTIMATED:formula]/[ASSUMED:source]/[UNAVAILABLE:reason]. No fabricated data — UNAVAILABLE with reason is acceptable.
+- **📈 20-Round Validation**: Workflow validated across 20 diverse scenarios (6 platforms × 4 stages × 6 business models). 19/20 rounds ≥50% external seller adoption. Average adoption rate: 82.7%. Validation used real Sorftime MCP API data for 15 product categories.
+- **📖 Wiki Pages**: [Closed-Loop Product Selection Workflow](https://github.com/DannylydST/sorftime-seller-agent/wiki/Closed-Loop-Product-Selection-Workflow), [Workflow Case Study](https://github.com/DannylydST/sorftime-seller-agent/wiki/Workflow-Case-Study) (Round 3: Insulated Water Bottle — 6/7 GO, 90% adoption).
+- **🖼️ Flowcharts**: CN + EN versions with compact left-to-right layout (992px tall vs previous 7800px). Auto-routing decision tree, 7-member panel with Agent spawn visualization.
+- **📦 Reference Spec**: `references/workflows/closed-loop-selection.md` — standalone workflow specification with Phase Execution Protocol, Seller Review Panel rules, and Data Persistence schema.
+
+### Fixed
+- **`product_traffic_terms` field trap documented**: The API returns `exposure_position` ("Organic"/"Ad"/"Ad,Organic"), `latest_organic_position`, `monthly_search_volume`. There is NO `organic_searched_percentage` field. Querying it returns null/0, falsely suggesting zero organic traffic. Verified case: B0FX56TVJP showed 0% on non-existent field but actually ranks organically on all 20 keywords. Now hard-coded into SKILL.md gotchas with correct parsing logic.
+- **`product_trend` parameter name**: Correct parameter is `product_trend_type` (not `trend_type`). Documented in gotchas.
+- **Hardcoded output path**: Replaced `~/Documents/sorftime/` with `${SORFTIME_OUTPUT_DIR}` env var with cross-platform defaults.
+
+### Changed
+- **SKILL.md v3.0.0 → v3.3.0**: Added Workflow Templates section with Closed-Loop Product Selection as primary workflow. Updated trigger phrases, routing table, and gotchas. Version bump reflects accumulated changes: dual-path architecture (v3.1), 5→7 member panel (v3.1), explicit MANDATORY protocol (v3.2), auto-routing + data persistence (v3.3).
+
 ## [2026-08-03]
 
 ### Added

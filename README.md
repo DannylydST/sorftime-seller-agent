@@ -28,20 +28,26 @@
 
 ---
 
-## 🆕 What's New (August 3, 2026)
+## 🆕 What's New (August 4, 2026)
 
-- **🧠 HPI 5D Signal Scoring workflow** — Built-in skill workflow. Finds products with low ad dependency, low reviews, stable pricing, growing sales, and climbing BSR. Run with one line: `/goal Run HPI 5D verified shortlist for kitchen storage on Amazon US. stop after 70 turns` — the skill handles methodology, batching, safety gates, and scoring automatically. 10 categories tested, 71 verified products. [Methodology card](https://github.com/DannylydST/sorftime-seller-agent/blob/main/references/methodology-cards/comprehensive/hpi-signal-scoring.md).
-- **⚡ 58 Loop & Goal templates** — [Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates) with ready-to-run commands. HPI verified shortlist, full-market blind scan, category cross-mining.
+- **🔄 Closed-Loop Product Selection Workflow** — The flagship end-to-end pipeline. Covers product discovery → supply chain → financial analysis → risk assessment → **7-member independent AI Seller Review Panel** → Go/No-Go deliverable → post-launch monitoring. Dual-path (HPI Product-First + Market-First with auto-routing). 6 business models, 7 platform adapters. One command: `/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for yoga mats on Amazon US. Seller: beginner, $10000, private-label.` [Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki/Closed-Loop-Product-Selection-Workflow) · [Case Study](https://github.com/DannylydST/sorftime-seller-agent/wiki/Workflow-Case-Study)
+- **🤖 7-Member Independent Seller Review Panel** — GO/CAUTION/NO-GO verdicts are no longer algorithmic thresholds. 7 independent AI sub-agents, each role-playing a different seller perspective (Peer, Mentor, Conservative, Opportunity, Platform Specialist, Financial Auditor), vote on every product with weighted scoring. Platform Specialist and Financial Auditor hold veto power. Panel may override algorithm. Validated: 20 rounds, 82.7% avg adoption.
+- **💾 Data Persistence** — Every phase auto-saves to `${SORFTIME_OUTPUT_DIR}`. 9 files per run: raw API data, P&L calculations, panel votes, self-contained Markdown deliverable, copy-paste-ready monitoring command. Cross-platform.
+- **📊 product_traffic_terms field trap documented** — The `exposure_position` field ("Organic"/"Ad"/"Ad,Organic") is the correct way to assess organic traffic. The non-existent `organic_searched_percentage` field returns false zeros. Now hard-coded into the skill's gotchas.
 - **[Full changelog →](CHANGELOG.md)**
+
+<details>
+<summary>August 3, 2026 updates</summary>
+
+- **🧠 HPI 5D Signal Scoring workflow** — Built-in skill workflow. Finds products with low ad dependency, low reviews, stable pricing, growing sales, and climbing BSR. 10 categories tested, 71 verified products.
+- **⚡ 58 Loop & Goal templates** — [Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates) with ready-to-run commands. HPI verified shortlist, full-market blind scan, category cross-mining.
+
+</details>
 
 <details>
 <summary>July 31, 2026 updates</summary>
 
-- **🛡️ MCP 2.0 compatibility hardened** — `requirements.txt` now locks `mcp>=1.0.0,<2.0.0`. Bridge checks MCP version at startup with clear fix command.
-- **📚 Wiki now live** — [Exclusive Methodology](https://github.com/DannylydST/sorftime-seller-agent/wiki/Exclusive-Methodology), [25 Sourcing Strategies](https://github.com/DannylydST/sorftime-seller-agent/wiki/Sourcing-Methodology), platform guides, glossary.
-- **1688 factory sourcing** — full toolchain verified. Multi-dimension supplier filtering, SKU breakdown, reverse image search.
-- **Shopee cross-border feasibility** — local vs cross-border comparison, cohort analysis, keyword favorites.
-- **Amazon + Walmart audit** — 21 additional tools verified.
+- **🛡️ MCP 2.0 compatibility hardened**, **📚 Wiki live**, **1688 factory sourcing**, **Shopee cross-border**, **Amazon + Walmart audit**.
 
 </details>
 
