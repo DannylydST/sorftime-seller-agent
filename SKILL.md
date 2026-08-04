@@ -1,8 +1,8 @@
 ---
 name: sorftime-seller-agent
 description: "Sorftime Seller Agent — Expert-level cross-border e-commerce data analysis and product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. A single skill that turns any MCP-enabled AI agent (Claude Code, OpenClaw, Cursor, Copilot) into a Sorftime marketplace intelligence expert. Covers product discovery, competitor analysis, keyword strategy, profit calculation, ASIN deep-dive, blue ocean finding, market intelligence, and more. Auto-adapts output for beginner, growing, and professional seller stages."
-trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/选品/竞品/关键词/利润/市场看板/ASIN/类目/蓝海/季节性/隐赚/货源/监控"
-version: 3.0.0
+trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/选品/竞品/关键词/利润/市场看板/ASIN/类目/蓝海/季节性/隐赚/货源/监控/closed-loop workflow/选品工作流/complete go-no-go/end-to-end product selection"
+version: 3.3.0
 user-invocable: true
 metadata:
   openclaw:
@@ -162,7 +162,7 @@ If `install.py` returns `test_passed: false` or `status: error`:
 | "analyze this ASIN" / "competitor analysis" / "traffic keywords" | → Competitor Analysis | `analyst.py --mode competitor` |
 | "keyword research" / "long-tail keywords" / "search terms" | → Keyword Analysis | `analyst.py --mode keyword` |
 | "calculate profit" / "break-even" / "FBA fees" | → Profit Calculator | `calculator.py` |
-| "HPI verified shortlist" / "hidden gem scan" / "find products with low ads and low reviews" / "5-dimension product scoring" | → HPI 5D Workflow | Built-in: HPI ranking → detail → trend → traffic → 1688 → score (see § Workflow Templates) |
+| "closed-loop workflow" / "选品工作流" / "complete go/no-go" / "end-to-end product selection" | → **Closed-Loop Product Selection** | Built-in workflow template |
 | "monitor price" / "watch this product" / "daily report" | → Monitoring Engine | `monitor.py --mode add/daily/alert` |
 | "TikTok/TEMU/Shopee + analysis" | → Multi-Platform Router | `platform_router.py --platform <name>` |
 | "Walmart product discovery/analysis" | → Walmart Automation | `walmart_picker.py` / `walmart_analyst.py` |
@@ -197,7 +197,6 @@ When users mention specific tactical scenarios, route to the corresponding metho
 | "cross-platform price gap" / "Walmart vs Amazon" | → `tactical/cross-platform-gap.md` ⭐ | Cross-Platform Price Gap Index (Sorftime exclusive dual-platform) |
 | "listing optimization" / "poor listing" / "optimization takeover" | → `tactical/poor-listing-grab.md` | Listing Optimization Potential Index |
 | "price band gap" / "pricing sweet spot" | → `tactical/price-band-sweetspot.md` | Demand Density ÷ Competitor Density |
-| "HPI signal scoring" / "hidden gem verification" / "low ad low review high growth" / "5D scoring" | → `comprehensive/hpi-signal-scoring.md` ⭐ | 5-Dimension Composite (Ad Independence + Review Efficiency + Price Discipline + Sales Growth + BSR Momentum) |
 
 ### Methodology Core Principle (Differentiator vs Competitors)
 
@@ -265,41 +264,39 @@ print(block)
 
 ---
 
-## ⚡ Loop & Goal Automation
-
-For recurring tasks (daily competitor monitoring, weekly keyword refresh, monthly Hidden Profit Index scan), use Claude Code's `/loop` and `/goal` commands with pre-built templates. **58 battle-tested recipes** covering all seller stages and platforms are available in the Wiki:
-
-→ **[Loop & Goal Command Templates](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates)**
-
-Example — Weekly Hidden Profit Index refresh:
-```
-/loop 7d Run Hidden Profit Index TOP20 for keywords "yoga mat"/"resistance bands".
-      Compare with last week. Highlight top 3 fastest-rising products.
-```
-
----
-
 ## Workflow Templates (Built-in)
 
-These workflows are baked into the skill — just trigger with a short goal command.
+### Closed-Loop Product Selection
 
-### HPI 5D Verified Shortlist
-
-Finds products with low ad dependency, low reviews, stable pricing, growing sales, and climbing BSR. Full methodology: `references/methodology-cards/comprehensive/hpi-signal-scoring.md`
+**Trigger**: "closed-loop workflow", "选品工作流", "complete go/no-go", "end-to-end product selection"
 
 ```
-/goal Run HPI 5D verified shortlist for kitchen storage on Amazon US.
-Save checkpoint after each phase. Output completeness gate: all table
-columns must have data — no TBD, no N/A. If any column empty, continue.
-Output ≥5 rows with all columns + TOP3 explanations + excluded list.
-stop after 70 turns
+/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for {category} on {platform}. Seller: {stage}, ${budget}, {model}. Rounds: {N}. Deliverable per acceptance criteria v3.0: confidence-labeled data, 7-member Seller Review Panel verdicts, Go/No-Go Decision Table, Risk Registry, First-Order Plan, copy-paste-ready /loop monitoring command.
+
+Rounds parameter: {N}=1 means test one category and stop. {N}=3 means scan 3 categories. Seller controls depth vs speed.
+
+MANDATORY PROTOCOL — DO NOT SKIP PHASES:
+
+P0(T1-3): ASK+CONFIRM budget, platform, stage, model. Then RECOMMEND path based on profile — but seller ALWAYS has final choice. Both paths are valid for any seller who wants a thorough scan.
+  Default recommendation (seller can say "Path 1", "Path 2", or "both"):
+    → Path 1 fits best when: budget<$10K OR beginner OR arbitrage OR "I want one good product fast"
+    → Path 2 fits best when: brand-owner OR factory OR professional OR "I need a category to build in"
+    → "Both": growing stage $10K+, or seller wants maximum coverage → Path 2 first (find winning categories) then Path 1 within each winner (find hidden gems)
+    → Seller unsure: run Path 2 then Path 1
+PA(T4-15): Path1=potential_product NO hard-threshold, safety AFTER rank, ≥10 products. Path2=category_report×N→11dim→top3 subcat→potential_product×node_id.
+PB(T16-30): PARALLEL product_detail×N, product_trend×N×3, product_traffic_terms×N. WARNING: read exposure_position NOT organic_searched_percentage. product_reviews×TOP3, category_report.
+PC(T31-45): ali1688(CHINESE keywords)×N. Full landed cost. First-order qty=max(MOQ,30d×2.5).
+PD(T46-55): Full P&L→TrueNet. DO NOT APPLY VERDICT.
+PE(T56-65): 4-tier+monopoly+seasonal+review+IP+compliance+platform risks.
+PD2(T66-80) MANDATORY: SPAWN 7 sub-agents IN PARALLEL as Seller Review Panel. Seat1(Peer)×2,Seat2(PeerAlt)×1,Seat3(Mentor)×1.5,Seat4(Conservative)×1,Seat5(Opportunity)×1,Seat6(PlatformSpec)×1.5,Seat7(FinAuditor)×1. Each:score5dim(0-10),vote GO/CAUTION/NO-GO with reasoning. GO=≥4/7 AND Seat6≠NO-GO. NOGO=≥4/7 OR Seat7 NO-GO with P&L evidence. Main agent FORBIDDEN from voting.
+PF(T81-95): Decision Table([VERIFIED]/[ESTIMATED]/[ASSUMED]/[UNAVAILABLE]), Panel record, TOP3, Risk Registry, Budget, First-Order Plan, Raw Data.
+PG(T96-100) MANDATORY: Output EXACT /loop command (NOT /goal):
+  `/loop 30d /sorftime-seller-agent Check {ASIN} on {platform}: product_detail(price/BSR/reviews/rating) + product_trend(SalesVolume)30d. Alerts: sales<30%proj D60->re-evaluate, ACoS>150%est D45->pause, rating<4.3->QC, stock<30d->reorder.`
+  Seat7(Financial Auditor) MUST return before final verdict — if timeout, retry with simplified P&L-only prompt.
+  Every panelist vote MUST include 2-3 sentence role-specific reasoning in the deliverable, not just the vote itself.
+
+Save checkpoint EVERY phase. stop after {N*35} turns (1 round≈35 turns: PA10+PB15+PC15+PD10+PE10+PD210+PF10+PG5). If {N}=1, stop at product verdict for the single category.
 ```
-
-**What it does automatically**: HPI ranking → safety filter → product_detail ×10 → product_trend (SalesVolume/Price/Rank) ×30 → product_traffic_terms ×10 → 1688 sourcing ×10 → category_report → review defect scan on TOP3 → 5-dimension scoring → verified table with risk flags → next steps.
-
-**What you control**: just the category name. The skill handles batching, checkpointing, scoring formulas, and safety gates.
-
-→ See also: [HPI 5D Scoring Card](references/methodology-cards/comprehensive/hpi-signal-scoring.md)
 
 ---
 
@@ -635,7 +632,6 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 
 - **MCP SDK version lock**: This skill requires **MCP 1.x** (not 2.x). `requirements.txt` locks to `mcp>=1.0.0,<2.0.0`. MCP 2.x has breaking API changes (`Server` → `MCPServer`, `stdio_server` signature change). If bridge startup shows "MCP 2.x is not yet supported" or `AttributeError: 'Server' object...`, run `python3 scripts/install.py --upgrade` to downgrade to 1.x.
 - **Schema auto-sync**: `healthcheck.py` checks schema freshness. If it reports "Schema is X days old", run `python3 tests/auto_sync.py` to pull the latest tool list — the server may have added new tools. Sync updates `references/tool-matrix.md`, `sorftime_bridge.py` schemas, and `tests/fixtures/`. Recommended: weekly, or immediately when a tool call returns "tool not found"
-- **🚫 ANTI-PATTERN: Never pre-filter HPI with hard thresholds.** Do NOT pass `price_min`/`price_max`/`month_sales_volume_min`/`review_count` filters to `potential_product` before ranking. The Hidden Profit Index exists to surface products that traditional filtering kills. Verified test (2026-08-03): passing `price $15-45, sales>200` to "kitchen storage" eliminated the #1 HPI product ($59.99, HPI 13.38) and the #7 HPI product ($8.99, HPI 13.22). **Correct sequence**: (1) full HPI ranking with NO filters → (2) safety exclusion via 4-tier risk filter only → (3) analyze why each product ranks high → (4) flag what hard thresholds would have missed → (5) let the seller decide. See [Wiki: Case Study](https://github.com/DannylydST/sorftime-seller-agent/wiki/Exclusive-Methodology#-case-study-products-the-hidden-profit-index-found-2026-08-03).
 - When `SORFTIME_MCP_KEY` is not set, the bridge raises `RuntimeError` — configure the env var or run `install.py` first
 - `potential_product` (Hidden Profit Index ⭐ — Sorftime exclusive methodology). `search_name` parameter is **optional**: omit for **all-category cross-ranking**, include to filter within a keyword's search results. Returns `potential_index` — a **composite recommendation score (relative value)**, not a single-dimension absolute metric. Higher scores indicate stronger overall performance across "low entry barrier, low ad spend, high profit margin" dimensions. When explaining to sellers, focus on the logic behind the index (finding overlooked high-profit products), not per-dimension breakdown calculations. ⚠️ **CRITICAL: A high HPI score does NOT override category risk.** Always cross-check results against the four-tier risk filter (hard-block/capital-intensive/operations-complex/trap-signals) before presenting to sellers. Food, supplements, electronics compliance, seasonal products, and licensed/branded goods must be excluded or flagged regardless of HPI. See `references/methodology-cards/tactical/invisible-profit.md#risk-notes` for the full exclusion table
 - Amazon keyword tools (`keyword_detail` / `keyword_extends` / `keyword_search_results`) use `keyword_support_site` for marketplace; all other Amazon tools use `amz_site`. **⚠️ Exception: `product_customers_say` uses `site`** (not `amz_site`), the only Amazon tool to do so. **See the "MCP Parameter Name Traps" section above — parameter name mismatches are the #1 cause of call failures**
@@ -670,6 +666,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - **Walmart `rank_min`/`rank_max` required**: `walmart_keyword_list` requires both `rank_min` and `rank_max`. Recommended range `1-100`, 100 results per page
 - **Walmart category ID format**: `node_id` is string, may contain underscores (e.g. `1072864_8490340`). Extract from product detail's `NodeTree`: `["Category Name", "node_id", "Date", "Rank"]`
 - **Walmart data scope**: search results cover last 15 days of organic-ranking products, sorted by monthly sales descending. Traffic keyword data includes `ShowShare` (impression share) and `RecentlyPosition`/`OrganicPosition`/`AdPosition` (recent/organic/ad rank positions)
+- **CRITICAL: `product_traffic_terms` field trap (2026-08-04).** The API returns `exposure_position` ("Organic"/"Ad"/"Ad,Organic"), `latest_organic_position`, `monthly_search_volume`, `recommended_bid`. There is NO field called `organic_searched_percentage`. Querying it returns null/0, falsely suggesting zero organic traffic. Use: count keywords where `exposure_position` contains "Organic" + check `latest_organic_position` for rank quality. 20/20 organic + 7/20 ad = organic-driven. 20/20 organic + 18/20 ad = buys visibility.
 - **Amazon `product_reviews` may return "No reviews found"** — try a higher-volume ASIN. The tool returns rich review data (35+ reviews with variant_attribute/review_date/star_rating/title) when available. `product_traffic_terms` + `competitor_product_keywords` confirmed working (keyword-level search volume/bid/exposure data). `similar_product_feature` uses `product_name` parameter (not `asin` — auto-corrected). `product_customers_say` uses `site` (not `amz_site`) — the only Amazon tool diverging from both `amz_site` and `keyword_support_site`. `category_report_from_history` and `category_keywords` returned no data in tests — possibly limited server-side historical/ keyword coverage.
 - **Amazon `product_variations` returns child ASINs but variant attributes may be empty** — the tool returns 55+ child ASINs but `attribute` and `month_sales_volume_range` may be blank for some products. Verify data quality before using.
 - **Walmart `walmart_product_trend_by_product_id` and `walmart_product_variation_sales_by_product_id` return raw interleaved arrays** like Shopee trend tools: `[date, val, date, val...]`. 730 daily data points for trends, 62 for variation sales. Parse with `zip(data[::2], data[1::2])`.
