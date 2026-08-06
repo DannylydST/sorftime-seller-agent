@@ -1,0 +1,10 @@
+# Main branch ownership — Sorftime Seller Agent maintenance team.
+#
+# Only reviews from these code owners count toward the required PR review
+# on `main`. External contributors and collaborators cannot merge without
+# a maintenance-team approval.
+#
+# Add additional maintainers here as the team grows:
+#   * @DannylydST @other-maintainer
+
+* @DannylydST
