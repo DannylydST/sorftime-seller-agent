@@ -4,6 +4,24 @@ All notable changes to Sorftime Seller Agent.
 
 ---
 
+## [2026-08-10] — v3.6.0
+
+### Added
+- **Instruction Priority — Obey the Seller**: Precise instructions (exact tool/ASIN/keyword/platform/site/output specified) execute **directly** — no routing, no methodology cards, no lens imposition, no stage reformatting. Only ambiguous/exploratory requests get the guided flow (persona → card → staged output). Output format follows the user (HTML report / `--json` / raw table / analysis on request).
+- **Risk folding for professional sellers**: `pro`/`factory`/`brand` profiles collapse the full risk table to a footnote + one-line proactive hints for 🔴hard products (`risk_verbose=false`); `--show-risks` expands. `newbie`/`grower` keep the full warning table + beginner safe-shortlist. Risk is always advisory — never blocks, never hides.
+- **Closed-Loop workflow → Reference (opt-in)**: The workflow runs only via `/goal`, `/loop`, or explicit "closed-loop" request. Daily queries never enter it. Full spec (with v3.3+ enhancements: seller-country P0 paths, anti-absolutism rule, `/loop` command) consolidated in `references/workflows/closed-loop-selection.md`.
+
+### Changed
+- SKILL.md: new "Instruction Priority" section; big in-file workflow block replaced by a reference pointer; Execution Principle #1 → "obey the instruction first, guide when ambiguous"; Seller Profiles table shows risk presentation per profile.
+- `seller_profile.py` / `picker.py` / `walmart_picker.py`: `risk_verbose` flag + `--show-risks` + `format_risk_section` (collapsed footnote vs full table).
+
+### Verified
+- Risk folding: pro profile on yoga-mat query → 2 hard products shown as one-line hints + collapsed footnote; `--show-risks` → full table; newbie → full warnings.
+- Agent-level: a "pro direct" prompt ("product_search yoga mat US sorted by monthly sales, data only") was executed directly — raw table returned, no lens/no risk table.
+- 20/20 scenario regression passes.
+
+---
+
 ## [2026-08-10] — v3.5.0
 
 ### Added
