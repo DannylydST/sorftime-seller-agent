@@ -55,27 +55,66 @@ else:
     import json
     import httpx
     from typing import Any, Dict, List, Optional
-    from mcp.server import Server
-    from mcp.server.stdio import stdio_server
-    from mcp.types import TextContent, Tool
     from utils.env_config import load_env
 
-    # ── MCP version guard: block 2.x on startup ──────────────────
+    # ── MCP SDK version detection — BEFORE imports, decides which Server API to use ──
     try:
         from importlib.metadata import version as _get_version
         _mcp_version = _get_version("mcp")
         _mcp_major = int(_mcp_version.split(".")[0])
     except Exception:
         _mcp_version = "unknown"
-        _mcp_major = 1  # assume safe
-    if _mcp_major >= 2:
-        print(
-            f"ERROR: MCP {_mcp_version} is not yet supported (breaking changes from 1.x).",
-            "Please run:  python3 scripts/install.py --upgrade",
-            "This will install mcp>=1.0.0,<2.0.0 into the virtual environment.",
-            sep="\n", file=sys.stderr,
+        _mcp_major = 1  # assume 1.x API shape if version is unreadable
+
+    # Supported majors: 1.x (decorator API) and 2.x (constructor API).
+    _MCP_V1 = (_mcp_major == 1)
+    _MCP_V2 = (_mcp_major == 2)
+
+    if not (_MCP_V1 or _MCP_V2):
+        # Unsupported/future major (3.x, 0.x, corrupted) — SELF-HEAL to known-good 1.x.
+        print(f"⚠️  MCP {_mcp_version} detected — unsupported SDK major. Auto-downgrading to 1.x...",
+              file=sys.stderr)
+        _fixed = False
+        try:
+            import subprocess
+            # We are running under the skill's venv (sys.executable = venv python);
+            # reinstall mcp 1.x into it, then restart the bridge.
+            _r = subprocess.run(
+                [sys.executable, "-m", "pip", "install", "--quiet", "--disable-pip-version-check",
+                 "mcp>=1.0.0,<2.0.0"],
+                capture_output=True, text=True, timeout=180,
+            )
+            if _r.returncode == 0:
+                _fixed = True
+        except Exception as _e:
+            print(f"    pip reinstall failed: {_e}", file=sys.stderr)
+
+        if _fixed:
+            print("    ✅ mcp downgraded. Restarting bridge...", file=sys.stderr)
+            os.execv(sys.executable, [sys.executable, __file__] + sys.argv[1:])
+        else:
+            print(
+                "    ❌ Auto-fix failed. Run manually:  python3 scripts/install.py --upgrade",
+                "    (reinstalls mcp>=1.0.0,<2.0.0 into the virtual environment)",
+                sep="\n", file=sys.stderr,
+            )
+            sys.exit(1)
+
+    # ── Conditional imports per SDK major ──
+    if _MCP_V2:
+        # mcp SDK 2.x: constructor-based Server, ctx/params handlers, explicit Result types.
+        # Ref: https://py.sdk.modelcontextprotocol.io/v2/migration
+        from mcp.server import Server, ServerRequestContext
+        from mcp.server.stdio import stdio_server
+        from mcp.types import (
+            CallToolRequestParams, CallToolResult, ListToolsResult,
+            PaginatedRequestParams, TextContent, Tool,
         )
-        sys.exit(1)
+    else:
+        # mcp SDK 1.x: decorator-based Server, bare return types.
+        from mcp.server import Server
+        from mcp.server.stdio import stdio_server
+        from mcp.types import TextContent, Tool
 
 load_env()
 SORFTIME_MCP_URL = os.getenv("SORFTIME_MCP_URL", "https://mcp.sorftime.com")
@@ -2027,6 +2066,11 @@ _FALLBACK_CORE_TOOLS = [
                 "asin": {
                     "description": "Product ASIN, single-ASIN query only.",
                     "type": "string"
+                },
+                "page": {
+                    "description": "The page index of the query result. Defaults to page 1. Each page returns 20 records.",
+                    "type": "integer",
+                    "default": 1
                 },
                 "amz_site": {
                     "description": "Amazon marketplace site. ",
@@ -4173,6 +4217,15 @@ async def call_sorftime(tool_name: str, arguments: Dict[str, Any]) -> str:
 
 
 async def run_server() -> None:
+    """Dispatch to the correct stdio Server implementation for the installed mcp SDK."""
+    if _MCP_V2:
+        await _run_server_v2()
+    else:
+        await _run_server_v1()
+
+
+async def _run_server_v1() -> None:
+    """mcp SDK 1.x: decorator-based Server."""
     server = Server("sorftime-seller-agent")
 
     @server.list_tools()
@@ -4190,6 +4243,34 @@ async def run_server() -> None:
             result = await call_sorftime(name, arguments)
         return [TextContent(type="text", text=result)]
 
+    async with stdio_server() as (read_stream, write_stream):
+        await server.run(read_stream, write_stream, server.create_initialization_options())
+
+
+async def _run_server_v2() -> None:
+    """mcp SDK 2.x: constructor-based Server, ctx/params handlers, Result types.
+    Also manually wraps tool exceptions (v2 removed automatic error wrapping)."""
+    async def list_tools(ctx: ServerRequestContext,
+                         params: Optional[PaginatedRequestParams] = None) -> ListToolsResult:
+        return ListToolsResult(tools=build_tools())
+
+    async def call_tool(ctx: ServerRequestContext, params: CallToolRequestParams) -> CallToolResult:
+        arguments = dict(params.arguments or {})
+        try:
+            if params.name == "sorftime_raw_call":
+                actual_name = arguments.pop("tool_name", "")
+                actual_args = arguments.pop("arguments", {})
+                result = await call_sorftime(actual_name, actual_args)
+            else:
+                result = await call_sorftime(params.name, arguments)
+            return CallToolResult(content=[TextContent(type="text", text=result)])
+        except Exception as e:
+            return CallToolResult(
+                content=[TextContent(type="text", text=f"ERROR: {e}")],
+                is_error=True,
+            )
+
+    server = Server("sorftime-seller-agent", on_list_tools=list_tools, on_call_tool=call_tool)
     async with stdio_server() as (read_stream, write_stream):
         await server.run(read_stream, write_stream, server.create_initialization_options())
 
