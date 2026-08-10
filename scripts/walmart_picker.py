@@ -23,7 +23,7 @@ for _stream in (sys.stdout, sys.stderr):
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from utils.cache import TTL_PRESETS, get, set
-from utils.category_guard import filter_products, format_risk_warning_table, format_low_risk_tips_table
+from utils.category_guard import filter_products, format_risk_section, format_low_risk_tips_table
 from utils.compressor import compress
 from utils.mcp_client import call_tool_json
 from utils.seller_profile import get_profile, format_profile_badge
@@ -226,7 +226,7 @@ def _fetch_keyword_extends(keyword: str):
         return None
 
 
-def run_blueocean(keyword: str, profile: dict = None):
+def run_blueocean(keyword: str, profile: dict = None, show_risks: bool = False):
     """Walmart Blue Ocean Mode: long-tail keywords + product search + risk filtering + quantitative analysis"""
     if profile is None:
         profile = get_profile("newbie")
@@ -280,13 +280,13 @@ def run_blueocean(keyword: str, profile: dict = None):
     print(format_risk_summary(inv_risk, crowding, profile_key))
 
     if warnings:
-        print(format_risk_warning_table(warnings))
+        print(format_risk_section(warnings, profile, show_risks))
 
     if low_risk_tips:
         print(format_low_risk_tips_table(low_risk_tips))
 
 
-def run_newbie(keyword: str, profile: dict = None):
+def run_newbie(keyword: str, profile: dict = None, show_risks: bool = False):
     """Walmart Beginner Mode: low reviews (<200) + mid-range price ($15-40) + risk filtering"""
     if profile is None:
         profile = get_profile("newbie")
@@ -339,7 +339,7 @@ def run_newbie(keyword: str, profile: dict = None):
     print(format_risk_summary(inv_risk, crowding, "newbie"))
 
     if warnings:
-        print(format_risk_warning_table(warnings))
+        print(format_risk_section(warnings, profile, show_risks))
 
     if low_risk_tips:
         print(format_low_risk_tips_table(low_risk_tips))
@@ -355,6 +355,8 @@ def main():
     parser.add_argument("--allow-capital", action="store_true")
     parser.add_argument("--allow-ops", action="store_true")
     parser.add_argument("--skip-traps", action="store_true")
+    parser.add_argument("--show-risks", action="store_true",
+                        help="Expand full risk warning table (pro/factory/brand collapse by default)")
     args = parser.parse_args()
 
     profile = get_profile(
@@ -367,9 +369,9 @@ def main():
     profile["key"] = args.profile  # Preserve key for downstream logic
 
     if args.mode == "blueocean":
-        run_blueocean(args.keyword, profile)
+        run_blueocean(args.keyword, profile, args.show_risks)
     elif args.mode == "newbie":
-        run_newbie(args.keyword, profile)
+        run_newbie(args.keyword, profile, args.show_risks)
 
 
 if __name__ == "__main__":

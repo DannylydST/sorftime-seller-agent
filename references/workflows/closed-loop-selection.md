@@ -1,21 +1,35 @@
 # Closed-Loop Product Selection Workflow
 
-> **Version**: 3.1 | **Turns**: 100 (Path 1) / 115 (Path 2) | **Seller Panel**: 7 members | **Platforms**: 7 | **Business Models**: 6 | **Validated**: 20 rounds, 82.7% avg adoption
+> **Version**: 3.3 | **Turns**: 100 (Path 1) / 115 (Path 2) | **Seller Panel**: 7 members | **Platforms**: 7 | **Business Models**: 6 | **Validated**: 20 rounds, 82.7% avg adoption
+>
+> **v3.6.0 note**: this is a REFERENCE workflow, opt-in only. It runs when the user invokes
+> `/goal` / `/loop` or explicitly asks for "closed-loop / 完整选品工作流". Daily queries never
+> enter this workflow. Within the workflow, phases are MANDATORY — do not skip.
 
 ## Quick Start
 
 ```
-/goal /sorftime-seller-agent Closed-loop product selection for {category} on Amazon US. Budget: ${amount}. Seller: {beginner|growing|professional|factory|brand}.
+/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for {category} on {platform}. Seller: {stage}, ${budget}, {model}, country={cn|us|uk|de|other}. Rounds: {N}.
 ```
 
 中文：`/goal /sorftime-seller-agent 跑完整选品工作流，瑜伽垫，$15K，进阶卖家`
+
+**Rounds parameter**: `{N}=1` means test one category and stop; `{N}=3` scans 3 categories. Seller controls depth vs speed. Stop after `{N*35}` turns (~35 turns/round).
 
 ---
 
 ## Phase Execution Protocol
 
-### Phase 0: Seller Input Gate (Turns 1-3)
-Ask: Budget, Platform, Stage, Model, **Seller Country**, Goal (Path 1 or 2). Confirm before proceeding.
+### Phase 0: Seller Input Gate (Turns 1-3) — MANDATORY INTERACTION
+Ask: Budget, Platform, Stage, Model, **Seller Country**, Goal (Path 1 or 2). **DO NOT call any MCP tool until the seller explicitly chooses a path.**
+
+Present BOTH paths in this exact format:
+> "Based on your profile ({stage}, ${budget}, {country} seller), two paths are available:
+> **Path 1 (HPI Product Sniper)**: full-category HPI ranking → find undervalued individual products. Fast results.
+> **Path 2 (Market Mapper)**: analyze subcategory competition first → pick products within winning categories. Strategic.
+> My recommendation: {Path X}, because {reason}. But you decide — Path 1, Path 2, or both?"
+
+Default recommendation: Path 1 for budget<$10K / beginner / arbitrage / "one good product fast"; Path 2 for brand-owner / factory / professional / "a category to build in"; Both for growing $10K+; unsure → Path 2 then Path 1.
 
 **Seller Country is a first-class parameter** — it changes sourcing, logistics, tax, risk, and compliance:
 
@@ -47,11 +61,26 @@ Ask: Budget, Platform, Stage, Model, **Seller Country**, Goal (Path 1 or 2). Con
 ### Phase D: Financial Analysis (Turns 46-55)
 Full P&L → post-ad true net margin. Capital vs budget check. **DO NOT apply verdict in this phase.**
 
+ADJUST TAX BY SELLER COUNTRY:
+- `cn` → No US sales tax obligation (Amazon collects/remits). Return cost: disposal only (no domestic return address).
+- `us` → Sales tax nexus consideration. Return cost: domestic return address, restock/resell possible.
+- `uk`/`de` → VAT registered: input VAT recoverable on import. Return cost: EU mandatory 14-day withdrawal.
+
 ### Phase E: Risk Assessment (Turns 56-65)
 4-tier risk + brand monopoly + seasonal + review quality + IP clearance + compliance + platform-specific.
 
+ADJUST RISK BY SELLER COUNTRY:
+- `cn` → HIGHER: compliance unfamiliarity (FCC/FDA/CPC), IP complaint vulnerability, account suspension risk
+- `us` → LOWER: compliance familiarity, stronger IP enforcement access, domestic liability insurance available
+- `uk`/`de` → MEDIUM: product liability strict, WEEE/GPSR/UKCA mandatory, language-specific listings
+
 ### Phase D2: Seller Review Panel (Turns 66-80) 🚨 MANDATORY — DO NOT SKIP
 **SPAWN 7 independent sub-agents via Agent tool in parallel.** The main agent MUST NOT vote — only the panel votes. Each panelist receives the full data package (P&L + trends + traffic + sourcing + risks). Each scores 5 dimensions (0-10), votes GO/CAUTION/NO-GO, writes role-specific reasoning.
+
+Seats (country-aware): Seat1 Peer Match (same stage+budget+model+COUNTRY)×2 · Seat2 Peer Alt (same country, budget×0.8)×1 · Seat3 Mentor (one stage up, SAME country)×1.5 · Seat4 Conservative×1 · Seat5 Opportunity×1 · Seat6 Platform Specialist (platform+COUNTRY dynamics)×1.5 · Seat7 Financial Auditor (country-specific P&L, tax, duties)×1.
+
+**Seat7 MUST return before final verdict** — if timeout, retry with a simplified P&L-only prompt. Every panelist vote MUST include 2-3 sentence role-specific reasoning in the deliverable, not just the vote.
+
 - GO: ≥4/7 votes GO + Platform Specialist (Seat 6) ≠ NO-GO
 - NO-GO: ≥4/7 NO-GO OR Financial Auditor (Seat 7) NO-GO with specific P&L evidence
 - CAUTION: else
@@ -60,8 +89,19 @@ Full P&L → post-ad true net margin. Capital vs budget check. **DO NOT apply ve
 ### Phase F: Final Deliverable (Turns 81-95)
 Go/No-Go Decision Table (confidence-labeled). TOP 3 deep-dive. Risk registry with severity+mitigation. Actionable next steps. Budget utilization vs seller budget. Raw data appendix. Panel vote tally + dissent summary. **No fabricated data — UNAVAILABLE is acceptable.**
 
+🚫 **ANTI-ABSOLUTISM RULE**: NEVER use absolute language. BANNED phrases: "this product WILL succeed", "guaranteed profit", "100% safe", "definitely", "certainly", "no risk". REQUIRED qualifiers: "based on available data", "estimates suggest", "historical trends indicate", "panel assessment is", "verify independently before committing capital".
+
+The Executive Summary MUST include: "All supply chain data is from 1688 (Chinese B2B platform) and is FOR REFERENCE ONLY. Financial projections are ESTIMATES based on current API data. Verify with actual supplier quotes, freight forwarders, and a small-batch PPC test before committing your full budget."
+
+Every GO verdict MUST be accompanied by: "Proceed to supplier negotiation and sample order. Do NOT commit full capital until [specific condition] is verified."
+
 ### Phase G: Post-Launch Monitoring (Turns 96-100) 🚨 MANDATORY
 Generate a complete, copy-paste-ready `/loop` command with: 30/60/90-day checks via `product_detail` + `product_trend`, reorder trigger (inventory <30 days cover), ACoS checkpoint (day 45, alert if >150% of projection), review rating alert (<4.3 triggers quality investigation).
+
+Output the EXACT `/loop` command (NOT `/goal`):
+```
+/loop 30d /sorftime-seller-agent Check {ASIN} on {platform}: product_detail(price/BSR/reviews/rating) + product_trend(SalesVolume)30d. Alerts: sales<30%proj D60->re-evaluate, ACoS>150%est D45->pause, rating<4.3->QC, stock<30d->reorder.
+```
 
 ---
 

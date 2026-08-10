@@ -23,6 +23,7 @@ PRESET_PROFILES: Dict[str, Dict[str, Any]] = {
         "capital_block": True,   # Capital-Intensive block: ON
         "ops_block": True,       # Operations-Complex block: ON
         "trap_filter": True,     # Trap Filter: ON
+        "risk_verbose": True,    # Full risk warning table (guidance-heavy)
         "max_sku_count": 10,     # Recommended max SKU count
         "max_inventory_invest": 5000,  # Recommended max initial capital (USD)
     },
@@ -33,6 +34,7 @@ PRESET_PROFILES: Dict[str, Dict[str, Any]] = {
         "capital_block": True,   # Still blocks capital-intensive, but shows more detailed risk quantification
         "ops_block": False,      # Allows operations-complex (warns but does not block)
         "trap_filter": True,
+        "risk_verbose": True,    # Full risk warning table
         "max_sku_count": 30,
         "max_inventory_invest": 15000,
     },
@@ -43,6 +45,7 @@ PRESET_PROFILES: Dict[str, Dict[str, Any]] = {
         "capital_block": False,  # Allows capital-intensive (warns but does not block)
         "ops_block": False,
         "trap_filter": True,     # Keeps trap filter (not recommended to disable)
+        "risk_verbose": False,   # Collapse risk table to a footnote (pro has compliance team)
         "max_sku_count": 100,
         "max_inventory_invest": 50000,
     },
@@ -53,6 +56,7 @@ PRESET_PROFILES: Dict[str, Dict[str, Any]] = {
         "capital_block": False,
         "ops_block": False,
         "trap_filter": True,     # Still recommended to keep trap filter
+        "risk_verbose": False,   # Collapse risk table to a footnote
         "max_sku_count": 500,
         "max_inventory_invest": 200000,
     },
@@ -63,6 +67,7 @@ PRESET_PROFILES: Dict[str, Dict[str, Any]] = {
         "capital_block": False,
         "ops_block": False,
         "trap_filter": True,
+        "risk_verbose": False,   # Collapse risk table to a footnote
         "max_sku_count": 1000,
         "max_inventory_invest": 500000,
     },

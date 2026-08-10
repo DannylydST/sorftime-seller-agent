@@ -21,7 +21,8 @@ for _stream in (sys.stdout, sys.stderr):
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from utils.cache import TTL_PRESETS, get, set
-from utils.category_guard import (filter_products, format_risk_warning_table,
+from utils.category_guard import (filter_products, format_risk_section,
+                                  format_risk_warning_table,
                                   format_low_risk_tips_table, recommend_safe)
 from utils.compressor import compress, _safe_get
 from utils.mcp_client import call_tool_json
@@ -134,7 +135,7 @@ def analyze_seller_insights(products: list, stage: str = "grower", risk_warnings
 
 
 def run_blueocean(platform: str, site: str, keyword: str, stage: str = "grower", profile: dict = None,
-                  json_path: str = ""):
+                  json_path: str = "", show_risks: bool = False):
     """Blue Ocean mode: Hidden Earning Index + Product Search (advisory — never removes products)"""
     results = []
     product_data = None
@@ -240,13 +241,14 @@ def run_blueocean(platform: str, site: str, keyword: str, stage: str = "grower",
             print()
 
     if all_warnings:
-        print(format_risk_warning_table(all_warnings))
+        print(format_risk_section(all_warnings, profile, show_risks))
 
     if all_low_risk_tips:
         print(format_low_risk_tips_table(all_low_risk_tips))
 
 
-def run_newbie(platform: str, site: str, keyword: str, profile: dict = None, json_path: str = ""):
+def run_newbie(platform: str, site: str, keyword: str, profile: dict = None, json_path: str = "",
+               show_risks: bool = False):
     """Beginner Mode: low-competition filtering + margin-friendly"""
     if profile is None:
         profile = get_profile("newbie")
@@ -315,7 +317,7 @@ def run_newbie(platform: str, site: str, keyword: str, profile: dict = None, jso
     print(format_risk_summary(inv_risk, crowding, profile.get("name", "newbie").lower()))
 
     if warnings:
-        print(format_risk_warning_table(warnings))
+        print(format_risk_section(warnings, profile, show_risks))
 
     if low_risk_tips:
         print(format_low_risk_tips_table(low_risk_tips))
@@ -353,6 +355,10 @@ def main():
     parser.add_argument("--json", dest="json_path", default="",
                         help="Save the annotated shortlist to this JSON file (for review_shortlist.py)")
 
+    # Force full risk table even for pro/factory/brand profiles (which collapse by default)
+    parser.add_argument("--show-risks", action="store_true",
+                        help="Expand the full risk warning table (pro/factory/brand collapse it by default)")
+
     # Help
     parser.add_argument("--profile-help", action="store_true",
                         help="Show detailed seller profile explanation")
@@ -377,9 +383,9 @@ def main():
     )
 
     if args.mode == "blueocean":
-        run_blueocean(args.platform, args.site, args.keyword, args.stage, profile, args.json_path)
+        run_blueocean(args.platform, args.site, args.keyword, args.stage, profile, args.json_path, args.show_risks)
     elif args.mode == "newbie":
-        run_newbie(args.platform, args.site, args.keyword, profile, args.json_path)
+        run_newbie(args.platform, args.site, args.keyword, profile, args.json_path, args.show_risks)
 
 
 if __name__ == "__main__":

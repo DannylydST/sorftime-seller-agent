@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime Seller Agent — Expert-level cross-border e-commerce data analysis and product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. A single skill that turns any MCP-enabled AI agent (Claude Code, OpenClaw, Cursor, Copilot) into a Sorftime marketplace intelligence expert. Covers product discovery, competitor analysis, keyword strategy, profit calculation, ASIN deep-dive, blue ocean finding, market intelligence, and more. Auto-adapts output for beginner, growing, and professional seller stages."
 trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/选品/竞品/关键词/利润/市场看板/ASIN/类目/蓝海/季节性/隐赚/货源/监控/closed-loop workflow/选品工作流/complete go-no-go/end-to-end product selection"
-version: 3.5.0
+version: 3.6.0
 user-invocable: true
 metadata:
   openclaw:
@@ -264,97 +264,50 @@ print(block)
 
 ---
 
-## Workflow Templates (Built-in)
+## Instruction Priority (v3.6.0) — Obey the Seller
 
-### Closed-Loop Product Selection
+> The skill is a data tool that follows the seller's instructions. Risk is always **advisory** — never blocks, never hides (see Four-Tier Risk Advisory System below).
 
-**Trigger**: "closed-loop workflow", "选品工作流", "complete go/no-go", "end-to-end product selection"
+### Precise instruction → direct execution (no routing, no cards, no reformatting)
 
+If the request specifies ≥2 of: **exact tool / ASIN / keyword / platform / site / output format** → EXECUTE DIRECTLY:
+- Skip `router.py` / `persona.py` stage detection, skip methodology cards, skip lens imposition
+- Return exactly what was asked: raw table, sorted-by-sales, JSON, etc.
+
+Examples:
+- `"product_search for 'yoga mat' US, sorted by monthly sales"` → execute + return the table, no added framing
+- `"raw product_detail JSON for B08N5WRWNW"` → return the JSON
+- `"compare B0X and B0Y price trends, just the numbers"` → return the numbers
+
+### Ambiguous / exploratory request → guided flow
+For vague requests (`"find opportunities"`, `"is this category worth it"`), THEN: identify stage (`persona.py`), route to a methodology card, use index-based analysis, present findings + risk advisory.
+
+### Output format follows the user
+- Wants a report → HTML per-product deliverable (see workspace CLAUDE.md)
+- Wants raw data → `--json` / raw tables
+- Wants analysis → analysis
+- Default: structured tables (never dump raw JSON unformatted without reason)
+
+---
+
+## Reference Workflow: Closed-Loop Product Selection (opt-in)
+
+> **v3.6.0**: REFERENCE workflow — NOT the default. Runs ONLY when the user explicitly invokes it via `/goal`, `/loop`, or says "run the full / closed-loop selection workflow". **Daily queries never enter this workflow.**
+
+**Trigger**: `/goal` / `/loop` with the workflow, or explicit "closed-loop selection" / "完整选品工作流"
+
+**Full spec** → `references/workflows/closed-loop-selection.md` (Phases P0→PG, 7-member Seller Review Panel, data persistence, /loop monitoring). When triggered, follow it exactly — within the workflow, phases are MANDATORY (do not skip).
+
+**Quick-start**:
 ```
-/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for {category} on {platform}. Seller: {stage}, ${budget}, {model}, country={cn|us|uk|de|other}. Rounds: {N}. Deliverable per acceptance criteria v3.0: confidence-labeled data, 7-member Seller Review Panel verdicts, Go/No-Go Decision Table, Risk Registry, First-Order Plan, copy-paste-ready /loop monitoring command.
-
-Rounds parameter: {N}=1 means test one category and stop. {N}=3 means scan 3 categories. Seller controls depth vs speed.
-
-MANDATORY PROTOCOL — DO NOT SKIP PHASES:
-
-P0(T1-3): MANDATORY INTERACTION — DO NOT call any MCP tool until seller explicitly chooses a path.
-  Step 1: ASK+CONFIRM budget, platform, stage, model, SELLER COUNTRY.
-  Step 2: PRESENT BOTH PATHS in this exact format:
-    "Based on your profile ({stage}, ${budget}, {country} seller), two paths are available:
-     Path 1 (HPI Product Sniper): full-category HPI ranking → find undervalued individual products. Fast results.
-     Path 2 (Market Mapper): analyze subcategory competition first → pick products within winning categories. Strategic.
-     My recommendation: {Path X}, because {reason}. But you decide — Path 1, Path 2, or both?"
-  Step 3: WAIT for seller response. DO NOT proceed to PA until seller chooses.
-  Seller country is a FIRST-CLASS parameter — it changes sourcing, logistics, tax, risk, compliance. DO NOT assume all sellers are Chinese.
-  Seller country options:
-    cn = Chinese cross-border seller → 1688 sourcing, cross-border freight+duty, lower COGS, higher compliance/IP risk
-    us = US domestic seller → Alibaba.com or domestic wholesale, domestic shipping, higher COGS, lower compliance risk
-    uk = UK domestic seller → EU/UK suppliers, UK duty+20% VAT, UKCA compliance
-    de = German domestic seller → EU suppliers, EU duty+19% VAT, WEEE/GPSR/VerpackG mandatory
-    other = Other (ask seller for sourcing preference + logistics details)
-  Default recommendation (seller can say "Path 1", "Path 2", or "both"):
-    → Path 1 fits best when: budget<$10K OR beginner OR arbitrage OR "I want one good product fast"
-    → Path 2 fits best when: brand-owner OR factory OR professional OR "I need a category to build in"
-    → "Both": growing stage $10K+, or seller wants maximum coverage → Path 2 first then Path 1 within each winner
-    → Seller unsure: run Path 2 then Path 1
-PA(T4-15): Path1=potential_product NO hard-threshold, safety AFTER rank, ≥10 products. Path2=category_report×N→11dim→top3 subcat→potential_product×node_id.
-PB(T16-30): PARALLEL product_detail×N, product_trend×N×3, product_traffic_terms×N. WARNING: read exposure_position NOT organic_searched_percentage. product_reviews×TOP3, category_report.
-PC(T31-45): Sorftime MCP ONLY has 1688 supply chain tools (5 endpoints). No Alibaba.com, no domestic wholesale.
-  ALL sellers use ali1688_similar_product — but ADAPT BY COUNTRY:
-  cn → CHINESE keywords (e.g. "瑜伽垫"). CNY pricing is native. Cross-border freight+duty.
-  us → ENGLISH keywords work (verified: "yoga mat" returns 100 results). Results in Chinese with CNY pricing — convert CNY→USD at ~0.14 rate. NOTE: 1688 is a Chinese platform, not a domestic supplier.
-       COGS fallback if 1688 returns unsuitable: price × 0.30 (US wholesale markup is higher than CN factory).
-       Logistics: sea freight + US duty + customs (US sellers importing from China — same as CN seller).
-  uk/de → ENGLISH keywords on 1688. Convert CNY→GBP/EUR. Add UK/EU import duty + VAT.
-       COGS fallback: price × 0.35 (EU wholesale).
-  WARNING for non-CN sellers: 1688 is a Chinese-language B2B platform. Results include Chinese titles, CNY prices, and China-based suppliers. Clearly label all 1688 data as [ESTIMATED: 1688 CN supplier, CNY→USD converted]. Recommend seller verify via Alibaba.com independently.
-  ⚠️ ALL 1688 DATA IS FOR REFERENCE ONLY. NOT definitive sourcing. Bait pricing, quality variability, MOQ mismatch, and currency conversion are inherent limitations. Every cost line in this phase MUST carry a disclaimer: "Verify with actual supplier quote before committing capital."
-  Full landed cost PER COUNTRY. First-order qty=max(MOQ,30d×2.5).
-PD(T46-55): Full P&L→TrueNet. ADJUST TAX BY SELLER COUNTRY:
-  cn → No US sales tax obligation (Amazon collects/remits). Return cost: disposal only (no domestic return address).
-  us → Sales tax nexus consideration. Return cost: domestic return address, restock/resell possible.
-  uk/de → VAT registered: input VAT recoverable on import. Return cost: EU mandatory 14-day withdrawal.
-  DO NOT APPLY VERDICT.
-PE(T56-65): ADJUST RISK BY SELLER COUNTRY:
-  cn → HIGHER: compliance unfamiliarity (FCC/FDA/CPC), IP complaint vulnerability, account suspension risk, language barrier in customer service
-  us → LOWER: compliance familiarity, stronger IP enforcement access, domestic liability insurance available
-  uk/de → MEDIUM: product liability strict, WEEE/GPSR/UKCA mandatory, language-specific listing requirements
-  +4-tier+monopoly+seasonal+review+platform risks.
-PD2(T66-80) MANDATORY: SPAWN 7 sub-agents IN PARALLEL as Seller Review Panel. Seat1(Peer: same stage+budget+model+COUNTRY)×2,Seat2(PeerAlt: same country, budget×0.8)×1,Seat3(Mentor: one stage up, SAME country)×1.5,Seat4(Conservative)×1,Seat5(Opportunity)×1,Seat6(PlatformSpec: platform+COUNTRY dynamics)×1.5,Seat7(FinAuditor: country-specific P&L, tax, duties)×1. Each:score5dim(0-10),vote GO/CAUTION/NO-GO with reasoning. GO=≥4/7 AND Seat6≠NO-GO. NOGO=≥4/7 OR Seat7 NO-GO with P&L evidence. Main agent FORBIDDEN from voting.
-PF(T81-95): Decision Table([VERIFIED]/[ESTIMATED]/[ASSUMED]/[UNAVAILABLE]), Panel record, TOP3, Risk Registry, Budget, First-Order Plan, Raw Data.
-  🚫 ANTI-ABSOLUTISM RULE: NEVER use absolute language in conclusions. BANNED phrases: "this product WILL succeed", "guaranteed profit", "100% safe", "definitely", "certainly", "no risk".
-  REQUIRED qualifiers: "based on available data", "estimates suggest", "historical trends indicate", "panel assessment is", "verify independently before committing capital".
-  The Executive Summary MUST include: "All supply chain data is from 1688 (Chinese B2B platform) and is FOR REFERENCE ONLY. Financial projections are ESTIMATES based on current API data. Verify with actual supplier quotes, freight forwarders, and a small-batch PPC test before committing your full budget."
-  Every GO verdict MUST be accompanied by: "Proceed to supplier negotiation and sample order. Do NOT commit full capital until [specific condition] is verified."
-PG(T96-100) MANDATORY: Output EXACT /loop command (NOT /goal):
-  `/loop 30d /sorftime-seller-agent Check {ASIN} on {platform}: product_detail(price/BSR/reviews/rating) + product_trend(SalesVolume)30d. Alerts: sales<30%proj D60->re-evaluate, ACoS>150%est D45->pause, rating<4.3->QC, stock<30d->reorder.`
-  Seat7(Financial Auditor) MUST return before final verdict — if timeout, retry with simplified P&L-only prompt.
-  Every panelist vote MUST include 2-3 sentence role-specific reasoning in the deliverable, not just the vote itself.
-
-Save checkpoint EVERY phase. stop after {N*35} turns (1 round≈35 turns: PA10+PB15+PC15+PD10+PE10+PD210+PF10+PG5). If {N}=1, stop at product verdict for the single category.
-
-DATA PERSISTENCE — ALL OUTPUTS MUST BE WRITTEN TO DISK:
-  Output directory: ${SORFTIME_OUTPUT_DIR:-~/Documents/sorftime}/{date}-{category}-{platform}/
-  (SORFTIME_OUTPUT_DIR env var overrides default; falls back to ~/Documents/sorftime)
-  Files to write after EVERY phase:
-    PA: {dir}/01-discovery.json (raw potential_product response + filtered shortlist)
-    PB: {dir}/02-verification.json (product_detail + trend + traffic + reviews per ASIN)
-    PC: {dir}/03-supply-chain.json (ali1688 results + landed cost calculations)
-    PD: {dir}/04-financials.json (full P&L per product)
-    PE: {dir}/05-risks.json (risk matrix per product)
-    PD2: {dir}/06-panel-verdict.json (all 7 panelist votes + reasoning + final verdict)
-    PF: {dir}/07-deliverable.md (complete Go/No-Go Decision Table + TOP3 + risk registry + budget + first-order plan in Markdown)
-    PG: {dir}/08-monitoring.sh (copy-paste-ready /loop command)
-    {dir}/workflow-state.md (checkpoint — resume if interrupted)
-    {dir}/README.md (index: scenario params, execution summary, data freshness)
-  After PF: Write the deliverable AS A STANDALONE .md FILE that the seller can open and read independently of this conversation. The file must include ALL tables, panel votes, risk registry, and budget plan. No "see above" or "as discussed" references — fully self-contained.
+/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for {category} on {platform}. Seller: {stage}, ${budget}, {model}, country={cn|us|uk|de|other}. Rounds: {N}.
 ```
 
 ---
 
 ## Execution Principles
 
-1. **Identify first, then execute**: Complex requests → use `router.py` or `persona.py` to identify intent and seller stage, then route to methodology card
+1. **Obey the instruction first, guide only when ambiguous** (v3.6.0): Precise requests (tool+ASIN/keyword/site/output specified) → execute directly, no routing. Only vague/exploratory requests → use `router.py` / `persona.py` to identify intent and seller stage, then route to methodology card. Never re-interpret a precise instruction.
 2. **Ask when information is insufficient**: Never guess ASINs, keywords, or marketplaces — ask
 3. **Schema freshness check**: At the first Sorftime usage in each session, run `python3 scripts/healthcheck.py`. If it reports "Schema is X days old" (>7 days), **proactively notify the user**: "Schema is X days old — new tools may be available on the server. Sync now?" — only sync after user confirmation (`python3 tests/auto_sync.py`). Never silently sync (involves file modification). If a tool call returns "not found" or "unsupported", the first step is to suggest syncing Schema
 4. **Cache-first**: Repeated queries auto-hit SQLite cache (`~/.sorftime-cache/`)
@@ -411,15 +364,15 @@ python3 scripts/picker.py --profile-help
 | ⚠️ **Trap** | Fake reviews/merged reviews/price wars/red ocean/seasonal/heavy+slow goods/size hell | Data anomaly or saturated market — investigate before committing. |
 | 🟢 **Safe** | Everything else | No elevated risk flags. |
 
-**Seller Profiles** (tune *emphasis*, never hide data):
+**Seller Profiles** (tune *emphasis*, never hide data — v3.6.0 adds risk folding for pros):
 
-| Profile | Emphasis | Suitable For |
-|---------|----------|-------------|
-| `newbie` | Hard+Capital+Ops+Trap warnings all prominent, plus a 🟢 Beginner Safe Shortlist highlight | Beginners, limited capital |
-| `grower` | Hard+Capital prominent; Ops de-emphasized | Growing sellers, moderate risk tolerance |
-| `pro` | Hard+Trap prominent; Capital/Ops de-emphasized | Professional sellers with teams |
-| `factory` | Hard+Trap prominent | Factory-direct, supply chain advantage |
-| `brand` | Hard+Trap prominent | Brand owners, in-house compliance |
+| Profile | Risk Presentation | Suitable For |
+|---------|-------------------|-------------|
+| `newbie` | **Full** risk warning table + 🟢 Beginner Safe Shortlist highlight | Beginners, limited capital |
+| `grower` | **Full** risk warning table (Ops de-emphasized) | Growing sellers, moderate risk tolerance |
+| `pro` | **Collapsed** to footnote + 🔴hard one-line hints (use `--show-risks` to expand) | Professional sellers with teams |
+| `factory` | **Collapsed** to footnote + 🔴hard one-line hints | Factory-direct, supply chain advantage |
+| `brand` | **Collapsed** to footnote + 🔴hard one-line hints | Brand owners, in-house compliance |
 
 **Other categories** (advisory notes, always informational):
 - Accessories (hats/scarves/gloves/socks/belts): 5-15% return rate

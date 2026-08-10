@@ -653,6 +653,33 @@ def format_risk_warning_table(warnings: list) -> str:
     return "\n".join(lines)
 
 
+def format_risk_section(warnings: list, profile: dict = None, show_risks: bool = False) -> str:
+    """Risk advisory presentation tuned by profile verbosity (v3.6.0).
+
+    - newbie/grower (risk_verbose=True) or --show-risks: full warning table
+    - pro/factory/brand (risk_verbose=False): collapsed footnote + one-line
+      proactive hints for hard-risk products. Never hides data, never blocks.
+    """
+    if not warnings:
+        return ""
+    verbose = show_risks or (profile or {}).get("risk_verbose", True)
+    if verbose:
+        return format_risk_warning_table(warnings)
+
+    hard = [w for w in warnings if w["risk_level"] == "hard"]
+    other_n = len(warnings) - len(hard)
+    lines = []
+    # Proactive one-line hints for the highest-severity (hard) products only
+    for w in hard:
+        lines.append(f"⚠️ `{w['asin']}` {w['title']}: {w['reason'][:80]}")
+    if lines:
+        lines.append("")
+    lines.append(f"🛡️ {len(warnings)} products flagged ({len(hard)} 🔴hard / {other_n} other risk). "
+                 "Table collapsed for this profile — use `--show-risks` to expand full warnings.")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def format_low_risk_tips_table(tips_list: list) -> str:
     """Format low-risk advisory tips as a Markdown table"""
     if not tips_list:
