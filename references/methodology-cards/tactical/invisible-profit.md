@@ -61,18 +61,18 @@ Step 4: Cross-validate: check CategoryReport to confirm the competitive landscap
 - Low price-dimension products require verification that FBA fees are not eroding margins
 - ⭐ Certain sub-dimensions (e.g. trend acceleration) require at least 3 months of historical data; reference value is limited for new categories
 
-### ⚠️ High-Risk Category Exclusion (CRITICAL)
+### ⚠️ High-Risk Category Advisory (CRITICAL)
 
-**A high HPI score does NOT override category-level risk.** These categories must be excluded or flagged regardless of HPI:
+**A high HPI score does NOT override category-level risk.** v3.5.0 is advisory — products are **never hidden**, but these categories must carry a prominent risk flag regardless of HPI:
 
-| Risk Tier | Categories | Why | Action |
-|-----------|-----------|-----|--------|
-| 🔴 **Hard Block** | Food, beverages, supplements, medical devices, baby food, pesticides, alcohol, functional cosmetics | Regulatory/compliance risk, potential account suspension | **Never recommend** |
-| 🟡 **Capital-Intensive** | Apparel, shoes, bags, jewelry, wigs, furniture, mattresses, large appliances | High return rates (5-30%), size/variant complexity, inventory risk | Flag prominently |
-| 🟠 **Operations-Complex** | Electronics, liquids, flammables, IP-licensed products, auto parts, glass/fragile items | Certification requirements, hazmat, IP infringement risk, shipping damage | Flag with warnings |
-| ⚠️ **Trap Signals** | Phone cases, screen protectors, holiday decorations, books/CDs/DVDs | Extreme competition, razor-thin margins, seasonal dead stock risk | Flag context |
+| Risk Tier | Categories | Why | Advisory Action |
+|-----------|-----------|-----|----------------|
+| 🔴 **Hard** | Food, beverages, supplements, medical devices, baby food, pesticides, alcohol, functional cosmetics | Regulatory/compliance risk, potential account suspension | **Flag HIGH** — viable only with credentials/compliance team; independent review must confirm |
+| 🟡 **Capital** | Apparel, shoes, bags, jewelry, wigs, furniture, mattresses, large appliances | High return rates (5-30%), size/variant complexity, inventory risk | Flag prominently |
+| 🟠 **Ops** | Electronics, liquids, flammables, IP-licensed products, auto parts, glass/fragile items | Certification requirements, hazmat, IP infringement risk, shipping damage | Flag with warnings |
+| ⚠️ **Trap** | Phone cases, screen protectors, holiday decorations, books/CDs/DVDs | Extreme competition, razor-thin margins, seasonal dead stock risk | Flag context |
 
-**Rule**: A soap dispenser (bathroom accessories) with HPI 13.68 is actionable. A supplement with HPI 20 is NOT. Always cross-check the category before presenting HPI results to sellers.
+**Rule**: A soap dispenser (bathroom accessories) with HPI 13.68 is actionable. A supplement with HPI 20 carries hard risk — it stays visible but must be flagged HIGH and challenged in the independent review step. Always cross-check the category before presenting HPI results to sellers.
 
 ## Combo Strategy
 This Strategy → Low Rating Replacement (validate demand pain points) → Keyword Scatter (find traffic entry points) → Launch
