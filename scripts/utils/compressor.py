@@ -13,16 +13,34 @@ def _safe_get(item: dict, keys: list, default="") -> Any:
     return default
 
 
+RISK_BADGE = {
+    "hard": "🔴hard",
+    "capital": "🟡cap",
+    "ops": "🟠ops",
+    "trap": "⚠️trap",
+    "safe": "🟢safe",
+    "unknown": "",
+}
+
+
+def _risk_badge(item: dict) -> str:
+    """Risk badge for annotated products (advisory mode adds _risk_level)."""
+    level = item.get("_risk_level", "unknown")
+    return RISK_BADGE.get(level, "")
+
+
 def compress_product_list(data: list, top_n: int = 20) -> str:
-    """Compress a product list into a Markdown table"""
+    """Compress a product list into a Markdown table (with risk badge when annotated)"""
     if not isinstance(data, list):
         return f"```json\n{json.dumps(data, ensure_ascii=False, indent=2)[:800]}\n```"
 
     items = data[:top_n]
-    lines = [
-        f"| Rank | ASIN | Title | Price | Monthly Sales | Rating | Reviews |",
-        "|------|------|------|------|--------|------|--------|",
-    ]
+    has_risk = any(item.get("_risk_level") not in (None, "safe") for item in items)
+    header = "| Rank | Risk | ASIN | Title | Price | Monthly Sales | Rating | Reviews |" if has_risk else \
+             "| Rank | ASIN | Title | Price | Monthly Sales | Rating | Reviews |"
+    sep = "|------|------|------|------|--------|------|--------|" if has_risk else \
+          "|------|------|------|------|--------|------|--------|"
+    lines = [header, sep]
     for idx, item in enumerate(items, 1):
         asin = _safe_get(item, ["ASIN", "asin"])
         title = _safe_get(item, ["title"])[:30]
@@ -30,7 +48,11 @@ def compress_product_list(data: list, top_n: int = 20) -> str:
         sales = _safe_get(item, ["monthly_sales_volume", "month_sales_volume"])
         rating = _safe_get(item, ["star_rating"])
         reviews = _safe_get(item, ["review_count"])
-        lines.append(f"| {idx} | {asin} | {title} | {price} | {sales} | {rating} | {reviews} |")
+        badge = _risk_badge(item)
+        if has_risk:
+            lines.append(f"| {idx} | {badge:8} | {asin} | {title} | {price} | {sales} | {rating} | {reviews} |")
+        else:
+            lines.append(f"| {idx} | {asin} | {title} | {price} | {sales} | {rating} | {reviews} |")
 
     lines.append(f"\n> Total {len(data)} results, showing first {len(items)}.")
     return "\n".join(lines)
@@ -71,11 +93,18 @@ def compress_potential_products(data: list, top_n: int = 20) -> str:
     # Filter out -99 and -9999 (server returns field as potential_index)
     valid = [x for x in data if _safe_get(x, ["potential_index", "potential_score", "score"], -99) not in (-99, -9999)]
     items = valid[:top_n]
+    has_risk = any(item.get("_risk_level") not in (None, "safe") for item in items)
 
-    lines = [
-        f"| Rank | ASIN | Title | Potential Index | Price | Monthly Sales | Listed |",
-        "|------|------|------|--------------|------|--------|----------|",
-    ]
+    if has_risk:
+        lines = [
+            f"| Rank | Risk | ASIN | Title | Potential Index | Price | Monthly Sales | Listed |",
+            "|------|------|------|------|--------------|------|--------|----------|",
+        ]
+    else:
+        lines = [
+            f"| Rank | ASIN | Title | Potential Index | Price | Monthly Sales | Listed |",
+            "|------|------|------|--------------|------|--------|----------|",
+        ]
     for idx, item in enumerate(items, 1):
         asin = _safe_get(item, ["ASIN", "asin"])
         title = _safe_get(item, ["title"])[:30]
@@ -83,7 +112,11 @@ def compress_potential_products(data: list, top_n: int = 20) -> str:
         price = _safe_get(item, ["price", "current_price"])
         sales = _safe_get(item, ["monthly_sales_volume"])
         age = _safe_get(item, ["launch_days"])
-        lines.append(f"| {idx} | {asin} | {title} | {score} | {price} | {sales} | {age} |")
+        badge = _risk_badge(item)
+        if has_risk:
+            lines.append(f"| {idx} | {badge:8} | {asin} | {title} | {score} | {price} | {sales} | {age} |")
+        else:
+            lines.append(f"| {idx} | {asin} | {title} | {score} | {price} | {sales} | {age} |")
 
     lines.append(f"\n> Total: {len(data)} results, {len(valid)} valid (non -99/-9999), showing first {len(items)}.")
     return "\n".join(lines)
@@ -107,25 +140,42 @@ def compress_generic(data: Any, title: str = "Result") -> str:
 
 
 def compress_walmart_product_list(data: list, top_n: int = 20) -> str:
-    """Walmart product list compression (keyword_search_results / category_report)"""
+    """Walmart product list compression (keyword_search_results / category_report)
+
+    Supports both raw API keys (Title/Price/ProductId...) and the normalized
+    Chinese keys used by walmart_picker's `_normalize_walmart_product`
+    (标题/价格/月销量/评论数/评分/卖家/物流方式). Adds a Risk badge when the
+    items carry `_risk_level` (advisory mode).
+    """
     if not isinstance(data, list):
         return f"```json\n{json.dumps(data, ensure_ascii=False, indent=2)[:800]}\n```"
 
     items = data[:top_n]
-    lines = [
-        f"| Rank | ProductId | Title | Price | Monthly Sales | Rating | Reviews | Seller | Fulfillment |",
-        "|------|-----------|------|------|--------|------|--------|------|------|",
-    ]
+    has_risk = any(item.get("_risk_level") not in (None, "safe") for item in items)
+    if has_risk:
+        lines = [
+            f"| Rank | Risk | ProductId | Title | Price | Monthly Sales | Rating | Reviews | Seller | Fulfillment |",
+            "|------|------|-----------|------|------|--------|------|--------|------|------|",
+        ]
+    else:
+        lines = [
+            f"| Rank | ProductId | Title | Price | Monthly Sales | Rating | Reviews | Seller | Fulfillment |",
+            "|------|-----------|------|------|--------|------|--------|------|------|",
+        ]
     for idx, item in enumerate(items, 1):
-        pid = _safe_get(item, ["ProductId", "productId", "product_id"])
-        title = _safe_get(item, ["Title", "title"])[:28]
-        price = _safe_get(item, ["Price", "price"])
-        sales = _safe_get(item, ["ListingSalesVolumeOfMonth", "monthly_sales_volume", "sales"])
-        rating = _safe_get(item, ["Ratings", "star_rating"])
-        reviews = _safe_get(item, ["ReviewsCount", "reviews", "review_count"])
-        seller = _safe_get(item, ["Seller", "seller", "seller_name"])
-        ship = _safe_get(item, ["Shipedby", "shipBy", "delivery_type"])
-        lines.append(f"| {idx} | {pid} | {title} | {price} | {sales} | {rating} | {reviews} | {seller} | {ship} |")
+        pid = _safe_get(item, ["ProductId", "productId", "product_id", "ASIN", "asin", "产品ASIN码"])
+        title = str(_safe_get(item, ["Title", "title", "标题"]))[:28]
+        price = _safe_get(item, ["Price", "price", "价格"])
+        sales = _safe_get(item, ["ListingSalesVolumeOfMonth", "monthly_sales_volume", "sales", "月销量"])
+        rating = _safe_get(item, ["Ratings", "star_rating", "评分"])
+        reviews = _safe_get(item, ["ReviewsCount", "reviews", "review_count", "评论数"])
+        seller = _safe_get(item, ["Seller", "seller", "seller_name", "卖家"])
+        ship = _safe_get(item, ["Shipedby", "shipBy", "delivery_type", "物流方式"])
+        badge = _risk_badge(item)
+        if has_risk:
+            lines.append(f"| {idx} | {badge:8} | {pid} | {title} | {price} | {sales} | {rating} | {reviews} | {seller} | {ship} |")
+        else:
+            lines.append(f"| {idx} | {pid} | {title} | {price} | {sales} | {rating} | {reviews} | {seller} | {ship} |")
 
     lines.append(f"\n> Total {len(data)} results, showing first {len(items)}.")
     return "\n".join(lines)

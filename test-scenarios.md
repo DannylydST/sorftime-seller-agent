@@ -11,8 +11,8 @@
 
 ### S2: 新手选品
 **用户输入**: "我是新手，资金有限，帮我在瑜伽垫类目找找机会"
-**预期**: 触发 → `picker.py --mode newbie --platform amazon --site US --keyword "yoga mat"` → 自动启用四级风险过滤
-**验证点**: 识别"新手"→ newbie profile、无硬阈值表述
+**预期**: 触发 → `picker.py --mode newbie --platform amazon --site US --keyword "yoga mat"` → v3.0 四级风险**咨询**（advisory）：全量展示 + 风险徽标 + 新手安全短清单高亮
+**验证点**: 识别"新手"→ newbie profile、**无产品被隐藏**、所有产品带 🟢/🟡/🔴/⚠️ 风险徽标、无硬阈值表述
 
 ### S3: 隐赚指数
 **用户输入**: "全品类扫一遍隐赚指数排名"

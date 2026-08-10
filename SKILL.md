@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime Seller Agent — Expert-level cross-border e-commerce data analysis and product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. A single skill that turns any MCP-enabled AI agent (Claude Code, OpenClaw, Cursor, Copilot) into a Sorftime marketplace intelligence expert. Covers product discovery, competitor analysis, keyword strategy, profit calculation, ASIN deep-dive, blue ocean finding, market intelligence, and more. Auto-adapts output for beginner, growing, and professional seller stages."
 trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/选品/竞品/关键词/利润/市场看板/ASIN/类目/蓝海/季节性/隐赚/货源/监控/closed-loop workflow/选品工作流/complete go-no-go/end-to-end product selection"
-version: 3.4.1
+version: 3.5.0
 user-invocable: true
 metadata:
   openclaw:
@@ -369,15 +369,19 @@ DATA PERSISTENCE — ALL OUTPUTS MUST BE WRITTEN TO DISK:
 ### 1.1 Discovery Engine `picker.py`
 
 ```bash
-# Default: beginner seller profile (strictest filtering)
+# Default: beginner seller profile (full pool shown + risk badges + safe shortlist highlight)
 python3 scripts/picker.py --mode newbie --platform amazon --site US --keyword "kitchen storage"
 python3 scripts/picker.py --mode blueocean --platform amazon --site US --keyword "pet supplies"
 
-# Factory-direct seller profile (allows capital-intensive and operations-complex categories)
+# Professional profile: same full pool, different emphasis (capital/ops de-emphasized)
 python3 scripts/picker.py --mode blueocean --platform amazon --site US --keyword "yoga mat" --profile factory
 
-# Per-category override: allow capital-intensive (clothing/shoes/bags) but still filter traps
+# v3.0 advisory mode: NO products are hidden. --allow-* flags now tune warning emphasis,
+# not "unhide" switches (nothing is hidden by default).
 python3 scripts/picker.py --mode blueocean --platform amazon --site US --keyword "dress" --allow-capital
+
+# Independent review of a shortlist (after selection, mandatory for final Go/No-Go)
+python3 scripts/review_shortlist.py /path/to/shortlist.json
 
 # View seller profile descriptions
 python3 scripts/picker.py --profile-help
@@ -391,26 +395,33 @@ python3 scripts/picker.py --profile-help
 - Beginner-friendliness (auto-apply reviews < 500, monopoly coefficient < 40%)
 - **Quantified risk summary**: estimated return rate, initial capital requirement, inventory turnover days, brand concentration, new product survival rate, price dispersion
 
-**Four-Tier Risk Filtering System (v2.0):**
+**Four-Tier Risk Advisory System (v3.0):**
 
-| Risk Level | Category Coverage | Default Filter | Override Switch |
-|------------|-------------------|---------------|-----------------|
-| 🔴 **Hard Block** | Food/beverage/supplements/medical devices/functional cosmetics/baby food/pesticides/alcohol | All profiles | `--allow-hard` (⚠️ not recommended) |
-| 🟡 **Capital-Intensive** | Apparel/shoes/bags/jewelry/wigs/furniture/mattresses/large appliances/bicycles | Beginner + Growing | `--allow-capital` |
-| 🟠 **Operations-Complex** | Electronics/liquids/flammables/IP-licensed/auto parts/safety equipment/BBQ grills/glass fragile items | Beginner only | `--allow-ops` |
-| ⚠️ **Trap Signals** | Fake reviews/merged reviews/price wars/red ocean/seasonal/heavy goods/hijacking/size hell | All profiles | `--skip-traps` (⚠️ not recommended) |
+> **v3.0 change**: risk is now **advisory, not blocking**. Products are NEVER hidden.
+> Every product gets a risk badge (`🔴hard` / `🟡capital` / `🟠ops` / `⚠️trap` / `🟢safe`)
+> and a specific warning surfaced AFTER the results. You (or an independent review
+> agent) make the final call — the tool informs, it does not censor. This matches the
+> skill's own "no hard thresholds, full-set ranking" principle.
 
-**Seller Profiles:**
+| Risk Level | Category Coverage | What it means |
+|------------|-------------------|---------------|
+| 🔴 **Hard** | Food/beverage/supplements/medical devices/functional cosmetics/baby food/pesticides/alcohol | Extremely high compliance barrier (FDA/EPA). Viable only with credentials. |
+| 🟡 **Capital** | Apparel/shoes/bags/jewelry/wigs/furniture/mattresses/large appliances/bicycles | High inventory/returns/SKU complexity — capital pressure. |
+| 🟠 **Ops** | Electronics/liquids/flammables/IP-licensed/auto parts/safety equipment/BBQ grills/glass | Complex certification/logistics/after-sales. |
+| ⚠️ **Trap** | Fake reviews/merged reviews/price wars/red ocean/seasonal/heavy+slow goods/size hell | Data anomaly or saturated market — investigate before committing. |
+| 🟢 **Safe** | Everything else | No elevated risk flags. |
 
-| Profile | Hard Block | Capital | Operations | Traps | Suitable For |
-|---------|-----------|---------|------------|-------|-------------|
-| `newbie` | ✅ | ✅ | ✅ | ✅ | Beginners, limited capital |
-| `grower` | ✅ | ✅ | ❌ | ✅ | Growing sellers, moderate risk tolerance |
-| `pro` | ✅ | ❌ | ❌ | ✅ | Professional sellers with teams |
-| `factory` | ✅ | ❌ | ❌ | ✅ | Factory-direct, supply chain advantage |
-| `brand` | ✅ | ❌ | ❌ | ✅ | Brand owners, in-house compliance |
+**Seller Profiles** (tune *emphasis*, never hide data):
 
-**Other high-risk categories** (not auto-filtered, but flagged during analysis):
+| Profile | Emphasis | Suitable For |
+|---------|----------|-------------|
+| `newbie` | Hard+Capital+Ops+Trap warnings all prominent, plus a 🟢 Beginner Safe Shortlist highlight | Beginners, limited capital |
+| `grower` | Hard+Capital prominent; Ops de-emphasized | Growing sellers, moderate risk tolerance |
+| `pro` | Hard+Trap prominent; Capital/Ops de-emphasized | Professional sellers with teams |
+| `factory` | Hard+Trap prominent | Factory-direct, supply chain advantage |
+| `brand` | Hard+Trap prominent | Brand owners, in-house compliance |
+
+**Other categories** (advisory notes, always informational):
 - Accessories (hats/scarves/gloves/socks/belts): 5-15% return rate
 - Eyewear/sunglasses: 10-20% return rate, prescription/style issues
 - Phone cases/screen protectors: extreme red ocean, razor-thin margins, patent minefield
@@ -418,7 +429,44 @@ python3 scripts/picker.py --profile-help
 - Holiday decorations: extremely short sales window, post-season inventory risk
 - Books/CD/DVD: low margins, shrinking market
 
-**Transparent filtering**: Every excluded product shows its specific reason and risk level, helping sellers understand the rationale. Experienced sellers can use `--profile` or per-category overrides to see the full analysis.
+**Transparent risk surfacing**: Every flagged product shows its specific reason and risk level.
+No product is hidden — the full pool stays visible, and the Risk Advisory table explains each flag.
+
+### 1.1.5 Post-Selection Independent Review (Mandatory)
+
+> Since v3.0 removed hard interception, the review burden moved to a **dedicated review step
+> that runs AFTER selection and is INDEPENDENT of the discovery model.** The same engine
+> that found the products must not be the only judge of them.
+
+**Rule: after `picker.py` produces a shortlist (or after Phase E of the Closed-Loop workflow),
+run BOTH review layers before presenting a final recommendation:**
+
+**Layer 1 — Deterministic independent review (fast, always):**
+```bash
+# picker.py now writes the annotated shortlist to JSON:
+python3 scripts/picker.py --mode blueocean --platform amazon --site US --keyword "yoga mat" \
+    --profile newbie --json /path/to/shortlist.json
+
+# Then run the independent reviewer (pass the original keyword for relevance check):
+python3 scripts/review_shortlist.py /path/to/shortlist.json --keyword "yoga mat"
+```
+The reviewer checks dimensions the discovery model does NOT: **category-relevance** (flags
+keyword-pollution products — e.g. supplements returned for a "yoga mat" query), margin sanity,
+IP/trademark terms, review anomalies, seasonal windows, and compliance red flags. It emits
+`GO / CAUTION / NO-GO` per product — advice, never removal.
+
+**Layer 2 — Independent review sub-agent (rigorous, mandatory for final Go/No-Go):**
+1. Spawn an **independent sub-agent with fresh context** (do NOT reuse the conversation that
+   found the products — fresh context is what makes the review independent).
+2. Give it ONLY: the shortlist + the risk badges + the `review_shortlist.py` output.
+   Do NOT feed it your reasoning.
+3. Ask it to red-team the top picks: challenge the GO verdicts, check the flagged products
+   against the seller's profile/country, and return a final per-product verdict.
+4. The main agent may disagree, but must document the dissent. No product is hidden by review —
+   the review informs the recommendation, it never deletes data.
+
+**Closed-Loop workflow**: Phase D2 already implements this at scale (7 sub-agents, parallel vote).
+For quick picks (picker.py path), Layer 1 + a single Layer 2 sub-agent is sufficient.
 
 ### 1.2 Analyst Engine `analyst.py`
 
@@ -454,6 +502,9 @@ python3 scripts/walmart_picker.py --mode blueocean --keyword "yoga mat"
 
 # Walmart beginner-friendly discovery (reviews < 200, price $15-40)
 python3 scripts/walmart_picker.py --mode newbie --keyword "kitchen storage"
+
+# Growing seller profile (Hard+Capital warnings prominent, Ops de-emphasized)
+python3 scripts/walmart_picker.py --mode blueocean --keyword "yoga mat" --profile grower
 
 # Factory-direct seller profile
 python3 scripts/walmart_picker.py --mode blueocean --keyword "toy" --profile factory
@@ -720,7 +771,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - **Walmart data scope**: search results cover last 15 days of organic-ranking products, sorted by monthly sales descending. Traffic keyword data includes `ShowShare` (impression share) and `RecentlyPosition`/`OrganicPosition`/`AdPosition` (recent/organic/ad rank positions)
 - **CRITICAL: `product_traffic_terms` field trap (2026-08-04).** The API returns `exposure_position` ("Organic"/"Ad"/"Ad,Organic"), `latest_organic_position`, `monthly_search_volume`, `recommended_bid`. There is NO field called `organic_searched_percentage`. Querying it returns null/0, falsely suggesting zero organic traffic. Use: count keywords where `exposure_position` contains "Organic" + check `latest_organic_position` for rank quality. 20/20 organic + 7/20 ad = organic-driven. 20/20 organic + 18/20 ad = buys visibility.
 - **`product_trend` returns comma-separated `key=value` text, NOT JSON.** Format: `"2024年08月=347,2024年09月=155,..."`. Fixed in bridge v3.4.1: `run_one_shot()` and `call_tool_json()` now auto-parse this format into `{"2024年08月": 347, ...}`. If you encounter `{"error": true, "hint": "Server returned non-JSON"}` from product_trend, update the skill (`git pull`) to get the fix.
-- **Amazon `product_reviews` may return "No reviews found"** — try a higher-volume ASIN. The tool returns rich review data (35+ reviews with variant_attribute/review_date/star_rating/title) when available. `product_traffic_terms` + `competitor_product_keywords` confirmed working (keyword-level search volume/bid/exposure data). `similar_product_feature` uses `product_name` parameter (not `asin` — auto-corrected). `product_customers_say` uses `site` (not `amz_site`) — the only Amazon tool diverging from both `amz_site` and `keyword_support_site`. `category_report_from_history` and `category_keywords` returned no data in tests — possibly limited server-side historical/ keyword coverage.
+- **Amazon `product_reviews` is capped at ~100 reviews and has NO `page` parameter** — schema is only `['amz_site','asin','review_type']`. To sample more sentiment, use `review_type` (`Both`/`Positive`/`Negative`) rather than trying to paginate. May return "No reviews found" on low-volume ASINs. The tool returns rich review data (variant_attribute/review_date/star_rating/title) when available. `product_traffic_terms` + `competitor_product_keywords` confirmed working (keyword-level search volume/bid/exposure data). `similar_product_feature` uses `product_name` parameter (not `asin` — auto-corrected). `product_customers_say` uses `site` (not `amz_site`) — the only Amazon tool diverging from both `amz_site` and `keyword_support_site`. `category_report_from_history` and `category_keywords` returned no data in tests — possibly limited server-side historical/ keyword coverage.
 - **Amazon `product_variations` returns child ASINs but variant attributes may be empty** — the tool returns 55+ child ASINs but `attribute` and `month_sales_volume_range` may be blank for some products. Verify data quality before using.
 - **Walmart `walmart_product_trend_by_product_id` and `walmart_product_variation_sales_by_product_id` return raw interleaved arrays** like Shopee trend tools: `[date, val, date, val...]`. 730 daily data points for trends, 62 for variation sales. Parse with `zip(data[::2], data[1::2])`.
 - **1688 tools have 5 endpoints** (verified 2026-07-30): `ali1688_similar_product` (keyword search, returns 100 items with title/price/product_id/store_name/service_score/sales_of_30d), `ali1688_product_search` (multi-dimension filter with 20+ params including supplier_type:1=实力商家/2=超级工厂, repurchase_rate, rights: "1,2,3", service_score), `ali1688_product_request` (detail: price/moq/supplier_info, 16 fields), `ali1688_product_variations` (SKU breakdown: price/stock/weight/dimensions per variant), `ali1688_product_search_from_image` (reverse image search). `ali1688_product_search` params are all optional — pass none to browse, or combine filters for precision sourcing. Supplier type codes: 1=实力商家, 2=超级工厂.

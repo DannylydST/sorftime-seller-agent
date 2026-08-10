@@ -13,10 +13,17 @@ import argparse
 import sys
 from pathlib import Path
 
+# Windows GBK console cannot print emoji (UnicodeEncodeError). Force UTF-8 output.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):
+        pass
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from utils.cache import TTL_PRESETS, get, set
-from utils.category_guard import filter_products, format_exclusion_table, format_low_risk_tips_table
+from utils.category_guard import filter_products, format_risk_warning_table, format_low_risk_tips_table
 from utils.compressor import compress
 from utils.mcp_client import call_tool_json
 from utils.seller_profile import get_profile, format_profile_badge
@@ -37,37 +44,74 @@ def _to_int(val) -> int:
         return 0
 
 
+def _wget(item: dict, keys: list, default=""):
+    """Case-tolerant field lookup. The live Walmart API returns lowercase snake_case
+    keys (title/price/product_id/...), while older docs used PascalCase (Title/Price).
+    Accept either."""
+    for k in keys:
+        if k in item and item[k] not in (None, ""):
+            return item[k]
+    return default
+
+
 def _normalize_walmart_product(item: dict) -> dict:
-    """Normalize Walmart fields to common fields, reuse risk/quant modules"""
-    price_str = str(item.get("Price", "$0")).replace("$", "").replace(",", "")
-    product_id = item.get("ProductId", "")
+    """Normalize Walmart fields to a key superset, reuse risk/quant modules.
+
+    Emits BOTH the Chinese normalized keys (标题/价格/月销量/...) and English
+    aliases (title/price/monthly_sales_volume/...) so compressor, insights and
+    risk models all resolve fields regardless of naming convention.
+    """
+    price_str = str(_wget(item, ["Price", "price", "价格"], "$0")).replace("$", "").replace(",", "")
+    product_id = _wget(item, ["ProductId", "product_id", "productId"], "")
+    title = _wget(item, ["Title", "title", "标题"], "")
+    monthly_sales = _to_int(_wget(item, ["ListingSalesVolumeOfMonth", "listing_sales_volume_of_month",
+                                         "monthly_sales_volume", "月销量"], 0))
+    reviews = _to_int(_wget(item, ["ReviewsCount", "reviews_count", "review_count", "评论数"], 0))
+    rating = _to_float(_wget(item, ["Ratings", "ratings", "star_rating", "评分"], 0))
+    brand = _wget(item, ["Brand", "brand", "品牌"], "Unknown")
+    seller = _wget(item, ["Seller", "seller", "seller_name", "卖家"], "")
+    ship = _wget(item, ["Shipedby", "shipedby", "delivery_type", "物流方式"], "")
+    node_tree = _wget(item, ["NodeTree", "node_tree", "nodeTree", "类目路径"], [])
+    label = _wget(item, ["Label", "label", "标签"], [])
+
     return {
-        # Field aliases for compatibility with existing components
+        # Chinese normalized keys (original consumers)
         "asin": product_id,
         "ASIN": product_id,
         "产品ASIN码": product_id,
-        "标题": item.get("Title", ""),
+        "标题": title,
         "价格": _to_float(price_str),
-        "月销量": item.get("ListingSalesVolumeOfMonth", 0),
-        "评论数": item.get("ReviewsCount", 0),
-        "评分": item.get("Ratings", 0),
-        "品牌": item.get("Brand", "Unknown"),
-        "卖家": item.get("Seller", ""),
-        "物流方式": item.get("Shipedby", ""),
-        "类目路径": item.get("NodeTree", []),
-        "标签": item.get("Label", []),
+        "月销量": monthly_sales,
+        "评论数": reviews,
+        "评分": rating,
+        "品牌": brand,
+        "卖家": seller,
+        "物流方式": ship,
+        "类目路径": node_tree,
+        "标签": label,
+        # English aliases (live-API style + risk/compressor compatibility)
+        "product_id": product_id,
+        "ProductId": product_id,
+        "title": title,
+        "price": _to_float(price_str),
+        "monthly_sales_volume": monthly_sales,
+        "review_count": reviews,
+        "rating": rating,
+        "brand": brand,
+        "seller": seller,
+        "delivery_type": ship,
         # Preserve raw data
         "_raw": item,
     }
 
 
 def _walmart_price(item: dict) -> float:
-    """Extract Walmart product price"""
-    price_str = str(item.get("Price", "$0")).replace("$", "").replace(",", "")
+    """Extract Walmart product price (tolerant of key casing + Chinese normalized keys)"""
+    price_str = str(_wget(item, ["Price", "price", "价格"], "$0")).replace("$", "").replace(",", "")
     return _to_float(price_str)
 
 
-def analyze_walmart_insights(products: list, excluded: list = None, profile_key: str = "newbie") -> str:
+def analyze_walmart_insights(products: list, risk_warnings: list = None, profile_key: str = "newbie") -> str:
     """Walmart-specific insights analysis"""
     if not isinstance(products, list) or not products:
         return ""
@@ -82,8 +126,8 @@ def analyze_walmart_insights(products: list, excluded: list = None, profile_key:
     brand_counts = {}
     seller_counts = {}
     for item in top20:
-        brand = item.get("Brand", "Unknown")
-        seller = item.get("Seller", "Unknown")
+        brand = _wget(item, ["品牌", "brand", "Brand"], "Unknown")
+        seller = _wget(item, ["卖家", "seller", "Seller"], "Unknown")
         brand_counts[brand] = brand_counts.get(brand, 0) + 1
         seller_counts[seller] = seller_counts.get(seller, 0) + 1
 
@@ -104,10 +148,10 @@ def analyze_walmart_insights(products: list, excluded: list = None, profile_key:
     # 2. Opportunity Window: low reviews + high sales (Walmart threshold <200)
     opportunities = []
     for item in top20:
-        reviews = item.get("ReviewsCount", 0)
-        sales = item.get("ListingSalesVolumeOfMonth", 0)
-        title = item.get("Title", "")[:30]
-        pid = item.get("ProductId", "")
+        reviews = _to_int(item.get("评论数", _wget(item, ["ReviewsCount", "reviews_count", "review_count"], 0)))
+        sales = _to_int(item.get("月销量", _wget(item, ["ListingSalesVolumeOfMonth", "listing_sales_volume_of_month", "monthly_sales_volume"], 0)))
+        title = str(_wget(item, ["标题", "title", "Title"], ""))[:30]
+        pid = _wget(item, ["产品ASIN码", "product_id", "ProductId"], "")
         if reviews < 200 and sales > 5000:
             opportunities.append(f"`{pid}` ({title}…) — Reviews {reviews} / Monthly Sales {sales}")
 
@@ -126,7 +170,7 @@ def analyze_walmart_insights(products: list, excluded: list = None, profile_key:
         lines.append(f"- **Price Band Health**: Low-priced products (<$10) account for a small share in TOP20 — some pricing buffer exists.")
 
     # 4. WFS penetration rate
-    wfs_count = sum(1 for item in top20 if item.get("Shipedby") == "WFS")
+    wfs_count = sum(1 for item in top20 if _wget(item, ["物流方式", "shipedby", "Shipedby"], "").upper() == "WFS")
     wfs_ratio = wfs_count / len(top20) * 100 if top20 else 0
     if wfs_ratio > 70:
         lines.append(f"- **WFS High Penetration**: {wfs_ratio:.0f}% of TOP20 use Walmart Fulfillment Services (WFS). Sellers not using WFS are at a disadvantage in delivery speed and search ranking — evaluate WFS onboarding costs.")
@@ -140,22 +184,26 @@ def analyze_walmart_insights(products: list, excluded: list = None, profile_key:
         newbie_friendly = [
             item for item in top20
             if 15 <= _walmart_price(item) <= 40
-            and item.get("ReviewsCount", 99999) < 200
+            and _to_int(item.get("评论数", _wget(item, ["ReviewsCount", "reviews_count", "review_count"], 99999))) < 200
         ]
         if newbie_friendly:
             lines.append(f"- **Beginner Recommendations 👍**: {len(newbie_friendly)} products in the $15-40 range with <200 reviews — competitive threshold is relatively friendly.")
         else:
             lines.append("- **Beginner Suitability Note**: Under this keyword, few products match the \"low reviews + mid-range price\" criteria. Consider switching keywords or exploring long-tail niche markets.")
 
-    # 6. Filter impact
-    if excluded:
-        hard_count = sum(1 for e in excluded if e["risk_level"] == "hard")
-        capital_count = sum(1 for e in excluded if e["risk_level"] == "capital")
-        ops_count = sum(1 for e in excluded if e["risk_level"] == "ops")
-        trap_count = sum(1 for e in excluded if e["risk_level"] == "trap")
-        lines.append(f"- **Filter Impact 🛡️**: {len(excluded)} products from original results were filtered out (Hard Block {hard_count} / Capital Intensive {capital_count} / Ops Complex {ops_count} / Trap {trap_count}).")
-        if profile_key in ("newbie", "grower") and capital_count > 0:
-            lines.append(f"  - Among them, {capital_count} are **capital-intensive categories**. If you have factory or overseas warehouse capabilities, try `--profile factory` for full analysis.")
+    # 6. Risk overview (advisory — products remain visible)
+    if risk_warnings:
+        hard_count = sum(1 for e in risk_warnings if e["risk_level"] == "hard")
+        capital_count = sum(1 for e in risk_warnings if e["risk_level"] == "capital")
+        ops_count = sum(1 for e in risk_warnings if e["risk_level"] == "ops")
+        trap_count = sum(1 for e in risk_warnings if e["risk_level"] == "trap")
+        lines.append(f"- **Risk Overview 🛡️**: {len(risk_warnings)}/{len(products)} products carry elevated risk "
+                     f"(🔴Hard {hard_count} / 🟡Capital {capital_count} / 🟠Ops {ops_count} / ⚠️Trap {trap_count}). "
+                     f"All products remain visible — review the Risk Advisory table and decide, or have an independent "
+                     f"review agent red-team the shortlist.")
+        if profile_key in ("newbie", "grower") and (hard_count + capital_count) > 0:
+            lines.append(f"  - 💡 {hard_count + capital_count} fall in hard/capital categories — viable only with the "
+                         f"right credentials or supply-chain capability.")
 
     lines.append("")
     return "\n".join(lines)
@@ -163,7 +211,7 @@ def analyze_walmart_insights(products: list, excluded: list = None, profile_key:
 
 def _fetch_keyword_extends(keyword: str):
     """Fetch Walmart long-tail keywords"""
-    params = {"keyword": keyword, "site": "US"}
+    params = {"keyword": keyword}
     cached = get("walmart_keyword_extends", params)
     if cached:
         return cached
@@ -195,7 +243,7 @@ def run_blueocean(keyword: str, profile: dict = None):
         print()
 
     # 2. Product search (core data source)
-    ps_params = {"keyword": keyword, "site": "US"}
+    ps_params = {"keyword": keyword}
     cached = get("walmart_keyword_search_results", ps_params)
     if cached:
         ps_data = cached
@@ -206,40 +254,33 @@ def run_blueocean(keyword: str, profile: dict = None):
             TTL_PRESETS.get("walmart_keyword_search_results", 21600))
         ps_label = "walmart_keyword_search_results"
 
+    # Unwrap MCP response envelope {"doc":...,"data":[...]} vs plain array [...]
+    if isinstance(ps_data, dict) and "data" in ps_data:
+        ps_data = ps_data.get("data", [])
     raw_products = ps_data if isinstance(ps_data, list) else []
 
     if not raw_products:
         print("> No product data retrieved. Please check keyword or network connection.")
         return
 
-    # Risk filter after field normalization
+    # Risk assessment (advisory — never removes products, surfaces warnings instead)
     normalized = [_normalize_walmart_product(p) for p in raw_products]
-    included_norm, excluded, low_risk_tips = filter_products(normalized, profile)
-    included = [p["_raw"] for p in included_norm]
-
-    if not included:
-        print("## Safety Mode Blocked")
-        print()
-        print("All results under this keyword belong to **High-Risk Categories** and have been filtered out in SMB seller safety mode.")
-        print()
-        if excluded:
-            print(format_exclusion_table(excluded))
-        return
+    annotated, warnings, low_risk_tips = filter_products(normalized, profile)
 
     print(f"## {ps_label}")
-    print(compress("walmart_keyword_search_results", included))
+    print(compress("walmart_keyword_search_results", annotated))
     print()
 
     profile_key = profile.get("key", "newbie")
-    print(analyze_walmart_insights(included, excluded, profile_key))
+    print(analyze_walmart_insights(annotated, warnings, profile_key))
 
     # Quantitative risk
-    inv_risk = estimate_inventory_risk(included_norm)
-    crowding = calculate_crowding_index(included_norm)
+    inv_risk = estimate_inventory_risk(annotated)
+    crowding = calculate_crowding_index(annotated)
     print(format_risk_summary(inv_risk, crowding, profile_key))
 
-    if excluded:
-        print(format_exclusion_table(excluded))
+    if warnings:
+        print(format_risk_warning_table(warnings))
 
     if low_risk_tips:
         print(format_low_risk_tips_table(low_risk_tips))
@@ -250,7 +291,7 @@ def run_newbie(keyword: str, profile: dict = None):
     if profile is None:
         profile = get_profile("newbie")
 
-    ps_params = {"keyword": keyword, "site": "US"}
+    ps_params = {"keyword": keyword}
     cached = get("walmart_keyword_search_results", ps_params)
     if cached:
         data = cached
@@ -261,6 +302,9 @@ def run_newbie(keyword: str, profile: dict = None):
             TTL_PRESETS.get("walmart_keyword_search_results", 21600))
         label = "walmart_keyword_search_results"
 
+    # Unwrap MCP response envelope {"doc":...,"data":[...]} vs plain array [...]
+    if isinstance(data, dict) and "data" in data:
+        data = data.get("data", [])
     raw_products = data if isinstance(data, list) else []
     normalized = [_normalize_walmart_product(p) for p in raw_products]
 
@@ -271,33 +315,31 @@ def run_newbie(keyword: str, profile: dict = None):
         and 15 <= p.get("价格", 0) <= 40
     ]
 
-    included_norm, excluded, low_risk_tips = filter_products(newbie_filtered, profile)
-    included = [p["_raw"] for p in included_norm]
+    annotated, warnings, low_risk_tips = filter_products(newbie_filtered, profile)
 
     print(format_profile_badge(profile))
     print(f"# Walmart Beginner-Friendly Discovery: {keyword}")
     print()
-    print("Filters: Reviews < 200, Price $15-40 (Walmart review count base is lower than Amazon — thresholds adjusted accordingly).")
+    print("Search scope: Reviews < 200, Price $15-40 (Walmart review count base is lower than Amazon — thresholds adjusted accordingly).")
+    print("Risk is surfaced as ADVISORY warnings — no products are hidden.")
     print()
 
-    if not included:
-        print("## Safety Mode Blocked")
-        if excluded:
-            print(format_exclusion_table(excluded))
+    if not annotated:
+        print("No product data returned for this keyword.")
         return
 
     print(f"## {label}")
-    print(compress("walmart_keyword_search_results", included))
+    print(compress("walmart_keyword_search_results", annotated))
     print()
 
-    print(analyze_walmart_insights(included, excluded, "newbie"))
+    print(analyze_walmart_insights(annotated, warnings, "newbie"))
 
-    inv_risk = estimate_inventory_risk(included_norm)
-    crowding = calculate_crowding_index(included_norm)
+    inv_risk = estimate_inventory_risk(annotated)
+    crowding = calculate_crowding_index(annotated)
     print(format_risk_summary(inv_risk, crowding, "newbie"))
 
-    if excluded:
-        print(format_exclusion_table(excluded))
+    if warnings:
+        print(format_risk_warning_table(warnings))
 
     if low_risk_tips:
         print(format_low_risk_tips_table(low_risk_tips))

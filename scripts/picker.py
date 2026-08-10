@@ -11,10 +11,18 @@ import json
 import sys
 from pathlib import Path
 
+# Windows GBK console cannot print emoji (UnicodeEncodeError). Force UTF-8 output.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):
+        pass
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from utils.cache import TTL_PRESETS, get, set
-from utils.category_guard import filter_products, format_exclusion_table, format_all_blocked_page, format_low_risk_tips_table
+from utils.category_guard import (filter_products, format_risk_warning_table,
+                                  format_low_risk_tips_table, recommend_safe)
 from utils.compressor import compress, _safe_get
 from utils.mcp_client import call_tool_json
 from utils.seller_profile import get_profile, format_profile_badge, format_profile_help
@@ -35,8 +43,8 @@ def _to_int(val) -> int:
         return 0
 
 
-def analyze_seller_insights(products: list, stage: str = "grower", excluded: list = None, profile_name: str = "newbie") -> str:
-    """Generate seller-friendly opportunity & risk analysis from product list"""
+def analyze_seller_insights(products: list, stage: str = "grower", risk_warnings: list = None, profile_name: str = "newbie") -> str:
+    """Generate seller-friendly opportunity & risk analysis from the FULL product list"""
     if not isinstance(products, list) or not products:
         return ""
 
@@ -104,25 +112,33 @@ def analyze_seller_insights(products: list, stage: str = "grower", excluded: lis
         else:
             lines.append('- **Beginner Suitability**: Under the current keyword, few products match the "low reviews + mid price" criteria. Consider switching keywords or exploring long-tail niche subcategories.')
 
-    # 6. Filter Impact
-    if excluded:
-        hard_count = sum(1 for e in excluded if e["risk_level"] == "hard")
-        capital_count = sum(1 for e in excluded if e["risk_level"] == "capital")
-        ops_count = sum(1 for e in excluded if e["risk_level"] == "ops")
-        trap_count = sum(1 for e in excluded if e["risk_level"] == "trap")
-        lines.append(f"- **Filter Impact 🛡️**: {len(excluded)} products were filtered from the original results (Hard Block {hard_count} / Capital-Intensive {capital_count} / Operations-Complex {ops_count} / Trap Signal {trap_count}). The accessible product pool has been narrowed — interpret the competitive landscape based on filtered results only.")
-        if profile_name in ("newbie", "grower") and capital_count > 0:
-            lines.append(f"  - 💡 {capital_count} of these are **capital-intensive categories** (apparel/shoes/bags/furniture, etc.). If you have factory or overseas warehouse capabilities, try `--profile factory` for the full analysis.")
+    # 6. Risk Overview (advisory — products remain visible, risk is surfaced)
+    if risk_warnings:
+        hard_count = sum(1 for e in risk_warnings if e["risk_level"] == "hard")
+        capital_count = sum(1 for e in risk_warnings if e["risk_level"] == "capital")
+        ops_count = sum(1 for e in risk_warnings if e["risk_level"] == "ops")
+        trap_count = sum(1 for e in risk_warnings if e["risk_level"] == "trap")
+        flagged = len(risk_warnings)
+        total = len(products)
+        lines.append(f"- **Risk Overview 🛡️**: {flagged}/{total} products carry elevated risk "
+                     f"(🔴Hard {hard_count} / 🟡Capital {capital_count} / 🟠Ops {ops_count} / ⚠️Trap {trap_count}). "
+                     f"All products remain visible — review the Risk Advisory table below and decide, or have an "
+                     f"independent review agent red-team the shortlist.")
+        if profile_name in ("newbie", "grower") and (hard_count + capital_count) > 0:
+            lines.append(f"  - 💡 {hard_count + capital_count} products fall in hard/capital risk categories "
+                         f"(supplements, apparel, electronics, etc.). They're viable only if you have the "
+                         f"credentials or supply-chain capability — otherwise skip them during review.")
 
     lines.append("")
     return "\n".join(lines)
 
 
-def run_blueocean(platform: str, site: str, keyword: str, stage: str = "grower", profile: dict = None):
-    """Blue Ocean mode: Hidden Earning Index + Product Search"""
+def run_blueocean(platform: str, site: str, keyword: str, stage: str = "grower", profile: dict = None,
+                  json_path: str = ""):
+    """Blue Ocean mode: Hidden Earning Index + Product Search (advisory — never removes products)"""
     results = []
     product_data = None
-    all_excluded = []
+    all_warnings = []
     all_low_risk_tips = []
 
     if profile is None:
@@ -145,17 +161,18 @@ def run_blueocean(platform: str, site: str, keyword: str, stage: str = "grower",
         # Compatible with MCP response envelope {"doc":...,"data":[...]} vs plain array [...]
         if isinstance(pp_data, dict) and "data" in pp_data:
             pp_data = pp_data.get("data", [])
-        pp_included, pp_excluded, pp_tips = filter_products(pp_data if isinstance(pp_data, list) else [], profile)
-        if pp_included:
-            results.append((pp_label, pp_included))
-        all_excluded.extend(pp_excluded)
+        pp_annotated, pp_warnings, pp_tips = filter_products(pp_data if isinstance(pp_data, list) else [], profile)
+        if pp_annotated:
+            results.append((pp_label, pp_annotated))
+        all_warnings.extend(pp_warnings)
         all_low_risk_tips.extend(pp_tips)
 
     # 2. Product Search
     if platform == "amazon":
         ps_params = {"amz_site": site, "search_name": keyword or "best seller"}
         if stage == "newbie":
-            ps_params["ratings_count_range"] = '["0","500"]'
+            ps_params["ratings_count_min"] = 0
+            ps_params["ratings_count_max"] = 500
         cached = get("product_search", ps_params)
         if cached:
             ps_data = cached
@@ -168,17 +185,18 @@ def run_blueocean(platform: str, site: str, keyword: str, stage: str = "grower",
         # Compatible with MCP response envelope {"doc":...,"data":[...]} vs plain array [...]
         if isinstance(ps_data, dict) and "data" in ps_data:
             ps_data = ps_data.get("data", [])
-        ps_included, ps_excluded, ps_tips = filter_products(ps_data if isinstance(ps_data, list) else [], profile)
-        product_data = ps_included
+        ps_annotated, ps_warnings, ps_tips = filter_products(ps_data if isinstance(ps_data, list) else [], profile)
+        product_data = ps_annotated
         if product_data:
             results.append((ps_label, product_data))
-        all_excluded.extend(ps_excluded)
+        all_warnings.extend(ps_warnings)
         all_low_risk_tips.extend(ps_tips)
 
-    # Output
-    # If all results are filtered, output the dedicated block page
+    # Output — advisory mode never outputs an all-blocked page; products are always shown
     if not any(data for _, data in results):
-        print(format_all_blocked_page(keyword, all_excluded))
+        print(f"# Blue Ocean Discovery Report: {keyword or 'Popular Category'} ({platform.upper()} {site})")
+        print()
+        print("No product data returned from the API for this keyword. Try a different keyword or verify the site.")
         return
 
     print(format_profile_badge(profile))
@@ -191,7 +209,7 @@ def run_blueocean(platform: str, site: str, keyword: str, stage: str = "grower",
         print()
 
     if product_data:
-        print(analyze_seller_insights(product_data, stage, all_excluded, profile.get("name", "newbie").lower()))
+        print(analyze_seller_insights(product_data, stage, all_warnings, profile.get("name", "newbie").lower()))
 
     # Quantitative Risk Summary
     if product_data:
@@ -199,14 +217,36 @@ def run_blueocean(platform: str, site: str, keyword: str, stage: str = "grower",
         crowding = calculate_crowding_index(product_data)
         print(format_risk_summary(inv_risk, crowding, profile.get("name", "newbie").lower()))
 
-    if all_excluded:
-        print(format_exclusion_table(all_excluded))
+    # JSON dump for the post-selection independent review (SKILL.md §1.1.5)
+    if json_path and product_data:
+        try:
+            import os
+            os.makedirs(os.path.dirname(os.path.abspath(json_path)), exist_ok=True)
+            with open(json_path, "w", encoding="utf-8") as f:
+                json.dump(product_data, f, ensure_ascii=False, indent=1)
+            print(f"> Shortlist saved to `{json_path}` — feed it to review_shortlist.py --keyword \"{keyword}\"")
+        except Exception as e:
+            print(f"⚠️  Could not write shortlist JSON: {e}")
+
+    # Beginner-friendly safe shortlist (a HIGHLIGHT — all products stay visible above)
+    if product_data and profile.get("name") == "Beginner Seller":
+        safe_picks = recommend_safe(product_data, profile)
+        if safe_picks:
+            print("### 🟢 Beginner Safe Shortlist (Recommended Starting Point)")
+            print("These products are lowest-risk and fit a beginner profile ($10-45, <1000 reviews, active sales). "
+                  "Review them first — but keep the full list above in mind too.")
+            print()
+            print(compress("product_search", safe_picks))
+            print()
+
+    if all_warnings:
+        print(format_risk_warning_table(all_warnings))
 
     if all_low_risk_tips:
         print(format_low_risk_tips_table(all_low_risk_tips))
 
 
-def run_newbie(platform: str, site: str, keyword: str, profile: dict = None):
+def run_newbie(platform: str, site: str, keyword: str, profile: dict = None, json_path: str = ""):
     """Beginner Mode: low-competition filtering + margin-friendly"""
     if profile is None:
         profile = get_profile("newbie")
@@ -219,8 +259,10 @@ def run_newbie(platform: str, site: str, keyword: str, profile: dict = None):
     ps_params = {
         "amz_site": site,
         "search_name": keyword or "easy start product",
-        "ratings_count_range": '["0","500"]',
-        "price_range": '["15","40"]',
+        "ratings_count_min": 0,
+        "ratings_count_max": 500,
+        "price_min": 15,
+        "price_max": 40,
     }
     cached = get("product_search", ps_params)
     if cached:
@@ -231,34 +273,49 @@ def run_newbie(platform: str, site: str, keyword: str, profile: dict = None):
         set("product_search", ps_params, data, TTL_PRESETS["product_search"])
         label = "product_search"
 
-    included, excluded, low_risk_tips = filter_products(data if isinstance(data, list) else [], profile)
+    # Compatible with MCP response envelope {"doc":...,"data":[...]} vs plain array [...]
+    if isinstance(data, dict) and "data" in data:
+        data = data.get("data", [])
+
+    annotated, warnings, low_risk_tips = filter_products(data if isinstance(data, list) else [], profile)
 
     print(format_profile_badge(profile))
 
     print(f"# Beginner-Friendly Discovery: {keyword or 'Low-Barrier Products'} ({platform.upper()} {site})")
     print()
-    print(f"Filters: review count < 500, price $15–40 — lowering the competitive barrier.")
+    print(f"Search scope: review count < 500, price $15–40 — lowering the competitive barrier.")
     profile_name = profile.get("name", "Beginner Seller")
-    print(f"Using **{profile_name}** profile — corresponding risk filter rules are active.")
+    print(f"Using **{profile_name}** profile — risk is surfaced as ADVISORY warnings, no products are hidden.")
     print()
 
-    # All blocked
-    if not included:
-        print(format_all_blocked_page(keyword, excluded))
+    if not annotated:
+        print("No product data returned from the API for this keyword. Try a different keyword.")
         return
 
     print(f"## {label}")
-    print(compress("product_search", included))
+    print(compress("product_search", annotated))
     print()
-    print(analyze_seller_insights(included, stage="newbie", excluded=excluded, profile_name=profile.get("name", "newbie").lower()))
+    print(analyze_seller_insights(annotated, stage="newbie", risk_warnings=warnings,
+                                  profile_name=profile.get("name", "newbie").lower()))
+
+    # JSON dump for the post-selection independent review (SKILL.md §1.1.5)
+    if json_path and annotated:
+        try:
+            import os
+            os.makedirs(os.path.dirname(os.path.abspath(json_path)), exist_ok=True)
+            with open(json_path, "w", encoding="utf-8") as f:
+                json.dump(annotated, f, ensure_ascii=False, indent=1)
+            print(f"> Shortlist saved to `{json_path}` — feed it to review_shortlist.py --keyword \"{keyword}\"")
+        except Exception as e:
+            print(f"⚠️  Could not write shortlist JSON: {e}")
 
     # Quantitative Risk Summary
-    inv_risk = estimate_inventory_risk(included)
-    crowding = calculate_crowding_index(included)
+    inv_risk = estimate_inventory_risk(annotated)
+    crowding = calculate_crowding_index(annotated)
     print(format_risk_summary(inv_risk, crowding, profile.get("name", "newbie").lower()))
 
-    if excluded:
-        print(format_exclusion_table(excluded))
+    if warnings:
+        print(format_risk_warning_table(warnings))
 
     if low_risk_tips:
         print(format_low_risk_tips_table(low_risk_tips))
@@ -277,19 +334,24 @@ def main():
                         choices=["newbie", "grower", "pro", "factory", "brand"],
                         help="Seller profile: newbie(Beginner)/grower(Growing)/pro(Professional)/factory(Factory)/brand(Brand)")
 
-    # Per-category override flags
+    # v3.0 advisory mode: products are never hidden. These flags are kept for backward
+    # compatibility and now only affect warning emphasis / the safe-shortlist highlight.
     parser.add_argument("--allow-hard", action="store_true",
-                        help="Allow hard-block categories (⚠️ strongly discouraged — requires FDA/EPA/regulatory credentials)")
+                        help="[v3.0 legacy] Deprecated — nothing is blocked in advisory mode. Kept for backward compat.")
     parser.add_argument("--allow-capital", action="store_true",
-                        help="Allow capital-intensive categories (apparel/shoes/bags/furniture, etc.)")
+                        help="[v3.0 legacy] Deprecated — nothing is blocked in advisory mode. Kept for backward compat.")
     parser.add_argument("--allow-ops", action="store_true",
-                        help="Allow operations-complex categories (electronics with batteries, liquids, auto parts, etc.)")
+                        help="[v3.0 legacy] Deprecated — nothing is blocked in advisory mode. Kept for backward compat.")
     parser.add_argument("--skip-traps", action="store_true",
-                        help="Skip trap signal filtering (⚠️ not recommended)")
+                        help="[v3.0 legacy] Deprecated — traps are advisory warnings, not filters.")
 
     # Backward compatible
     parser.add_argument("--explicit-category", action="store_true",
                         help="User explicitly specified a category (backward-compatible, equivalent to --allow-capital --allow-ops)")
+
+    # JSON shortlist output for the independent review step
+    parser.add_argument("--json", dest="json_path", default="",
+                        help="Save the annotated shortlist to this JSON file (for review_shortlist.py)")
 
     # Help
     parser.add_argument("--profile-help", action="store_true",
@@ -315,9 +377,9 @@ def main():
     )
 
     if args.mode == "blueocean":
-        run_blueocean(args.platform, args.site, args.keyword, args.stage, profile)
+        run_blueocean(args.platform, args.site, args.keyword, args.stage, profile, args.json_path)
     elif args.mode == "newbie":
-        run_newbie(args.platform, args.site, args.keyword, profile)
+        run_newbie(args.platform, args.site, args.keyword, profile, args.json_path)
 
 
 if __name__ == "__main__":
