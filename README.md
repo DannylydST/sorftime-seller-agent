@@ -28,13 +28,22 @@
 
 ---
 
-## 🆕 What's New (August 4, 2026)
+## 🆕 What's New (August 10, 2026)
+
+- **🛡️ v3.5.0 Advisory Risk Model** — The 4-tier risk system is now **advisory, not blocking**. Products are **never hidden**. Every result carries a risk badge (`🔴hard`/`🟡capital`/`🟠ops`/`⚠️trap`/`🟢safe`) with a specific warning, surfaced AFTER the results. The seller — or an independent review agent — makes the final call. This kills the false-positive blocking other tools suffer from: non-slip yoga mats are no longer "apparel", alcohol wipes are no longer "chemicals", microwave-safe containers are no longer "large appliances". Matches the skill's own "no hard thresholds, full-set ranking" principle.
+- **🧐 Independent Shortlist Review** — New `scripts/review_shortlist.py` runs a deterministic second-opinion (category-relevance, margin sanity, IP/trademark, review anomalies, seasonal windows, compliance red flags) emitting `GO / CAUTION / NO-GO`. SKILL.md §1.1.5 adds a **mandatory post-selection review protocol**: Layer 1 script + Layer 2 fresh-context independent sub-agent red-team. `picker.py --json` wires discovery → review seamlessly.
+- **🔀 mcp SDK 1.x/2.x dual-support** — The local bridge now runs natively on **both** mcp 1.x and 2.x (version-branched Server API, per the official 2.0 migration guide), plus a self-heal guard for unsupported SDK majors. No more "MCP 2.0 not yet supported" errors on any device — the skill self-repairs on first start.
+- **🧪 Agent-level verified** — 3 independent agents exercised the skill end-to-end (beginner blue-ocean, pro competitor teardown, Walmart discovery), surfacing and fixing real doc-vs-code gaps (keyword-pollution false-GO, non-existent `--mode` refs, `product_reviews` pagination).
+- **[Full changelog →](CHANGELOG.md)**
+
+<details>
+<summary>August 4, 2026 updates</summary>
+
 
 - **🔄 Closed-Loop Product Selection Workflow** — The flagship end-to-end pipeline. Covers product discovery → supply chain → financial analysis → risk assessment → **7-member independent AI Seller Review Panel** → Go/No-Go deliverable → post-launch monitoring. Dual-path (HPI Product-First + Market-First with auto-routing). 6 business models, 7 platform adapters. One command: `/goal /sorftime-seller-agent Execute Closed-Loop Product Selection for yoga mats on Amazon US. Seller: beginner, $10000, private-label.` [Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki/Closed-Loop-Product-Selection-Workflow) · [Case Study](https://github.com/DannylydST/sorftime-seller-agent/wiki/Workflow-Case-Study)
 - **🤖 7-Member Independent Seller Review Panel** — GO/CAUTION/NO-GO verdicts are no longer algorithmic thresholds. 7 independent AI sub-agents, each role-playing a different seller perspective (Peer, Mentor, Conservative, Opportunity, Platform Specialist, Financial Auditor), vote on every product with weighted scoring. Platform Specialist and Financial Auditor hold veto power. Panel may override algorithm. Validated: 20 rounds, 82.7% avg adoption.
 - **💾 Data Persistence** — Every phase auto-saves to `${SORFTIME_OUTPUT_DIR}`. 9 files per run: raw API data, P&L calculations, panel votes, self-contained Markdown deliverable, copy-paste-ready monitoring command. Cross-platform.
 - **📊 product_traffic_terms field trap documented** — The `exposure_position` field ("Organic"/"Ad"/"Ad,Organic") is the correct way to assess organic traffic. The non-existent `organic_searched_percentage` field returns false zeros. Now hard-coded into the skill's gotchas.
-- **[Full changelog →](CHANGELOG.md)**
 
 <details>
 <summary>August 3, 2026 updates</summary>

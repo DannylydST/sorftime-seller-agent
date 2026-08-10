@@ -4,6 +4,31 @@ All notable changes to Sorftime Seller Agent.
 
 ---
 
+## [2026-08-10] — v3.5.0
+
+### Added
+- **🛡️ Advisory Risk Model (replaces hard blocking)**: The 4-tier risk system is now advisory — products are **never hidden**. Every result carries a risk badge (`🔴hard`/`🟡capital`/`🟠ops`/`⚠️trap`/`🟢safe`) + a specific warning, surfaced after results. False-positive classes fixed via word-boundary matching + context overrides (non-slip ≠ apparel, alcohol wipes ≠ chemicals, microwave-safe containers ≠ appliances, SPF clothing ≠ cosmetics, apple slicer ≠ Apple brand, fashion masks ≠ medical, watch bands ≠ jewelry). Bilingual keyword coverage closed (English medical-device terms added).
+- **🧐 Independent Shortlist Review**: New `scripts/review_shortlist.py` — deterministic second-opinion (category-relevance with `--keyword`, margin sanity, IP/trademark, review anomaly, seasonal window, compliance red flags) → `GO / CAUTION / NO-GO`. `picker.py --json` writes the annotated shortlist for seamless handoff.
+- **🔀 mcp SDK 1.x/2.x dual-support**: Bridge version-branches the Server API (v1 decorator / v2 constructor, per official 2.0 migration guide) + self-heal guard for unsupported SDK majors. Works on any mcp version; self-repairs on first start.
+
+### Changed
+- `category_guard.py` → advisory `assess_product`/`filter_products` (never removes products; returns annotated list + risk warnings).
+- `picker.py` / `walmart_picker.py` → full-pool display + risk badges + beginner safe-shortlist highlight; `--json` output; heavy-goods trap now requires low sales (case-weight false positives fixed).
+- SKILL.md §1.1.5 → mandatory Post-Selection Independent Review protocol (Layer 1 script + Layer 2 fresh-context sub-agent).
+- `healthcheck.py` → UTF-8 hardening (Windows GBK emoji crash).
+
+### Fixed
+- Walmart discovery never worked against the live API (illegal `site` param, missing envelope unwrap, key-casing mismatch) — now end-to-end functional.
+- venv mcp 2.0 dependency pollution blocked the bridge; self-heal + dual-support resolve.
+- Doc-vs-code drift surfaced by agent-level tests: `competitor-deepdive.md` non-existent `--mode` refs, `product_reviews` 100-cap/no-pagination, `product_trend` format, walmart_picker grower example.
+
+### Verified
+- 20/20 scenario test suite (deterministic risk-gate + cached live pipeline + environment).
+- mcp 1.29 and 2.0 both pass JSON-RPC handshake (initialize → tools/list 87 tools → tools/call).
+- 3 agent-level runs (beginner blue-ocean, pro competitor teardown, Walmart discovery) exercised the skill end-to-end.
+
+---
+
 ## [2026-08-04]
 
 ### Added
