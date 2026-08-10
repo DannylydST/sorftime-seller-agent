@@ -513,6 +513,25 @@ def assess_product(product: dict, profile: dict = None) -> Tuple[str, str, list]
             matches.append(("trap", "stationery",
                 "Stationery Low Margin Trap: Low ASP, thin margins, severe commoditization"))
 
+    # Pet Oral / Oral-Entry Products (v3.6.1) — oral-entry + hygiene/compliance
+    pet_oral_kws = ["dog toothpaste", "pet toothpaste", "dental chew", "dental treats",
+                    "dental bones", "pet oral", "dog dental", "pet dental",
+                    "宠物牙膏", "狗牙膏", "洁齿骨", "宠物口腔", "口腔清洁"]
+    if any(k in text for k in pet_oral_kws):
+        matches.append(("trap", "pet_oral",
+            "Pet Oral Care Trap: Oral-entry product with hygiene/compliance concerns (dental/health claims). Verify ingredient safety & labeling before sourcing"))
+
+    # Generic Electrically-Powered Devices (v3.6.1) — UL/certification barrier
+    electric_kws = ["electric", "电动", "electrical", "corded", "voltage", "110v", "220v",
+                    "heating element", "电机", "通电", "电热"]
+    if any(k in text for k in electric_kws):
+        # Downgrade if clearly low-power/accessory, keep as caution otherwise
+        benign = ["non electric", "manual", "hand powered", "不插电", "手动", "无绳充气",
+                  "battery-free"]
+        if not any(b in text for b in benign):
+            matches.append(("ops", "electric",
+                "Electrically-Powered Device: UL/FCC/CE certification required — certification barrier & liability risk (newbie account risk)"))
+
     # ---- Determine highest-severity result ----
     # Drop matches that were downgraded to "safe" by a context override — those are
     # benign by definition and should never surface a warning.

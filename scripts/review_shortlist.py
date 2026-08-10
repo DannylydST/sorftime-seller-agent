@@ -165,6 +165,20 @@ def review_product(item: dict, keyword: str = "") -> dict:
         reasons.append(f"Compliance: contains {comp_hits} — verify certifications (FDA/FCC/CPC) before sourcing")
         caution_flags += 1
 
+    # 6. FBA ratio: fba_fee / price > 35% = margin fragile (v3.6.1)
+    fba_fee = _f(_get(item, ["fba_fee", "FBA Fee", "FBAFee", "fbaFee"], 0))
+    if price > 0 and fba_fee > 0 and (fba_fee / price) > 0.35:
+        reasons.append(f"Margin: FBA fee ${fba_fee:.2f} = {fba_fee/price*100:.0f}% of ${price:.2f} (>35%) — margin fragile after COGS+ads+referral")
+        caution_flags += 1
+
+    # 7. Generic electric devices — UL/certification barrier (v3.6.1)
+    electric_kws = ["electric", "电动", "electrical", "corded", "voltage", "110v", "220v",
+                    "heating element", "电机", "通电", "电热"]
+    benign = ["non electric", "manual", "hand powered", "不插电", "手动", "无绳充气", "battery-free"]
+    if any(k in title for k in electric_kws) and not any(b in title for b in benign):
+        reasons.append("Certification: electrically-powered device — verify UL/FCC/CE before sourcing (liability & account risk)")
+        caution_flags += 1
+
     # Verdict
     if hard_flags > 0:
         verdict = "NO-GO"

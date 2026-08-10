@@ -4,6 +4,21 @@ All notable changes to Sorftime Seller Agent.
 
 ---
 
+## [2026-08-10] — v3.6.1
+
+### Added (audit-layer gap-filling)
+- **Pet oral / oral-entry products** (`category_guard`): dog toothpaste, dental chews, pet oral, 宠物牙膏/洁齿骨 → trap risk (hygiene/compliance).
+- **Generic electric devices** (`category_guard` + `review_shortlist`): electric/电动/corded/voltage devices → ops risk / CAUTION (UL/FCC/CE certification barrier), with benign exemption for manual/hand-powered items.
+- **FBA fee ratio check** (`review_shortlist`): `fba_fee / price > 35%` → CAUTION (margin fragile after COGS+ads+referral).
+- **Organic traffic share** (`analyst.py` competitor mode): computes organic vs ad exposure from `exposure_position`; `<50%` organic → 🔴 buy-traffic bestseller flag, `<70%` → 🟡. Detects the round-11 "硅胶沥水垫 19/20 = 95% ad" class of products.
+
+### Verified
+- All 7 workspace audit pitfalls (pet-oral / supplement / therapeutic-claim / patent-pending / red-ocean / electric / FBA-ratio / price-vs-detail / ad-share) now auto-detected by the review framework.
+- Benign exemption works (manual/hand-powered devices not flagged).
+- 20/20 scenario regression passes.
+
+---
+
 ## [2026-08-10] — v3.6.0
 
 ### Added
