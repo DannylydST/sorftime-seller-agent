@@ -46,7 +46,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 def run_command(cmd, timeout=60):
     """运行命令并返回输出"""
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="replace")
         return result.stdout + result.stderr
     except subprocess.TimeoutExpired:
         return f"ERROR: Command timed out after {timeout}s"

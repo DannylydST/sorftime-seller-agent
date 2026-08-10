@@ -15,6 +15,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+# Windows GBK console cannot print emoji (UnicodeEncodeError). Force UTF-8 output.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):
+        pass
+
 SKILL_DIR = Path(__file__).resolve().parent.parent
 VENV_DIR = SKILL_DIR / ".venv"
 

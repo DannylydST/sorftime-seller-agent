@@ -30,7 +30,7 @@ def _call(tool, args):
     env = os.environ.copy()
     if KEY:
         env["SORFTIME_MCP_KEY"] = KEY
-    r = subprocess.run(cmd, capture_output=True, text=True, env=env, cwd=str(SKILL_DIR))
+    r = subprocess.run(cmd, capture_output=True, text=True, env=env, cwd=str(SKILL_DIR), encoding="utf-8", errors="replace")
     stdout = r.stdout.strip()
     stderr = r.stderr.strip()
     if not stdout:

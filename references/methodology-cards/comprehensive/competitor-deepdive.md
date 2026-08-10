@@ -37,24 +37,28 @@ Where α + β + γ + δ + ε + ζ + η + θ = 1, dynamically adjusted by the sel
 
 ## Conversational Execution (agent-x / MCP Channel)
 
-### Step 1: Full Pull --> Threat Index Ranking
+### Step 1: Full Pull --> Competitor Teardown
 ```bash
-python3 scripts/picker.py --mode competitor --asin "B0XXXXXXXX" \
-  --domain 1 --sort-by threat_index --top 50
+python3 scripts/analyst.py --mode competitor --platform amazon --site US --asin "B0XXXXXXXX"
 ```
-Start with ProductRequest to pull the target ASIN's core data, then trace back to competitors through its core keywords. No hard threshold -- even competitors with extremely low monthly sales appear in the ranking.
+`analyst.py --mode competitor` pulls the target ASIN's detail, traffic keywords, and
+competitor keyword overlap in a single call. No hard threshold -- even competitors with
+extremely low monthly sales are visible in the ranking.
 
 ### Step 2: Deep Dive into Top Competitors
 ```bash
-python3 scripts/analyst.py --mode product-traffic-terms --asin "B0YYYYYYYY"
-python3 scripts/analyst.py --mode asin-request-keyword --asin "B0YYYYYYYY"
-python3 scripts/analyst.py --mode product-reviews --asin "B0YYYYYYYY" --page 1
+# analyst.py --mode competitor already returns, per ASIN:
+#   product_detail  (price / sales / rating / FBA / seller)
+#   product_traffic_terms  (traffic-driving keywords + exposure position)
+#   competitor_product_keywords  (keyword overlap)
+# For reviews, call the MCP tool directly (capped at 100, no pagination):
+python3 scripts/sorftime_bridge.py --one-shot product_reviews '{"amz_site":"US","asin":"B0YYYYYYYY","review_type":"Both"}'
 ```
 
 Layer-by-layer deep dive:
-- **ProductTrafficTerms ⭐**: View the competitor's core traffic-driving keywords and understand their traffic structure (head terms vs. long-tail).
-- **ASINRequestKeywordv2 ⭐**: See which keywords the competitor ranks top-20 for, and calculate keyword overlap with your own product.
-- **ProductReviews**: Pull 1-3 pages of reviews for sentiment analysis; identify the competitor's "negative-review vulnerability points."
+- **Traffic terms**: View the competitor's core traffic-driving keywords and their traffic structure (head terms vs. long-tail vs. brand-term-only).
+- **Keyword overlap**: See which keywords the competitor ranks for, and calculate overlap with your own product.
+- **Reviews (max 100)**: `product_reviews` is capped at 100 reviews with no `page` parameter -- use `review_type` (`Both`/`Positive`/`Negative`) to sample different sentiment buckets for negative-review vulnerability analysis.
 
 ### Step 3: Cross-Validation
 - Use ProductRequest to confirm the competitor's FBA fees and pricing strategy; estimate their margin structure.
