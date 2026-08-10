@@ -7,6 +7,7 @@ All notable changes to Sorftime Seller Agent.
 ## [2026-08-10] — v3.6.1
 
 ### Added (audit-layer gap-filling)
+- **`verify_candidates.py`** — reusable batch `product_detail` reality-check for the review pipeline. In-process `call_tool_json` (avoids the Windows Store `python3` subprocess hijack), per-ASIN retry + stagger, auto-unwraps the `{"doc","data"}` envelope, key-tolerant field extraction, merges multi-batch output. Documented in SKILL.md §1.1.5 Step 0.
 - **Pet oral / oral-entry products** (`category_guard`): dog toothpaste, dental chews, pet oral, 宠物牙膏/洁齿骨 → trap risk (hygiene/compliance).
 - **Generic electric devices** (`category_guard` + `review_shortlist`): electric/电动/corded/voltage devices → ops risk / CAUTION (UL/FCC/CE certification barrier), with benign exemption for manual/hand-powered items.
 - **FBA fee ratio check** (`review_shortlist`): `fba_fee / price > 35%` → CAUTION (margin fragile after COGS+ads+referral).

@@ -394,6 +394,14 @@ No product is hidden — the full pool stays visible, and the Risk Advisory tabl
 **Rule: after `picker.py` produces a shortlist (or after Phase E of the Closed-Loop workflow),
 run BOTH review layers before presenting a final recommendation:**
 
+**Step 0 — Reality-check candidate data (always):**
+```bash
+# Batch-verify each candidate's REAL product_detail (picker table price ≠ actual).
+# In-process call, retry+stagger, auto-unwraps the {"doc","data"} envelope.
+python3 scripts/verify_candidates.py --input /path/to/asins.txt --out /path/to/verify_raw.json --brief
+# asins.txt = one ASIN per line (or asins.json = list of strings / {"asin": ...} dicts)
+```
+
 **Layer 1 — Deterministic independent review (fast, always):**
 ```bash
 # picker.py now writes the annotated shortlist to JSON:
