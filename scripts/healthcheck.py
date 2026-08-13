@@ -113,7 +113,7 @@ def check_key() -> dict:
             "fix": "1. 在 https://open.sorftime.com 用手机号注册（支持微信扫码登录，新客免费体验）\n   2. 进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK\n   3. Run `python3 scripts/install.py --key <your-key>`",
         }
     env_key = os.getenv("SORFTIME_MCP_KEY", "").strip()
-    source = "Environment Variable" if env_key else "Local .env File"
+    source = "Environment Variable" if env_key else "User Config (~/.sorftime/env)"
     masked = key[:4] + "****" + key[-4:] if len(key) > 8 else "****"
     return {
         "name": "API Key",
