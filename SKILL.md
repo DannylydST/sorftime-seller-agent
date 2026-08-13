@@ -64,16 +64,17 @@ This skill is the **single unified entry point** for all Sorftime MCP capabiliti
 
 ## 🌐 Sorftime Platform（国内站）
 
-> **平台地址**: https://www.sorftime.com — Sorftime 国内站（面向国内卖家）。
+> **平台地址**: https://open.sorftime.com — Sorftime 国内站（面向国内卖家）。
 
 ### 注册与账号
 
 | 项目 | 说明 |
 |------|------|
-| **注册** | https://www.sorftime.com → 手机号注册（新客免费体验） |
+| **注册** | https://open.sorftime.com → 手机号注册（新客免费体验） |
 | **登录方式** | 手机号（+86）/ 微信扫码登录 / 短信验证码 |
-| **MCP Key 位置** | 登录后 → 进入「MCP 控制台」→ 激活 MCP 服务 → 获取 MCP 服务地址与 Key |
-| **付费** | 人民币（购买开通 MCP 服务） |
+| **MCP Key（Account-SK）位置** | 登录后 → 进入「MCP 服务」页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
+| **MCP 服务地址** | mcp.sorftime.com（streamableHttp，与 Account-SK 配合用于 agent 配置） |
+| **付费** | 人民币：MCP 通用资源包 ￥99/3万次/1月 起（或连续包月套餐） |
 | **客服** | 官网「联系客服」或微信客服 |
 
 ### 产品形态
@@ -106,11 +107,11 @@ Run `python3 scripts/healthcheck.py` to quickly determine which is missing: Key,
 
 #### Step 2 — Guide to Get Key (if Key is missing)
 If the user hasn't provided a Key, proactively provide the acquisition path:
-- 注册地址：https://www.sorftime.com — Sorftime 国内站
+- 注册地址：https://open.sorftime.com — Sorftime 国内站（开放数据平台）
 - 用**手机号（+86）**注册，或微信扫码登录（新客免费体验）
-- 注册后进入「MCP 控制台」→ 激活 MCP 服务 → 获取 MCP 服务地址与 Key
-- 付费：人民币（购买开通 MCP 服务）
-- Suggested phrasing: "打开 www.sorftime.com，用手机号注册（支持微信扫码登录），进入 MCP 控制台激活 MCP 服务拿到 Key，我来帮你配置好。新账号可免费体验。"
+- 注册后进入「MCP 服务」页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK
+- 付费：人民币（MCP 通用资源包 ￥99/3万次/1月 起）
+- Suggested phrasing: "打开 open.sorftime.com，用手机号注册（支持微信扫码登录），进入 MCP 服务页购买开通，复制 Account-SK 发给我，我来帮你配置好。新账号可免费体验。"
 
 #### Step 3 — Auto-Install
 Once you have the Key, immediately run:
@@ -128,7 +129,7 @@ python3 scripts/install.py --unattended --key <user-provided-Key>
 If `install.py` returns `test_passed: false` or `status: error`:
 1. Check if the Key was copied completely (common: missing trailing characters)
 2. Confirm the Sorftime account has MCP service enabled
-3. Check network connectivity to `www.sorftime.com`
+3. Check network connectivity to `open.sorftime.com`
 4. Report the specific error to the user with next-step suggestions
 
 ### First-Time User Guide (Simplified for Users)
@@ -136,7 +137,7 @@ If `install.py` returns `test_passed: false` or `status: error`:
 | Step | User Action | Agent Action |
 |------|-------------|--------------|
 | 1 | Say "help me find products" or "configure Sorftime" | Detect configuration status |
-| 2 | 在 https://www.sorftime.com 用手机号注册（支持微信扫码登录）。进入 MCP 控制台激活 MCP 服务，拿到 Key 发给 agent。 | Auto-run `install.py --unattended --key <Key>` |
+| 2 | 在 https://open.sorftime.com 用手机号注册（支持微信扫码登录）。进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK 发给 agent。 | Auto-run `install.py --unattended --key <Key>` |
 | 3 | Wait 10-20 seconds | Auto-test connection, save config, retry original request |
 | 4 | 新账号免费体验，立即开始使用 | — |
 
@@ -145,10 +146,10 @@ If `install.py` returns `test_passed: false` or `status: error`:
 | Problem | Solution |
 |---------|---------|
 | "[SORFTIME_ONBOARDING_REQUIRED]" | Immediately execute onboarding flow (Steps 1-4) |
-| "Connection test failed" | Check Key completeness / account MCP status / network to www.sorftime.com |
-| Don't know where to get Key | Direct user to https://www.sorftime.com → 手机号注册（支持微信扫码）→ MCP 控制台 → 激活 MCP 服务 → 获取 Key |
+| "Connection test failed" | Check Key completeness / account MCP status / network to open.sorftime.com |
+| Don't know where to get Key | Direct user to https://open.sorftime.com → 手机号注册（支持微信扫码）→ MCP 服务页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
 | "Schema is X days old" | Run `python3 tests/auto_sync.py` to pull latest tool schemas |
-| How to pay / pricing | Direct user to https://www.sorftime.com — 人民币付费。新账号可免费体验。 |
+| How to pay / pricing | Direct user to https://open.sorftime.com — 人民币付费。新账号可免费体验。 |
 
 ---
 
