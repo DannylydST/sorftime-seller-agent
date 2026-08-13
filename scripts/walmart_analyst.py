@@ -35,11 +35,16 @@ def _parse_flat_trend(data: list) -> list[tuple]:
 
 
 def _raw_call(tool_name: str, arguments: dict):
-    """Call Walmart tools without registered Schema"""
-    return call_tool_json("sorftime_raw_call", {
+    """Call Walmart tools without registered Schema, unwrap the {doc, data} envelope"""
+    result = call_tool_json("sorftime_raw_call", {
         "tool_name": tool_name,
         "arguments": arguments,
     })
+    # sorftime_raw_call passthrough returns {"doc": <field schema>, "data": <actual data>}
+    # — callers expect the unwrapped data, so extract it here.
+    if isinstance(result, dict) and "data" in result:
+        return result["data"]
+    return result
 
 
 def _fetch(tool_name: str, params: dict, use_raw: bool = False, optional: bool = False):
@@ -64,14 +69,14 @@ def _fetch(tool_name: str, params: dict, use_raw: bool = False, optional: bool =
 def analyze_competitor(product_id: str):
     """Competitor analysis: product detail + traffic keywords + sales/rating trends"""
     detail = _fetch("walmart_product_detail_by_product_id",
-                    {"product_id": product_id, "site": "US"}, use_raw=True)
+                    {"product_id": product_id}, use_raw=True)
     traffic = _fetch("walmart_product_traffic_terms",
-                     {"product_id": product_id, "site": "US"}, use_raw=True, optional=True)
+                     {"product_id": product_id}, use_raw=True, optional=True)
     trend_sales = _fetch("walmart_product_trend_by_product_id",
-                         {"product_id": product_id, "site": "US", "trend_type": "SalesVolume"},
+                         {"product_id": product_id, "trend_type": "SalesVolume"},
                          use_raw=True, optional=True)
     trend_star = _fetch("walmart_product_trend_by_product_id",
-                        {"product_id": product_id, "site": "US", "trend_type": "Star"},
+                        {"product_id": product_id, "trend_type": "Star"},
                         use_raw=True, optional=True)
 
     print(f"# Walmart Competitor Analysis Report: {product_id}")
@@ -118,11 +123,11 @@ def analyze_competitor(product_id: str):
 def analyze_keyword(keyword: str):
     """Keyword analysis: detail + extensions + search results"""
     detail = _fetch("walmart_keyword_detail",
-                    {"keyword": keyword, "site": "US"}, use_raw=True, optional=True)
+                    {"keyword": keyword}, use_raw=True, optional=True)
     extends = _fetch("walmart_keyword_extends",
-                     {"keyword": keyword, "site": "US"}, use_raw=True, optional=True)
+                     {"keyword": keyword}, use_raw=True, optional=True)
     results = _fetch("walmart_keyword_search_results",
-                     {"keyword": keyword, "site": "US"}, optional=True)
+                     {"keyword": keyword}, optional=True)
 
     print(f"# Walmart Keyword Analysis Report: {keyword}")
     print()
@@ -153,7 +158,7 @@ def analyze_keyword(keyword: str):
 def analyze_market(node_id: str):
     """Market analysis: category report + top product profiles"""
     report = _fetch("walmart_category_report_by_node_id",
-                    {"node_id": node_id, "site": "US"}, use_raw=True)
+                    {"node_id": node_id}, use_raw=True)
 
     print(f"# Walmart Market Analysis Report: Category {node_id}")
     print()
@@ -173,20 +178,20 @@ def analyze_market(node_id: str):
         print("## Top Product Profiles (Top 10)")
         print()
         for idx, p in enumerate(top10, 1):
-            pid = p.get("ProductId", "")
-            title = p.get("Title", "")[:40]
+            pid = p.get("product_id", "")
+            title = p.get("title", "")[:40]
             if not pid:
                 continue
             print(f"### {idx}. {title}")
             try:
                 detail = _fetch("walmart_product_detail_by_product_id",
-                                {"product_id": pid, "site": "US"}, use_raw=True, optional=True)
+                                {"product_id": pid}, use_raw=True, optional=True)
                 if detail and isinstance(detail, dict):
-                    brand = detail.get("Brand", "-")
-                    seller = detail.get("Seller", "-")
-                    ship = detail.get("Shipedby", "-")
-                    reviews = detail.get("ReviewsCount", 0)
-                    rating = detail.get("Ratings", 0)
+                    brand = detail.get("brand", "-")
+                    seller = detail.get("seller", "-")
+                    ship = detail.get("shipedby", "-")
+                    reviews = detail.get("reviews_count", 0)
+                    rating = detail.get("ratings", 0)
                     print(f"- **ProductId**: {pid} | **Brand**: {brand} | **Seller**: {seller}")
                     print(f"- **Fulfillment**: {ship} | **Reviews**: {reviews} | **Rating**: {rating}")
                 else:
@@ -201,11 +206,11 @@ def analyze_market(node_id: str):
         wfs_count = 0
         total_sales = 0
         for p in products[:20]:
-            sellers[p.get("Seller", "Unknown")] = sellers.get(p.get("Seller", "Unknown"), 0) + 1
-            brands[p.get("Brand", "Unknown")] = brands.get(p.get("Brand", "Unknown"), 0) + 1
-            if p.get("Shipedby") == "WFS":
+            sellers[p.get("seller", "Unknown")] = sellers.get(p.get("seller", "Unknown"), 0) + 1
+            brands[p.get("brand", "Unknown")] = brands.get(p.get("brand", "Unknown"), 0) + 1
+            if p.get("shipedby") == "WFS":
                 wfs_count += 1
-            total_sales += p.get("ListingSalesVolumeOfMonth", 0)
+            total_sales += p.get("listing_sales_volume_of_month", 0)
 
         print(f"- **TOP20 Total Monthly Sales**: {total_sales:,}")
         print(f"- **WFS Share**: {wfs_count}/20 ({wfs_count*5}%)")
