@@ -1,6 +1,7 @@
 tool: product_search
 name: product_search — 搜索亚马逊电商平台上的**实时**产品数据，默认按月销量倒序
-arguments: {}
+arguments:
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_kitchen_storage

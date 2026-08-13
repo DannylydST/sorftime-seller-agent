@@ -2,6 +2,7 @@ tool: keyword_extends
 name: keyword_extends — 查询亚马逊电商平台上热搜关键词的延伸词关键词，可用于卖家查询
 arguments:
   keyword: yoga mat
+  keyword_support_site: US
 category: amazon
 test_cases:
 - name: normal_kitchen_storage

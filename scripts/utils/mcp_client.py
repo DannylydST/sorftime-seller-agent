@@ -67,6 +67,49 @@ PARAM_ALIASES = {
     "search_name":     ["keyword", "category_name", "product_name", "name", "search_name"],
 }
 
+# ── 参数值语义陷阱（自愈机制核心）──
+# 顽疾：某些工具参数名正确，但参数值的"语义/格式"与业务直觉相反（如 author_id 实际收 handle、
+# shop_id 实际收店铺名），服务端静默返回空数据（不报错），导致 agent 误判为"真的没数据"。
+# 本表记录已知的"参数值语义错位"，用于空数据时的诊断自愈提示。
+# 每发现一个新陷阱，补充一行。格式：tool_name -> {param_name: 语义提示}
+PARAM_VALUE_TRAPS = {
+    "tiktok_author": {
+        "author_id": "实际接受作者 handle（用户名，如 xmw_us），非数字 ID；可从 tiktok_product_video_author 的 author_name 获取",
+    },
+    "temu_shop_request": {
+        "shop_id": "实际接受店铺名 store_name（如 Zooye Family Cleaning），非数字 ID；可从 temu_product_search 的 store_name 获取",
+    },
+    "ali1688_product_search_from_image": {
+        "image_url": "需要真实 web 图片 URL（<1MB）；可从 ali1688_similar_product 的 photo 字段获取",
+    },
+}
+
+# 空数据哨兵字符串（服务端静默返回"无数据"时的典型文案）
+_EMPTY_MARKERS = (
+    "no data available", "no relevant data", "no product found",
+    "please specify", "please enter", "not found",
+)
+
+
+def _looks_empty(data) -> bool:
+    """检测响应是否为'空数据'哨兵（服务端静默无数据，而非正常空结果）
+
+    同时支持原始文本（str）与解析后的 JSON（dict），供 call_tool_json（脚本路径）
+    与 call_sorftime（MCP server / one-shot 汇合点）两处复用。
+    """
+    if isinstance(data, str):
+        low = data.lower()
+        return any(m in low for m in _EMPTY_MARKERS)
+    if isinstance(data, dict):
+        for key in ("data", "message", "msg"):
+            v = data.get(key)
+            if isinstance(v, str):
+                low = v.lower()
+                if any(m in low for m in _EMPTY_MARKERS):
+                    return True
+    return False
+
+
 # Lazily loaded tool Schema cache
 _SCHEMA_CACHE: dict = None
 
@@ -190,6 +233,30 @@ def _log_gap(tool_name: str, reason: str, arguments: dict):
         f.write(entry + "\n")
 
 
+def _diagnose_empty(tool_name: str, arguments: dict) -> None:
+    """空数据自愈诊断：查参数值语义陷阱表，命中则 stderr 提示 + gap 日志。
+
+    不污染返回值（仅 stderr + 日志），让调用方保持干净数据的同时，agent 能
+    从 stderr 看到"这可能是传参值错误"的精确提示，从而自我纠正。
+    """
+    traps = PARAM_VALUE_TRAPS.get(tool_name)
+    if not traps:
+        return
+    hints = []
+    for pname, hint in traps.items():
+        val = arguments.get(pname)
+        if val is None or str(val).strip() in ("", "test", "123456789", "1234567890"):
+            hints.append(f"    · {pname} 传了 {val!r}，但 {hint}")
+    if not hints:
+        return
+    msg = (
+        f"[Sorftime 自愈诊断] {tool_name} 返回空数据，疑似参数值语义错误（非'真的没数据'）：\n"
+        + "\n".join(hints)
+    )
+    print(msg, file=sys.stderr)
+    _log_gap(tool_name, "empty_data_param_semantics", arguments)
+
+
 def call_tool(tool_name: str, arguments: dict) -> str:
     """Call a Sorftime MCP tool, return raw text string"""
     # 0. Key pre-check — give onboarding guidance when Key is missing
@@ -272,9 +339,8 @@ def _parse_kv_text(raw: str) -> dict:
     return result
 
 
-def call_tool_json(tool_name: str, arguments: dict):
-    """Call a Sorftime MCP tool, auto-extract and return JSON object from the response text"""
-    raw = call_tool(tool_name, arguments)
+def _parse_response(raw: str, tool_name: str):
+    """从原始响应文本解析出 JSON 对象（处理多种返回格式）"""
     # Sorftime response text usually contains a description line + \n + JSON
     # Try direct parse first
     try:
@@ -308,3 +374,13 @@ def call_tool_json(tool_name: str, arguments: dict):
         if pairs:
             return pairs
     raise RuntimeError(f"Cannot parse JSON from {tool_name} response. Raw response:\n{raw[:500]}")
+
+
+def call_tool_json(tool_name: str, arguments: dict):
+    """Call a Sorftime MCP tool, auto-extract and return JSON object from the response text"""
+    raw = call_tool(tool_name, arguments)
+    parsed = _parse_response(raw, tool_name)
+    # 自愈：空数据哨兵检测 → 诊断提示（不污染返回值，仅 stderr + gap 日志）
+    if _looks_empty(parsed):
+        _diagnose_empty(tool_name, arguments)
+    return parsed

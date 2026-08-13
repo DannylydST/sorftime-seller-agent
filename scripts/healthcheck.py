@@ -269,7 +269,7 @@ def _print_human(checks: list[dict], overall_ok: bool, has_warnings: bool):
         print()
         print("  Try asking your AI:")
         print('    "Find blue ocean products in yoga mats"')
-        print('    "Analyze ASIN B08N5WRWNW"')
+        print('    "Analyze ASIN B07H9PZDQW"')
         print('    "Calculate profit: price $29.99, cost $8.50"')
     else:
         error_count = sum(1 for c in checks if c["status"] == "error")

@@ -1,3 +1,4 @@
 tool: shopee_get_favorite_keyword_dict
 name: shopee_get_favorite_keyword_dict — 查询我的Shopee平台关键词词库的收藏夹列表
-arguments: {}
+arguments:
+  site: MY

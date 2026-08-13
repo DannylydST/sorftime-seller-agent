@@ -1,6 +1,7 @@
 tool: keyword_list
 name: keyword_list — 查询亚马逊电商平台上实时热搜关键词榜，按周搜索量排序
-arguments: {}
+arguments:
+  keyword_support_site: US
 category: amazon
 test_cases:
 - name: normal_valid_keyword

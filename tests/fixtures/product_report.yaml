@@ -1,7 +1,8 @@
 tool: product_report
 name: product_report — 亚马逊平台上单个产品分析报告
 arguments:
-  asin: B08N5WRWNW
+  asin: B07H9PZDQW
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_valid_asin
@@ -17,7 +18,7 @@ test_cases:
     tool_name: product_report
     arguments:
       amzSite: UK
-      asin: B08N5WRWNW
+      asin: B07H9PZDQW
   expect:
     status: success
 - name: error_missing_asin

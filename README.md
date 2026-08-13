@@ -79,7 +79,7 @@ python3 scripts/install.py
 ### 3. Ask your AI
 ```
 "Find blue ocean products in yoga mats on Amazon US for a beginner"
-"Analyze this Amazon competitor: ASIN B08N5WRWNW — traffic keywords, pricing, sales trend"
+"Analyze this Amazon competitor: ASIN B07H9PZDQW — traffic keywords, pricing, sales trend"
 "Calculate my Amazon FBA profit: price $29.99, cost $8.50, weight 1.2lb"
 "Pull Shopee MY phone case category Top 20 — who's selling, what prices, brand share"
 "Compare this product's price between Walmart and Amazon"
@@ -105,14 +105,14 @@ python3 scripts/install.py
 |-----|----------|---------------|
 | 🔍 | **Amazon Product Research** | "Find blue ocean kitchen products under $30 on Amazon US for a beginner seller" |
 | 💎 | **Hidden Profit Index** ⭐ | "Scan the yoga mat category — surface products with high hidden profit potential that other tools miss" |
-| 🎯 | **Competitor Analysis (Reverse ASIN)** | "Break down ASIN B08N5WRWNW — monthly sales, traffic keywords, pricing history, FBA fees" |
+| 🎯 | **Competitor Analysis (Reverse ASIN)** | "Break down ASIN B07H9PZDQW — monthly sales, traffic keywords, pricing history, FBA fees" |
 | 🔑 | **Amazon Keyword Research** | "What are the best long-tail keywords for yoga mats? Show search volume and competition" |
 | 💰 | **Amazon FBA Profit Calculator** | "Calculate FBA profit: $29.99 selling price, $8.50 unit cost, 1.2lb weight" |
 | 📊 | **Market & Category Analysis** | "Analyze the blender category on Amazon US — brand monopoly, pricing trends, market gaps" |
 | 🏪 | **Shopee Market Research** | "Pull Shopee MY phone case category Top 20 — brands, pricing bands, shop types, sales distribution" |
 | 🛒 | **Walmart Product Research** | "Find blue ocean products on Walmart US under $25 with low review counts" |
 | 🎬 | **TikTok Shop Intelligence** | "Show me top-selling TikTok Shop US beauty products and their video authors" |
-| 📈 | **Automated Price & Sales Monitoring** | "Watch ASIN B08N5WRWNW and alert me when price drops below $15 or sales spike 50%" |
+| 📈 | **Automated Price & Sales Monitoring** | "Watch ASIN B07H9PZDQW and alert me when price drops below $15 or sales spike 50%" |
 | 🌏 | **Cross-Platform Arbitrage** | "Find products priced 30%+ higher on Walmart than Amazon US — low competition on Walmart side" |
 
 ---
@@ -189,7 +189,7 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 > "5 opportunities with low brand concentration, <500 reviews on top listings, healthy margins. #1: Under-sink organizers — 15K monthly searches, only 3 competitors with >100 reviews, estimated margin 35–42%."
 
 ### Amazon competitor deep-dive (reverse ASIN)
-> **You**: "Reverse ASIN B08N5WRWNW — traffic keywords, pricing strategy, sales trend."
+> **You**: "Reverse ASIN B07H9PZDQW — traffic keywords, pricing strategy, sales trend."
 >
 > **Agent**: *[ProductDetail + TrafficTerms + CompetitorKeywords]*
 > "Gaiam Yoga Block — 40K monthly sales, 4.7 stars, $18.99. Top traffic keywords: 'yoga block' (52K), 'yoga blocks 2 pack' (28K), 'cork yoga block' (15K). FBA fee: $12.82. Top competitor ASINs: B07XJ5YV8G, B09XMQ5J8W."
@@ -263,7 +263,7 @@ Any MCP-compatible agent: **Claude Code, Codex (OpenAI), Cursor, OpenClaw, Herme
 [open-intl.sorftime.com](https://open-intl.sorftime.com) → sign up with Google → MCP page → copy your Key.
 
 **Q: Can I use this without an AI?**
-Yes — all CLI tools work standalone: `python3 scripts/picker.py --keyword "yoga mat"`. But AI-driven analysis with the 20 methodology cards unlocks the full value.
+Yes — all scripts work standalone: `python3 scripts/picker.py --keyword "yoga mat"`. But AI-driven analysis with the 20 methodology cards unlocks the full value.
 
 **Q: What methodology cards are included?**
 **Hidden Profit Index, Blue Ocean Finder, Competitor Deep-Dive, Keyword Strategy, Cross-Platform Price Gap**, and 15 more. Full-ranking models — no hard thresholds that hide borderline opportunities. See `references/methodology-cards/`.

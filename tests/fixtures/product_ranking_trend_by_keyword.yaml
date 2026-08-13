@@ -1,8 +1,9 @@
 tool: product_ranking_trend_by_keyword
 name: product_ranking_trend_by_keyword — 亚马逊电商平台产品在指定关键词下曝光的排名趋势，按曝光时间倒
 arguments:
-  asin: B08N5WRWNW
+  asin: B07H9PZDQW
   keyword: yoga mat
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_valid_keyword

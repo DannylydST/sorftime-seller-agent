@@ -1,7 +1,8 @@
 tool: tiktok_product_detail
 name: tiktok_product_detail — 查询Tiktok平台产品详情
 arguments:
-  product_id: '123456789'
+  product_id: '1731637081990992476'
+  site: US
 category: tiktok
 test_cases:
 - name: normal_valid_product

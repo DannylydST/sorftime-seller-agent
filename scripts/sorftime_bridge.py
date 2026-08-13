@@ -4211,6 +4211,14 @@ async def call_sorftime(tool_name: str, arguments: Dict[str, Any]) -> str:
                     pass
                 if is_error:
                     return json.dumps({"error": True, "status": "server_error", "message": text, "hint": "Check parameter names, required fields, and tool availability. Retry or contact Sorftime support."}, ensure_ascii=False)
+                # 自愈：空数据哨兵检测（MCP server / --one-shot 两条路径的汇合点）
+                # 脚本路径（call_tool_json）会再独立检测一次，因 subprocess 会吞掉这里的 stderr
+                try:
+                    from utils.mcp_client import _looks_empty, _diagnose_empty
+                    if _looks_empty(text):
+                        _diagnose_empty(tool_name, arguments)
+                except ImportError:
+                    pass
                 return text
 
     return json.dumps(data, ensure_ascii=False, indent=2)

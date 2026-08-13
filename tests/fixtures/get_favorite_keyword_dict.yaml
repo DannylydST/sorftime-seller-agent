@@ -1,6 +1,7 @@
 tool: get_favorite_keyword_dict
 name: get_favorite_keyword_dict — 查询我的亚马逊平台关键词词库的收藏夹列表
-arguments: {}
+arguments:
+  keyword_support_site: US
 category: amazon
 test_cases:
 - name: normal_basic

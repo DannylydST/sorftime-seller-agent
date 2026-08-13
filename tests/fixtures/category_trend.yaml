@@ -1,7 +1,8 @@
 tool: category_trend
 name: category_trend — 查询亚马逊电商平台细分类目市场趋势数据，基于类目Top100
 arguments:
-  node_id: '1064954'
+  node_id: '166350011'
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_valid_node

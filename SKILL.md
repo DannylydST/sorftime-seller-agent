@@ -82,8 +82,8 @@ This skill is the **single unified entry point** for all Sorftime MCP capabiliti
 | Product | Status | Description |
 |---------|--------|-------------|
 | **MCP** | ✅ Live | AI agent toolset — plug-and-play model integration for Claude, Cursor, etc. |
-| **CLI** | 🔜 Coming Soon | Command-line client for scripting and batch processing |
-| **API** | 🔜 Coming Soon | HTTP data interface for custom system integration |
+
+> This Skill is **MCP-only**: exposes Sorftime data tools exclusively via the MCP protocol — no CLI / API product form.
 
 ### Supported Platforms
 Amazon · Walmart · Shopee · TikTok · TEMU · 1688 — across 21 global sites.
@@ -210,7 +210,7 @@ When users mention specific tactical scenarios, route to the corresponding metho
 | Data Depth | Basic metrics | 160+ dimensions + proprietary indices |
 | AI Integration | Limited, manual operation | MCP-native, 86 standardized tools for AI agents |
 | Platform Coverage | Amazon only | 40+ platforms |
-| Interface | GUI-heavy, steep learning curve | CLI + AI Agent, natural language |
+| Interface | GUI-heavy, steep learning curve | MCP-native + AI Agent, natural language |
 
 ---
 
@@ -276,7 +276,7 @@ If the request specifies ≥2 of: **exact tool / ASIN / keyword / platform / sit
 
 Examples:
 - `"product_search for 'yoga mat' US, sorted by monthly sales"` → execute + return the table, no added framing
-- `"raw product_detail JSON for B08N5WRWNW"` → return the JSON
+- `"raw product_detail JSON for B07H9PZDQW"` → return the JSON
 - `"compare B0X and B0Y price trends, just the numbers"` → return the numbers
 
 ### Ambiguous / exploratory request → guided flow
@@ -432,7 +432,7 @@ For quick picks (picker.py path), Layer 1 + a single Layer 2 sub-agent is suffic
 ### 1.2 Analyst Engine `analyst.py`
 
 ```bash
-python3 scripts/analyst.py --mode competitor --platform amazon --site US --asin B08N5WRWNW
+python3 scripts/analyst.py --mode competitor --platform amazon --site US --asin B07H9PZDQW
 python3 scripts/analyst.py --mode keyword --platform amazon --site US --keyword "yoga mat"
 python3 scripts/analyst.py --mode market --platform amazon --site US --node-id 1064954
 ```
@@ -448,7 +448,7 @@ Output: gross margin, break-even daily sales, return rate sensitivity. FBA fee i
 ### 1.4 Monitoring Engine `monitor.py`
 
 ```bash
-python3 scripts/monitor.py --mode add --type asin --value B08N5WRWNW --platform amazon --site US
+python3 scripts/monitor.py --mode add --type asin --value B07H9PZDQW --platform amazon --site US
 python3 scripts/monitor.py --mode daily
 python3 scripts/monitor.py --mode alert
 ```
@@ -575,10 +575,14 @@ python3 scripts/install.py
 
 Auto-completes: virtual environment creation, CC/OpenClaw detection, prompts for `SORFTIME_MCP_KEY`, connection test, config snippet output.
 
-### 5.2 Quick Tool Invocation
+### 5.2 Tool Invocation
+
+> 本 Skill 通过 **MCP 协议**对外暴露 86 个工具：`sorftime_bridge.py` 是 stdio MCP server，由 `install.py` 自动注册到 agent（mcporter.json）。agent 直接通过 MCP 协议调用工具，**无需 CLI**。
+
+脚本内部（picker/analyst 等）与手动调试时，用 `--one-shot` 底层接口直接调单个工具（非对外交互方式）：
 
 ```bash
-# Test connection
+# Test connection（脚本内部 / 调试用）
 python3 scripts/sorftime_bridge.py --one-shot get_time '{}'
 
 # Product search
@@ -714,7 +718,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - **Shopee `shopee_product_search` `shop_location` parameter**: 1=本土店 (local), 2=跨境店 (cross-border). Use for cross-border feasibility analysis — compare page_count between the two. Response is nested: `data.products[]` not `data[]`.
 - **Shopee keyword favorites tools return raw arrays** (not `{doc, data}` wrapper). `shopee_favorite_keyword` add returns "Favorite succeeded" in error-format JSON. `shopee_get_favorite_keyword_dict` returns `["dict_name", ...]`, `shopee_get_favorite_keyword` returns `["keyword", ...]`. Don't expect the standard response envelope.
 - **Shopee site enum (8 站全部实测通过)**: `MY`, `PH`, `VN`, `TH`, `ID`, `SG`, `TW`, `BR` (plus `UnKonw` default). All 15 Shopee tools share the same site list. Always pass `site` explicitly — it's optional in schema but server behavior without it is inconsistent.
-- **Python API**: Prefer the bridge CLI (`python3 scripts/sorftime_bridge.py --one-shot <tool> '<json>'`) for one-off calls — it handles all path/env complexity. If you need programmatic access:
+- **脚本内部编程调用（Python API）**: 脚本（picker/analyst 等）内部通过 `call_tool_json` 调用 MCP 工具（底层封装 `--one-shot` 直连，处理所有路径/env 复杂度）：
   ```python
   import sys; sys.path.insert(0, 'scripts')  # REQUIRED — utils is under scripts/
   from utils.mcp_client import call_tool, call_tool_json
@@ -722,7 +726,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
   `call_tool(name, args)` returns str. `call_tool_json(name, args)` returns parsed dict. Do NOT try `import MCPClient` or `import mcp_client` — those names don't exist. Never run `python3 -c "from utils..."` from outside the skill root directory.
 - Some Sorftime tools return Chinese narrative prefix before JSON — `utils/mcp_client.py` and `sorftime_bridge.py` handle this parsing
 - Requests beyond registered tool scope: `utils/mcp_client.py` auto-remaps deprecated tools or intercepts with alternatives
-- `mcporter` HTTP transport may intermittently break on large responses — complex queries prefer `--one-shot` main path
+- `mcporter` HTTP transport may intermittently break on large responses — complex queries prefer the bridge `--one-shot` direct-call path (the same path scripts use internally)
 - `picker.py` defaults to `--profile newbie` (strictest filtering). Switch profiles via `--profile grower/pro/factory/brand` or use per-category overrides (`--allow-capital` / `--allow-ops`). Filtered products are listed in report with specific risk level and reason
 - `--explicit-category` is backward-compatible, equivalent to `--allow-capital --allow-ops`
 - **Schema auto-sync**: `sorftime_bridge.py` loads dynamic schema from `schema_store` on startup; falls back to `_FALLBACK_CORE_TOOLS` if never synced. Run `python3 tests/auto_sync.py` regularly
@@ -746,8 +750,8 @@ Complete tool list and counts in `references/tool-matrix.md` (auto-sync generate
 Core frequently-used tools:
 `get_time`, `category_report`, `product_search`, `product_detail`, `product_reviews`, `product_variations`, `product_traffic_terms`, `keyword_detail`, `keyword_search_results`, `keyword_extends`, `potential_product`, `category_name_search`, `category_search_from_top_node`, `similar_product_feature`, `competitor_product_keywords`, `ali1688_similar_product`, `tiktok_category_report`, `tiktok_product_detail`, `sorftime_raw_call`
 
-**Walmart core tools (14):**
-`walmart_keyword_search_results`, `walmart_keyword_detail`, `walmart_keyword_list`, `walmart_keyword_extends`, `walmart_product_detail_by_product_id`, `walmart_product_traffic_terms`, `walmart_product_trend_by_product_id`, `walmart_product_variation_sales_by_product_id`, `walmart_category_report_by_node_id`, `walmart_favorite_keyword`, `walmart_get_favorite_keyword`, `walmart_get_favorite_keyword_dict`, `walmart_change_favorite_keyword`, `walmart_del_favorite_keyword`
+**Walmart core tools (15):**
+`walmart_keyword_search_results`, `walmart_keyword_detail`, `walmart_keyword_list`, `walmart_keyword_extends`, `walmart_keyword_search_from_name`, `walmart_product_detail_by_product_id`, `walmart_product_traffic_terms`, `walmart_product_trend_by_product_id`, `walmart_product_variation_sales_by_product_id`, `walmart_category_report_by_node_id`, `walmart_favorite_keyword`, `walmart_get_favorite_keyword`, `walmart_get_favorite_keyword_dict`, `walmart_change_favorite_keyword`, `walmart_del_favorite_keyword`
 
 > **Walmart is US-only**: none of the 15 Walmart tools have a `site` parameter — the marketplace is hardcoded to US. No parameter needed.
 >

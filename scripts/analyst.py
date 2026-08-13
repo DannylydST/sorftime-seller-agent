@@ -49,26 +49,41 @@ def analyze_competitor(platform: str, site: str, asin: str):
     """Competitor analysis: detail + reviews + traffic keywords + competitor keywords"""
     amz_site = site if platform == "amazon" else "US"
 
-    def fetch(tool: str, params: dict):
+    def fetch(tool: str, params: dict, optional: bool = False):
         cached = get(tool, params)
         if cached:
             return cached
-        data = call_tool_json(tool, params)
-        set(tool, params, data, TTL_PRESETS.get(tool, 21600))
-        return data
+        try:
+            data = call_tool_json(tool, params)
+            set(tool, params, data, TTL_PRESETS.get(tool, 21600))
+            return data
+        except Exception as e:
+            if optional:
+                fetch.errors[tool] = str(e).split("\n")[0][:120]
+                return None
+            raise
+
+    fetch.errors = {}
 
     detail = fetch("product_detail", {"amz_site": amz_site, "asin": asin})
-    reviews = fetch("product_reviews", {"amz_site": amz_site, "asin": asin})
-    traffic = fetch("product_traffic_terms", {"amz_site": amz_site, "asin": asin})
-    keywords = fetch("competitor_product_keywords", {"amz_site": amz_site, "asin": asin})
+    # reviews / traffic / competitor-keywords are optional: high-volume ASINs can make
+    # product_traffic_terms exceed the HTTP timeout (large response) — degrade instead of crash
+    reviews = fetch("product_reviews", {"amz_site": amz_site, "asin": asin}, optional=True)
+    traffic = fetch("product_traffic_terms", {"amz_site": amz_site, "asin": asin}, optional=True)
+    keywords = fetch("competitor_product_keywords", {"amz_site": amz_site, "asin": asin}, optional=True)
 
     print(fmt_competitor_brief(asin, detail, reviews, traffic))
     org_brief = _organic_share_brief(traffic)
     if org_brief:
         print(org_brief)
+    if traffic is None:
+        print(f"> Traffic-keyword data unavailable: {fetch.errors.get('product_traffic_terms', 'Unknown reason')}. Retry later or raise SORFTIME_HTTP_TIMEOUT.")
     print()
-    print("## Keyword Rankings")
-    print(compress("competitor_product_keywords", keywords))
+    if keywords:
+        print("## Keyword Rankings")
+        print(compress("competitor_product_keywords", keywords))
+    else:
+        print(f"> Competitor-keyword data unavailable: {fetch.errors.get('competitor_product_keywords', 'Unknown reason')}. Retry later.")
 
 
 def analyze_keyword(platform: str, site: str, keyword: str):

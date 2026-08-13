@@ -1,4 +1,5 @@
 tool: shopee_category_search_from_name
 name: shopee_category_search_from_name — 按名称搜索Shopee相关类目市场
 arguments:
-  name: test
+  name: yoga mat
+  site: MY

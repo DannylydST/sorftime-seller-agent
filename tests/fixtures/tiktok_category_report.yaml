@@ -1,7 +1,8 @@
 tool: tiktok_category_report
 name: tiktok_category_report — 查询Tiktok电商平台**指定类目**的类目数据报告
 arguments:
-  node_id: '1064954'
+  node_id: '700650'
+  site: US
 category: tiktok
 test_cases:
 - name: normal_us_category

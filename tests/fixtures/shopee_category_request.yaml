@@ -1,4 +1,5 @@
 tool: shopee_category_request
 name: shopee_category_request — Shopee类目下Best Seller Top 500 产
 arguments:
-  node_id: '1064954'
+  node_id: '11001012'
+  site: MY

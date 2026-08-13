@@ -1,6 +1,7 @@
 tool: potential_product
 name: potential_product — 搜索亚马逊电商平台上的潜力产品
-arguments: {}
+arguments:
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_with_searchName

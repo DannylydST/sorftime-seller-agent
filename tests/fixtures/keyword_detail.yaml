@@ -2,6 +2,7 @@ tool: keyword_detail
 name: keyword_detail — 查询亚马逊电商平台上热搜关键词详情
 arguments:
   keyword: yoga mat
+  keyword_support_site: US
 category: amazon
 test_cases:
 - name: normal_kitchen_storage

@@ -1,7 +1,8 @@
 tool: category_search_from_product_name
 name: category_search_from_product_name — 指定产品品类名称（如空气炸锅、手机充电宝）搜索亚马逊电商平台
 arguments:
-  product_name: air fryer
+  product_name: yoga mat
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_valid_name

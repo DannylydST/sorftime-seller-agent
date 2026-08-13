@@ -1,4 +1,5 @@
 tool: temu_category_search_from_name
 name: temu_category_search_from_name — 按名称搜索Temu平台中相关类目市场
 arguments:
-  name: test
+  name: yoga mat
+  site: US

@@ -1,7 +1,8 @@
 tool: product_search_from_history
 name: product_search_from_history — 搜索亚马逊电商平台上的**历史**产品，用于查看历史时间段的
 arguments:
-  search_time: test
+  search_time: '2026-08-10'
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_basic

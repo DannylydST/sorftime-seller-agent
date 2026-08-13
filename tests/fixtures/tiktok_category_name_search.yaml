@@ -2,6 +2,7 @@ tool: tiktok_category_name_search
 name: tiktok_category_name_search — 按名称搜索Tiktok上相关类目市场，返回类目市场名称和no
 arguments:
   search_name: kitchen storage
+  site: US
 category: tiktok
 test_cases:
 - name: normal_valid_name

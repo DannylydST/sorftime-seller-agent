@@ -2,6 +2,7 @@ tool: del_favorite_keyword
 name: del_favorite_keyword — 删除我的亚马逊平台关键词词库中收藏的指定关键词
 arguments:
   keyword: yoga mat
+  keyword_support_site: US
 category: amazon
 test_cases:
 - name: normal_delete

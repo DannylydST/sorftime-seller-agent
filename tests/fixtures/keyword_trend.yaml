@@ -2,6 +2,7 @@ tool: keyword_trend
 name: keyword_trend — 查询亚马逊电商平台上热搜关键词历史趋势，支持搜索量、搜索排名
 arguments:
   keyword: yoga mat
+  keyword_support_site: US
 category: amazon
 test_cases:
 - name: normal_valid_keyword

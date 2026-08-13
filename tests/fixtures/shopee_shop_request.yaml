@@ -1,4 +1,5 @@
 tool: shopee_shop_request
 name: shopee_shop_request — 查询Shopee卖家（店铺）详情
 arguments:
-  shop_id: test
+  shop_id: '13248331'
+  site: MY

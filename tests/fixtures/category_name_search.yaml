@@ -2,6 +2,7 @@ tool: category_name_search
 name: category_name_search — 基于名称查询亚马逊电商平台细分类目市场，返回相关细分类目的N
 arguments:
   category_name: kitchen
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_kitchen

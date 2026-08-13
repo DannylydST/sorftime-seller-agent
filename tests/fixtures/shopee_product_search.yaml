@@ -1,3 +1,4 @@
 tool: shopee_product_search
 name: shopee_product_search — 搜索Shopee电商平台上的产品数据，支持多维度筛选，按月销
-arguments: {}
+arguments:
+  site: MY

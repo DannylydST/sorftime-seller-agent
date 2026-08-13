@@ -1,3 +1,4 @@
 tool: temu_category_search
 name: temu_category_search — 搜索Temu电商平台上的类目数据，支持多维度筛选
-arguments: {}
+arguments:
+  site: US

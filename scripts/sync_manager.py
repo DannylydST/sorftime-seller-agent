@@ -26,7 +26,7 @@ import shutil
 import subprocess
 import sys
 import textwrap
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 # 动态定位技能根目录
@@ -64,7 +64,61 @@ CATEGORY_MAP = {
     "del_favorite_": "Keyword",
     "favorite_": "Keyword",
     "get_favorite_": "Keyword",
+    "walmart_": "Walmart",
+    "shopee_": "Shopee",
+    "temu_": "TEMU",
 }
+
+# ── 平台专属真实 ID（fixture 默认值，避免假 ID 空跑）──
+# 来源：2026-08-13 真实调用逐一验证（node_id 用 category_report 验证有 top100 数据）
+_PLATFORM_NODE_IDS = {
+    "walmart_": "5438",
+    "tiktok_": "700650",
+    "shopee_": "11001012",
+    "temu_": "878",
+    "default": "166350011",  # Amazon 及默认
+}
+_PLATFORM_PRODUCT_IDS = {
+    "walmart_": "15689567602",
+    "tiktok_": "1731637081990992476",
+    "shopee_": "3536399570",
+    "temu_": "606553130247338",
+    "ali1688_": "671918122259",
+    "default": "15689567602",
+}
+_PLATFORM_SHOP_IDS = {
+    "shopee_": "13248331",          # Shopee shop_id 是数字 ID
+    "temu_": "Zooye Family Cleaning",  # ⚠️ TEMU shop_id 实际接受店铺名（store_name）
+}
+# 站点默认值（按平台；Shopee 无 US 站，用 MY）
+_PLATFORM_SITES = {
+    "shopee_": "MY",
+    "default": "US",
+}
+# TikTok author_id 实际接受作者 handle（用户名），非数字 ID
+_AUTHOR_HANDLE = "xmw_us"
+# 1688 反向图搜需要一个真实 web 图片 URL
+_IMAGE_URL = "https://cbu01.alicdn.com/img/ibank/O1CN01TmjJpw1o1codZFhZH_!!951425165-0-cib.jpg"
+
+# 服务端实际必填、但 schema 标注为可选的参数（缺了服务端会报错）
+_SERVER_REQUIRED_OPTIONAL = {
+    "walmart_product_trend_by_product_id": {"trend_type": "SalesVolume"},
+    "shopee_keyword_relation_results": {"keyword": "yoga mat"},
+    "shopee_category_trend": {"node_id": "11001012"},
+}
+
+
+def _platform_of(name: str) -> str:
+    """按工具名前缀判断所属平台，返回平台 key（default 表示 Amazon 及通用）"""
+    for p in ("walmart_", "tiktok_", "shopee_", "temu_", "ali1688_"):
+        if name.startswith(p):
+            return p
+    return "default"
+
+
+def _days_ago(n: int) -> str:
+    """返回 n 天前的日期（yyyy-MM-dd），用于历史类工具的真实日期"""
+    return (datetime.now() - timedelta(days=n)).strftime("%Y-%m-%d")
 
 # 哪些工具是"核心"（需要在 bridge 中单独注册 schema，而非仅靠 raw_call）
 # 规则：常用读工具单独注册；写操作、低频工具走 raw_call
@@ -315,7 +369,7 @@ def generate_matrix(tools: list[dict]) -> str:
         for prefix, cat in sorted(CATEGORY_MAP.items(), key=lambda x: -len(x[0])):
             if name.startswith(prefix) or name == prefix:
                 return cat
-        return "其他"
+        return "Other"
 
     # 按分类分组
     groups: dict[str, list[dict]] = {}
@@ -339,7 +393,7 @@ def generate_matrix(tools: list[dict]) -> str:
         "",
     ]
 
-    for cat in ["Amazon Product", "Keyword", "Category", "TikTok Shop", "Other"]:
+    for cat in ["Amazon Product", "Keyword", "Category", "TikTok Shop", "Walmart", "Shopee", "TEMU", "Other"]:
         if cat not in groups:
             continue
         lines.append(f"## {cat} ({len(groups[cat])})")
@@ -380,8 +434,9 @@ def generate_fixture(tool: dict) -> dict:
     props = schema.get("properties", {})
     required = schema.get("required", [])
 
-    # 构建示例参数
+    # 构建示例参数（平台专属真实 ID，避免假 ID 空跑）
     args: dict[str, Any] = {}
+    plat = _platform_of(name)
     for pname, pdef in props.items():
         if pname in required:
             ptype = pdef.get("type", "string")
@@ -398,17 +453,31 @@ def generate_fixture(tool: dict) -> dict:
             elif pname == "search_name":
                 args[pname] = "kitchen storage"
             elif pname == "asin":
-                args[pname] = "B08N5WRWNW"
-            elif pname == "product_name":
-                args[pname] = "air fryer"
+                args[pname] = "B07H9PZDQW"
             elif pname == "node_id":
-                args[pname] = "1064954"
+                args[pname] = _PLATFORM_NODE_IDS.get(plat, _PLATFORM_NODE_IDS["default"])
+            elif pname == "product_id":
+                args[pname] = _PLATFORM_PRODUCT_IDS.get(plat, _PLATFORM_PRODUCT_IDS["default"])
+            elif pname == "shop_id":
+                args[pname] = _PLATFORM_SHOP_IDS.get(plat, "123456789")
+            elif pname == "author_id":
+                args[pname] = _AUTHOR_HANDLE
+            elif pname == "image_url":
+                args[pname] = _IMAGE_URL
+            elif pname == "product_name":
+                args[pname] = "yoga mat"
+            elif pname == "name":
+                args[pname] = "yoga mat"
             elif pname == "category_name":
                 args[pname] = "kitchen"
-            elif pname == "product_id":
-                args[pname] = "123456789"
-            elif pname in ("page", "top_node", "topNode"):
+            elif pname in ("top_node", "topNode"):
+                args[pname] = "370783011"
+            elif pname == "page":
                 args[pname] = 1
+            elif pname in ("start_date", "begin_date"):
+                args[pname] = _days_ago(40)
+            elif pname in ("end_date", "query_date", "search_time", "date"):
+                args[pname] = _days_ago(3)
             elif ptype == "integer":
                 args[pname] = 1
             elif ptype == "number":
@@ -417,6 +486,15 @@ def generate_fixture(tool: dict) -> dict:
                 args[pname] = True
             else:
                 args[pname] = "test"
+
+    # 服务端实际必填但 schema 标注可选的参数，补齐（否则服务端报错）
+    for extra_k, extra_v in _SERVER_REQUIRED_OPTIONAL.get(name, {}).items():
+        args.setdefault(extra_k, extra_v)
+
+    # 站点类参数：schema 常标注为可选，但服务端实际必填（缺了返回 "Please specify the site"）
+    for site_param in ("amz_site", "site", "keyword_support_site"):
+        if site_param in props and site_param not in args:
+            args[site_param] = _PLATFORM_SITES.get(plat, "US")
 
     return {
         "tool": name,

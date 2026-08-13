@@ -1,4 +1,5 @@
 tool: temu_product_search_from_name
 name: temu_product_search_from_name — 按名称搜索Temu上相关产品，每次返回20个产品
 arguments:
-  name: test
+  name: yoga mat
+  site: US

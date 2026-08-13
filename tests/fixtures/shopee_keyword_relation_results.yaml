@@ -1,3 +1,5 @@
 tool: shopee_keyword_relation_results
 name: shopee_keyword_relation_results — 按关键词搜索相关产品
-arguments: {}
+arguments:
+  keyword: yoga mat
+  site: MY

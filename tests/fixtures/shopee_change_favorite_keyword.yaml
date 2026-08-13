@@ -3,3 +3,4 @@ name: shopee_change_favorite_keyword — 移动我的Shopee平台关键词词库
 arguments:
   keyword: yoga mat
   to_dict: test
+  site: MY

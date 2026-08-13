@@ -1,7 +1,8 @@
 tool: tiktok_similar_product
 name: tiktok_similar_product — 查询产品在Tiktok平台上的相似产品，可用于分析此类产品的
 arguments:
-  product_name: air fryer
+  product_name: yoga mat
+  site: US
 category: tiktok
 test_cases:
 - name: normal_valid_product

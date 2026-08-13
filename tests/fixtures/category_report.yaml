@@ -1,7 +1,8 @@
 tool: category_report
 name: category_report — 查询亚马逊电商平台**指定类目**的**实时**销量Top1
 arguments:
-  node_id: '1064954'
+  node_id: '166350011'
+  amz_site: US
 category: amazon
 test_cases:
 - name: normal_us_node

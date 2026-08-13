@@ -1,3 +1,5 @@
 tool: shopee_category_trend
 name: shopee_category_trend — 用于查询该类目市场历史趋势
-arguments: {}
+arguments:
+  node_id: '11001012'
+  site: MY
