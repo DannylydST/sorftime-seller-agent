@@ -113,7 +113,7 @@ def check_key() -> dict:
             "fix": "1. Create a free account at https://open-intl.sorftime.com (Google login supported, free trial credits included)\n   2. Go to the MCP page and copy your Key\n   3. Run `python3 scripts/install.py --key <your-key>`",
         }
     env_key = os.getenv("SORFTIME_MCP_KEY", "").strip()
-    source = "Environment Variable" if env_key else "Local .env File"
+    source = "Environment Variable" if env_key else "User Config (~/.sorftime/env)"
     masked = key[:4] + "****" + key[-4:] if len(key) > 8 else "****"
     return {
         "name": "API Key",

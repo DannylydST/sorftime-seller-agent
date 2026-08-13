@@ -217,10 +217,10 @@ def main():
     env = detect_env()
     key = prompt_key(args.key)
 
-    # Auto-save to skill local .env
-    save_key(key)
+    # Auto-save to user-level config (NOT inside the skill directory)
+    saved_path = save_key(key)
     if not args.unattended:
-        print(f"    ✅ Key saved to skill .env ({SKILL_DIR / '.env'})")
+        print(f"    ✅ Key saved to user config ({saved_path})")
 
     test_result = {"status": "skipped"}
     if not args.skip_test:
