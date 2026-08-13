@@ -67,7 +67,7 @@
 ## ⚡ Quick Start
 
 ### 1. Create a free account
-[open-intl.sorftime.com](https://open-intl.sorftime.com) — sign up with **Google**, free trial credits included. PayPal for additional credits.
+[www.sorftime.com](https://www.sorftime.com) — 手机号注册（支持微信扫码登录），新客免费体验。人民币付费。
 
 ### 2. Install
 ```bash
@@ -235,7 +235,7 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 
 ## 📦 Installation
 
-**Prerequisites**: Python 3.10+ · [Free Sorftime account](https://open-intl.sorftime.com) · Any MCP-compatible AI agent
+**Prerequisites**: Python 3.10+ · [Free Sorftime account](https://www.sorftime.com) · Any MCP-compatible AI agent
 
 ```bash
 git clone https://github.com/DannylydST/sorftime-seller-agent.git
@@ -251,16 +251,16 @@ python3 scripts/healthcheck.py # Verify
 ## 🙋 FAQ
 
 **Q: Is this official Sorftime?**
-Yes. Built by [@DannylydST](https://github.com/DannylydST) at Sorftime Data Technology. Connects to Sorftime's official MCP API at [open-intl.sorftime.com](https://open-intl.sorftime.com).
+Yes. Built by [@DannylydST](https://github.com/DannylydST) at Sorftime Data Technology. Connects to Sorftime's official MCP API at [www.sorftime.com](https://www.sorftime.com).
 
 **Q: Is it really free?**
-New accounts get **free trial credits** — no credit card required. Paid usage-based tiers available via PayPal for higher-volume sellers and agencies.
+新账号可**免费体验** — 无需信用卡。高用量卖家/机构可通过人民币购买更高档位。
 
 **Q: Which AI agents can I use?**
 Any MCP-compatible agent: **Claude Code, Codex (OpenAI), Cursor, OpenClaw, Hermes, Pi**, and more. `install.py` auto-detects your environment.
 
 **Q: Where do I get my MCP Key?**
-[open-intl.sorftime.com](https://open-intl.sorftime.com) → sign up with Google → MCP page → copy your Key.
+[www.sorftime.com](https://www.sorftime.com) → 手机号注册（支持微信扫码）→ MCP 控制台 → 激活 MCP 服务 → 获取 Key。
 
 **Q: Can I use this without an AI?**
 Yes — all scripts work standalone: `python3 scripts/picker.py --keyword "yoga mat"`. But AI-driven analysis with the 20 methodology cards unlocks the full value.

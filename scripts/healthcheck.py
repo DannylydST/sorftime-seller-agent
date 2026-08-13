@@ -110,7 +110,7 @@ def check_key() -> dict:
             "name": "API Key",
             "status": "error",
             "detail": "Not configured",
-            "fix": "1. Create a free account at https://open-intl.sorftime.com (Google login supported, free trial credits included)\n   2. Go to the MCP page and copy your Key\n   3. Run `python3 scripts/install.py --key <your-key>`",
+            "fix": "1. 在 https://www.sorftime.com 用手机号注册（支持微信扫码登录，新客免费体验）\n   2. 进入 MCP 控制台激活 MCP 服务并获取 Key\n   3. Run `python3 scripts/install.py --key <your-key>`",
         }
     env_key = os.getenv("SORFTIME_MCP_KEY", "").strip()
     source = "Environment Variable" if env_key else "Local .env File"
@@ -162,7 +162,7 @@ asyncio.run(main())
             "name": "Sorftime Connect",
             "status": "error",
             "detail": f"Connection failed: {err[:100]}",
-            "fix": "1. Check if the Key was copied completely (no missing characters)\n   2. Confirm your account has MCP service enabled (check MCP page after login)\n   3. Check network access to open-intl.sorftime.com\n   4. New accounts get free trial credits — if exhausted, top up via PayPal",
+            "fix": "1. Check if the Key was copied completely (no missing characters)\n   2. Confirm your account has MCP service enabled (check MCP page after login)\n   3. Check network access to www.sorftime.com\n   4. New accounts get free trial experience — if exhausted, top up in RMB",
         }
     return {
         "name": "Sorftime Connect",

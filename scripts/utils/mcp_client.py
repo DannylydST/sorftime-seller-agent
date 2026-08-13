@@ -264,7 +264,7 @@ def call_tool(tool_name: str, arguments: dict) -> str:
         raise RuntimeError(
             "[SORFTIME_ONBOARDING_REQUIRED] "
             "Sorftime MCP Key not configured.\n"
-            "Get it at: https://open-intl.sorftime.com/mcp\n"
+            "Get it at: https://www.sorftime.com/mcp\n"
             "Config command: python3 scripts/install.py --unattended --key <your-key>\n"
             "Or tell your agent: 'Help me configure Sorftime'."
         )
@@ -298,7 +298,7 @@ def call_tool(tool_name: str, arguments: dict) -> str:
             raise RuntimeError(
                 "[SORFTIME_ONBOARDING_REQUIRED] "
                 "Sorftime MCP Key not configured. "
-                "Provide your Key to the agent (get it at: https://open-intl.sorftime.com/mcp), "
+                "Provide your Key to the agent (get it at: https://www.sorftime.com/mcp), "
                 "or say 'Help me configure Sorftime'."
             )
         # Log unknown errors for drift analysis
