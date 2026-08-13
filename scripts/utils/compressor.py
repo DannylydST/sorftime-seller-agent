@@ -166,11 +166,11 @@ def compress_walmart_product_list(data: list, top_n: int = 20) -> str:
         pid = _safe_get(item, ["ProductId", "productId", "product_id", "ASIN", "asin", "产品ASIN码"])
         title = str(_safe_get(item, ["Title", "title", "标题"]))[:28]
         price = _safe_get(item, ["Price", "price", "价格"])
-        sales = _safe_get(item, ["ListingSalesVolumeOfMonth", "monthly_sales_volume", "sales", "月销量"])
-        rating = _safe_get(item, ["Ratings", "star_rating", "评分"])
-        reviews = _safe_get(item, ["ReviewsCount", "reviews", "review_count", "评论数"])
+        sales = _safe_get(item, ["ListingSalesVolumeOfMonth", "monthly_sales_volume", "listing_sales_volume_of_month", "sales", "月销量"])
+        rating = _safe_get(item, ["Ratings", "star_rating", "ratings", "评分"])
+        reviews = _safe_get(item, ["ReviewsCount", "reviews", "review_count", "reviews_count", "评论数"])
         seller = _safe_get(item, ["Seller", "seller", "seller_name", "卖家"])
-        ship = _safe_get(item, ["Shipedby", "shipBy", "delivery_type", "物流方式"])
+        ship = _safe_get(item, ["Shipedby", "shipBy", "delivery_type", "shipedby", "物流方式"])
         badge = _risk_badge(item)
         if has_risk:
             lines.append(f"| {idx} | {badge:8} | {pid} | {title} | {price} | {sales} | {rating} | {reviews} | {seller} | {ship} |")
@@ -187,15 +187,15 @@ def compress_walmart_product_detail(data: dict) -> str:
         return compress_generic(data, title="walmart_product_detail")
 
     lines = ["## Walmart Product Detail"]
-    pid = _safe_get(data, ["ProductId", "productId"])
+    pid = _safe_get(data, ["ProductId", "productId", "product_id"])
     title = _safe_get(data, ["Title", "title"])
     price = _safe_get(data, ["Price", "price"])
     brand = _safe_get(data, ["Brand", "brand"])
     seller = _safe_get(data, ["Seller", "seller", "seller_name"])
-    ship = _safe_get(data, ["Shipedby", "shipBy", "delivery_type"])
-    sales = _safe_get(data, ["ListingSalesVolumeOfMonth", "monthly_sales_volume"])
-    reviews = _safe_get(data, ["ReviewsCount", "review_count"])
-    rating = _safe_get(data, ["Ratings", "star_rating"])
+    ship = _safe_get(data, ["Shipedby", "shipBy", "delivery_type", "shipedby"])
+    sales = _safe_get(data, ["ListingSalesVolumeOfMonth", "monthly_sales_volume", "listing_sales_volume_of_month"])
+    reviews = _safe_get(data, ["ReviewsCount", "review_count", "reviews_count"])
+    rating = _safe_get(data, ["Ratings", "star_rating", "ratings"])
     node_tree = _safe_get(data, ["NodeTree", "nodeTree", "category"])
 
     lines.append(f"- **ProductId**: {pid}")
