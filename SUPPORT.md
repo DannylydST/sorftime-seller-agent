@@ -2,7 +2,7 @@
 
 ## Free Trial
 
-New accounts at [open-intl.sorftime.com](https://open-intl.sorftime.com) include free trial credits. Sign up with Google — no credit card required.
+新账号在 [open.sorftime.com](https://open.sorftime.com) 注册可免费体验。手机号注册（支持微信扫码登录），无需信用卡。
 
 ## Documentation
 
@@ -29,4 +29,4 @@ Check parameter names first — the same concept uses different parameter names 
 Run `python3 tests/auto_sync.py` to pull server schema updates.
 
 **Q: Can I use this without an AI agent?**
-Yes — all CLI tools work standalone: `python3 scripts/picker.py --keyword "yoga mat"`.
+Yes — all scripts work standalone: `python3 scripts/picker.py --keyword "yoga mat"`.

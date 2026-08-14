@@ -156,7 +156,7 @@ All notable changes to Sorftime Seller Agent.
 
 ### Changed
 - GitHub topics: 12→20 (added `amazon-fba`, `amazon-product-research`, `keyword-research`, `competitor-analysis`, `mcp-server`, `cross-border-ecommerce`, `tiktok-shop`, `shopee`, `temu`, `open-source`)
-- GitHub homepage: set to `open-intl.sorftime.com`
+- GitHub homepage: set to `open.sorftime.com`
 
 ## [2026-07-28]
 

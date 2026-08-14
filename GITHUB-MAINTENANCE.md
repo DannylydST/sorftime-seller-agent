@@ -20,7 +20,7 @@
 |-------|--------|
 | ☐ Description | Max **350 chars**. Must mention key differentiators. Update via `gh repo edit` |
 | ☐ Topics/Tags | Max **20**. When adding a new tag, remove one. Evaluate overlap (e.g. `product-research` vs `amazon-product-research`) |
-| ☐ Website/Homepage | Should point to `open-intl.sorftime.com` |
+| ☐ Website/Homepage | Should point to `open.sorftime.com` |
 
 ## 3. Wiki
 
