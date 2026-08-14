@@ -1,7 +1,7 @@
 ---
 name: sorftime-seller-agent
-description: "Sorftime Seller Agent — Expert-level cross-border e-commerce data analysis and product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. A single skill that turns any MCP-enabled AI agent (Claude Code, OpenClaw, Cursor, Copilot) into a Sorftime marketplace intelligence expert. Covers product discovery, competitor analysis, keyword strategy, profit calculation, ASIN deep-dive, blue ocean finding, market intelligence, and more. Auto-adapts output for beginner, growing, and professional seller stages."
-trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/选品/竞品/关键词/利润/市场看板/ASIN/类目/蓝海/季节性/隐赚/货源/监控/closed-loop workflow/选品工作流/complete go-no-go/end-to-end product selection"
+description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
+trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/closed-loop workflow/complete go-no-go/end-to-end product selection/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/市场看板/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/流量来源/关键词/关键词研究/长尾词/搜索词/算利润/利润测算/盈亏平衡/FBA费用/价格监控/看这个产品/监控/日报/隐赚/隐赚指数/隐藏利润/潜力产品/被忽视的产品/季节性/旺季/节日选品/货源/1688/找工厂/供应链/评论分析/差评/买家痛点/定价/价格带/listing优化/标题优化/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/亚马逊卖家/跨境卖家"
 version: 3.6.1
 user-invocable: true
 metadata:
@@ -15,7 +15,7 @@ metadata:
 
 # Sorftime Seller Agent
 
-> One skill. Any AI agent. Instant marketplace intelligence for global sellers.
+> 一个技能，任意 AI agent，即时的市场情报，面向全球卖家。 / One skill. Any AI agent. Instant marketplace intelligence for global sellers.
 
 ## 🔴 Language Rule (Mandatory)
 
