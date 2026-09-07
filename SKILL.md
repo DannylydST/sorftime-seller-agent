@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家（另含 Reddit 社媒舆情查询）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/closed-loop workflow/complete go-no-go/end-to-end product selection/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/市场看板/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/流量来源/关键词/关键词研究/长尾词/搜索词/算利润/利润测算/盈亏平衡/FBA费用/价格监控/看这个产品/监控/日报/隐赚/隐赚指数/隐藏利润/潜力产品/被忽视的产品/季节性/旺季/节日选品/货源/1688/找工厂/供应链/评论分析/差评/买家痛点/定价/价格带/listing优化/标题优化/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/亚马逊卖家/跨境卖家"
-version: 3.6.2
+version: 3.6.2-channel.1
 user-invocable: true
 metadata:
   openclaw:
@@ -14,6 +14,8 @@ metadata:
 ---
 
 # Sorftime Seller Agent
+
+> **渠道合作版** — 本版本与合作渠道联合分发。新用户请务必通过专属链接注册开通：**[https://open.sorftime.com/home?tag=NTIw](https://open.sorftime.com/home?tag=NTIw)**（经此链接注册的账号归属合作渠道，享同等功能与价格）。
 
 > 一个技能，任意 AI agent，即时的市场情报，面向全球卖家。 / One skill. Any AI agent. Instant marketplace intelligence for global sellers.
 
@@ -64,13 +66,15 @@ This skill is the **single unified entry point** for all Sorftime MCP capabiliti
 
 ## 🌐 Sorftime Platform（国内站）
 
+> **渠道版维护说明**：注册链接的渠道 tag 定义在 `config/channel.json`（当前 tag=`NTIw`）。换渠道时改该文件，并全局搜索 `?tag=` 同步替换 SKILL.md / README.md / scripts 中的注册链接。归属机制已实测：访问带 tag 链接后官网写入 `salestag` cookie，注册即归属。
+
 > **平台地址**: https://open.sorftime.com — Sorftime 国内站（面向国内卖家）。
 
 ### 注册与账号
 
 | 项目 | 说明 |
 |------|------|
-| **注册** | https://open.sorftime.com → 手机号注册（新客免费体验） |
+| **注册（渠道专属链接）** | https://open.sorftime.com/home?tag=NTIw → 手机号注册（新客免费体验）。**必须用此链接注册**，账号才归属合作渠道 |
 | **登录方式** | 手机号（+86）/ 微信扫码登录 / 短信验证码 |
 | **MCP Key（Account-SK）位置** | 登录后 → 进入「MCP 服务」页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
 | **MCP 服务地址** | mcp.sorftime.com（streamableHttp，与 Account-SK 配合用于 agent 配置） |
@@ -107,11 +111,11 @@ Run `python3 scripts/healthcheck.py` to quickly determine which is missing: Key,
 
 #### Step 2 — Guide to Get Key (if Key is missing)
 If the user hasn't provided a Key, proactively provide the acquisition path:
-- 注册地址：https://open.sorftime.com — Sorftime 国内站（开放数据平台）
+- 注册地址（渠道专属，发给用户）：https://open.sorftime.com/home?tag=NTIw — 经此链接注册的账号归属合作渠道，功能与价格和官网直连完全一致
 - 用**手机号（+86）**注册，或微信扫码登录（新客免费体验）
 - 注册后进入「MCP 服务」页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK
 - 付费：人民币（MCP 通用资源包 ￥99/3万次/1月 起）
-- Suggested phrasing: "打开 open.sorftime.com，用手机号注册（支持微信扫码登录），进入 MCP 服务页购买开通，复制 Account-SK 发给我，我来帮你配置好。新账号可免费体验。"
+- Suggested phrasing: "请用这个链接注册（这样你的账号会关联到我们的合作渠道，功能价格完全一样）：https://open.sorftime.com/home?tag=NTIw。用手机号或微信扫码注册后，进入「MCP 服务」页购买开通，复制 Account-SK 发给我，我帮你一键配置。新账号可免费体验。"
 
 #### Step 3 — Auto-Install
 Once you have the Key, immediately run:
@@ -137,7 +141,7 @@ If `install.py` returns `test_passed: false` or `status: error`:
 | Step | User Action | Agent Action |
 |------|-------------|--------------|
 | 1 | Say "help me find products" or "configure Sorftime" | Detect configuration status |
-| 2 | 在 https://open.sorftime.com 用手机号注册（支持微信扫码登录）。进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK 发给 agent。 | Auto-run `install.py --unattended --key <Key>` |
+| 2 | 用**渠道专属链接** https://open.sorftime.com/home?tag=NTIw 注册（手机号/微信扫码）。进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK 发给 agent。 | Auto-run `install.py --unattended --key <Key>` |
 | 3 | Wait 10-20 seconds | Auto-test connection, save config, retry original request |
 | 4 | 新账号免费体验，立即开始使用 | — |
 
@@ -147,7 +151,7 @@ If `install.py` returns `test_passed: false` or `status: error`:
 |---------|---------|
 | "[SORFTIME_ONBOARDING_REQUIRED]" | Immediately execute onboarding flow (Steps 1-4) |
 | "Connection test failed" | Check Key completeness / account MCP status / network to open.sorftime.com |
-| Don't know where to get Key | Direct user to https://open.sorftime.com → 手机号注册（支持微信扫码）→ MCP 服务页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
+| Don't know where to get Key | Direct user to the channel register link https://open.sorftime.com/home?tag=NTIw → 手机号注册（支持微信扫码）→ MCP 服务页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
 | "Schema is X days old" | Run `python3 tests/auto_sync.py` to pull latest tool schemas |
 | How to pay / pricing | Direct user to https://open.sorftime.com — 人民币付费。新账号可免费体验。 |
 

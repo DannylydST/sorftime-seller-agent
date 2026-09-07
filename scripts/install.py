@@ -93,8 +93,9 @@ def prompt_key(cli_key: str = "") -> str:
         return key
 
     print("    ⚠️  SORFTIME_MCP_KEY environment variable not found")
-    print("    在 https://open.sorftime.com 用手机号注册（支持微信扫码登录，新客免费体验）")
-    print("    Then go to the MCP page to copy your Key.")
+    print("    用渠道专属链接注册（账号归属合作渠道，功能价格一致）：https://open.sorftime.com/home?tag=NTIw")
+    print("    支持手机号/微信扫码登录，新客免费体验")
+    print("    注册后到 MCP 服务页（open.sorftime.com/mcp）购买开通并复制 Account-SK")
     key = input("    Enter your Sorftime MCP Key: ").strip()
     if not key:
         print("    ❌ Key cannot be empty")

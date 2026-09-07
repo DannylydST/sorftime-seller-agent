@@ -1,4 +1,4 @@
-# Sorftime Seller Agent — Free AI-Powered Amazon Product Research & Marketplace Intelligence
+# Sorftime Seller Agent（渠道合作版） — Free AI-Powered Amazon Product Research & Marketplace Intelligence
 
 <p align="center">
   <img src="assets/hero-extension.png" alt="Sorftime — AI-powered Amazon product research, competitor analysis, keyword research, and marketplace intelligence for 6 platforms" width="100%">
@@ -67,7 +67,7 @@
 ## ⚡ Quick Start
 
 ### 1. Create a free account
-[open.sorftime.com](https://open.sorftime.com) — 手机号注册（支持微信扫码登录），新客免费体验。人民币付费。
+[渠道专属注册链接](https://open.sorftime.com/home?tag=NTIw) — 手机号注册（支持微信扫码登录），新客免费体验，人民币付费。经此链接注册的账号归属合作渠道（功能与价格和官网直连完全一致）。
 
 ### 2. Install
 ```bash
@@ -235,7 +235,7 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 
 ## 📦 Installation
 
-**Prerequisites**: Python 3.10+ · [Free Sorftime account](https://open.sorftime.com) · Any MCP-compatible AI agent
+**Prerequisites**: Python 3.10+ · [Free Sorftime account via channel link](https://open.sorftime.com/home?tag=NTIw) · Any MCP-compatible AI agent
 
 ```bash
 git clone https://github.com/DannylydST/sorftime-seller-agent.git
@@ -260,7 +260,7 @@ Yes. Built by [@DannylydST](https://github.com/DannylydST) at Sorftime Data Tech
 Any MCP-compatible agent: **Claude Code, Codex (OpenAI), Cursor, OpenClaw, Hermes, Pi**, and more. `install.py` auto-detects your environment.
 
 **Q: Where do I get my MCP Key?**
-[open.sorftime.com](https://open.sorftime.com) → 手机号注册（支持微信扫码）→ MCP 服务页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK。
+https://open.sorftime.com/home?tag=NTIw → 手机号注册（支持微信扫码）→ MCP 服务页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK。
 
 **Q: Can I use this without an AI?**
 Yes — all scripts work standalone: `python3 scripts/picker.py --keyword "yoga mat"`. But AI-driven analysis with the 20 methodology cards unlocks the full value.

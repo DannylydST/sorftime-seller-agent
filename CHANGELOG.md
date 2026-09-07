@@ -1,5 +1,12 @@
 # Changelog
 
+## [2026-09-07] — v3.6.2-channel.1 (渠道合作版首发)
+
+基于 v3.6.2（97 工具）创建 `channel` 分支，面向合作渠道分发：
+- **渠道专属注册链路**：全部注册引导（SKILL.md 7 处 / README 3 处 / install.py / healthcheck.py）统一指向 `https://open.sorftime.com/home?tag=NTIw`——经此链接注册的账号归属合作渠道，功能与价格和官网直连完全一致（归属机制已实测：访问链接后官网写入 `salestag` cookie）
+- **`config/channel.json` 单点维护**：渠道 tag 与链接集中定义，换渠道改一处文件 + 全局搜索 `?tag=` 同步
+- **智能体引导闭环**：新用户无 Key → install/healthcheck 输出渠道注册链接 → 用户注册取 Account-SK → `install.py --key` 一键配置 → 连接验证全绿
+
 ## [2026-09-07] — v3.6.2 (tool sync 86→97 + healthcheck auth-detection fix)
 
 ### Updated
