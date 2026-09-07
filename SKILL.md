@@ -577,7 +577,7 @@ Auto-completes: virtual environment creation, CC/OpenClaw detection, prompts for
 
 ### 5.2 Tool Invocation
 
-> 本 Skill 通过 **MCP 协议**对外暴露 86 个工具：`sorftime_bridge.py` 是 stdio MCP server，由 `install.py` 自动注册到 agent（mcporter.json）。agent 直接通过 MCP 协议调用工具，**无需 CLI**。
+> 本 Skill 通过 **MCP 协议**对外暴露 97 个工具：`sorftime_bridge.py` 是 stdio MCP server，由 `install.py` 自动注册到 agent（mcporter.json）。agent 直接通过 MCP 协议调用工具，**无需 CLI**。
 
 脚本内部（picker/analyst 等）与手动调试时，用 `--one-shot` 底层接口直接调单个工具（非对外交互方式）：
 
