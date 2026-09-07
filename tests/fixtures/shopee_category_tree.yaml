@@ -1,0 +1,4 @@
+tool: shopee_category_tree
+name: shopee_category_tree — Query the product category str
+arguments:
+  site: MY

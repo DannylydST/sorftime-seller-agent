@@ -1,5 +1,14 @@
 # Changelog
 
+## [2026-09-07] — v3.6.2 (tool sync 86→97 + healthcheck auth-detection fix)
+
+### Updated
+- **Tool matrix synced to server (97 tools, +12/-1)**: new — `reddit_comment_request` / `reddit_post_request` / `reddit_post_search` (Reddit social listening, passthrough), `ali1688_category_tree`, `shopee_category_tree`, `temu_category_tree`, `tiktok_category_tree`, `tiktok_similar_product_detail`, `walmart_category_tree`, `walmart_category_search_from_name`, `walmart_product_search_from_name`, `product_search_from_name`; removed — `tiktok_category_name_search`.
+- SKILL.md / README.md tool-count references updated (86 → 97); platform coverage now notes Reddit.
+
+### Fixed
+- **healthcheck.py false-positive "Connect OK"**: server-side auth failures (`isError: true` / "Authentication required" / `NotAuthorization` / `"error": true`) arrive as normal text with returncode 0 — a stale or rotated key reported a green check. These markers now fail the check.
+
 All notable changes to Sorftime Seller Agent.
 
 ---

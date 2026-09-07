@@ -110,7 +110,7 @@ def check_key() -> dict:
             "name": "API Key",
             "status": "error",
             "detail": "Not configured",
-            "fix": "1. Create a free account at https://open-intl.sorftime.com (Google login supported, free trial credits included)\n   2. Go to the MCP page and copy your Key\n   3. Run `python3 scripts/install.py --key <your-key>`",
+            "fix": "1. 在 https://open.sorftime.com 用手机号注册（支持微信扫码登录，新客免费体验）\n   2. 进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK\n   3. Run `python3 scripts/install.py --key <your-key>`",
         }
     env_key = os.getenv("SORFTIME_MCP_KEY", "").strip()
     source = "Environment Variable" if env_key else "User Config (~/.sorftime/env)"
@@ -156,13 +156,18 @@ asyncio.run(main())
         cwd=str(SKILL_DIR),
     )
     stdout = result.stdout.strip()
-    if result.returncode != 0 or "ERROR" in stdout:
+    # Server-side failures arrive as normal text (no exception, returncode 0):
+    # e.g. {"content":[{"text":"Authentication required"}],"isError":true} or
+    # {"error":true,"status":"server_error",...}. Treat those as failures too —
+    # a stale/rotated key must not report "Connect OK" (2026-09-07 incident).
+    failure_markers = ("ERROR", "isError", "Authentication required", "NotAuthorization", '"error": true')
+    if result.returncode != 0 or any(m in stdout for m in failure_markers):
         err = stdout or result.stderr
         return {
             "name": "Sorftime Connect",
             "status": "error",
             "detail": f"Connection failed: {err[:100]}",
-            "fix": "1. Check if the Key was copied completely (no missing characters)\n   2. Confirm your account has MCP service enabled (check MCP page after login)\n   3. Check network access to open-intl.sorftime.com\n   4. New accounts get free trial credits — if exhausted, top up via PayPal",
+            "fix": "1. Check if the Key was copied completely (no missing characters)\n   2. Confirm your account has MCP service enabled (check MCP page after login)\n   3. Check network access to open.sorftime.com\n   4. New accounts get free trial experience — if exhausted, top up in RMB",
         }
     return {
         "name": "Sorftime Connect",

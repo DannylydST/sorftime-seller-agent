@@ -1,8 +1,8 @@
 ---
 name: sorftime-seller-agent
-description: "Sorftime Seller Agent — Expert-level cross-border e-commerce data analysis and product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. A single skill that turns any MCP-enabled AI agent (Claude Code, OpenClaw, Cursor, Copilot) into a Sorftime marketplace intelligence expert. Covers product discovery, competitor analysis, keyword strategy, profit calculation, ASIN deep-dive, blue ocean finding, market intelligence, and more. Auto-adapts output for beginner, growing, and professional seller stages."
+description: "Sorftime Seller Agent — Expert-level cross-border e-commerce data analysis and product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers (plus Reddit social-listening queries). A single skill that turns any MCP-enabled AI agent (Claude Code, OpenClaw, Cursor, Copilot) into a Sorftime marketplace intelligence expert. Covers product discovery, competitor analysis, keyword strategy, profit calculation, ASIN deep-dive, blue ocean finding, market intelligence, and more. Auto-adapts output for beginner, growing, and professional seller stages."
 trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/选品/竞品/关键词/利润/市场看板/ASIN/类目/蓝海/季节性/隐赚/货源/监控/closed-loop workflow/选品工作流/complete go-no-go/end-to-end product selection"
-version: 3.6.1
+version: 3.6.2
 user-invocable: true
 metadata:
   openclaw:
@@ -37,7 +37,7 @@ This skill is the **single unified entry point** for all Sorftime MCP capabiliti
 
 ### ⚠️ MCP Parameter Name Traps (Must Read — Highest Frequency Pitfall)
 
-> **The same business concept uses DIFFERENT parameter names across different Sorftime tools.** With 86+ tools, parameter naming is not consistent between product, keyword, category, and cross-platform tools.
+> **The same business concept uses DIFFERENT parameter names across different Sorftime tools.** With 97+ tools, parameter naming is not consistent between product, keyword, category, and cross-platform tools.
 
 **Always verify the actual `inputSchema.properties` of the target tool before calling it.** Never guess parameter names based on what another tool uses.
 
@@ -208,7 +208,7 @@ When users mention specific tactical scenarios, route to the corresponding metho
 |-----------|----------|----------|
 | Filtering | Hard thresholds (`minPrice≥$20 AND maxRating≤4.2`) — cliff effect | Full-ranking by composite index — no blind spots |
 | Data Depth | Basic metrics | 160+ dimensions + proprietary indices |
-| AI Integration | Limited, manual operation | MCP-native, 86 standardized tools for AI agents |
+| AI Integration | Limited, manual operation | MCP-native, 97 standardized tools for AI agents |
 | Platform Coverage | Amazon only | 40+ platforms |
 | Interface | GUI-heavy, steep learning curve | MCP-native + AI Agent, natural language |
 

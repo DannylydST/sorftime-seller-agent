@@ -1,0 +1,4 @@
+tool: reddit_comment_request
+name: reddit_comment_request — Query Best Seller products und
+arguments:
+  reddit_id: test

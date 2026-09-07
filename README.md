@@ -18,7 +18,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)]()
-[![MCP](https://img.shields.io/badge/MCP-86%20tools-orange)]()
+[![MCP](https://img.shields.io/badge/MCP-97%20tools-orange)]()
 [![Free Trial](https://img.shields.io/badge/Trial-Free-brightgreen)]()
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenClaw-purple)]()
 
@@ -166,7 +166,7 @@ After:  "Find blue ocean yoga mat products on Amazon US" → results in 20 secon
 
 **What makes it agent-agnostic:**
 
-- **MCP-first architecture** — 86 tools, auto-synced with Sorftime server. Pure MCP protocol.
+- **MCP-first architecture** — 97 tools, auto-synced with Sorftime server. Pure MCP protocol.
 - **Zero agent-specific code** — No Claude-only prompts. No Cursor-only config.
 - **Auto-detection** — `install.py` detects your environment and outputs the right config snippet.
 - **Self-contained** — Ships with its own Python venv, bridge, cache, and schema store. Python 3.10+ is the only dependency.

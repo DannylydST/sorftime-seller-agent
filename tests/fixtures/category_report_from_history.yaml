@@ -1,8 +1,8 @@
 tool: category_report_from_history
 name: category_report_from_history — 查询亚马逊电商平台**指定类目**的**指定历史时间段**销
 arguments:
-  start_date: '2026-07-04'
-  end_date: '2026-08-10'
+  start_date: '2026-07-29'
+  end_date: '2026-09-04'
   node_id: '166350011'
   amz_site: US
 category: amazon

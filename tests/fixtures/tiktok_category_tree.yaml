@@ -1,0 +1,4 @@
+tool: tiktok_category_tree
+name: tiktok_category_tree — Query the product category str
+arguments:
+  site: US

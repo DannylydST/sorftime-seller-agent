@@ -171,6 +171,20 @@ def _load_core_tools() -> list[dict]:
 # 硬编码后备（首次安装或自动同步未运行时兜底）
 _FALLBACK_CORE_TOOLS = [
     {
+        "name": "ali1688_category_tree",
+        "description": """Query the product category structure on the 1688 platform. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "node_id": {
+                    "description": "Optional: if specified, returns the child categories of this node_id; if not specified, returns the top-level and second-level categories. Data type: string.",
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        },
+    },
+    {
         "name": "ali1688_product_request",
         "description": """Query the product details on the 1688 platform. (可通过 sorftime_raw_call 透传调用)""",
         "inputSchema": {
@@ -194,11 +208,6 @@ _FALLBACK_CORE_TOOLS = [
             "properties": {
                 "node_id": {
                     "description": "Query based on a category (not limited to leaf categories); if specified, search within that category.",
-                    "type": "string",
-                    "default": ""
-                },
-                "product_id": {
-                    "description": "Query similar products based on a ProductId (note: it does not query only this ProductId; to fetch that exact product, call the product_request tool).",
                     "type": "string",
                     "default": ""
                 },
@@ -514,14 +523,12 @@ _FALLBACK_CORE_TOOLS = [
                         "GB",
                         "DE",
                         "FR",
-                        "IN",
                         "CA",
                         "JP",
                         "ES",
                         "IT",
                         "MX",
                         "AE",
-                        "AU",
                         "BR",
                         "SA"
                     ],
@@ -1966,6 +1973,49 @@ _FALLBACK_CORE_TOOLS = [
         },
     },
     {
+        "name": "product_search_from_name",
+        "description": """earch products on the Amazon platform by name, returning up to 20 products each call. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The product name to search for.",
+                    "type": "string"
+                },
+                "page": {
+                    "description": "The page index of the query result. Defaults to page 1.",
+                    "type": "integer",
+                    "default": 1
+                },
+                "amz_site": {
+                    "description": "Amazon marketplace site. ",
+                    "type": "string",
+                    "enum": [
+                        "Unknow",
+                        "US",
+                        "GB",
+                        "DE",
+                        "FR",
+                        "IN",
+                        "CA",
+                        "JP",
+                        "ES",
+                        "IT",
+                        "MX",
+                        "AE",
+                        "AU",
+                        "BR",
+                        "SA"
+                    ],
+                    "default": "Unknow"
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+    },
+    {
         "name": "product_traffic_terms",
         "description": """Reverse-lookup keywords for a product on the Amazon platform; returns the keywords where the product has appeared in the first 3 pages recently, sorted by latest exposure time in descending order.""",
         "inputSchema": {
@@ -2010,7 +2060,7 @@ _FALLBACK_CORE_TOOLS = [
     },
     {
         "name": "product_trend",
-        "description": """Query the historical trend of a product on the Amazon platform, supporting monthly sales volume/amount, price, and top-category rank trends.""",
+        "description": """Query the historical trend of a product on the Amazon platform, supporting monthly sales volume/amount, price, top-category rank trends, and sub-category rank trends.""",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -2019,13 +2069,14 @@ _FALLBACK_CORE_TOOLS = [
                     "type": "string"
                 },
                 "product_trend_type": {
-                    "description": "Product trend type to query. Defaults to SalesVolume.",
+                    "description": "Product trend type to query. Allowed values: SalesVolume (monthly sales volume), SalesAmount (monthly sales amount), Price, Rank (main category ranking), BsrRank (subcategory ranking);  Defaults to SalesVolume.",
                     "type": "string",
                     "enum": [
                         "SalesVolume",
                         "SalesAmount",
                         "Price",
-                        "Rank"
+                        "Rank",
+                        "BsrRank"
                     ],
                     "default": "SalesVolume"
                 },
@@ -2097,6 +2148,74 @@ _FALLBACK_CORE_TOOLS = [
             },
             "required": [
                 "asin"
+            ]
+        },
+    },
+    {
+        "name": "reddit_comment_request",
+        "description": """Query Best Seller products under a Reddit category market, which can be used for category data analysis. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "reddit_id": {
+                    "description": "The ID of the Reddit post, which must be prefixed with t3_. This value can be retrieved from the social_media_search endpoint.",
+                    "type": "string"
+                },
+                "page": {
+                    "description": "The page index of the query result. Defaults to page 1. Each page returns 20 records.",
+                    "type": "integer",
+                    "default": 1
+                }
+            },
+            "required": [
+                "reddit_id"
+            ]
+        },
+    },
+    {
+        "name": "reddit_post_request",
+        "description": """Query the complete main post content of a specified Reddit post, including the title, full text of the post body, and attached multimedia (images, videos, etc.). (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "reddit_id": {
+                    "description": "The ID of the Reddit post, which must be prefixed with t3_. This value can be retrieved from the social_media_search endpoint.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "reddit_id"
+            ]
+        },
+    },
+    {
+        "name": "reddit_post_search",
+        "description": """Search social media posts related to a specified product or keyword to learn what users really say — complaints, reviews, and usage discussions; returns up to 20 posts per call. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "search_name": {
+                    "description": "Search keyword, supports both Chinese and English. Can be a brand name (e.g., Whirlpool), a category term (e.g., \"Ice Maker\"), or a problem description (e.g., \"What to do if the ice maker leaks\").",
+                    "type": "string"
+                },
+                "post_type": {
+                    "description": "Filter by post type, multiple values separated by commas. Allowed: 1=Question/Help, 2=Purchase Advice, 3=Complaint, 4=Experience Sharing, 5=Discussion, 6=Innovation, 7=Other.",
+                    "type": "string",
+                    "default": ""
+                },
+                "main_sentiment": {
+                    "description": "Filter by main post sentiment. Allowed: 1=Positive, 2=Neutral, 3=Negative.",
+                    "type": "integer",
+                    "default": 0
+                },
+                "page": {
+                    "description": "The page index of the query result. Defaults to page 1. Each page returns 20 records.",
+                    "type": "integer",
+                    "default": 1
+                }
+            },
+            "required": [
+                "search_name"
             ]
         },
     },
@@ -2260,7 +2379,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2270,7 +2389,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -2292,7 +2411,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2302,12 +2421,42 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
                 "name"
             ]
+        },
+    },
+    {
+        "name": "shopee_category_tree",
+        "description": """Query the product category structure on the Shopee platform. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "site": {
+                    "description": "Shopee site.",
+                    "type": "string",
+                    "enum": [
+                        "Unknown",
+                        "VN",
+                        "ID",
+                        "SG",
+                        "TH",
+                        "MY",
+                        "TW",
+                        "PH",
+                        "BR"
+                    ],
+                    "default": "Unknown"
+                },
+                "node_id": {
+                    "description": "Optional: if specified, returns the child categories of this node_id; if not specified, returns the top-level and second-level categories. Data type: string.",
+                    "type": "string",
+                    "default": ""
+                }
+            }
         },
     },
     {
@@ -2409,7 +2558,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2419,7 +2568,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             }
         },
@@ -2447,7 +2596,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2457,7 +2606,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -2485,7 +2634,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2495,7 +2644,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -2522,7 +2671,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2532,7 +2681,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -2560,7 +2709,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2570,7 +2719,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             }
         },
@@ -2590,7 +2739,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2600,7 +2749,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             }
         },
@@ -2625,7 +2774,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2635,7 +2784,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             }
         },
@@ -2680,7 +2829,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2690,7 +2839,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             }
         },
@@ -2709,7 +2858,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2719,7 +2868,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -2733,11 +2882,6 @@ _FALLBACK_CORE_TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "product_id": {
-                    "description": "Optional. If specified: query similar products based on productId (note: it does not query only this productId; to fetch that exact product, call the ProductRequest tool).",
-                    "type": "string",
-                    "default": None
-                },
                 "node_id": {
                     "description": "Optional. If specified: query within a category (not limited to sub-categories).",
                     "type": "string",
@@ -2817,7 +2961,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2827,7 +2971,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 },
                 "page": {
                     "description": "Page query, max 20 products per page. Defaults to 1 (pages start from 1, not 0).",
@@ -2851,7 +2995,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2861,7 +3005,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 },
                 "page": {
                     "description": "Page index, defaults to page 1.",
@@ -2898,7 +3042,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2908,7 +3052,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -2930,7 +3074,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Shopee site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "VN",
                         "ID",
                         "SG",
@@ -2940,7 +3084,7 @@ _FALLBACK_CORE_TOOLS = [
                         "PH",
                         "BR"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -3005,11 +3149,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Temu site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "US",
                         "EU"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -3227,11 +3371,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Temu site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "US",
                         "EU"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             }
         },
@@ -3250,16 +3394,40 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Temu site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "US",
                         "EU"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
                 "name"
             ]
+        },
+    },
+    {
+        "name": "temu_category_tree",
+        "description": """Query the product category structure on the Temu platform. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "site": {
+                    "description": "Temu site.",
+                    "type": "string",
+                    "enum": [
+                        "Unknown",
+                        "US",
+                        "EU"
+                    ],
+                    "default": "Unknown"
+                },
+                "node_id": {
+                    "description": "Optional: if specified, returns the child categories of this node_id; if not specified, returns the top-level and second-level categories. Data type: string.",
+                    "type": "string",
+                    "default": ""
+                }
+            }
         },
     },
     {
@@ -3276,11 +3444,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Temu site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "US",
                         "EU"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -3294,11 +3462,6 @@ _FALLBACK_CORE_TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "product_id": {
-                    "description": "Optional. If specified: query similar products based on the given ProductId.",
-                    "type": "string",
-                    "default": None
-                },
                 "node_id": {
                     "description": "Optional. If specified: limit the search scope to the specified category and its sub-categories (the specified category nodeId is not limited to leaf categories).",
                     "type": "string",
@@ -3403,11 +3566,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Temu site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "US",
                         "EU"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 },
                 "page": {
                     "description": "Pagination, at most 20 products per page. Defaults to 1 (page index starts from 1, not 0).",
@@ -3431,11 +3594,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Temu site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "US",
                         "EU"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 },
                 "page": {
                     "description": "The page index of the query result. Defaults to page 1.",
@@ -3472,11 +3635,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Temu site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "US",
                         "EU"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -3498,11 +3661,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Temu site.",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "US",
                         "EU"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 }
             },
             "required": [
@@ -3523,38 +3686,6 @@ _FALLBACK_CORE_TOOLS = [
             },
             "required": [
                 "author_id"
-            ]
-        },
-    },
-    {
-        "name": "tiktok_category_name_search",
-        "description": """Search related TikTok categories by name, returns category name and nodeid. (可通过 sorftime_raw_call 透传调用)""",
-        "inputSchema": {
-            "type": "object",
-            "properties": {
-                "search_name": {
-                    "description": "The product name to search for.",
-                    "type": "string"
-                },
-                "site": {
-                    "description": "TikTok site.",
-                    "type": "string",
-                    "enum": [
-                        "Unknow",
-                        "US",
-                        "MY",
-                        "PH",
-                        "VN",
-                        "TH",
-                        "ID",
-                        "GB",
-                        "JP"
-                    ],
-                    "default": "Unknow"
-                }
-            },
-            "required": [
-                "search_name"
             ]
         },
     },
@@ -3620,6 +3751,36 @@ _FALLBACK_CORE_TOOLS = [
             "required": [
                 "name"
             ]
+        },
+    },
+    {
+        "name": "tiktok_category_tree",
+        "description": """Query the product category structure on the Tiktok platform. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "site": {
+                    "description": "TikTok site. ",
+                    "type": "string",
+                    "enum": [
+                        "Unknow",
+                        "US",
+                        "MY",
+                        "PH",
+                        "VN",
+                        "TH",
+                        "ID",
+                        "GB",
+                        "JP"
+                    ],
+                    "default": "Unknow"
+                },
+                "node_id": {
+                    "description": "Optional: if specified, returns the child categories of this node_id; if not specified, returns the top-level and second-level categories. Data type: string.",
+                    "type": "string",
+                    "default": ""
+                }
+            }
         },
     },
     {
@@ -3770,6 +3931,17 @@ _FALLBACK_CORE_TOOLS = [
                     "type": "integer",
                     "default": 1
                 },
+                "query_type": {
+                    "description": "Search mode. Allowed values: 0 = Natural language search – search for related products (default); 1 = Title keyword search – filter products that contain all specified keywords. Multiple keywords should be separated by commas (\",\"); 2 = Title keyword search – filter products that contain one or more of the specified keywords. Multiple keywords should be separated by commas (\",\"); 3 = Title exact match – search products by exact title match. Default: 0.",
+                    "type": "string",
+                    "enum": [
+                        "Defualt",
+                        "TitleContainAll",
+                        "TitleContainOne",
+                        "ExactTitleMatch"
+                    ],
+                    "default": "Defualt"
+                },
                 "site": {
                     "description": "TikTok site.",
                     "type": "string",
@@ -3793,6 +3965,53 @@ _FALLBACK_CORE_TOOLS = [
         },
     },
     {
+        "name": "tiktok_similar_product_detail",
+        "description": """Search related products on TikTok Shop by name, returning up to 20 products each call. Supports 4 query modes: natural-language search, title-contains-all-keywords, title-contains-any-keywords, and exact-title match. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "scope": {
+                    "type": "object",
+                    "description": ""
+                },
+                "site": {
+                    "type": "string",
+                    "enum": [
+                        "Unknow",
+                        "US",
+                        "MY",
+                        "PH",
+                        "VN",
+                        "TH",
+                        "ID",
+                        "GB",
+                        "JP"
+                    ],
+                    "description": ""
+                },
+                "searchName": {
+                    "type": "string",
+                    "description": ""
+                },
+                "page": {
+                    "type": "integer",
+                    "description": ""
+                },
+                "takeSize": {
+                    "type": "integer",
+                    "description": ""
+                }
+            },
+            "required": [
+                "scope",
+                "site",
+                "searchName",
+                "page",
+                "takeSize"
+            ]
+        },
+    },
+    {
         "name": "walmart_category_report_by_node_id",
         "description": """Query the real-time Top 100 best-selling product data report for a specified category on the Walmart e-commerce platform. (可通过 sorftime_raw_call 透传调用)""",
         "inputSchema": {
@@ -3806,6 +4025,36 @@ _FALLBACK_CORE_TOOLS = [
             "required": [
                 "node_id"
             ]
+        },
+    },
+    {
+        "name": "walmart_category_search_from_name",
+        "description": """Search related category markets on Walmart by name. Used to obtain category node IDs and category names. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The category name to search for.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+    },
+    {
+        "name": "walmart_category_tree",
+        "description": """Query the product category structure on the Walmart platform. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "node_id": {
+                    "description": "Optional: if specified, returns the child categories of this node_id; if not specified, returns the top-level and second-level categories. Data type: string.",
+                    "type": "string",
+                    "default": ""
+                }
+            }
         },
     },
     {
@@ -4031,6 +4280,27 @@ _FALLBACK_CORE_TOOLS = [
         },
     },
     {
+        "name": "walmart_product_search_from_name",
+        "description": """Search Walmart products by name, returning up to 20 products per call. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The product name to search for.",
+                    "type": "string"
+                },
+                "page": {
+                    "description": "The page index of the query result. Defaults to page 1.",
+                    "type": "integer",
+                    "default": 1
+                }
+            },
+            "required": [
+                "name"
+            ]
+        },
+    },
+    {
         "name": "walmart_product_traffic_terms",
         "description": """Reverse-lookup keywords for a product on the Walmart e-commerce platform, returns the keywords the product has been exposed under recently. (可通过 sorftime_raw_call 透传调用)""",
         "inputSchema": {
@@ -4065,7 +4335,7 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "The trend type to query",
                     "type": "string",
                     "enum": [
-                        "UnKonw",
+                        "Unknown",
                         "SalesVolume",
                         "SalesAmount",
                         "Price",
@@ -4073,7 +4343,7 @@ _FALLBACK_CORE_TOOLS = [
                         "Reviews",
                         "Star"
                     ],
-                    "default": "UnKonw"
+                    "default": "Unknown"
                 },
                 "begin_date": {
                     "description": "The start time for historical lookback (format: yyyy-MM-dd), defaults (when not passed, or when the parameter is invalid) to return data for the last 1 years.",
@@ -4149,7 +4419,7 @@ async def call_sorftime(tool_name: str, arguments: Dict[str, Any]) -> str:
             "Environment variable SORFTIME_MCP_KEY is not set. "
             "If this is your first time, run `python3 scripts/install.py` for one-click setup, "
             "or provide your Sorftime MCP Key directly to your AI agent. "
-            "Get your Key at: https://open-intl.sorftime.com/mcp"
+            "Get your Key at: https://open.sorftime.com/mcp"
         )
 
     # Auto-correct parameter names: uses the same PARAM_ALIASES rules as scripts/utils/mcp_client.py.
