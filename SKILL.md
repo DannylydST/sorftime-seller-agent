@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家（另含 Reddit 社媒舆情查询）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/closed-loop workflow/complete go-no-go/end-to-end product selection/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/市场看板/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/流量来源/关键词/关键词研究/长尾词/搜索词/算利润/利润测算/盈亏平衡/FBA费用/价格监控/看这个产品/监控/日报/隐赚/隐赚指数/隐藏利润/潜力产品/被忽视的产品/季节性/旺季/节日选品/货源/1688/找工厂/供应链/评论分析/差评/买家痛点/定价/价格带/listing优化/标题优化/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/亚马逊卖家/跨境卖家"
-version: 3.6.2-channel.1
+version: 3.6.2-channel.2
 user-invocable: true
 metadata:
   openclaw:
@@ -116,6 +116,32 @@ If the user hasn't provided a Key, proactively provide the acquisition path:
 - 注册后进入「MCP 服务」页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK
 - 付费：人民币（MCP 通用资源包 ￥99/3万次/1月 起）
 - Suggested phrasing: "请用这个链接注册（这样你的账号会关联到我们的合作渠道，功能价格完全一样）：https://open.sorftime.com/home?tag=NTIw。用手机号或微信扫码注册后，进入「MCP 服务」页购买开通，复制 Account-SK 发给我，我帮你一键配置。新账号可免费体验。"
+
+#### 📋 注册引导标准路径规范（渠道版强制 — Standard Registration Path）
+
+> 渠道版的所有注册引导**必须**按本规范执行。目标：任何智能体（Claude Code / Cursor / Kimi / WorkBuddy…）引导方式完全一致，注册归属不丢失。
+
+**状态机（顺序固定）**：`Detect（healthcheck）→ Guide（三步话术）→ Install（--key）→ Verify（get_time）→ Retry（回放原请求）`
+
+**标准话术骨架（三段式，用户语言）**：
+1. **为什么**：一句话说明需要一次性配置（新账号有免费体验额度）
+2. **三步操作**：①打开渠道注册链接 ②注册后在「MCP 服务」页开通并复制 Account-SK ③把 Key 发回来
+3. **归属提示**：务必用此链接注册（功能价格与官网一致），账号才能关联合作渠道
+
+**模板（可直接使用）**：
+> 好的，我来处理「{用户原始请求}」。取数前需要一次性配置 Sorftime 账号（约 2 分钟，新账号有免费体验额度）：
+> 1. 打开注册链接：https://open.sorftime.com/home?tag=NTIw （手机号或微信扫码）
+> 2. 登录后进入「MCP 服务」页 → 购买开通 → 复制 Account-SK
+> 3. 把 Account-SK 发给我，我自动配置并立刻继续你的请求
+>
+> 请务必用上面这个链接注册（功能与价格和官网完全一样）——这样你的账号才会关联到我们的合作渠道。
+
+**硬规则（不可违反）**：
+- **R1 注册链接唯一来源**：只允许使用本规范中的渠道链接（含 `?tag=`）。**禁止**改写、缩短、或替换为 `open.sorftime.com` 裸域名——用户从裸域名注册将不归属渠道且无法补救
+- **R2 Key 隐私**：用户发回的 Account-SK 只用于 `install.py --key`，不得回显完整 Key（可掩码）、不得写入笔记/git/对话总结
+- **R3 无缝续接**：配置成功后必须自动回放用户原始请求，不让用户重复一遍
+- **R4 已注册用户诚实原则**：若用户已有账号（非渠道链接注册），如实告知"现有账号无法变更归属，新账号走渠道链接可关联"，由用户自选，不强迫重注册
+- **R5 异常分流**：Key 报 401/NotAuthorization → 引导到「MCP 服务」页重新复制（key 可能被轮换）；报连接失败 → 先跑 `healthcheck.py` 看具体哪项挂了再指引
 
 #### Step 3 — Auto-Install
 Once you have the Key, immediately run:
