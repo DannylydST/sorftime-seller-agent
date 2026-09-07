@@ -1,10 +1,10 @@
 {
-  "_comment": "渠道合作版元数据（单点维护）。换渠道时：改本文件 + SKILL.md/README.md/scripts 中带 tag 的注册链接（全局搜索 '?tag=' 即可定位全部位置）。归属机制：用户访问带 tag 的注册链接后，官网自动写入 salestag cookie，注册账号即归属该渠道（2026-09-07 实测验证）。",
+  "_comment": "渠道合作版元数据（单点维护）。换渠道时：改本文件 + SKILL.md/README.md/scripts 中带 tag 的注册链接（全局搜索 '?tag=' 即可定位全部位置）。归属机制：用户访问带 tag 的注册链接后，官网自动写入 salestag cookie，注册那一刻起**永久归属**该渠道（2026-09-07 实测验证）；后续登录/充值走官网无影响，话术无需引导收藏或回访。",
   "channel_edition": true,
   "channel_name": "Sorftime 合作渠道专版",
   "channel_tag": "NTIw",
   "register_url": "https://open.sorftime.com/home?tag=NTIw",
   "key_page_url": "https://open.sorftime.com/mcp",
   "verified_at": "2026-09-07",
-  "base_version": "3.6.2-channel.3"
+  "base_version": "3.6.2-channel.4"
 }

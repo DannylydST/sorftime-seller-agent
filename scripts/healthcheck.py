@@ -110,7 +110,7 @@ def check_key() -> dict:
             "name": "API Key",
             "status": "error",
             "detail": "Not configured",
-            "fix": "1. 在 请从该链接注册（建议收藏，以后登录也从这里进）：https://open.sorftime.com/home?tag=NTIw（手机号/微信扫码，新客免费体验）\n   2. 进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK\n   3. Run `python3 scripts/install.py --key <your-key>`",
+            "fix": "1. 在 请从该链接注册：https://open.sorftime.com/home?tag=NTIw（手机号/微信扫码，新客免费体验）\n   2. 进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK\n   3. Run `python3 scripts/install.py --key <your-key>`",
         }
     env_key = os.getenv("SORFTIME_MCP_KEY", "").strip()
     source = "Environment Variable" if env_key else "User Config (~/.sorftime/env)"
