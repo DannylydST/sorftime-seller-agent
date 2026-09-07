@@ -1,0 +1,4 @@
+tool: temu_category_tree
+name: temu_category_tree — Query the product category str
+arguments:
+  site: US

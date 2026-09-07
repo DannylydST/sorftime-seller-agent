@@ -156,7 +156,12 @@ asyncio.run(main())
         cwd=str(SKILL_DIR),
     )
     stdout = result.stdout.strip()
-    if result.returncode != 0 or "ERROR" in stdout:
+    # Server-side failures arrive as normal text (no exception, returncode 0):
+    # e.g. {"content":[{"text":"Authentication required"}],"isError":true} or
+    # {"error":true,"status":"server_error",...}. Treat those as failures too —
+    # a stale/rotated key must not report "Connect OK" (2026-09-07 incident).
+    failure_markers = ("ERROR", "isError", "Authentication required", "NotAuthorization", '"error": true')
+    if result.returncode != 0 or any(m in stdout for m in failure_markers):
         err = stdout or result.stderr
         return {
             "name": "Sorftime Connect",

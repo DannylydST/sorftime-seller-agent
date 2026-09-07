@@ -1,8 +1,8 @@
 ---
 name: sorftime-seller-agent
-description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
+description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家（另含 Reddit 社媒舆情查询）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/closed-loop workflow/complete go-no-go/end-to-end product selection/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/市场看板/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/流量来源/关键词/关键词研究/长尾词/搜索词/算利润/利润测算/盈亏平衡/FBA费用/价格监控/看这个产品/监控/日报/隐赚/隐赚指数/隐藏利润/潜力产品/被忽视的产品/季节性/旺季/节日选品/货源/1688/找工厂/供应链/评论分析/差评/买家痛点/定价/价格带/listing优化/标题优化/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/亚马逊卖家/跨境卖家"
-version: 3.6.1
+version: 3.6.2
 user-invocable: true
 metadata:
   openclaw:
@@ -37,7 +37,7 @@ This skill is the **single unified entry point** for all Sorftime MCP capabiliti
 
 ### ⚠️ MCP Parameter Name Traps (Must Read — Highest Frequency Pitfall)
 
-> **The same business concept uses DIFFERENT parameter names across different Sorftime tools.** With 86+ tools, parameter naming is not consistent between product, keyword, category, and cross-platform tools.
+> **The same business concept uses DIFFERENT parameter names across different Sorftime tools.** With 97+ tools, parameter naming is not consistent between product, keyword, category, and cross-platform tools.
 
 **Always verify the actual `inputSchema.properties` of the target tool before calling it.** Never guess parameter names based on what another tool uses.
 
@@ -207,7 +207,7 @@ When users mention specific tactical scenarios, route to the corresponding metho
 |-----------|----------|----------|
 | Filtering | Hard thresholds (`minPrice≥$20 AND maxRating≤4.2`) — cliff effect | Full-ranking by composite index — no blind spots |
 | Data Depth | Basic metrics | 160+ dimensions + proprietary indices |
-| AI Integration | Limited, manual operation | MCP-native, 86 standardized tools for AI agents |
+| AI Integration | Limited, manual operation | MCP-native, 97 standardized tools for AI agents |
 | Platform Coverage | Amazon only | 40+ platforms |
 | Interface | GUI-heavy, steep learning curve | MCP-native + AI Agent, natural language |
 
@@ -576,7 +576,7 @@ Auto-completes: virtual environment creation, CC/OpenClaw detection, prompts for
 
 ### 5.2 Tool Invocation
 
-> 本 Skill 通过 **MCP 协议**对外暴露 86 个工具：`sorftime_bridge.py` 是 stdio MCP server，由 `install.py` 自动注册到 agent（mcporter.json）。agent 直接通过 MCP 协议调用工具，**无需 CLI**。
+> 本 Skill 通过 **MCP 协议**对外暴露 97 个工具：`sorftime_bridge.py` 是 stdio MCP server，由 `install.py` 自动注册到 agent（mcporter.json）。agent 直接通过 MCP 协议调用工具，**无需 CLI**。
 
 脚本内部（picker/analyst 等）与手动调试时，用 `--one-shot` 底层接口直接调单个工具（非对外交互方式）：
 

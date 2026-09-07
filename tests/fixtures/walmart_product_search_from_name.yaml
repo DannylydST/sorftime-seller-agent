@@ -1,0 +1,4 @@
+tool: walmart_product_search_from_name
+name: walmart_product_search_from_name — Search Walmart products by nam
+arguments:
+  name: yoga mat

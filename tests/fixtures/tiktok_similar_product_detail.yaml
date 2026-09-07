@@ -1,0 +1,8 @@
+tool: tiktok_similar_product_detail
+name: tiktok_similar_product_detail — Search related products on Tik
+arguments:
+  scope: test
+  site: US
+  searchName: test
+  page: 1
+  takeSize: 1

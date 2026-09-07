@@ -1,0 +1,5 @@
+tool: product_search_from_name
+name: product_search_from_name — earch products on the Amazon p
+arguments:
+  name: yoga mat
+  amz_site: US

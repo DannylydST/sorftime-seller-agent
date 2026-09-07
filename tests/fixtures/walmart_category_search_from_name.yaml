@@ -1,0 +1,4 @@
+tool: walmart_category_search_from_name
+name: walmart_category_search_from_name — Search related category market
+arguments:
+  name: yoga mat

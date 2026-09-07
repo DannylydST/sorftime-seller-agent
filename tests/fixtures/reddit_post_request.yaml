@@ -1,0 +1,4 @@
+tool: reddit_post_request
+name: reddit_post_request — Query the complete main post c
+arguments:
+  reddit_id: test
