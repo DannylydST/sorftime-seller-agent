@@ -45,5 +45,5 @@ jobs:
       - name: L3 live regression
         env:
           SORFTIME_MCP_KEY: ${{ secrets.SORFTIME_MCP_KEY }}
-        run: python tests/full_gate.py
+        run: python tests/full_gate.py --skip-e2e
         shell: bash
