@@ -61,6 +61,9 @@ def gate_static():
 
 # ---------- L2 version matrix ----------
 def gate_versions():
+    import shutil
+    if not shutil.which("uv"):
+        return ["(info) skipped-no-uv — L2 needs uv (astral.sh); static L1 still enforced"], []
     fails, tried = [], []
     for ver in ("3.10", "3.11", "3.12"):
         proc = subprocess.run(["uv", "run", "--python", ver, "--no-project", "python", "-c",
@@ -156,6 +159,7 @@ def gate_e2e(pack_script=None):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--skip-live", action="store_true")
+    ap.add_argument("--skip-e2e", action="store_true", help="skip L4 clean-room pack/install (CI mode)")
     a = ap.parse_args()
     report = {}
     f1 = gate_static(); report["L1_static"] = f1
@@ -167,7 +171,10 @@ def main():
         else:
             f3, passed, skipped = gate_live(key)
             report["L3_live"] = f3 + [f"(info) passed={passed} skipped_write_type={len(skipped)}"]
-    f4 = gate_e2e(); report["L4_e2e"] = f4
+    if a.skip_e2e:
+        report["L4_e2e"] = ["(info) skipped (--skip-e2e, CI mode)"]
+    else:
+        f4 = gate_e2e(); report["L4_e2e"] = f4
     print("=" * 60)
     hard = False
     for layer, fails in report.items():
