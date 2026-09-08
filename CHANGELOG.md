@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-09-08] — v3.6.2-channel.5 (安装致命 bug 修复 — 用户反馈"有 key 也查不了数据")
+
+### Fixed
+- **install.py `NameError: args`（上游 bug，所有分支均受影响）**：`install_deps()` 引用了 main() 局部变量 `args`——任何全新环境跑 install 第一步即崩，依赖装不上、bridge 起不来。已参数化为 `install_deps(upgrade)`。干净目录端到端实测：解包 → install --key → venv+依赖+连接测试全通过
+- **分发包缺文件**：打包由白名单改为黑名单法，`requirements.txt` / `.env.example` 等此前遗漏文件全部入包（must-have 断言进打包脚本）
+
 ## [2026-09-07] — v3.6.2-channel.4 (无感注册定稿)
 
 - 话术移除"建议收藏链接"——归属在经链接注册那一刻**永久生效**，后续登录充值走官网均可，无需引导回访
