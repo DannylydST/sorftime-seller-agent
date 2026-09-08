@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-09-08] — v3.6.4 (full release gate)
+
+- `tests/full_gate.py` four-layer release gate (static integrity / py3.10-3.12 compile matrix / read-only tool regression / clean-room e2e) + GitHub Actions CI (3 OS)
+- Removed orphan fixture for the retired `tiktok_category_name_search`
+- Gate result this run: GREEN (82/82 read-only tools live-verified)
+
 ## [2026-09-08] — v3.6.3 (external-audit fixes: retired tool cleanup + py3.10 compat + docs counts)
 
 - `discover_tiktok.py`: stop calling the retired `tiktok_category_name_search`

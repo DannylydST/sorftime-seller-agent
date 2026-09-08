@@ -1,0 +1,48 @@
+name: release-gate
+
+on:
+  push:
+    branches: [main, cn, channel]
+  pull_request:
+    branches: [main, cn, channel]
+  workflow_dispatch:
+
+jobs:
+  static-and-matrix:
+    name: gate (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: L1+L2+L4 release gate (no key, no requests)
+        run: python tests/full_gate.py --skip-live
+        shell: bash
+      - name: upload gate log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate-log-${{ matrix.os }}
+          path: |
+            **/*.log
+          if-no-files-found: ignore
+
+  live-regression:
+    name: live tool regression (97 tools, read-only)
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'DannylydST'   # only run with owner secrets
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: install deps
+        run: pip install mcp httpx socksio pyyaml
+      - name: L3 live regression
+        env:
+          SORFTIME_MCP_KEY: ${{ secrets.SORFTIME_MCP_KEY }}
+        run: python tests/full_gate.py
+        shell: bash
