@@ -1,5 +1,14 @@
 # Changelog
 
+## [2026-09-08] — v3.6.2-channel.6 (外部审计 7 处修复)
+
+渠道用户侧智能体审计报告核实（7/7 属实）并修复：
+- `discover_tiktok.py` 不再调用已下架的 `tiktok_category_name_search`（fallback 与双工具循环移除，保留弃用注释）
+- `healthcheck.py` f-string 同引号嵌套仅 3.12 可用 → 预拼变量，恢复声明的 Python ≥3.10 兼容
+- SKILL.md：TikTok 段改写（已有 `tiktok_category_tree`、`name_search` 已下架）；Shopee 15→16（+`shopee_category_tree`）；1688 5→6（+`ali1688_category_tree`）；Walmart 15→18（+tree/两个按名搜索）；两处 "5 tools" 同步
+- `sorftime_bridge.py` 描述笔误 `tikto_` → `tiktok_`
+- 注：审计中"本机副本已修"说法不实——本机 healthcheck 修复前仍为坏 f-string 原样
+
 ## [2026-09-08] — v3.6.2-channel.5 (安装致命 bug 修复 — 用户反馈"有 key 也查不了数据")
 
 ### Fixed
