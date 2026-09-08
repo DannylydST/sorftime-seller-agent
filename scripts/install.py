@@ -51,7 +51,7 @@ def check_python():
     print("    ✅ Python version meets requirements")
 
 
-def install_deps():
+def install_deps(upgrade: bool = False):
     print("[2/7] Installing dependencies...")
     if not VENV_DIR.exists():
         print("    Creating virtual environment...")
@@ -60,7 +60,7 @@ def install_deps():
     pip = get_venv_pip()
     req_file = SKILL_DIR / "requirements.txt"
     install_cmd = [str(pip), "install"]
-    if args.upgrade:
+    if upgrade:
         install_cmd.append("--force-reinstall")
     if req_file.exists():
         result = run(install_cmd + ["-r", str(req_file)])
@@ -213,7 +213,7 @@ def main():
         print("=" * 60)
 
     check_python()
-    install_deps()
+    install_deps(args.upgrade)
     env = detect_env()
     key = prompt_key(args.key)
 
