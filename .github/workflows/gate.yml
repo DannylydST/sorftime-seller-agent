@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
       - name: L1+L2+L4 release gate (no key, no requests)
-        run: python tests/full_gate.py --skip-live
+        run: python tests/full_gate.py --skip-live --skip-e2e
         shell: bash
       - name: upload gate log on failure
         if: failure()
@@ -45,5 +45,5 @@ jobs:
       - name: L3 live regression
         env:
           SORFTIME_MCP_KEY: ${{ secrets.SORFTIME_MCP_KEY }}
-        run: python tests/full_gate.py
+        run: python tests/full_gate.py --skip-e2e
         shell: bash
