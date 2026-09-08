@@ -59,10 +59,7 @@ def discover(keyword):
     """Search for categories matching keyword, persist new ones, return all matches"""
     result = _call("tiktok_category_search_from_name", {"name": keyword, "site": "US"})
     data = result.get("data", result)
-    if not isinstance(data, list) or not data:
-        # Try alternate tool
-        result = _call("tiktok_category_name_search", {"search_name": keyword, "site": "US"})
-        data = result.get("data", result)
+    # tiktok_category_name_search was retired server-side; no fallback tool exists
 
     if not isinstance(data, list) or not data:
         print(f"No categories found for '{keyword}'")
@@ -120,8 +117,7 @@ PROBES = [
 def _search_one(term):
     """Run both search tools for one probe term, return unique (node_id, name) pairs."""
     results = {}
-    for tool, param in [("tiktok_category_search_from_name", "name"),
-                        ("tiktok_category_name_search", "search_name")]:
+    for tool, param in [("tiktok_category_search_from_name", "name")]:
         try:
             res = _call(tool, {param: term, "site": "US"})
             for item in res.get("data", []) if isinstance(res, dict) else []:

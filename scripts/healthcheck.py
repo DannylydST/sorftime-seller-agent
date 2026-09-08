@@ -282,7 +282,8 @@ def _print_human(checks: list[dict], overall_ok: bool, has_warnings: bool):
         parts = [f"{error_count} error(s)"]
         if warn_count:
             parts.append(f"{warn_count} warning(s)")
-        print(f"  {ICON_ERR} Found {", ".join(parts)}. Follow the hints above to fix.")
+        summary = ", ".join(parts)
+        print(f"  {ICON_ERR} Found {summary}. Follow the hints above to fix.")
         print()
         print(f"  Re-run after fixing: python3 scripts/healthcheck.py")
     print("=" * 50)

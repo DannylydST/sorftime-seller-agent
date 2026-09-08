@@ -3696,7 +3696,7 @@ _FALLBACK_CORE_TOOLS = [
             "type": "object",
             "properties": {
                 "node_id": {
-                    "description": "Category node_id, can be obtained via tiktok_category_name_search or tikto_category_search_from_name.",
+                    "description": "Category node_id, can be obtained via tiktok_category_name_search or tiktok_category_search_from_name.",
                     "type": "string"
                 },
                 "site": {

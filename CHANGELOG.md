@@ -1,5 +1,12 @@
 # Changelog
 
+## [2026-09-08] — v3.6.3 (external-audit fixes: retired tool cleanup + py3.10 compat + docs counts)
+
+- `discover_tiktok.py`: stop calling the retired `tiktok_category_name_search`
+- `healthcheck.py`: f-string nested same-quote (3.12-only) → pre-joined variable; restores declared Python ≥3.10 support
+- SKILL.md: TikTok section rewritten (`tiktok_category_tree` exists, `name_search` retired); Shopee 15→16; 1688 5→6; Walmart 15→18 with the 3 new tools listed
+- `sorftime_bridge.py`: typo `tikto_` → `tiktok_`
+
 ## [2026-09-07] — v3.6.2 (tool sync 86→97 + healthcheck auth-detection fix)
 
 ### Updated
