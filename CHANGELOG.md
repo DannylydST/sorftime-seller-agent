@@ -1,5 +1,12 @@
 # Changelog
 
+## [2026-09-09] — v3.6.2-channel.8 (引导分支修复)
+
+Danny 反馈：已给 Key 的用户仍被引导注册。根因=规范把流程写成"顺序固定"的线性状态机，盖掉了上游的 (if Key is missing) 条件。修复：
+- 线性状态机 → **条件决策树**：先判 Key（用户提供/环境已配置）→ 有 Key 直接 Install→Verify→Retry（绝口不提注册）；无 Key 才走三步话术
+- 新增 **R6 分支纪律**：已有 Key 禁止任何注册/登录话术
+- 话术模板与执行表格 Step 2 标注"仅无 Key 分支"
+
 ## [2026-09-08] — v3.6.2-channel.7 (全量发布门禁落地)
 
 新增 `tests/full_gate.py` 四层门禁 + GitHub Actions CI（三 OS×版本矩阵）：

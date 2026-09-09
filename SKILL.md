@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家（另含 Reddit 社媒舆情查询）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/product sourcing/competitor/keyword/profit/market intelligence/ASIN/category/blue ocean/seasonal/amazon/tiktok/shopee/temu/walmart/hidden profit/supply chain/monitor/analyze this data/review this product/content review/MCP debug/bridge/install/market panorama/competitor deep-dive/keyword strategy/blue ocean finder/listing audit/review mining/pricing strategy/traffic structure/negative review replacement/brand monopoly/brand gap/keyword scatter/lightweight profit/FBA fee/seasonal products/variant gap/new product burst/FBM to FBA/cross-platform price gap/listing optimization/price band/sweet spot/hidden profit index/ecommerce seller/seller tools/closed-loop workflow/complete go-no-go/end-to-end product selection/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/市场看板/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/流量来源/关键词/关键词研究/长尾词/搜索词/算利润/利润测算/盈亏平衡/FBA费用/价格监控/看这个产品/监控/日报/隐赚/隐赚指数/隐藏利润/潜力产品/被忽视的产品/季节性/旺季/节日选品/货源/1688/找工厂/供应链/评论分析/差评/买家痛点/定价/价格带/listing优化/标题优化/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/亚马逊卖家/跨境卖家"
-version: 3.6.2-channel.7
+version: 3.6.2-channel.8
 user-invocable: true
 metadata:
   openclaw:
@@ -121,14 +121,21 @@ If the user hasn't provided a Key, proactively provide the acquisition path:
 
 > 渠道版的所有注册引导**必须**按本规范执行。目标：任何智能体（Claude Code / Cursor / Kimi / WorkBuddy…）引导方式完全一致，注册归属不丢失。
 
-**状态机（顺序固定）**：`Detect（healthcheck）→ Guide（三步话术）→ Install（--key）→ Verify（get_time）→ Retry（回放原请求）`
+**决策树（按用户状态分支，禁止机械线性套用）**：
+```
+Detect（用户消息里已有 Key？或环境已配置？）
+├─ 有 Key（用户提供/已配置）→ Install（--key）→ Verify → Retry 原请求
+│    ⚠️ 此分支绝口不提注册/登录——用户已就绪，只差配置
+└─ 无 Key → Guide（三步话术，见下方模板）→ 等用户提供 Key → Install → Verify → Retry
+```
+注册引导（Guide）**仅在 Key 缺失时出现**。判定顺序：先看用户是否已给出 Key（形如 API key 的字符串，触发条件 2），再看环境变量 `SORFTIME_MCP_KEY` / `~/.sorftime/env` 是否已配置，两者任一成立即走「有 Key」分支。
 
 **标准话术骨架（三段式，用户语言）**：
 1. **为什么**：一句话说明需要一次性配置（新账号有免费体验额度）
 2. **三步操作**：①打开注册链接 ②注册后在「MCP 服务」页开通并复制 Account-SK ③把 Key 发回来
 3. **到此为止**：归属已在注册时刻永久生效，不提收藏、不提回访——用户感知就是一次正常注册
 
-**模板（可直接使用）**：
+**模板（仅用于「无 Key」分支；有 Key 分支一句话都不需要）**：
 > 好的，我来处理「{用户原始请求}」。取数前需要注册一个 Sorftime 账号（约 2 分钟，新账号有免费体验额度）：
 > 1. 打开注册链接：https://open.sorftime.com/home?tag=NTIw （手机号或微信扫码）
 > 2. 登录后进入「MCP 服务」页 → 购买开通 → 复制 Account-SK
@@ -141,6 +148,7 @@ If the user hasn't provided a Key, proactively provide the acquisition path:
 - **R2 Key 隐私**：用户发回的 Account-SK 只用于 `install.py --key`，不得回显完整 Key（可掩码）、不得写入笔记/git/对话总结
 - **R3 无缝续接**：配置成功后必须自动回放用户原始请求，不让用户重复一遍
 - **R4 已注册用户诚实原则**：若用户已有账号（非渠道链接注册），如实告知"已有账号直接用就行；想通过我们开通新账号，用这个链接注册即可"，不解释归属机制、不强迫重注册
+- **R6 分支纪律**：用户已提供 Key 或环境已配置时，**禁止**任何注册/登录/开通话术（包括"还没注册吧？"式确认）——直接 `install.py --key` → 验证 → 干活。注册引导只属于无 Key 分支；判断错了比不引导更伤体验
 - **R5 异常分流**：Key 报 401/NotAuthorization → 引导到「MCP 服务」页重新复制（key 可能被轮换）；报连接失败 → 先跑 `healthcheck.py` 看具体哪项挂了再指引
 
 #### Step 3 — Auto-Install
@@ -167,7 +175,7 @@ If `install.py` returns `test_passed: false` or `status: error`:
 | Step | User Action | Agent Action |
 |------|-------------|--------------|
 | 1 | Say "help me find products" or "configure Sorftime" | Detect configuration status |
-| 2 | 用**渠道专属链接** https://open.sorftime.com/home?tag=NTIw 注册（手机号/微信扫码）。进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK 发给 agent。 | Auto-run `install.py --unattended --key <Key>` |
+| 2 |（仅当无 Key）用**渠道专属链接** https://open.sorftime.com/home?tag=NTIw 注册（手机号/微信扫码）。进入 MCP 服务页（open.sorftime.com/mcp）购买开通，复制 Account-SK 发给 agent。 | Auto-run `install.py --unattended --key <Key>` |
 | 3 | Wait 10-20 seconds | Auto-test connection, save config, retry original request |
 | 4 | 新账号免费体验，立即开始使用 | — |
 
