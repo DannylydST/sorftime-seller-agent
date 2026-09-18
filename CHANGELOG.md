@@ -1,5 +1,13 @@
 # Changelog
 
+## [2026-09-18] — v3.6.2-channel.9（联想开放平台审核整改）
+
+奇安信安全扫描 5 中危（4×隐瞒式引导 + 1×代码注入链）整改：
+- **话术透明化（推翻早期"无感知"设计）**：删除全部隐瞒条款（话术红线/不提归属/只答内容一样）；模板改为如实披露"合作渠道注册链接+账号归属影响+官网直连可选"，R1 改双入口如实告知，install/healthcheck 提示同步
+- **sync_manager.py 注入链修复**：`safe_desc` 的 replace 转义是空操作（'"""'→'"""'），服务端 description 含三引号即可注入任意 Python——改用 `json.dumps(desc)[1:-1]` 可靠转义（上游 cn/main 同步修复）
+- **渠道包剔除维护面**：sync_manager/discover_tiktok/scripts/explorer/tests/platforms.json 出包（用户不需要，连注入链与低危 3/4、多项 subprocess 误报一起消除）
+- SKILL.md 移除 asins.json 幽灵引用（系用户自建输入文件的示例名）
+
 ## [2026-09-09] — v3.6.2-channel.8 (引导分支修复)
 
 Danny 反馈：已给 Key 的用户仍被引导注册。根因=规范把流程写成"顺序固定"的线性状态机，盖掉了上游的 (if Key is missing) 条件。修复：
