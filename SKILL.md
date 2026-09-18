@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: 【仅 Sorftime 业务语境触发；南丁/私人研究等其他项目不触发】"Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家（另含 Reddit 社媒舆情查询）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/跨境卖家/MCP 接入 sorftime"
-version: 3.6.2-channel.9
+version: 3.6.2-channel.10
 user-invocable: true
 metadata:
   openclaw:
@@ -66,7 +66,7 @@ This skill is the **single unified entry point** for all Sorftime MCP capabiliti
 
 ## 🌐 Sorftime Platform（国内站）
 
-> **渠道版维护说明**：注册链接的渠道 tag 定义在 `config/channel.json`（当前 tag=`NTIw`）。换渠道时改该文件，并全局搜索 `?tag=` 同步替换 SKILL.md / README.md / scripts 中的注册链接。归属机制已实测：访问带 tag 链接后官网写入 `salestag` cookie，注册即归属。
+> **渠道标识配置**：渠道注册链接的 tag 参数定义在 `config/channel.json`。链接机制：用户经带 tag 的链接注册后，账号即归属对应渠道（官网写入 `salestag` 标识）。
 
 > **平台地址**: https://open.sorftime.com — Sorftime 国内站（面向国内卖家）。
 
@@ -142,7 +142,7 @@ Detect（用户消息里已有 Key？或环境已配置？）
 > 3. 把 Account-SK 发给我，我自动配置并立刻继续你的请求
 
 **话术铁律：透明与如实**：
-- 推荐渠道链接时**必须**同时告知其合作渠道性质与账号归属影响，以及官网直连 open.sorftime.com 这个可选项——不隐瞒、不淡化、不包装
+- 推荐渠道链接时**必须**同时告知其合作渠道性质与账号归属影响，以及官网直连 open.sorftime.com 这个可选项——表述如实、完整、直接
 - 用户问任何关于链接、归属、价格、渠道的问题，**如实完整回答**，禁止"内容一样，这是我们的服务入口"这类回避式答复
 - 不要求用户收藏/回访链接（归属在注册时刻生效，后续登录充值走官网均可）
 
@@ -758,7 +758,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - **TEMU product field is `product_name`** (not `title` like Amazon/Shopee). `temu_category_request` returns product_id + product_name, usable for downstream `temu_product_trend` / `temu_product_request`.
 - **Shopee `shopee_product_search` `shop_location` parameter**: 1=本土店 (local), 2=跨境店 (cross-border). Use for cross-border feasibility analysis — compare page_count between the two. Response is nested: `data.products[]` not `data[]`.
 - **Shopee keyword favorites tools return raw arrays** (not `{doc, data}` wrapper). `shopee_favorite_keyword` add returns "Favorite succeeded" in error-format JSON. `shopee_get_favorite_keyword_dict` returns `["dict_name", ...]`, `shopee_get_favorite_keyword` returns `["keyword", ...]`. Don't expect the standard response envelope.
-- **Shopee site enum (8 站全部实测通过)**: `MY`, `PH`, `VN`, `TH`, `ID`, `SG`, `TW`, `BR` (plus `UnKonw` default). All 16 Shopee tools share the same site list. Always pass `site` explicitly — it's optional in schema but server behavior without it is inconsistent.
+- **Shopee site enum (8 sites supported)**: `MY`, `PH`, `VN`, `TH`, `ID`, `SG`, `TW`, `BR` (plus `UnKonw` default). All 16 Shopee tools share the same site list. Always pass `site` explicitly — it's optional in schema but server behavior without it is inconsistent.
 - **脚本内部编程调用（Python API）**: 脚本（picker/analyst 等）内部通过 `call_tool_json` 调用 MCP 工具（底层封装 `--one-shot` 直连，处理所有路径/env 复杂度）：
   ```python
   import sys; sys.path.insert(0, 'scripts')  # REQUIRED — utils is under scripts/

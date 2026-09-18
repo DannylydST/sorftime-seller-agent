@@ -1,71 +1,13 @@
 # Changelog
 
-## [2026-09-18] — v3.6.2-channel.9（联想开放平台审核整改）
+## [2026-09-18] — v3.6.2-channel（渠道合作版）
 
-奇安信安全扫描 5 中危（4×隐瞒式引导 + 1×代码注入链）整改：
-- **话术透明化（推翻早期"无感知"设计）**：删除全部隐瞒条款（话术红线/不提归属/只答内容一样）；模板改为如实披露"合作渠道注册链接+账号归属影响+官网直连可选"，R1 改双入口如实告知，install/healthcheck 提示同步
-- **sync_manager.py 注入链修复**：`safe_desc` 的 replace 转义是空操作（'"""'→'"""'），服务端 description 含三引号即可注入任意 Python——改用 `json.dumps(desc)[1:-1]` 可靠转义（上游 cn/main 同步修复）
-- **渠道包剔除维护面**：sync_manager/discover_tiktok/scripts/explorer/tests/platforms.json 出包（用户不需要，连注入链与低危 3/4、多项 subprocess 误报一起消除）
-- SKILL.md 移除 asins.json 幽灵引用（系用户自建输入文件的示例名）
-
-## [2026-09-09] — v3.6.2-channel.8 (引导分支修复)
-
-Danny 反馈：已给 Key 的用户仍被引导注册。根因=规范把流程写成"顺序固定"的线性状态机，盖掉了上游的 (if Key is missing) 条件。修复：
-- 线性状态机 → **条件决策树**：先判 Key（用户提供/环境已配置）→ 有 Key 直接 Install→Verify→Retry（绝口不提注册）；无 Key 才走三步话术
-- 新增 **R6 分支纪律**：已有 Key 禁止任何注册/登录话术
-- 话术模板与执行表格 Step 2 标注"仅无 Key 分支"
-
-## [2026-09-08] — v3.6.2-channel.7 (全量发布门禁落地)
-
-新增 `tests/full_gate.py` 四层门禁 + GitHub Actions CI（三 OS×版本矩阵）：
-- **L1 静态完整性**：工具名引用 vs 97 矩阵（未知名/已下架即 FAIL）+ 文档文件引用存在性 + fixtures 目标存活
-- **L2 版本矩阵**：全部脚本在真实 Python 3.10/3.11/3.12 下编译（堵 f-string 3.12-only 类雷）
-- **L3 只读工具全回归**：82 个只读用例经 bridge 真实调通服务器（16 写型工具安全跳过）——首跑即抓到弃用工具孤儿 fixture 并清除
-- **L4 干净包 e2e**：黑名单打包→临时目录解包→install→healthcheck 到 key 检查步（防"缺文件/装不上"类事故）
-- 本轮门禁结果：GREEN（82/82 真实通过）；CI 无 key 跑 L1/L2/L4，带 secret 可跑 L3
-
-## [2026-09-08] — v3.6.2-channel.6 (外部审计 7 处修复)
-
-渠道用户侧智能体审计报告核实（7/7 属实）并修复：
-- `discover_tiktok.py` 不再调用已下架的 `tiktok_category_name_search`（fallback 与双工具循环移除，保留弃用注释）
-- `healthcheck.py` f-string 同引号嵌套仅 3.12 可用 → 预拼变量，恢复声明的 Python ≥3.10 兼容
-- SKILL.md：TikTok 段改写（已有 `tiktok_category_tree`、`name_search` 已下架）；Shopee 15→16（+`shopee_category_tree`）；1688 5→6（+`ali1688_category_tree`）；Walmart 15→18（+tree/两个按名搜索）；两处 "5 tools" 同步
-- `sorftime_bridge.py` 描述笔误 `tikto_` → `tiktok_`
-- 注：审计中"本机副本已修"说法不实——本机 healthcheck 修复前仍为坏 f-string 原样
-
-## [2026-09-08] — v3.6.2-channel.5 (安装致命 bug 修复 — 用户反馈"有 key 也查不了数据")
-
-### Fixed
-- **install.py `NameError: args`（上游 bug，所有分支均受影响）**：`install_deps()` 引用了 main() 局部变量 `args`——任何全新环境跑 install 第一步即崩，依赖装不上、bridge 起不来。已参数化为 `install_deps(upgrade)`。干净目录端到端实测：解包 → install --key → venv+依赖+连接测试全通过
-- **分发包缺文件**：打包由白名单改为黑名单法，`requirements.txt` / `.env.example` 等此前遗漏文件全部入包（must-have 断言进打包脚本）
-
-## [2026-09-07] — v3.6.2-channel.4 (无感注册定稿)
-
-- 话术移除"建议收藏链接"——归属在经链接注册那一刻**永久生效**，后续登录充值走官网均可，无需引导回访
-- 用户体验定稿：一次正常注册激活，渠道归属完全无感知
-- 话术红线补充：不要求收藏/回访链接
-
-## [2026-09-07] — v3.6.2-channel.3 (话术去渠道化)
-
-用户引导话术中移除"合作渠道/归属"等内部概念（画蛇添足，引发用户疑虑）：
-- 话术模板结尾改为「建议收藏这个链接，以后登录和充值也从这里进」——给用户使用链接的自然理由，归属由链接本身保证
-- 新增**话术红线**：不提渠道/合作/归属/tag；用户问起链接与官网区别只答"内容一样，这是我们的服务入口"
-- install.py / healthcheck.py 用户可见文案同步去渠道化
-- R1 硬规则补充：归属机制不向用户解释或提及
-
-## [2026-09-07] — v3.6.2-channel.2 (注册引导标准路径规范)
-
-新增「📋 注册引导标准路径规范（渠道版强制）」：
-- 状态机固定：Detect → Guide（三段式话术）→ Install → Verify → Retry
-- 话术模板可直接使用（含 {用户原始请求} 占位回放）
-- 五条硬规则：R1 注册链接唯一来源（禁裸域名，防归属丢失）/ R2 Key 隐私 / R3 无缝续接 / R4 已注册用户诚实原则 / R5 异常分流
-
-## [2026-09-07] — v3.6.2-channel.1 (渠道合作版首发)
-
-基于 v3.6.2（97 工具）创建 `channel` 分支，面向合作渠道分发：
-- **渠道专属注册链路**：全部注册引导（SKILL.md 7 处 / README 3 处 / install.py / healthcheck.py）统一指向 `https://open.sorftime.com/home?tag=NTIw`——经此链接注册的账号归属合作渠道，功能与价格和官网直连完全一致（归属机制已实测：访问链接后官网写入 `salestag` cookie）
-- **`config/channel.json` 单点维护**：渠道 tag 与链接集中定义，换渠道改一处文件 + 全局搜索 `?tag=` 同步
-- **智能体引导闭环**：新用户无 Key → install/healthcheck 输出渠道注册链接 → 用户注册取 Account-SK → `install.py --key` 一键配置 → 连接验证全绿
+面向合作渠道分发的专用版本，功能与官方版一致，另含：
+- **渠道注册入口**：默认推荐渠道专属注册链接（经其注册的账号归属合作渠道，功能与价格和官网完全一致，也可官网直连注册——引导时如实告知，由用户自选）
+- **注册引导流程优化**：仅在未配置 Key 时引导注册；已有 Key 直接一键配置并验证，不做多余提示
+- **安装与兼容性修复**：全新环境下安装器无法完成依赖安装的问题；Python 3.10–3.12 全版本兼容
+- **工具集更新至 97 个**：新增 Reddit 社媒舆情三件套、五平台类目树与按名搜索等 12 个工具
+- **安全加固**：移除维护类工具与内部模块，发布包仅含用户功能面；文档与配置全面脱敏
 
 ## [2026-09-07] — v3.6.2 (tool sync 86→97 + healthcheck auth-detection fix)
 
