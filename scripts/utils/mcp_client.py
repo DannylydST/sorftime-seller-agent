@@ -28,7 +28,7 @@ UNSUPPORTED_TOOLS = {
     "temu_category_report",
 }
 
-# Deprecated/renamed tools, with automatic remapping
+# Legacy tool aliases with automatic remapping
 DEPRECATED_TOOL_MAP = {
     "keyword_search": "keyword_search_results",
     "product_keywords": "competitor_product_keywords",

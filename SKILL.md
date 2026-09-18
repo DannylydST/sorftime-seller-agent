@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: 【仅 Sorftime 业务语境触发；南丁/私人研究等其他项目不触发】"Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家（另含 Reddit 社媒舆情查询）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/跨境卖家/MCP 接入 sorftime"
-version: 3.6.2-channel.10
+version: 3.6.2-channel.11
 user-invocable: true
 metadata:
   openclaw:
@@ -190,7 +190,7 @@ If `install.py` returns `test_passed: false` or `status: error`:
 | "[SORFTIME_ONBOARDING_REQUIRED]" | Immediately execute onboarding flow (Steps 1-4) |
 | "Connection test failed" | Check Key completeness / account MCP status / network to open.sorftime.com |
 | Don't know where to get Key | Direct user to the channel register link https://open.sorftime.com/home?tag=NTIw → 手机号注册（支持微信扫码）→ MCP 服务页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
-| "Schema is X days old" | Run `python3 tests/auto_sync.py` to pull latest tool schemas |
+| "Schema is X days old" | The tool list ships with the skill package — get new tools by updating to the latest skill version |
 | How to pay / pricing | Direct user to https://open.sorftime.com — 人民币付费。新账号可免费体验。 |
 
 ---
@@ -210,7 +210,7 @@ If `install.py` returns `test_passed: false` or `status: error`:
 | "review my content" / "quality check" | → Content Quality Guidelines | Execute guidelines flow (see below) |
 | "configure Sorftime" / "first time" / "MCP Key" | → Auto Onboarding | `install.py --unattended --key <KEY>` |
 | "explore Sorftime" / "what features exist" / "available fields" | → Platform Explorer | `explorer/*.js` + Playwright |
-| "install/debug/run tests" / "MCP not connecting" | → Bridge Operations | `install.py` / `run_tool_tests.py` / `healthcheck.py` |
+| "install/debug" / "MCP not connecting" | → Bridge Operations | `install.py` / `healthcheck.py` |
 
 ### Methodology Card Routing (v3.0)
 
@@ -350,7 +350,7 @@ For vague requests (`"find opportunities"`, `"is this category worth it"`), THEN
 
 1. **Obey the instruction first, guide only when ambiguous** (v3.6.0): Precise requests (tool+ASIN/keyword/site/output specified) → execute directly, no routing. Only vague/exploratory requests → use `router.py` / `persona.py` to identify intent and seller stage, then route to methodology card. Never re-interpret a precise instruction.
 2. **Ask when information is insufficient**: Never guess ASINs, keywords, or marketplaces — ask
-3. **Schema freshness check**: At the first Sorftime usage in each session, run `python3 scripts/healthcheck.py`. If it reports "Schema is X days old" (>7 days), **proactively notify the user**: "Schema is X days old — new tools may be available on the server. Sync now?" — only sync after user confirmation (`python3 tests/auto_sync.py`). Never silently sync (involves file modification). If a tool call returns "not found" or "unsupported", the first step is to suggest syncing Schema
+3. **Schema freshness**: if `healthcheck.py` reports an old schema or a tool call returns "not found"/"unsupported", tell the user a newer skill version may be available (new tools ship with package updates).
 4. **Cache-first**: Repeated queries auto-hit SQLite cache (`~/.sorftime-cache/`)
 5. **Structure results**: Raw JSON must be formatted before presenting to users — never dump raw JSON
 6. **Out of scope**: Log unsupported requests to `~/.sorftime-cache/unsupported-requests.log` and provide alternatives
@@ -428,7 +428,7 @@ No product is hidden — the full pool stays visible, and the Risk Advisory tabl
 
 ### 1.1.5 Post-Selection Independent Review (Mandatory)
 
-> Since v3.0 removed hard interception, the review burden moved to a **dedicated review step
+> The review runs as a **dedicated review step
 > that runs AFTER selection and is INDEPENDENT of the discovery model.** The same engine
 > that found the products must not be the only judge of them.
 
@@ -592,10 +592,7 @@ When the user asks "review my content" / "quality check", follow these guideline
 
 When user says "explore Sorftime" / "what features are available" / "available fields" / "verify fields":
 
-```bash
-# Example: extract all field definitions from a page
-node scripts/explorer/content-capture.js <url>
-```
+
 
 Core principles:
 - One module at a time
@@ -636,48 +633,6 @@ python3 scripts/sorftime_bridge.py --one-shot potential_product '{"amz_site":"US
 # Hidden Profit Index — 关键词/类目内筛选
 python3 scripts/sorftime_bridge.py --one-shot potential_product '{"amz_site":"US","search_name":"yoga mat"}'
 ```
-
-### 5.3 Full Test Suite
-
-```bash
-python3 tests/run_tool_tests.py
-```
-
-### 5.4 Schema Auto-Sync
-
-When Sorftime MCP server updates tools (add/remove/modify schemas), the skill auto-detects and syncs.
-
-```bash
-# Full sync: fetch server schema → diff → generate → apply
-python3 scripts/sync_manager.py full
-
-# Detect changes only (no writes)
-python3 scripts/sync_manager.py diff
-
-# Auto-sync entry (executes when changes detected)
-python3 tests/auto_sync.py
-```
-
-Sync scope:
-- `scripts/sorftime_bridge.py` — update `_FALLBACK_CORE_TOOLS` with latest server schema
-- `references/tool-matrix.md` — regenerate categorized tool matrix
-- `tests/fixtures/*.yaml` — update test case parameter structures
-- `~/.sorftime-cache/schema-store/` — versioned storage, supports rollback
-
-Each sync auto-creates backup in `.sync-backups/`, with one-click rollback:
-```bash
-python3 scripts/sync_manager.py rollback YYYYMMDD_HHMMSS
-```
-
-### 5.5 Drift Detection
-
-```bash
-python3 tests/drift_detector.py
-```
-
-Compares local `references/tool-matrix.md` against `scripts/sorftime_bridge.py`'s `_FALLBACK_CORE_TOOLS`. Alerts on inconsistency. Note: this checks local file consistency only, not against the server.
-
----
 
 ## VI. Multi-Platform Parameter Quick Reference
 
@@ -740,7 +695,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 ## VII. Gotchas
 
 - **MCP SDK version lock**: This skill requires **MCP 1.x** (not 2.x). `requirements.txt` locks to `mcp>=1.0.0,<2.0.0`. MCP 2.x has breaking API changes (`Server` → `MCPServer`, `stdio_server` signature change). If bridge startup shows "MCP 2.x is not yet supported" or `AttributeError: 'Server' object...`, run `python3 scripts/install.py --upgrade` to downgrade to 1.x.
-- **Schema auto-sync**: `healthcheck.py` checks schema freshness. If it reports "Schema is X days old", run `python3 tests/auto_sync.py` to pull the latest tool list — the server may have added new tools. Sync updates `references/tool-matrix.md`, `sorftime_bridge.py` schemas, and `tests/fixtures/`. Recommended: weekly, or immediately when a tool call returns "tool not found"
+- **Tool list updates**: the tool matrix and bridge schemas ship with the skill package; update the package to get newly released tools
 - When `SORFTIME_MCP_KEY` is not set, the bridge raises `RuntimeError` — configure the env var or run `install.py` first
 - `potential_product` (Hidden Profit Index ⭐ — Sorftime exclusive methodology). `search_name` parameter is **optional**: omit for **all-category cross-ranking**, include to filter within a keyword's search results. Returns `potential_index` — a **composite recommendation score (relative value)**, not a single-dimension absolute metric. Higher scores indicate stronger overall performance across "low entry barrier, low ad spend, high profit margin" dimensions. When explaining to sellers, focus on the logic behind the index (finding overlooked high-profit products), not per-dimension breakdown calculations. ⚠️ **CRITICAL: A high HPI score does NOT override category risk.** Always cross-check results against the four-tier risk advisory (hard/capital/ops/trap) before presenting to sellers. Food, supplements, electronics compliance, seasonal products, and licensed/branded goods must be **flagged prominently** (never hidden — v3.5.0 advisory) regardless of HPI, and challenged in the independent review step. See `references/methodology-cards/tactical/invisible-profit.md#risk-notes` for the full advisory table
 - Amazon keyword tools (`keyword_detail` / `keyword_extends` / `keyword_search_results`) use `keyword_support_site` for marketplace; all other Amazon tools use `amz_site`. **⚠️ Exception: `product_customers_say` uses `site`** (not `amz_site`), the only Amazon tool to do so. **See the "MCP Parameter Name Traps" section above — parameter name mismatches are the #1 cause of call failures**
@@ -748,8 +703,6 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - **TikTok category tools**: `tiktok_category_tree` (full tree enumeration) + `tiktok_category_search_from_name` (keyword → leaf categories). The retired `tiktok_category_name_search` no longer exists server-side — do not call it. Keyword search only discovers **leaf-level** categories; to enumerate top levels or traverse hierarchies use `tiktok_category_tree`. See `references/tiktok-rankings.json` for the pre-computed ranking snapshot.
 - **TikTok category discovery SOP** (always tier 1 first):
   1. **TIER 1 (0s, 0 API calls)**: Read `references/tiktok-rankings.json` — pre-computed rankings of 228 leaf categories with monthly sales, MoM, avg price, and heuristic parent-category aggregation. Covers the vast majority of active categories. Use for: "top categories", "what's selling", market overview questions.
-  2. **TIER 2 (~1min, batch API)**: `python3 scripts/discover_tiktok.py --sweep` — parallel keyword scan to refresh or expand category coverage. Use when: rankings are stale (>7 days) or searching for a niche not in the rankings. Auto-persists to `references/tiktok-categories.json`.
-  3. **TIER 3 (per-call API)**: `python3 scripts/discover_tiktok.py <keyword>` — single-keyword search. Use for: targeted lookup of one specific category name. Do NOT use for broad discovery — TIER 2 is faster and more complete.
   Anti-patterns: Do NOT iterate letters brute-force. Do NOT call tools without `site`. Do NOT expect exact-match top-level category names to work.
 - **Shopee trend tools return flat interleaved arrays**, not `[{date, value}]` objects. Both `shopee_category_trend` and `shopee_product_trend` return `[date1, val1, date2, val2, ...]`. Parse by pairing: `list(zip(data[::2], data[1::2]))`. Date elements are integers in `YYYYMMDD` format (daily) or `YYYYMM` (monthly), not ISO strings. `shopee_product_trend` accepts optional `query_start` / `query_end` (format `yyyy-MM-dd`) to scope the date range; omitting them defaults to ~1 year.
 - **Shopee `shopee_category_trend` has 72+ `trend_index` values** (default: `MonthlySalesVolume`). Key ones: `MonthlySalesVolume`, `MonthlySalesAmount`, `AveragePrice`, `AverageStarRating`, `SellerCount`, `BrandCount`, `FlagshipStoreRatio`, plus time-windowed variants (`Listed1Month*`, `Listed3Month*`, `Top3*`, `Top10*`). Always check the schema enum for the full list — it's extensive and covers market concentration, new-product dynamics, and store-type breakdowns.
@@ -770,7 +723,7 @@ Walmart marketplace parameter is always `site`, currently supports `US`. All Wal
 - `mcporter` HTTP transport may intermittently break on large responses — complex queries prefer the bridge `--one-shot` direct-call path (the same path scripts use internally)
 - `picker.py` defaults to `--profile newbie` (strictest filtering). Switch profiles via `--profile grower/pro/factory/brand` or use per-category overrides (`--allow-capital` / `--allow-ops`). Filtered products are listed in report with specific risk level and reason
 - `--explicit-category` is backward-compatible, equivalent to `--allow-capital --allow-ops`
-- **Schema auto-sync**: `sorftime_bridge.py` loads dynamic schema from `schema_store` on startup; falls back to `_FALLBACK_CORE_TOOLS` if never synced. Run `python3 tests/auto_sync.py` regularly
+- **Bridge schema**: `sorftime_bridge.py` loads its tool schema at startup and ships pre-synced with the package
 - **Walmart `trend_type` must be in English**: `walmart_product_trend_by_product_id`'s `trend_type` uses English enum values (`SalesVolume`/`SalesAmount`/`Price`/`Rank`/`Reviews`/`Star`) — **cannot use Chinese**. Server returns "please enter the trend type to query" if omitted
 - **Walmart `rank_min`/`rank_max` required**: `walmart_keyword_list` requires both `rank_min` and `rank_max`. Recommended range `1-100`, 100 results per page
 - **Walmart category ID format**: `node_id` is string, may contain underscores (e.g. `1072864_8490340`). Extract from product detail's `NodeTree`: `["Category Name", "node_id", "Date", "Rank"]`
