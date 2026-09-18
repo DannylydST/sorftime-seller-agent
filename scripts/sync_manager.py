@@ -314,8 +314,9 @@ def generate_core_tools(tools: list[dict]) -> str:
         # 核心工具单独注册，其他标记为 raw 但保留基本信息
         is_core = _is_core_tool(name)
 
-        # 转义三引号
-        safe_desc = desc.replace('"""', '"""').replace("\\", "\\\\")
+        # 转义为可安全嵌入 Python 源码的字符串字面量（json.dumps 处理引号/反斜杠/控制字符）；
+        # [1:-1] 去掉首尾引号。禁止手写 replace——三引号/反斜杠注入曾因此可提前闭合 docstring
+        safe_desc = json.dumps(desc, ensure_ascii=False)[1:-1]
 
         schema_json = json.dumps(schema, ensure_ascii=False, indent=4)
         # 将 JSON 字面量转换为 Python 字面量（true→True, false→False, null→None）
