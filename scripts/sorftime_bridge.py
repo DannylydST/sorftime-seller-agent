@@ -71,34 +71,13 @@ else:
     _MCP_V2 = (_mcp_major == 2)
 
     if not (_MCP_V1 or _MCP_V2):
-        # Unsupported/future major (3.x, 0.x, corrupted) — SELF-HEAL to known-good 1.x.
-        print(f"⚠️  MCP {_mcp_version} detected — unsupported SDK major. Auto-downgrading to 1.x...",
+        # Unsupported/future major (3.x, 0.x, corrupted) — fail fast with explicit guidance.
+        # Dependencies are managed by the explicit install step only; no runtime pip install.
+        print(f"ERROR: MCP {_mcp_version} detected — unsupported SDK major.",
               file=sys.stderr)
-        _fixed = False
-        try:
-            import subprocess
-            # We are running under the skill's venv (sys.executable = venv python);
-            # reinstall mcp 1.x into it, then restart the bridge.
-            _r = subprocess.run(
-                [sys.executable, "-m", "pip", "install", "--quiet", "--disable-pip-version-check",
-                 "mcp>=1.0.0,<2.0.0"],
-                capture_output=True, text=True, timeout=180,
-            )
-            if _r.returncode == 0:
-                _fixed = True
-        except Exception as _e:
-            print(f"    pip reinstall failed: {_e}", file=sys.stderr)
-
-        if _fixed:
-            print("    ✅ mcp downgraded. Restarting bridge...", file=sys.stderr)
-            os.execv(sys.executable, [sys.executable, __file__] + sys.argv[1:])
-        else:
-            print(
-                "    ❌ Auto-fix failed. Run manually:  python3 scripts/install.py --upgrade",
-                "    (reinstalls mcp>=1.0.0,<2.0.0 into the virtual environment)",
-                sep="\n", file=sys.stderr,
-            )
-            sys.exit(1)
+        print("Fix: python3 scripts/install.py --upgrade   (reinstalls mcp per requirements.txt)",
+              file=sys.stderr)
+        sys.exit(1)
 
     # ── Conditional imports per SDK major ──
     if _MCP_V2:
