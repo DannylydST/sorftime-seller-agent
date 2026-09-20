@@ -8,6 +8,7 @@
 结果保存到 ~/.sorftime-cache/batch_analysis/ 目录
 """
 
+import re
 import subprocess
 import json
 import os
@@ -43,10 +44,28 @@ PRODUCTS = [
 SCRIPT_DIR = Path(__file__).resolve().parent
 
 
-def run_command(cmd, timeout=60):
-    """运行命令并返回输出"""
+ASIN_RE = re.compile(r"^[A-Z0-9]{10}$")   # ASIN whitelist: 10 uppercase alnum chars
+SITE_RE = re.compile(r"^[A-Z]{2}$")        # site code whitelist: 2 uppercase letters
+
+
+def validate_asin(a: str) -> str:
+    if not ASIN_RE.match(a or ""):
+        raise ValueError(f"invalid ASIN: {a!r}")
+    return a
+
+
+def validate_site(s: str) -> str:
+    if not SITE_RE.match(s or ""):
+        raise ValueError(f"invalid site: {s!r}")
+    return s
+
+
+def run_command(cmd: list, timeout=60):
+    """Run an argv-list command (never a shell string; shell=False explicit)."""
+    assert isinstance(cmd, list) and all(isinstance(a, str) for a in cmd)
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, encoding="utf-8", errors="replace")
+        result = subprocess.run(cmd, shell=False, capture_output=True, text=True,
+                                 timeout=timeout, encoding="utf-8", errors="replace")
         return result.stdout + result.stderr
     except subprocess.TimeoutExpired:
         return f"ERROR: Command timed out after {timeout}s"

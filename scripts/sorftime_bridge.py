@@ -42,6 +42,8 @@ else:
             venv_python = get_venv_python()
         except Exception:
             pass
+        # Security: exec target = the skill's bundled venv interpreter, a
+        # package-internal path derived from __file__ only (never user-controlled).
         if venv_python and venv_python.exists():
             if sys.platform == "win32":
                 os.execve(str(venv_python), [str(venv_python), __file__] + sys.argv[1:], os.environ.copy())
@@ -97,6 +99,20 @@ else:
 
 load_env()
 SORFTIME_MCP_URL = os.getenv("SORFTIME_MCP_URL", "https://mcp.sorftime.com")
+
+# Security: outbound network whitelist. The MCP credential (SORFTIME_MCP_KEY) is
+# ONLY ever sent to the official Sorftime MCP endpoint; no third-party, analytics
+# or channel endpoint receives it. All credential-bearing calls go through
+# _assert_official_url().
+ALLOWED_OUTBOUND_HOSTS = ("mcp.sorftime.com",)
+
+
+def _assert_official_url(url: str) -> str:
+    from urllib.parse import urlparse
+    host = urlparse(url).hostname or ""
+    if host not in ALLOWED_OUTBOUND_HOSTS:
+        raise RuntimeError(f"blocked non-whitelisted outbound host: {host} (allowed: {ALLOWED_OUTBOUND_HOSTS})")
+    return url
 SORFTIME_MCP_KEY = os.getenv("SORFTIME_MCP_KEY", "")
 
 # ── 动态 Schema 加载（方案 B：全自动同步） ──
@@ -4424,7 +4440,7 @@ async def call_sorftime(tool_name: str, arguments: Dict[str, Any]) -> str:
     timeout = float(os.getenv("SORFTIME_HTTP_TIMEOUT", "30.0"))
     proxy = os.getenv("SORFTIME_PROXY")
     async with httpx.AsyncClient(timeout=timeout, follow_redirects=True, proxy=proxy) as client:
-        resp = await client.post(url, json=payload, headers={"Content-Type": "application/json"})
+        resp = await client.post(_assert_official_url(url), json=payload, headers={"Content-Type": "application/json"})
         resp.raise_for_status()
         raw_text = resp.text
 

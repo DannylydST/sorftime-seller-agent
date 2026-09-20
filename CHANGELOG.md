@@ -1,4 +1,11 @@
 # Changelog
+## [2026-09-20] — v3.7.0-channel.1（安全模型显性化）
+
+- **出站域名白名单**：bridge 新增 `ALLOWED_OUTBOUND_HOSTS=("mcp.sorftime.com",)` 与 `_assert_official_url()`——凭证仅发往官方 MCP 端点，任何非白名单主机立即抛错（代码级强制）
+- **命令执行全量显性化**：所有 subprocess 调用点显式 `shell=False`+argv 断言；ASIN/站点输入新增正则白名单校验器（`^[A-Z0-9]{10}$` / `^[A-Z]{2}$`）；execv 引导路径注释固化（包内派生，非用户可控）
+- **新增 SECURITY.md**：逐点位的命令执行/凭证流向/文件写入安全说明（供审核与自动分析器直接取用）
+- **工作流输出目录安全规范**：category/platform 必须 slug 化+realpath 前缀校验（closed-loop-selection.md）
+- 依赖安装：仅显式安装步骤（install.py），运行期零 pip install
 ## [2026-09-18] — v3.6.2-channel（渠道合作版）
 
 面向合作渠道分发的专用版本，功能与官方版一致，另含：

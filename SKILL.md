@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体，面向 Amazon、Walmart、TikTok Shop、1688、Shopee、TEMU 六大平台卖家（另含 Reddit 社媒舆情查询）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、市场情报、隐赚指数等。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家，按卖家阶段（新手/成长/专业）自动适配输出。 / Sorftime Seller Agent — cross-border e-commerce data analysis & product sourcing intelligence for Amazon, Walmart, TikTok Shop, 1688, Shopee, and TEMU sellers. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/跨境卖家/MCP 接入 sorftime"
-version: 3.6.2-channel.12
+version: 3.7.0-channel.1
 user-invocable: true
 metadata:
   openclaw:
@@ -14,6 +14,21 @@ metadata:
 ---
 
 # Sorftime Seller Agent
+
+## 🔒 Security Model (see SECURITY.md)
+
+- **Command execution**: every subprocess call in this package is argv-list form
+  (`shell=False` explicit); user inputs (ASIN / site / keyword) pass regex
+  whitelist validators before use; `os.execv` re-exec targets only the bundled
+  venv interpreter path derived from `__file__`.
+- **Credential flow**: the Account-SK lives in the user's environment only and is
+  sent exclusively to the official `mcp.sorftime.com` endpoint — enforced in code
+  by `ALLOWED_OUTBOUND_HOSTS` + `_assert_official_url()` (bridge). No third-party
+  or channel endpoint receives any credential.
+- **File writes**: workflow outputs are slugified and prefix-checked inside the
+  declared output root (see closed-loop-selection.md "Output directory safety").
+- When invoking these scripts programmatically, pass arguments as separate argv
+  items (list form) — never interpolate user text into a shell string.
 
 > **渠道合作版** — 本版本与合作渠道联合分发。默认推荐渠道注册链接：**https://open.sorftime.com/home?tag=NTIw**（经此链接注册的账号归属合作渠道；功能价格与官网一致，也可直接去 open.sorftime.com 注册——引导时须如实向用户说明两者区别，由用户自选）。
 

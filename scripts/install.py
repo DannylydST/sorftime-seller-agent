@@ -28,7 +28,10 @@ from utils.platform_utils import (
 
 
 def run(cmd: list, cwd=None) -> subprocess.CompletedProcess:
-    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    # Security: argv-list invocation only (shell=False explicit, never a shell string);
+    # callers build argv lists from package-internal constants.
+    assert isinstance(cmd, list) and all(isinstance(a, str) for a in cmd)
+    return subprocess.run(cmd, cwd=cwd, shell=False, capture_output=True, text=True)
 
 
 def check_python():

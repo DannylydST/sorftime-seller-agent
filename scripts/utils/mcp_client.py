@@ -290,7 +290,10 @@ def call_tool(tool_name: str, arguments: dict) -> str:
     args_json = json.dumps(arguments, ensure_ascii=False)
     cmd = [python, str(BRIDGE_SCRIPT), "--one-shot", tool_name, args_json]
     env = os.environ.copy()
-    result = subprocess.run(cmd, capture_output=True, text=True, env=env, encoding="utf-8", errors="replace")
+    # argv-list invocation; tool_name is validated against the tool registry,
+    # arguments are a JSON object — never interpolated into a shell string.
+    result = subprocess.run(cmd, shell=False, capture_output=True, text=True, env=env,
+                            encoding="utf-8", errors="replace")
     if result.returncode != 0:
         err = result.stderr or "Unknown error"
         # Onboarding guard: throw machine-readable error when Key is not set

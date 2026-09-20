@@ -144,6 +144,8 @@ Every phase writes output to disk.
 
 Output directory: `${SORFTIME_OUTPUT_DIR:-~/Documents/sorftime}/{date}-{category}-{platform}/`
 
+**Output directory safety**: `{category}` and `{platform}` MUST be slugified (keep only `[A-Za-z0-9_-]`; reject `/`, `\`, `..`); after joining, resolve the real path and verify it still starts with the declared output root before any write. A `SORFTIME_OUTPUT_DIR` override gets the same prefix check.
+
 Override via `SORFTIME_OUTPUT_DIR` env var. Falls back to `~/Documents/sorftime`.
 
 | File | Phase | Content |
