@@ -188,13 +188,18 @@ def main():
     credit = None
     if isinstance(quota, dict):
         credit = quota.get("data", {}).get("credit_left")
+    # 端点解析可能被白名单镇流拦下——诊断工具结构化降级，不裸 traceback
+    try:
+        active_url = get_mcp_url()
+    except RuntimeError as e:
+        active_url = f"[blocked] {str(e)[:80]}"
     if not args.json:
         print(f"💰 配额余量 credit_left = {credit if credit is not None else '查询失败'}"
-              f"（端点={get_mcp_url()}）")
+              f"（端点={active_url}）")
 
     if args.json:
         slim = {k: {kk: vv for kk, vv in v.items() if kk != "_full"} for k, v in results.items()}
-        print(json.dumps({"quota_credit_left": credit, "active_mcp_url": get_mcp_url(),
+        print(json.dumps({"quota_credit_left": credit, "active_mcp_url": active_url,
                           "endpoints": slim}, ensure_ascii=False, indent=1))
 
     if args.matrix:

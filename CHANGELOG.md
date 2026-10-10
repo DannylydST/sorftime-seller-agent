@@ -1,4 +1,8 @@
 # Changelog
+## [2026-10-10] — v4.0.3（终审文档打磨 + probe 尾部降级）
+
+- probe 尾部 `get_mcp_url()` 结构化降级（敌意配置下不再半截输出/裸 traceback，与 healthcheck 同治）
+- mercado.md 矛盾修正（1 工具实测 vs 「无工具」旧文；common_usage_query 可调口径）；walmart/shopee/tiktok 头部口径统一「N 业务 + 通用配额」；README 配额工具名跟新
 ## [2026-10-10] — v4.0.2（复审修复 + 服务端当日二改适配）
 
 - **usage_query → common_usage_query（服务端当日改名并铺满 9 端点）**：probe/healthcheck 改为动态探测端点工具清单里可用的配额工具名（两个名字都认）；文档口径统一为「全端点通用配额工具」；各平台页/构建器工具数刷新为 10:45 实测（各端点 +1=通用配额工具，mercado 0→1）

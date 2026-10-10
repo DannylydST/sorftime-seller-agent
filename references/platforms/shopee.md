@@ -1,6 +1,6 @@
 # Shopee Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/shopee` · 17 tools · 纯前缀工具（`shopee_*`），无跨平台工具
+> Endpoint: `https://mcp.sorftime.com/shopee` · 17 tools（16 业务 + 通用配额）· 业务工具纯前缀（`shopee_*`），另有跨端点通用配额工具 `common_usage_query`
 > Site param: `site` — 8 站点：**`VN ID SG TH MY TW PH BR`**（schema 默认值拼写为 `Unknown`）。⭐2026-10-10 实测：**不传 `site` 报 "Please specify the site"；传非法站点（如 `US`）报 "An error occurred"；传合法站点（如 `PH`）有真数据**——`site` 虽在多数工具标 optional，实际**必传合法枚举值**
 
 ## Parameter Traps（调错第一原因，先看这张表）

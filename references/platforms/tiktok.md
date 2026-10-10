@@ -1,6 +1,6 @@
 # TikTok Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/tiktok` · 19 tools
+> Endpoint: `https://mcp.sorftime.com/tiktok` · 19 tools（18 业务 + 通用配额 `common_usage_query`）
 > Site param: `site` — 9 sites: `Unknow US MY PH VN TH ID GB JP`（⚠️ **author 系 2 个工具只有 `Unknow US MY`**）；schema 里 `Unknow` 即原样拼写
 > 2026-10-10 实测：`tiktok_category_search_from_name {"name":"kitchen","site":"US"}` 有真数据
 

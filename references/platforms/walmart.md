@@ -1,7 +1,7 @@
 # Walmart Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/walmart` · 19 tools · 纯前缀工具（`walmart_*`），无跨平台工具
-> 站点：**US 单一市场**——18 个工具无一有 `site` 参数， marketplace 硬编码美国，不需要也不接受站点参数
+> Endpoint: `https://mcp.sorftime.com/walmart` · 19 tools（18 业务 + 通用配额）· 业务工具纯前缀（`walmart_*`）
+> 站点：**US 单一市场**——18 个业务工具无一有 `site` 参数， marketplace 硬编码美国，不需要也不接受站点参数；通用配额工具 `common_usage_query` 跨端点同款
 
 ## Parameter Traps（调错第一原因，先看这张表）
 

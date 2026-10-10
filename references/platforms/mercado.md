@@ -1,11 +1,11 @@
 # Mercado Libre Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/mercado` · **1 tool（common_usage_query）**（2026-10-10 实测：当前账号下该端点未暴露任何工具）
+> Endpoint: `https://mcp.sorftime.com/mercado` · 1 tool（2026-10-10 实测）
 
 ## 当前状态
 
-- 端点已上线并可连通，但工具按账号数据包逐步开通——当前账号未见任何工具，不代表端点不存在。
-- **不要对 mercado 端点发起任何工具调用**：会返回方法不存在类错误，且可能被服务端记录为异常请求。
+- 端点已上线并可连通；当前账号仅见通用配额工具 `common_usage_query`（实测可调，返回 credit_left），业务工具按账号数据包逐步开通。
+- **业务工具调用前先探活**：`common_usage_query` 可直接调；其余业务工具在清单未出现前不要调（方法不存在错误，且可能被服务端记录为异常请求）。
 - 用户问到 Mercado Libre 数据能力时，如实告知「端点已就绪、工具尚未对当前账号开通」，不要虚构工具或参数。
 
 ## 工具开通后怎么复查
