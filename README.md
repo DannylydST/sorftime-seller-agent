@@ -38,7 +38,27 @@
 - **🔧 New ops tooling**: `scripts/probe_endpoints.py` — one-command health check across all 9 endpoints with tool counts and credit balance, `--matrix` regenerates the tool matrix grouped by endpoint. `healthcheck.py` is now endpoint-aware (works on any platform endpoint, detects rotated keys via pseudo-tools, shows remaining credits).
 - **[Full changelog →](CHANGELOG.md)**
 
+## 📦 Install (3 steps)
+
+**1. Put the skill folder into your AI tool's skills directory** (keep the folder intact):
+
+| Tool | Directory |
+|---|---|
+| Claude Code | `~/.claude/skills/` (Windows: `C:\Users\<you>\.claude\skills\`) |
+| ZCode | `~/.zcode/skills/` |
+| OpenClaw | your active workspace's skills directory |
+| Other Agent-Skills-compatible tools | that tool's skills directory |
+
+**2. Get your Account-SK** — sign up / log in at [open.sorftime.com](https://open.sorftime.com) (new accounts get a free trial) → open the **MCP 服务** page → subscribe → copy the Account-SK. One subscription covers all platforms; quota is metered per call.
+
+**3. Tell your AI**: *"Configure Sorftime for me, my key is <paste Account-SK>"* — it installs, verifies, and runs your first query. Manual alternative: `python scripts/install.py --key <KEY>` (Windows: use `python`, not `python3`).
+
+Prefer the official one-click path? The **MCP 服务** page generates a copy-paste instruction for your AI (single- or multi-platform), configuring native MCP servers named `sorftime-<platform>` — this skill then automatically serves as the knowledge layer (no extra key setup needed).
+
+**Skill family**: this repo is the **all-platform master skill** (the official download at `oss.sorftime.com/download/skill/sorftime-mcp.zip`). Platform-specific editions (`sorftime-amazon`, `sorftime-walmart`, `sorftime-shopee`, `sorftime-tiktok`, `sorftime-temu`, `sorftime-ali1688`, `sorftime-mercado`, `sorftime-social`) are built from the same source — same Account-SK works everywhere.
+
 ---
+
 ## 🆕 What's New (August 10, 2026)
 
 - **🎯 v3.6.0 Instruction Priority — Obey the Seller**: Precise instructions execute **directly** (no routing, no methodology cards, no lens imposition) — ask for "product_search yoga mat sorted by sales, data only" and you get exactly that, unfiltered and unembellished. Ambiguous/exploratory requests still get the guided flow. The Closed-Loop workflow is now an **opt-in reference** (runs only via `/goal`/`/loop` or explicit request); daily queries never enter it.

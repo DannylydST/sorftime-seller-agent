@@ -1,4 +1,12 @@
 # Changelog
+## [2026-10-10] — v5.0.0（双通道接入 + 官网一键配置对齐 + 安装体验重做）
+
+- **双通道数据接入（自动分流）**：通道 A=宿主原生 MCP 服务（官网 MCP 页「一键配置」配置的 `sorftime-<平台>` 系 streamableHttp 服务，服务名与平台包同名）——已配置时本技能自动作为知识层（平台文档/参数 traps/选品方法论/批量脚本），不再要求重复配 Key；通道 B=技能内置 bridge（默认，install.py 一键配置）。官方指令原文（单选/多选两种形态）入 `references/onboarding.md`
+- **总技能定位确立**：本技能=全平台总技能+官方分发单元；8 个平台包为同源平台专版，同名对齐官网原生服务名，共存迭代
+- **安装体验重做**：每个平台包新增用户 README（技能目录放置对照表+Windows `python` 提示+三步开始+官网一键配置入口）；仓库 README 新增 Install 段
+- **平台包工具清单改为端点专属视图**：不再携带全端点矩阵（曾导致跨平台工具误调用），顶部声明本包可用范围与跨包获取方式
+- **脚本平台适用性标注**：引擎脚本覆盖 Amazon/Walmart，其余平台 MCP 直调（SKILL.md Scripts 表与 scripts-guide 注明）
+- onboarding 排障表补 Windows `python3`→`python` 条目
 ## [2026-10-10] — v4.0.6（文档勘误）
 
 - social 平台指南分页参数说明补全（`quora_question_search` 支持 `page`）

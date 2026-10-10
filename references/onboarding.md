@@ -42,10 +42,28 @@ Detect（用户消息里已有 Key？或环境已配置？）
 - 已有账号的用户：如实告知「已有账号直接用就行」；归属在注册时确定、事后不可变更
 - 用户已提供 Key 或环境已配置时，一个字的注册话术都不说——直接 install → 验证 → 干活
 
+## 两种接入方式（用户问「怎么配置 / 官网一键配置」先看这里）
+
+**方式 A · 官网一键配置（用户会用官网时最省事）**——官网「MCP 服务」页（open.sorftime.com/mcp）按平台勾选（支持多选，推荐只选实际在做的平台）→ 复制「一键配置」指令发给 AI。官方指令原文（多选形态示例）：
+
+> 亚马逊、虾皮 是我在做的平台，
+> 请帮我配置 Sorftime MCP，按你当前支持的 MCP 能力自动选择方式：
+> 方式一（优先，远程托管版）：如果你支持远程/HTTP MCP，直接添加以下地址：
+> https://mcp.sorftime.com/amazon?key=<Account-SK> （类型：streamableHttp）
+> https://mcp.sorftime.com/shopee?key=<Account-SK>
+> 方式二（本地版）：如果你只支持本地 MCP Server：
+> 1. 从 https://oss.sorftime.com/download/skill/sorftime-mcp.zip 下载技能包
+> 2. 按技能包内说明完成配置，我的 Key 是：<Account-SK>
+> 配置完成后：调用一次接口验证连通性。如遇任何问题，告诉我你是什么 AI 工具，给出对应的替代步骤。
+
+收到这类指令时的执行要点：支持远程/HTTP MCP → 把所选端点配置为宿主原生 MCP 服务，**服务名用 `sorftime-<平台>`**（与官网 JSON 形态一致，也与平台包同名）；只支持本地 → 下载技能包按方式二安装（下载位就是本技能家族的全平台版）。装完必调一次工具验证连通性（如 `get_time`）。用户贴来的 Key 按红线处理（不回显完整值、不落盘到笔记/git）。配置了原生服务后，本技能自动作为知识层工作，不要再引导用户跑 install.py 或重复给 Key（避免双通道重复配置）。
+
+**方式 B · 本技能一键安装（对话内直接配，不经过官网）** → 下方安装流程。
+
 ## 安装流程
 
 ```bash
-# 有 Key（自动模式，输出 JSON）
+# 有 Key（自动模式，输出 JSON）；Windows 命令行把 python3 换成 python
 python3 scripts/install.py --unattended --key <用户提供的Key>
 
 # 交互模式
@@ -62,6 +80,7 @@ python3 scripts/install.py
 |------|------|
 | Key 报 401/NotAuthorization | 引导到「MCP 服务」页重新复制（key 可能被轮换——服务端轮换后 tools/list 会返回伪工具名，已发生过） |
 | test_passed: false | 检查 Key 是否复制完整（常见缺尾字符）→ 确认账号已开通 MCP 服务 → 检查到 open.sorftime.com 的网络 |
+| Windows 提示 `python3` 不是内部或外部命令 | Windows 命令行用 `python scripts/install.py`（python3 仅类 Unix 系统存在） |
 | bridge 启动报 "MCP 2.x is not yet supported" / AttributeError | `python3 scripts/install.py --upgrade` 降级到 MCP 1.x（版本锁见 references/gotchas.md） |
 | "Schema is X days old" | 工具清单随包发布；跑 `python3 scripts/sync_manager.py` 同步，或更新技能包 |
 

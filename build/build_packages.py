@@ -116,7 +116,7 @@ def _sub_or_die(text: str, pattern: str, repl: str, what: str) -> str:
     return new
 
 
-def gen_platform_skill(platform: dict, version: str) -> str:
+def gen_platform_skill(platform: dict, version: str, platform_key: str) -> str:
     text = read_root_skill()
     # frontmatter 定制（全部 fail-fast）
     text = _sub_or_die(text, r"^name: sorftime-seller-agent$", f"name: {platform['pkg']}", "name")
@@ -133,6 +133,8 @@ def gen_platform_skill(platform: dict, version: str) -> str:
         f"| 知识页 | `references/platforms/{platform['doc']}` |\n\n"
         f"- 端点解析：环境变量 `SORFTIME_MCP_URL` > 本包 `config/platform.json`（已预置上面的端点）。"
         f"**同一把 Account-SK 全端点通用，配额共享**。\n"
+        f"- 本包是总技能 `sorftime-seller-agent`（全平台版）的 {platform['display']} 专版，同源构建、同步迭代；"
+        f"官网 MCP 页「一键配置」生成的原生服务名与本包同名（`sorftime-{platform_key}`），已配原生服务时本技能自动作为知识层（见「数据通道」节）。\n"
         f"- 其他平台（Amazon/Walmart/Shopee/TikTok/TEMU/1688/Mercado/社媒）有独立端点与独立技能包；"
         f"本包只管 {platform['display']}。配额查询：`common_usage_query`（全端点通用，无参数返回 credit_left）。\n"
     )
@@ -153,17 +155,83 @@ def get_version_sync_note(tools: int) -> str:
     return "2026-10-10 实测" if tools else "端点已上线，工具随账号数据包开通"
 
 
+README_TEMPLATE = """# Sorftime {display} 卖家助手 · 快速上手
+
+> 本包是总技能 **sorftime-seller-agent** 的 {display} 专版——数据与总技能同源、同步迭代，只接 {display} 端点。同一把 Account-SK 全平台通用、配额共享。
+
+## 三步开始
+
+**第 1 步 · 放进你 AI 助手的技能目录**——把整个 `{pkg}` 文件夹（不要拆散）复制到对应目录，然后重启 / 新开会话：
+
+| 你在用 | 放到这里 |
+|---|---|
+| Claude Code | `~/.claude/skills/`（Windows：`C:\\Users\\你的用户名\\.claude\\skills\\`） |
+| ZCode | `~/.zcode/skills/` |
+| OpenClaw | active workspace 的 skills 目录 |
+| 其他支持 Agent Skills 的工具 | 该工具的技能目录（其文档会写） |
+
+**第 2 步 · 拿到你的 Key（Account-SK）**——注册/登录 https://open.sorftime.com （新账号有免费体验额度）→ 进入「MCP 服务」页 → 购买开通 → 复制 **Account-SK**。一次开通全平台可用，配额按实际调用次数计。
+
+**第 3 步 · 让 AI 配好**——直接对你的 AI 说：
+
+> 帮我配置 Sorftime，我的 Key 是 <粘贴 Account-SK>
+
+AI 会自动完成安装、验证并跑通第一条数据。喜欢手动：`python scripts/install.py --key <你的Key>`（**Windows 命令行用 `python`，不是 `python3`**）。
+
+## 也可以走官网一键配置
+
+官网「MCP 服务」页可按平台勾选（支持多选）生成配置指令。若你的 AI 已按官网指令配置了原生 MCP 服务（服务名与本包同名：`sorftime-{key}`），本技能自动作为知识层（平台工具文档 / 参数坑 / 选品方法论 / 批量脚本）配合使用，**无需再配 Key**。
+
+## 常用
+
+- 环境体检：`python scripts/healthcheck.py`（连接 / 端点 / 配额一次看清）
+- 查剩余配额：直接问 AI「还剩多少配额」
+- **想加做别的平台**：再放一个对应平台包（同一把 Key 直接用），或换总技能 `sorftime-seller-agent`（全平台合一，官网下载地址 oss.sorftime.com/download/skill/sorftime-mcp.zip）
+- 出问题：`references/onboarding.md` 排障表；`references/platforms/{doc}` 本平台全部工具与参数坑
+
+## 当前端点
+
+`{url}` · {tools} 工具（以 `scripts/probe_endpoints.py` 实测为准，服务端持续上新）
+"""
+
+
+def write_platform_readme(dst: Path, platform_key: str) -> None:
+    p = PLATFORMS[platform_key]
+    (dst / "README.md").write_text(
+        README_TEMPLATE.format(display=p["display"], pkg=p["pkg"], key=platform_key,
+                               url=p["url"], tools=p["tools"], doc=p["doc"]),
+        encoding="utf-8")
+
+
+def write_platform_matrix(dst: Path, platform_key: str) -> None:
+    """平台包内工具清单只保留本端点视图，杜绝跨平台工具误导调用。"""
+    import re as _re
+    full = (ROOT / "references" / "tool-matrix.md").read_text(encoding="utf-8")
+    target = PLATFORMS[platform_key]["url"].rstrip("/")
+    parts = _re.split(r"(?=^## )", full, flags=_re.M)
+    kept = [p for p in parts[1:] if target in p.splitlines()[0]]
+    body = "".join(kept) if kept else f"## {PLATFORMS[platform_key]['display']} — {target}\n\n以 `python scripts/probe_endpoints.py --matrix` 再生。\n"
+    out = (
+        "# 工具清单（本包视角）\n\n"
+        f"> **本包只接 {PLATFORMS[platform_key]['display']} 端点（`{target}`）**，下表只含本端点工具。\n"
+        "> 其他平台各有独立端点与技能包（`sorftime-amazon/walmart/shopee/temu/tiktok/ali1688/social`），"
+        "同一把 Account-SK 全端点通用——需要时安装对应平台包或总技能 `sorftime-seller-agent`，不要用本包直接调其他平台的工具。\n\n"
+        + body
+    )
+    (dst / "references" / "tool-matrix.md").write_text(out, encoding="utf-8")
+
+
 def copy_shared_refs(dst: Path, platform_key: str) -> None:
     refs = dst / "references"
     refs.mkdir(parents=True, exist_ok=True)
     (refs / "platforms").mkdir(exist_ok=True)
     shutil.copy2(ROOT / "references" / "platforms" / PLATFORMS[platform_key]["doc"],
                  refs / "platforms" / PLATFORMS[platform_key]["doc"])
-    for name in ["onboarding.md", "gotchas.md", "scripts-guide.md", "content-quality.md",
-                 "tool-matrix.md"]:
+    for name in ["onboarding.md", "gotchas.md", "scripts-guide.md", "content-quality.md"]:
         src = ROOT / "references" / name
         if src.exists():
             shutil.copy2(src, refs / name)
+    write_platform_matrix(dst, platform_key)  # 平台专属视图，不再整包复制全端点矩阵
     for sub in ["methodology-cards", "workflows"]:
         src = ROOT / "references" / sub
         if src.is_dir():
@@ -188,7 +256,8 @@ def build(platform_key: str, version: str) -> dict:
         shutil.rmtree(pkg_dir)
     pkg_dir.mkdir(parents=True)
 
-    (pkg_dir / "SKILL.md").write_text(gen_platform_skill(p, version), encoding="utf-8")
+    (pkg_dir / "SKILL.md").write_text(gen_platform_skill(p, version, platform_key), encoding="utf-8")
+    write_platform_readme(pkg_dir, platform_key)
     copy_shared_refs(pkg_dir, platform_key)
     copy_scripts(pkg_dir)
 

@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体（全平台版）。MCP 已按平台拆分为 8 个独立端点：Amazon / Walmart / Shopee / TikTok Shop / TEMU / 1688 / Mercado Libre / 海外社媒(Reddit·Quora)，本技能走兼容根端点（全平台合一）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、隐赚指数、低价商城类目分析、卖家搜索、listing 内容拆解、配额查询。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家。 / Sorftime Seller Agent (all-platform edition) — cross-border e-commerce data analysis & product sourcing intelligence across 8 marketplace endpoints. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/低价商城/卖家分析/查卖家/配额/余额/quota/credits/选品/找产品/跨境卖家/MCP 接入 sorftime"
-version: 4.0.6
+version: 5.0.0
 user-invocable: true
 metadata:
   openclaw:
@@ -18,6 +18,8 @@ metadata:
 **One skill. Any AI agent. Instant marketplace intelligence.** 用户描述需求，技能自动路由到平台知识与工具链；精确指令直接执行，不重述不包装。
 
 > **渠道合作版** — 注册引导默认推荐渠道链接 https://open.sorftime.com/home?tag=NTIw （经此注册账号归属合作渠道，功能价格与官网一致；引导时如实说明，官网直连可选，由用户自选）。完整话术与开通流程见 `references/onboarding.md`。
+>
+> **总技能（全平台版）**——本技能是跨平台场景的默认入口与官方分发单元（官网下载位 oss.sorftime.com/download/skill/sorftime-mcp.zip）。8 个平台包（`sorftime-amazon/walmart/shopee/tiktok/temu/ali1688/mercado/social`）是本技能的平台专版：同源构建、同步迭代、可共存安装；官网 MCP 页「一键配置」生成的原生服务名与平台包同名。同一把 Account-SK 全端点通用。
 
 ## 🔴 Language Rule
 
@@ -41,6 +43,15 @@ metadata:
 - 工具数=2026-10-10 实测（服务端当日持续上新，以 `scripts/probe_endpoints.py` 实测为准）；各端点均含通用配额工具 `common_usage_query`，mercado 业务工具按账号数据包开通中。
 - social 端点含 Reddit 三件套 + Quora 三件套（Quora 与 amazon 端点双侧同挂）。
 - 配额查询：`common_usage_query`（全端点通用，无参数，返回 `credit_left`）。用户问「还剩多少次/配额/余额」直接调它。
+
+## 🔌 数据通道（两种接入，自动分流）
+
+| 通道 | 适用 | 数据走哪 | Key 放哪 |
+|---|---|---|---|
+| **A · 宿主原生 MCP**（官网一键配置） | 用户已按官网「MCP 服务」页配置 `sorftime-<平台>` 系服务 | 宿主原生 MCP 工具（服务名如 `sorftime-amazon`/`sorftime-shopee`，streamableHttp） | 官网生成配置时已在 URL 里，**无需再配** |
+| **B · 技能内置 bridge**（默认） | 未配置原生服务 | 本技能 bridge（端点解析：环境变量 `SORFTIME_MCP_URL` > `config/platform.json` > 根端点） | `~/.sorftime/env` 或环境变量（install.py 一键写入） |
+
+**分流判定**：检测到宿主已配置 `mcp.sorftime.com` 系原生 MCP 服务（典型名 `sorftime-<platform>`、`sorftime-mcp`）→ 走通道 A：本技能自动作为**知识层**（平台工具文档 / 参数 traps / 选品方法论 / 批量脚本）配合，不再要求用户跑 install.py 或重复提供 Key；未检测到 → 通道 B，走 Onboarding。官方指令原文（含单选/多选形态）与执行细则 → `references/onboarding.md`。
 
 ## 🔴 Red Lines（红线，不随模型能力松绑）
 
@@ -73,14 +84,16 @@ metadata:
 
 ## Scripts（引擎）
 
-| 场景 | 入口 |
-|------|------|
-| 选品发现 / 蓝海（四层风险咨询制，永不隐藏产品） | `scripts/picker.py --mode newbie\|blueocean` |
-| 竞品 / 关键词 / 市场分析 | `scripts/analyst.py` / `scripts/walmart_analyst.py` |
-| 利润测算 | `scripts/calculator.py` |
-| 监控 / 日常报告 | `scripts/monitor.py` |
-| 候选清单独立复核（Go/No-Go 前） | `scripts/verify_candidates.py` + `scripts/review_shortlist.py` |
-| 环境体检 / 端点探活 / 配额 | `scripts/healthcheck.py` / `scripts/probe_endpoints.py` |
+| 场景 | 平台适用 | 入口 |
+|------|------|------|
+| 选品发现 / 蓝海（四层风险咨询制，永不隐藏产品） | Amazon | `scripts/picker.py --mode newbie\|blueocean` |
+| 竞品 / 关键词 / 市场分析 | Amazon / Walmart | `scripts/analyst.py` / `scripts/walmart_analyst.py` |
+| 利润测算 | 全平台（数据经 MCP 工具取） | `scripts/calculator.py` |
+| 监控 / 日常报告 | 全平台 | `scripts/monitor.py` |
+| 候选清单独立复核（Go/No-Go 前） | 全平台 | `scripts/verify_candidates.py` + `scripts/review_shortlist.py` |
+| 环境体检 / 端点探活 / 配额 | 全平台 | `scripts/healthcheck.py` / `scripts/probe_endpoints.py` |
+
+Shopee / TEMU / TikTok / 1688 / 社媒平台的单点查询直接走 MCP 工具（各平台知识页有全工具表），无需脚本。
 
 完整用法、分层输出原则（新手讲术语/专业给结论，模型自行适配不必跑脚本）、闭环选品工作流（`/goal` 显式触发才进）见 `references/scripts-guide.md`。
 
