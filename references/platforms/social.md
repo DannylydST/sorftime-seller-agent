@@ -13,7 +13,7 @@
 | 串联键 | Reddit：`reddit_id`——**必须带 `t3_` 前缀**，从 `reddit_post_search` 结果里取；Quora：`reddit_id`（字段名同 Reddit，值为 Quora 问题 ID，从 `quora_question_search` 结果里取） |
 | 帖子类型 | `reddit_post_search` 的 `post_type`，逗号分隔多值：`1`=Question/Help · `2`=Purchase Advice · `3`=Complaint · `4`=Experience Sharing · `5`=Discussion · `6`=Innovation · `7`=Other |
 | 情感倾向 | `reddit_post_search` 的 `main_sentiment`（整数）：`1`=Positive · `2`=Neutral · `3`=Negative |
-| 分页 | `page`（从 1 起，每页 20 条），`reddit_post_search` 与 `reddit_comment_request` / `quora_answer_request` 有 |
+| 分页 | `page`（从 1 起，每页 20 条）——仅 `reddit_post_search`、`reddit_comment_request`、`quora_question_search`、`quora_answer_request` 有 |
 
 ## Tool Reference
 
