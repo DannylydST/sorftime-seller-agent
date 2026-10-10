@@ -53,7 +53,7 @@
 
 **3. Tell your AI**: *"Configure Sorftime for me, my key is <paste Account-SK>"* — it installs, verifies, and runs your first query. Manual alternative: `python scripts/install.py --key <KEY>` (Windows: use `python`, not `python3`).
 
-Prefer the official one-click path? The **MCP 服务** page generates a copy-paste instruction for your AI (single- or multi-platform), configuring native MCP servers named `sorftime-<platform>` — this skill then automatically serves as the knowledge layer (no extra key setup needed).
+Prefer the official one-click path? The **MCP 服务** page generates a copy-paste instruction for your AI (single- or multi-platform), configuring native MCP servers named `sorftime-<platform>` — this skill then automatically serves as the knowledge layer for data queries (no extra key setup needed; batch scripts still want a one-time local key via install.py).
 
 **Skill family**: this repo is the **all-platform master skill**; the official download slot `oss.sorftime.com/download/skill/sorftime-mcp.zip` is being updated to this build (it currently serves an older v3.x). Platform-specific editions (`sorftime-amazon`, `sorftime-walmart`, `sorftime-shopee`, `sorftime-tiktok`, `sorftime-temu`, `sorftime-ali1688`, `sorftime-mercado`, `sorftime-social`) are built from the same source — same Account-SK works everywhere.
 
