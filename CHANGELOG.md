@@ -1,4 +1,8 @@
 # Changelog
+## [2026-10-10] — v5.0.2（平台包脚本净化 + 措辞收尾）
+
+- 平台包不再随带其他平台的专属脚本（picker/analyst→Amazon、walmart_*→Walmart、discover_tiktok→TikTok），消除跨平台脚本误导；总技能（全平台包）保留全部脚本
+- SKILL.md Onboarding/Environment 两处安装命令补 Windows `python` 提示
 ## [2026-10-10] — v5.0.1（通道 A 范围修正）
 
 - 通道 A（原生 MCP）知识层范围澄清：数据查询走宿主原生 MCP 工具；批量脚本（picker/monitor 等）内部经技能 bridge 取数、仍需本地 Key（届时跑一次 install.py 即可）——SKILL.md/onboarding/平台包 README 三处同步

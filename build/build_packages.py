@@ -247,9 +247,24 @@ def copy_shared_refs(dst: Path, platform_key: str) -> None:
                 shutil.copy2(src, refs / name)
 
 
-def copy_scripts(dst: Path) -> None:
+# 平台专属脚本的适用面：其余平台包不随带（避免错放误导）
+PLATFORM_ONLY_SCRIPTS = {
+    "walmart": {"walmart_picker.py", "walmart_analyst.py"},
+    "amazon": {"picker.py", "analyst.py"},
+    "tiktok": {"discover_tiktok.py"},
+}
+
+
+def copy_scripts(dst: Path, platform_key: str) -> None:
     ignore = shutil.ignore_patterns("__pycache__", "*.pyc", ".pytest_cache")
     shutil.copytree(ROOT / "scripts", dst / "scripts", ignore=ignore, dirs_exist_ok=True)
+    for owner, files in PLATFORM_ONLY_SCRIPTS.items():
+        if owner == platform_key:
+            continue
+        for fname in files:
+            target = dst / "scripts" / fname
+            if target.exists():
+                target.unlink()
 
 
 def build(platform_key: str, version: str) -> dict:
@@ -262,7 +277,7 @@ def build(platform_key: str, version: str) -> dict:
     (pkg_dir / "SKILL.md").write_text(gen_platform_skill(p, version, platform_key), encoding="utf-8")
     write_platform_readme(pkg_dir, platform_key)
     copy_shared_refs(pkg_dir, platform_key)
-    copy_scripts(pkg_dir)
+    copy_scripts(pkg_dir, platform_key)
 
     cfg = pkg_dir / "config"
     cfg.mkdir(exist_ok=True)

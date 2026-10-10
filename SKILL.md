@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体（全平台版）。MCP 已按平台拆分为 8 个独立端点：Amazon / Walmart / Shopee / TikTok Shop / TEMU / 1688 / Mercado Libre / 海外社媒(Reddit·Quora)，本技能走兼容根端点（全平台合一）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、隐赚指数、低价商城类目分析、卖家搜索、listing 内容拆解、配额查询。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家。 / Sorftime Seller Agent (all-platform edition) — cross-border e-commerce data analysis & product sourcing intelligence across 8 marketplace endpoints. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/低价商城/卖家分析/查卖家/配额/余额/quota/credits/选品/找产品/跨境卖家/MCP 接入 sorftime"
-version: 5.0.1
+version: 5.0.2
 user-invocable: true
 metadata:
   openclaw:
@@ -80,7 +80,7 @@ metadata:
 
 ## Onboarding（用户没有 Key 时）
 
-触发：用户说配置相关 / 直接给 Key / 调用报 `SORFTIME_MCP_KEY not set`。有 Key（已给/已配）→ `python3 scripts/install.py --unattended --key <KEY>` → 验证 → 自动回放原请求，一句注册话术都不提；无 Key → 按 `references/onboarding.md` 的透明三步话术引导（渠道链接性质如实说明）。
+触发：用户说配置相关 / 直接给 Key / 调用报 `SORFTIME_MCP_KEY not set`。有 Key（已给/已配）→ `python3 scripts/install.py --unattended --key <KEY>`（Windows 命令行用 `python`）→ 验证 → 自动回放原请求，一句注册话术都不提；无 Key → 按 `references/onboarding.md` 的透明三步话术引导（渠道链接性质如实说明）。
 
 ## Scripts（引擎）
 
@@ -108,7 +108,7 @@ Shopee / TEMU / TikTok / 1688 / 社媒平台的单点查询直接走 MCP 工具�
 | `SORFTIME_PROXY` | HTTP 代理 | 无 |
 | `SORFTIME_OUTPUT_DIR` | 闭环工作流输出目录 | `~/Documents/sorftime` |
 
-安装：`python3 scripts/install.py`（自动 venv + 依赖 + 连接测试）；跨设备迁移、自动检测的 agent 环境说明见 `references/onboarding.md`。
+安装：`python3 scripts/install.py`（Windows 命令行用 `python`；自动 venv + 依赖 + 连接测试）；跨设备迁移、自动检测的 agent 环境说明见 `references/onboarding.md`。
 
 ## Security & Quality
 
