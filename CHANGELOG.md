@@ -1,4 +1,9 @@
 # Changelog
+## [2026-10-10] — v5.0.3（包内文档与脚本过滤对齐）
+
+- 平台包 SKILL.md Scripts 表按平台过滤（包内不含的引擎不再列出，杜绝死命令）；tiktok 包补 discover_tiktok 入口行
+- 平台包 scripts-guide 顶部加包级注（跨平台引擎示例属总技能，本包执行会报文件不存在）
+- 构建器 docstring 与过滤行为对齐
 ## [2026-10-10] — v5.0.2（平台包脚本净化 + 措辞收尾）
 
 - 平台包不再随带其他平台的专属脚本（picker/analyst→Amazon、walmart_*→Walmart、discover_tiktok→TikTok），消除跨平台脚本误导；总技能（全平台包）保留全部脚本

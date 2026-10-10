@@ -10,7 +10,7 @@
   references/platforms/<x>.md 平台知识页 + 共享 references（onboarding/gotchas/
                               scripts-guide/content-quality/tool-matrix/方法论卡/
                               workflows；tiktok 包另带 rankings/categories JSON）
-  scripts/                    全量脚本（端点路由由 config/platform.json 预置）
+  scripts/                    按平台适用面过滤的脚本（专属引擎只进对应平台包；端点路由由 config/platform.json 预置）
   config/platform.json        {"platform","mcp_url","display_name"} ← get_mcp_url() 读这里
   SECURITY.md/LICENSE/CHANGELOG.md/requirements.txt/.env.example/config/channel.json
 
@@ -151,6 +151,29 @@ def gen_platform_skill(platform: dict, version: str, platform_key: str) -> str:
         f"- **通用坑**（MCP SDK 版本锁 / 响应包裹格式 / 中文前缀解析）→ `references/gotchas.md`\n"
     )
     text = replace_section(text, "Platform Knowledge Router", router_body)
+    # Scripts 表按平台过滤（包内不含的引擎不列，防死命令）
+    common_rows = (
+        "| 利润测算 | 全平台（数据经 MCP 工具取） | `scripts/calculator.py` |\n"
+        "| 监控 / 日常报告 | 全平台 | `scripts/monitor.py` |\n"
+        "| 候选清单独立复核（Go/No-Go 前） | 全平台 | `scripts/verify_candidates.py` + `scripts/review_shortlist.py` |\n"
+        "| 环境体检 / 端点探活 / 配额 | 全平台 | `scripts/healthcheck.py` / `scripts/probe_endpoints.py` |\n"
+    )
+    extra_rows = {
+        "amazon": ("| 选品发现 / 蓝海（四层风险咨询制，永不隐藏产品） | Amazon | `scripts/picker.py --mode newbie\|blueocean` |\n"
+                   "| 竞品 / 关键词 / 市场分析 | Amazon | `scripts/analyst.py` |\n"),
+        "walmart": ("| 选品发现 / 蓝海 | Walmart | `scripts/walmart_picker.py --mode blueocean` |\n"
+                    "| 竞品 / 关键词 / 市场分析 | Walmart | `scripts/walmart_analyst.py` |\n"),
+        "tiktok": "| TikTok 类目发现（榜单兜底腿） | TikTok | `scripts/discover_tiktok.py` |\n",
+    }
+    rows = extra_rows.get(platform_key, "") + common_rows
+    note = "" if platform_key in ("amazon", "walmart") else (
+        "\n本包不含 Amazon/Walmart 选品引擎脚本（属总技能与对应平台包）；本平台单点查询直接走 MCP 工具（知识页有全工具表）。")
+    scripts_body = (
+        "## Scripts（引擎）\n\n"
+        "| 场景 | 平台适用 | 入口 |\n|------|------|------|\n" + rows + note + "\n"
+        "完整用法与分层输出原则 → `references/scripts-guide.md`（注意该指南的跨平台引擎示例属总技能）。"
+    )
+    text = replace_section(text, "Scripts（引擎）", scripts_body)
     return text
 
 
@@ -235,6 +258,15 @@ def copy_shared_refs(dst: Path, platform_key: str) -> None:
         if src.exists():
             shutil.copy2(src, refs / name)
     write_platform_matrix(dst, platform_key)  # 平台专属视图，不再整包复制全端点矩阵
+    # scripts-guide 包级横幅：跨平台引擎示例属总技能，防包内死命令
+    sg = refs / "scripts-guide.md"
+    if sg.exists():
+        body = sg.read_text(encoding="utf-8")
+        banner = (f"> **本包注（{PLATFORMS[platform_key]['display']} 专版）**：本指南的引擎示例覆盖多平台，"
+                  f"本包只随带适用于 {PLATFORMS[platform_key]['display']} 的脚本（以 SKILL.md Scripts 表为准）；"
+                  "其他平台的引擎（picker/analyst/walmart_* 等）属总技能 `sorftime-seller-agent` 或对应平台包，"
+                  "在本包内执行会报文件不存在。\n\n")
+        sg.write_text(banner + body, encoding="utf-8")
     for sub in ["methodology-cards", "workflows"]:
         src = ROOT / "references" / sub
         if src.is_dir():
