@@ -63,6 +63,32 @@ def save_key(key: str) -> Path:
     return _ENV_FILE
 
 
+_DEFAULT_MCP_URL = "https://mcp.sorftime.com"
+
+
+def get_mcp_url() -> str:
+    """MCP 端点解析：环境变量 SORFTIME_MCP_URL > 技能包内 config/platform.json > 根端点。
+
+    Sorftime MCP 按平台拆分为 8 个独立端点（amazon/walmart/shopee/temu/tiktok/1688/
+    mercado/social），根端点保留全平台兼容。平台分发包在 config/platform.json 预置
+    各自端点；未预置的包（含本仓根本体 = 全平台版）走根端点，与拆分前行为一致。
+    """
+    env_url = os.getenv("SORFTIME_MCP_URL", "").strip()
+    if env_url:
+        return env_url
+    cfg = _SKILL_ROOT / "config" / "platform.json"
+    try:
+        if cfg.exists():
+            import json
+            data = json.loads(cfg.read_text(encoding="utf-8"))
+            url = str(data.get("mcp_url", "")).strip()
+            if url:
+                return url
+    except Exception:
+        pass
+    return _DEFAULT_MCP_URL
+
+
 def has_key() -> bool:
     """检查环境变量或 .env 中是否有可用的 Key"""
     return bool(get_key())

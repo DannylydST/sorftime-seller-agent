@@ -23,15 +23,22 @@ load_env()
 
 # Tools known to be out of current MCP coverage (for graceful degradation)
 UNSUPPORTED_TOOLS = {
-    "tiktok_product_search",
     "shopee_category_report",
     "temu_category_report",
 }
 
-# Legacy tool aliases with automatic remapping
+# Legacy tool aliases with automatic remapping — only semantically equivalent
+# renames belong here (same args, same result). Retired tools whose behavior has
+# no direct successor are NOT remapped: a clean "tool retired" error beats a
+# confusing wrong-args failure.
 DEPRECATED_TOOL_MAP = {
     "keyword_search": "keyword_search_results",
     "product_keywords": "competitor_product_keywords",
+    # TikTok tool suite renamed server-side (same-args renames only):
+    "tiktok_product_detail": "tiktok_product_request",
+    "tiktok_category_report": "tiktok_category_request",
+    "tiktok_author": "tiktok_author_request",
+    "tiktok_category_name_search": "tiktok_category_search_from_name",
 }
 
 GAPS_LOG = get_cache_dir() / "unsupported-requests.log"

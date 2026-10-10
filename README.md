@@ -9,7 +9,7 @@
   <img src="assets/platform-logos.png" alt="Amazon · Walmart · TikTok Shop · Shopee · TEMU · 1688" width="100%">
 </p>
 
-> **AI-powered product research, competitor analysis, and keyword intelligence for Amazon, Walmart, TikTok Shop, Shopee, TEMU, and 1688 sellers.**
+> **AI-powered product research, competitor analysis, and keyword intelligence for Amazon, Walmart, TikTok Shop, Shopee, TEMU, 1688, Mercado Libre sellers — plus overseas social listening (Reddit/Quora).**
 >
 > Open source. Free trial. Works with any MCP-compatible AI agent — Claude Code, Codex, Cursor, OpenClaw, and more.
 >
@@ -18,7 +18,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)]()
-[![MCP](https://img.shields.io/badge/MCP-97%20tools-orange)]()
+[![MCP](https://img.shields.io/badge/MCP-113%20tools%20%C2%B7%208%20endpoints-orange)]()
 [![Free Trial](https://img.shields.io/badge/Trial-Free-brightgreen)]()
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenClaw-purple)]()
 
@@ -28,6 +28,17 @@
 
 ---
 
+## 🆕 What's New (October 10, 2026) — v4.0.0: Platform-Split Endpoints & Modular Packages
+
+- **🌐 MCP split by platform (8 endpoints)**: Sorftime MCP now ships one endpoint per platform — `mcp.sorftime.com/{amazon|walmart|shopee|tiktok|temu|1688|mercado|social}` — with the root endpoint kept as the all-platform compatible default (113 tools = exact union of the 8 endpoints, verified 2026-10-10). One Account-SK works across all endpoints with a shared quota. Endpoint resolution: `SORFTIME_MCP_URL` env > per-package `config/platform.json` > root.
+- **📦 Platform packages via a single-source builder**: `build/build_packages.py` generates 8 self-contained skill packages (`sorftime-amazon`, `sorftime-walmart`, `sorftime-shopee`, `sorftime-tiktok`, `sorftime-temu`, `sorftime-ali1688`, `sorftime-mercado`, `sorftime-social`) from this repo — each with a platform-tailored hot layer, its own platform knowledge page, and a pre-wired endpoint. Fix once, rebuild all.
+- **🧠 Knowledge restructured for progressive disclosure**: SKILL.md shrinks 58KB → 7KB; onboarding scripts, per-platform tool tables, gotchas, content QA and script guides move into `references/` (8 new `references/platforms/*.md` pages). The model reads what it needs, when it needs it.
+- **🎵 TikTok suite fully renamed server-side (breaking)**: the old 7 tools are retired; 18 new tools ship under the `*_request` / `*_search_from_name` convention — now with product search (30+ filters) plus five new search families: **shops, authors, brands, videos, hashtags**. Same-args renames are auto-remapped; behavior-changed tools fail cleanly instead of mis-calling.
+- **✨ New Amazon capabilities (verified live)**: `usage_query` (quota balance, zero-arg), `category_low_price_search` (Amazon Haul low-price-mall category intelligence), `product_content` (listing bullets/A+ content/buyer-focus teardown), `seller_search` + `seller_search_from_name` (40+ seller filters), and the Quora intel trio. `seller_search`/`quora_*` are live but still backfilling data coverage (verified no-data across 3 valid param sets each — reported honestly).
+- **🔧 New ops tooling**: `scripts/probe_endpoints.py` — one-command health check across all 9 endpoints with tool counts and credit balance, `--matrix` regenerates the tool matrix grouped by endpoint. `healthcheck.py` is now endpoint-aware (works on any platform endpoint, detects rotated keys via pseudo-tools, shows remaining credits).
+- **[Full changelog →](CHANGELOG.md)**
+
+---
 ## 🆕 What's New (August 10, 2026)
 
 - **🎯 v3.6.0 Instruction Priority — Obey the Seller**: Precise instructions execute **directly** (no routing, no methodology cards, no lens imposition) — ask for "product_search yoga mat sorted by sales, data only" and you get exactly that, unfiltered and unembellished. Ambiguous/exploratory requests still get the guided flow. The Closed-Loop workflow is now an **opt-in reference** (runs only via `/goal`/`/loop` or explicit request); daily queries never enter it.

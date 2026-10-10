@@ -28,3 +28,7 @@ __MACOSX/
 
 # Compiled Python
 *.pyc
+
+# Build artifacts (builder source stays; dist + legacy extracts do not)
+build/dist/
+build/legacy-*.md

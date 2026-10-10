@@ -98,7 +98,8 @@ else:
         from mcp.types import TextContent, Tool
 
 load_env()
-SORFTIME_MCP_URL = os.getenv("SORFTIME_MCP_URL", "https://mcp.sorftime.com")
+from utils.env_config import get_mcp_url
+SORFTIME_MCP_URL = get_mcp_url()
 
 # Security: outbound network whitelist. The MCP credential (SORFTIME_MCP_KEY) is
 # ONLY ever sent to the official Sorftime MCP endpoint; no third-party, analytics

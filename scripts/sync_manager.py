@@ -33,7 +33,7 @@ from pathlib import Path
 _SKILL_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_SKILL_ROOT / "scripts"))
 
-from utils.env_config import load_env
+from utils.env_config import load_env, get_mcp_url
 from utils.platform_utils import get_venv_python
 import utils.schema_store as schema_store
 
@@ -45,7 +45,7 @@ MATRIX_PATH = _SKILL_ROOT / "references" / "tool-matrix.md"
 FIXTURES_DIR = _SKILL_ROOT / "tests" / "fixtures"
 BACKUP_DIR = _SKILL_ROOT / ".sync-backups"
 
-SORFTIME_MCP_URL = os.getenv("SORFTIME_MCP_URL", "https://mcp.sorftime.com")
+SORFTIME_MCP_URL = get_mcp_url()
 SORFTIME_MCP_KEY = os.getenv("SORFTIME_MCP_KEY", "")
 
 # ── Tool Category Mapping (for tool-matrix.md grouping) ──

@@ -26,7 +26,7 @@ SKILL_DIR = Path(__file__).resolve().parent.parent
 VENV_DIR = SKILL_DIR / ".venv"
 
 sys.path.insert(0, str(SKILL_DIR / "scripts"))
-from utils.env_config import get_key
+from utils.env_config import get_key, get_mcp_url
 from utils.platform_utils import get_venv_python
 
 VENV_PYTHON = get_venv_python()
@@ -40,6 +40,7 @@ CRITICAL_SCRIPTS = [
     "monitor.py",
     "walmart_picker.py",
     "walmart_analyst.py",
+    "probe_endpoints.py",
 ]
 
 # Human-friendly icons
@@ -125,6 +126,7 @@ def check_key() -> dict:
 
 def check_mcp_connection() -> dict:
     key = get_key()
+    url = get_mcp_url()
     if not key:
         return {
             "name": "Sorftime Connect",
@@ -133,48 +135,50 @@ def check_mcp_connection() -> dict:
             "fix": "Configure the API Key first, then re-run healthcheck",
         }
 
-    python = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
-    env = os.environ.copy()
-    env["SORFTIME_MCP_KEY"] = key
-    test_code = """
-import asyncio, sys, os
-sys.path.insert(0, os.path.abspath('scripts'))
-from sorftime_bridge import call_sorftime
-async def main():
+    # Endpoint-aware: handshake + tools/list works on every endpoint (root and all
+    # platform splits). get_time/usage_query only exist on root+amazon, so tool
+    # calls are conditional on the endpoint's advertised tool list.
     try:
-        r = await call_sorftime("get_time", {})
-        print(r)
-    except Exception as e:
-        print(f"ERROR: {e}")
-asyncio.run(main())
-"""
-    result = subprocess.run(
-        [python, "-c", test_code],
-        capture_output=True,
-        text=True,
-        env=env,
-        cwd=str(SKILL_DIR),
-    )
-    stdout = result.stdout.strip()
-    # Server-side failures arrive as normal text (no exception, returncode 0):
-    # e.g. {"content":[{"text":"Authentication required"}],"isError":true} or
-    # {"error":true,"status":"server_error",...}. Treat those as failures too —
-    # a stale/rotated key must not report "Connect OK" (2026-09-07 incident).
-    failure_markers = ("ERROR", "isError", "Authentication required", "NotAuthorization", '"error": true')
-    if result.returncode != 0 or any(m in stdout for m in failure_markers):
-        err = stdout or result.stderr
+        from probe_endpoints import probe_endpoint, call_tool
+        ok, tools, err = probe_endpoint(url, key)
+        names = [t.get("name", "") for t in tools]
+        pseudo = [t for t in names if "notauthorization" in t.lower()]
+        # Server-side auth failures may also arrive as pseudo tools instead of
+        # errors — a stale/rotated key must not report "Connect OK".
+        if not ok:
+            return {
+                "name": "Sorftime Connect",
+                "status": "error",
+                "detail": f"Connection failed ({url}): {str(err)[:100]}",
+                "fix": "1. Check if the Key was copied completely\n   2. Confirm your account has MCP service enabled\n   3. Check network access to mcp.sorftime.com",
+            }
+        if pseudo:
+            return {
+                "name": "Sorftime Connect",
+                "status": "error",
+                "detail": f"Key rejected (pseudo tools returned: {pseudo[:1]})",
+                "fix": "Key likely rotated — re-copy the Account-SK from open.sorftime.com/mcp",
+            }
+        detail = f"OK — {url} · {len(tools)} tools"
+        if "usage_query" in names:
+            q = call_tool(url, key, "usage_query", {})
+            if isinstance(q, dict):
+                credit = q.get("data", {}).get("credit_left")
+                if credit is not None:
+                    detail += f" · credit_left={credit}"
+        return {
+            "name": "Sorftime Connect",
+            "status": "ok",
+            "detail": detail,
+            "fix": None,
+        }
+    except Exception as e:  # noqa: BLE001
         return {
             "name": "Sorftime Connect",
             "status": "error",
-            "detail": f"Connection failed: {err[:100]}",
-            "fix": "1. Check if the Key was copied completely (no missing characters)\n   2. Confirm your account has MCP service enabled (check MCP page after login)\n   3. Check network access to open.sorftime.com\n   4. New accounts get free trial experience — if exhausted, top up in RMB",
+            "detail": f"Connection test error: {type(e).__name__}: {e}",
+            "fix": "Check network access to mcp.sorftime.com and re-run",
         }
-    return {
-        "name": "Sorftime Connect",
-        "status": "ok",
-        "detail": f"OK ({stdout[:50]})",
-        "fix": None,
-    }
 
 
 def check_scripts() -> dict:

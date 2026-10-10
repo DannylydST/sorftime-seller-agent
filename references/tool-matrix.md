@@ -1,163 +1,292 @@
-# Sorftime MCP Tool Matrix
+# Sorftime MCP Tool Matrix（按平台端点分组）
 
-> Maintained by the publisher. Tool list synced with the Sorftime MCP server.
-> Sync time: 2026-09-07 17:36:41
-> Total tools: 97
+> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-10-10 09:57:41
 
-## Legend
+## root(全平台兼容) — https://mcp.sorftime.com
 
-| Marker | Meaning |
-|------|------|
-| ✅ | Core tool (Schema registered in bridge) |
-| ⚠️ | Supported tool (accessible via `sorftime_raw_call` passthrough) |
+工具数：113
 
-## Amazon Product (13)
+| 工具 | 必填参数 |
+|---|---|
+| `shopee_get_favorite_keyword` | — |
+| `ali1688_category_tree` | — |
+| `usage_query` | — |
+| `tiktok_shop_search` | — |
+| `potential_product` | — |
+| `tiktok_product_trend` | product_id |
+| `ali1688_product_search` | — |
+| `tiktok_video_request` | video_id |
+| `shopee_change_favorite_keyword` | keyword, to_dict |
+| `shopee_product_request` | product_id |
+| `shopee_favorite_keyword` | keyword |
+| `tiktok_product_search` | — |
+| `product_variations` | asin |
+| `walmart_keyword_search_results` | keyword |
+| `quora_question_request` | reddit_id |
+| `shopee_product_trend` | product_id |
+| `shopee_del_favorite_keyword` | keyword |
+| `tiktok_category_request` | node_id |
+| `shopee_shop_request` | shop_id |
+| `shopee_product_search` | — |
+| `ali1688_product_request` | product_id |
+| `category_tree` | — |
+| `temu_category_tree` | — |
+| `category_name_search` | category_name |
+| `category_search_from_top_node` | top_node |
+| `tiktok_category_tree` | — |
+| `walmart_category_search_from_name` | name |
+| `walmart_category_report_by_node_id` | node_id |
+| `tiktok_category_search` | — |
+| `walmart_category_tree` | — |
+| `category_trend` | node_id |
+| `product_search_from_name` | name |
+| `get_time` | — |
+| `tiktok_category_search_from_name` | name |
+| `product_content` | asin |
+| `ali1688_similar_product` | search_name |
+| `keyword_extends` | keyword |
+| `temu_category_request` | node_id |
+| `shopee_category_request` | node_id |
+| `temu_product_request` | product_id |
+| `reddit_comment_request` | reddit_id |
+| `walmart_product_detail_by_product_id` | product_id |
+| `temu_product_search` | — |
+| `favorite_keyword` | keyword |
+| `shopee_category_tree` | — |
+| `keyword_list` | — |
+| `reddit_post_request` | reddit_id |
+| `walmart_product_search_from_name` | name |
+| `reddit_post_search` | search_name |
+| `product_traffic_terms` | asin |
+| `tiktok_product_search_from_name` | — |
+| `product_ranking_trend_by_keyword` | asin, keyword |
+| `quora_question_search` | search_name |
+| `walmart_product_trend_by_product_id` | product_id |
+| `change_favorite_keyword` | keyword, to_dict |
+| `product_trend` | asin |
+| `get_favorite_keyword_dict` | — |
+| `similar_product_feature` | product_name |
+| `product_search` | — |
+| `tiktok_category_trend` | node_id |
+| `category_products` | node_id |
+| `walmart_favorite_keyword` | keyword |
+| `walmart_keyword_detail` | keyword |
+| `temu_category_search` | — |
+| `walmart_keyword_list` | rank_min, rank_max |
+| `category_low_price_search` | — |
+| `shopee_category_search_from_name` | name |
+| `tiktok_brand_search_from_name` | — |
+| `keyword_trend` | keyword |
+| `walmart_get_favorite_keyword` | — |
+| `keyword_search_results` | keyword |
+| `product_search_from_history` | — |
+| `walmart_keyword_search_from_name` | name |
+| `temu_category_search_from_name` | name |
+| `temu_shop_request` | shop_id |
+| `walmart_change_favorite_keyword` | keyword, to_dict |
+| `product_reviews` | asin |
+| `walmart_product_traffic_terms` | product_id |
+| `product_customers_say` | asin |
+| `walmart_get_favorite_keyword_dict` | — |
+| `shopee_keyword_relation_results` | — |
+| `walmart_product_variation_sales_by_product_id` | product_id |
+| `tiktok_author_search_from_name` | — |
+| `get_favorite_keyword` | — |
+| `tiktok_video_search_from_name` | — |
+| `ali1688_product_search_from_image` | image_url |
+| `temu_product_search_from_name` | name |
+| `walmart_keyword_extends` | keyword |
+| `product_detail` | asin |
+| `category_keywords` | node_id |
+| `quora_answer_request` | reddit_id |
+| `category_report` | node_id |
+| `temu_product_trend` | product_id |
+| `keyword_list_from_history` | date |
+| `shopee_keyword_search` | — |
+| `tiktok_video_tag_search` | tag_name |
+| `tiktok_shop_search_from_name` | — |
+| `tiktok_product_request` | product_id |
+| `ali1688_product_variations` | product_id |
+| `product_report` | asin |
+| `shopee_product_search_from_name` | name |
+| `category_search_from_product_name` | product_name |
+| `del_favorite_keyword` | keyword |
+| `seller_search` | — |
+| `walmart_del_favorite_keyword` | keyword |
+| `shopee_category_trend` | — |
+| `tiktok_author_request` | author_id |
+| `seller_search_from_name` | — |
+| `competitor_product_keywords` | asin |
+| `keyword_detail` | keyword |
+| `search_categories_broadly` | — |
+| `tiktok_shop_request` | shop_id |
+| `shopee_get_favorite_keyword_dict` | — |
 
-| 工具名 | 状态 | 说明 |
-|--------|------|------|
-| `competitor_product_keywords` | ✅ Registered | Get the exposure positions of a product's competitors under  |
-| `product_customers_say` | ⚠️ raw | Query the Amazon "Customers Say" content summarized from the |
-| `product_detail` | ✅ Registered | Query the detailed data of a product on the Amazon platform. |
-| `product_ranking_trend_by_keyword` | ⚠️ raw | Exposure ranking trend of a product under a given keyword on |
-| `product_report` | ⚠️ raw | Analysis report for a single product on the Amazon platform. |
-| `product_reviews` | ✅ Registered | Query user reviews of a product on the Amazon platform in th |
-| `product_search` | ✅ Registered | Search the real-time product data on the Amazon platform, so |
-| `product_search_from_history` | ⚠️ raw | Search historical product data on the Amazon platform to vie |
-| `product_search_from_name` | ⚠️ raw | earch products on the Amazon platform by name, returning up  |
-| `product_traffic_terms` | ✅ Registered | Reverse-lookup keywords for a product on the Amazon platform |
-| `product_trend` | ✅ Registered | Query the historical trend of a product on the Amazon platfo |
-| `product_variations` | ✅ Registered | Query the variation (child ASIN) details of a product on the |
-| `similar_product_feature` | ✅ Registered | Query the product features of an Amazon sub-category. |
+## amazon — https://mcp.sorftime.com/amazon
 
-## Keyword (11)
+工具数：43
 
-| 工具名 | 状态 | 说明 |
-|--------|------|------|
-| `change_favorite_keyword` | ⚠️ raw | Move a favorited keyword in my Amazon platform keyword libra |
-| `del_favorite_keyword` | ⚠️ raw | Delete a specified favorited keyword from my Amazon platform |
-| `favorite_keyword` | ⚠️ raw | Add a keyword favorite into my Amazon platform keyword libra |
-| `get_favorite_keyword` | ⚠️ raw | Query the keywords in my Amazon platform keyword library. |
-| `get_favorite_keyword_dict` | ⚠️ raw | Query the favorite folder list of my Amazon platform keyword |
-| `keyword_detail` | ✅ Registered | Query the detail of a trending keyword on the Amazon platfor |
-| `keyword_extends` | ✅ Registered | Query the extended keywords of a trending keyword on the Ama |
-| `keyword_list` | ⚠️ raw | Query the real-time trending keyword list on the Amazon plat |
-| `keyword_list_from_history` | ⚠️ raw | Query the historical-date trending keyword list on the Amazo |
-| `keyword_search_results` | ✅ Registered | Query the organic-position product list of a trending keywor |
-| `keyword_trend` | ✅ Registered | Query the historical trend of a trending keyword on the Amaz |
+| 工具 | 必填参数 |
+|---|---|
+| `product_traffic_terms` | asin |
+| `category_tree` | — |
+| `category_trend` | node_id |
+| `product_content` | asin |
+| `product_customers_say` | asin |
+| `search_categories_broadly` | — |
+| `quora_question_request` | reddit_id |
+| `del_favorite_keyword` | keyword |
+| `product_trend` | asin |
+| `similar_product_feature` | product_name |
+| `keyword_trend` | keyword |
+| `product_report` | asin |
+| `product_ranking_trend_by_keyword` | asin, keyword |
+| `keyword_search_results` | keyword |
+| `quora_question_search` | search_name |
+| `usage_query` | — |
+| `product_variations` | asin |
+| `category_search_from_top_node` | top_node |
+| `category_keywords` | node_id |
+| `keyword_detail` | keyword |
+| `change_favorite_keyword` | keyword, to_dict |
+| `product_detail` | asin |
+| `seller_search_from_name` | — |
+| `get_favorite_keyword` | — |
+| `seller_search` | — |
+| `competitor_product_keywords` | asin |
+| `category_report` | node_id |
+| `category_name_search` | category_name |
+| `product_search_from_history` | — |
+| `keyword_list_from_history` | date |
+| `product_search` | — |
+| `category_search_from_product_name` | product_name |
+| `category_products` | node_id |
+| `category_low_price_search` | — |
+| `get_favorite_keyword_dict` | — |
+| `keyword_list` | — |
+| `product_reviews` | asin |
+| `get_time` | — |
+| `keyword_extends` | keyword |
+| `potential_product` | — |
+| `product_search_from_name` | name |
+| `favorite_keyword` | keyword |
+| `quora_answer_request` | reddit_id |
 
-## Category (9)
+## walmart — https://mcp.sorftime.com/walmart
 
-| 工具名 | 状态 | 说明 |
-|--------|------|------|
-| `category_keywords` | ⚠️ raw | Query the core keywords of an Amazon sub-category market. |
-| `category_name_search` | ✅ Registered | Query Amazon sub-category markets by name, returning the Nod |
-| `category_report` | ✅ Registered | Query the real-time top-100-by-sales product data report for |
-| `category_report_from_history` | ⚠️ raw | Query the historical-period top-100-by-sales product data re |
-| `category_search_from_product_name` | ⚠️ raw | Search Amazon sub-category markets related to a given produc |
-| `category_search_from_top_node` | ✅ Registered | Search Amazon sub-category markets under a given top-level c |
-| `category_tree` | ⚠️ raw | Query the product category structure on the Amazon platform. |
-| `category_trend` | ✅ Registered | Query Amazon sub-category market trend data, based on the su |
-| `search_categories_broadly` | ⚠️ raw | Broadly search sub-category markets that match multi-dimensi |
+工具数：18
 
-## TikTok Shop (10)
+| 工具 | 必填参数 |
+|---|---|
+| `walmart_product_search_from_name` | name |
+| `walmart_get_favorite_keyword_dict` | — |
+| `walmart_keyword_list` | rank_min, rank_max |
+| `walmart_category_tree` | — |
+| `walmart_product_variation_sales_by_product_id` | product_id |
+| `walmart_keyword_extends` | keyword |
+| `walmart_get_favorite_keyword` | — |
+| `walmart_del_favorite_keyword` | keyword |
+| `walmart_keyword_detail` | keyword |
+| `walmart_favorite_keyword` | keyword |
+| `walmart_category_search_from_name` | name |
+| `walmart_category_report_by_node_id` | node_id |
+| `walmart_keyword_search_results` | keyword |
+| `walmart_keyword_search_from_name` | name |
+| `walmart_product_trend_by_product_id` | product_id |
+| `walmart_change_favorite_keyword` | keyword, to_dict |
+| `walmart_product_traffic_terms` | product_id |
+| `walmart_product_detail_by_product_id` | product_id |
 
-| 工具名 | 状态 | 说明 |
-|--------|------|------|
-| `tiktok_author` | ⚠️ raw | Query TikTok platform author details by author ID, US site o |
-| `tiktok_category_report` | ✅ Registered | Query the category data report for a given category on the T |
-| `tiktok_category_search_from_name` | ⚠️ raw | Search related categories on the TikTok platform by name. |
-| `tiktok_category_tree` | ⚠️ raw | Query the product category structure on the Tiktok platform. |
-| `tiktok_product_detail` | ✅ Registered | Query product details on the TikTok platform. |
-| `tiktok_product_trend` | ⚠️ raw | Query TikTok platform product trend, returning multiple dime |
-| `tiktok_product_video` | ⚠️ raw | Query promo videos of a TikTok product. |
-| `tiktok_product_video_author` | ⚠️ raw | Query promo authors of a product on the TikTok platform. |
-| `tiktok_similar_product` | ⚠️ raw | Query similar products of a product on the TikTok platform;  |
-| `tiktok_similar_product_detail` | ⚠️ raw | Search related products on TikTok Shop by name, returning up |
+## shopee — https://mcp.sorftime.com/shopee
 
-## Walmart (18)
+工具数：16
 
-| 工具名 | 状态 | 说明 |
-|--------|------|------|
-| `walmart_category_report_by_node_id` | ⚠️ raw | Query the real-time Top 100 best-selling product data report |
-| `walmart_category_search_from_name` | ⚠️ raw | Search related category markets on Walmart by name. Used to  |
-| `walmart_category_tree` | ⚠️ raw | Query the product category structure on the Walmart platform |
-| `walmart_change_favorite_keyword` | ⚠️ raw | Move a favorited keyword in my Walmart platform keyword libr |
-| `walmart_del_favorite_keyword` | ⚠️ raw | Delete a specific favorited keyword from my Walmart platform |
-| `walmart_favorite_keyword` | ⚠️ raw | Add a keyword favorite in my Walmart platform keyword librar |
-| `walmart_get_favorite_keyword` | ⚠️ raw | Query the keywords in my Walmart platform keyword library. |
-| `walmart_get_favorite_keyword_dict` | ⚠️ raw | Query the collection list of my Walmart platform keyword lib |
-| `walmart_keyword_detail` | ⚠️ raw | Query the details of a hot-search keyword on the Walmart e-c |
-| `walmart_keyword_extends` | ⚠️ raw | Query the extension keywords of a hot-search keyword on the  |
-| `walmart_keyword_list` | ⚠️ raw | Query the real-time hot-search keyword list on the Walmart e |
-| `walmart_keyword_search_from_name` | ⚠️ raw | Query a hot-search keyword on the Walmart e-commerce platfor |
-| `walmart_keyword_search_results` | ⚠️ raw | Query the natural-position product list in the last 15 days' |
-| `walmart_product_detail_by_product_id` | ⚠️ raw | Query the details of a product on the Walmart e-commerce pla |
-| `walmart_product_search_from_name` | ⚠️ raw | Search Walmart products by name, returning up to 20 products |
-| `walmart_product_traffic_terms` | ⚠️ raw | Reverse-lookup keywords for a product on the Walmart e-comme |
-| `walmart_product_trend_by_product_id` | ⚠️ raw | Query the historical trend data of a product on the Walmart  |
-| `walmart_product_variation_sales_by_product_id` | ⚠️ raw | Query the variation (child item) sales breakdown of a produc |
+| 工具 | 必填参数 |
+|---|---|
+| `shopee_get_favorite_keyword` | — |
+| `shopee_change_favorite_keyword` | keyword, to_dict |
+| `shopee_product_request` | product_id |
+| `shopee_favorite_keyword` | keyword |
+| `shopee_product_trend` | product_id |
+| `shopee_del_favorite_keyword` | keyword |
+| `shopee_shop_request` | shop_id |
+| `shopee_product_search` | — |
+| `shopee_category_request` | node_id |
+| `shopee_category_tree` | — |
+| `shopee_category_search_from_name` | name |
+| `shopee_keyword_relation_results` | — |
+| `shopee_keyword_search` | — |
+| `shopee_product_search_from_name` | name |
+| `shopee_category_trend` | — |
+| `shopee_get_favorite_keyword_dict` | — |
 
-## Shopee (16)
+## tiktok — https://mcp.sorftime.com/tiktok
 
-| 工具名 | 状态 | 说明 |
-|--------|------|------|
-| `shopee_category_request` | ⚠️ raw | Query Best Seller products under a Shopee category. Optional |
-| `shopee_category_search_from_name` | ⚠️ raw | Search related category markets on Shopee by name. Used to o |
-| `shopee_category_tree` | ⚠️ raw | Query the product category structure on the Shopee platform. |
-| `shopee_category_trend` | ⚠️ raw | Used to query the historical trend of a Shopee category mark |
-| `shopee_change_favorite_keyword` | ⚠️ raw | Move a favorited keyword on the Shopee platform to a specifi |
-| `shopee_del_favorite_keyword` | ⚠️ raw | Delete a specified keyword from my Shopee keyword favorites. |
-| `shopee_favorite_keyword` | ⚠️ raw | Add a keyword to my Shopee keyword favorites. If the specifi |
-| `shopee_get_favorite_keyword` | ⚠️ raw | Query the favorited keywords in my Shopee keyword favorites. |
-| `shopee_get_favorite_keyword_dict` | ⚠️ raw | Query the list of dicts (folders) in my Shopee keyword favor |
-| `shopee_keyword_relation_results` | ⚠️ raw | Search Shopee related products by keyword, returning up to 2 |
-| `shopee_keyword_search` | ⚠️ raw | The list of trending keywords on Shopee, sorted by monthly s |
-| `shopee_product_request` | ⚠️ raw | Query detailed information of a Shopee product. |
-| `shopee_product_search` | ⚠️ raw | Search product data on the Shopee platform with multi-dimens |
-| `shopee_product_search_from_name` | ⚠️ raw | Search related products on Shopee by name, returning up to 2 |
-| `shopee_product_trend` | ⚠️ raw | Supports historical trends across five dimensions: star rati |
-| `shopee_shop_request` | ⚠️ raw | Query Shopee seller (shop) details. Returns basic informatio |
+工具数：18
 
-## TEMU (9)
+| 工具 | 必填参数 |
+|---|---|
+| `tiktok_shop_request` | shop_id |
+| `tiktok_shop_search_from_name` | — |
+| `tiktok_video_tag_search` | tag_name |
+| `tiktok_category_search` | — |
+| `tiktok_category_tree` | — |
+| `tiktok_product_search_from_name` | — |
+| `tiktok_category_request` | node_id |
+| `tiktok_video_search_from_name` | — |
+| `tiktok_category_search_from_name` | name |
+| `tiktok_category_trend` | node_id |
+| `tiktok_shop_search` | — |
+| `tiktok_product_search` | — |
+| `tiktok_product_trend` | product_id |
+| `tiktok_author_request` | author_id |
+| `tiktok_brand_search_from_name` | — |
+| `tiktok_video_request` | video_id |
+| `tiktok_product_request` | product_id |
+| `tiktok_author_search_from_name` | — |
 
-| 工具名 | 状态 | 说明 |
-|--------|------|------|
-| `temu_category_request` | ⚠️ raw | Query Best Seller products under a Temu category market, whi |
-| `temu_category_search` | ⚠️ raw | Search category data on the Temu e-commerce platform with mu |
-| `temu_category_search_from_name` | ⚠️ raw | Search Temu platform category markets by name. |
-| `temu_category_tree` | ⚠️ raw | Query the product category structure on the Temu platform. |
-| `temu_product_request` | ⚠️ raw | Query Temu product details. |
-| `temu_product_search` | ⚠️ raw | Search product data on the Temu e-commerce platform with mul |
-| `temu_product_search_from_name` | ⚠️ raw | Search Temu products by name, returning 20 products per call |
-| `temu_product_trend` | ⚠️ raw | Query product historical trend data, returning monthly trend |
-| `temu_shop_request` | ⚠️ raw | Query Temu seller (shop) details. |
+## temu — https://mcp.sorftime.com/temu
 
-## Other (11)
+工具数：9
 
-| 工具名 | 状态 | 说明 |
-|--------|------|------|
-| `ali1688_category_tree` | ⚠️ raw | Query the product category structure on the 1688 platform. |
-| `ali1688_product_request` | ⚠️ raw | Query the product details on the 1688 platform. |
-| `ali1688_product_search` | ⚠️ raw | Search product information on the 1688 platform across multi |
-| `ali1688_product_search_from_image` | ⚠️ raw | Search products on the 1688 platform by image. |
-| `ali1688_product_variations` | ⚠️ raw | Find the variation (SKU) data of a product on the 1688 platf |
-| `ali1688_similar_product` | ✅ Registered | Find sourcing/wholesale suppliers for a product on the 1688  |
-| `get_time` | ✅ Registered | Get the current server time. |
-| `potential_product` | ✅ Registered | (隐赚指数选品) Search for potential products on the Amazon platfor |
-| `reddit_comment_request` | ⚠️ raw | Query Best Seller products under a Reddit category market, w |
-| `reddit_post_request` | ⚠️ raw | Query the complete main post content of a specified Reddit p |
-| `reddit_post_search` | ⚠️ raw | Search social media posts related to a specified product or  |
+| 工具 | 必填参数 |
+|---|---|
+| `temu_category_tree` | — |
+| `temu_category_request` | node_id |
+| `temu_product_request` | product_id |
+| `temu_product_search` | — |
+| `temu_category_search` | — |
+| `temu_category_search_from_name` | name |
+| `temu_shop_request` | shop_id |
+| `temu_product_search_from_name` | name |
+| `temu_product_trend` | product_id |
 
-## Universal Call Method
+## 1688 — https://mcp.sorftime.com/1688
 
-To call ⚠️ raw tools, use `sorftime_raw_call`:
+工具数：6
 
-```json
-{
-  "tool_name": "product_trend",
-  "arguments": {
-    "amz_site": "US",
-    "asin": "B0DPQ772T9"
-  }
-}
-```
+| 工具 | 必填参数 |
+|---|---|
+| `ali1688_category_tree` | — |
+| `ali1688_product_search` | — |
+| `ali1688_product_request` | product_id |
+| `ali1688_similar_product` | search_name |
+| `ali1688_product_search_from_image` | image_url |
+| `ali1688_product_variations` | product_id |
+
+## mercado — https://mcp.sorftime.com/mercado
+
+工具数：0
+
+| 工具 | 必填参数 |
+|---|---|
+
+## social — https://mcp.sorftime.com/social
+
+工具数：3
+
+| 工具 | 必填参数 |
+|---|---|
+| `reddit_comment_request` | reddit_id |
+| `reddit_post_search` | search_name |
+| `reddit_post_request` | reddit_id |

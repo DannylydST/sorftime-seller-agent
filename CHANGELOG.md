@@ -1,4 +1,14 @@
 # Changelog
+## [2026-10-10] — v4.0.0（MCP 按平台拆分适配 + 架构重构）
+
+- **平台拆分适配**：Sorftime MCP 拆分为 8 平台端点（amazon/walmart/shopee/tiktok/temu/1688/mercado/social），根端点保留全平台兼容（113 工具=8 端点并集，2026-10-10 实测）。端点解析链：`SORFTIME_MCP_URL` 环境变量 > 包内 `config/platform.json` > 根端点（`utils/env_config.get_mcp_url()`，bridge/sync_manager 统一走它）
+- **平台分发包**：新增构建器 `build/build_packages.py`——从本仓单一事实源产出 8 个自包含平台包（sorftime-amazon/walmart/shopee/tiktok/temu/ali1688/mercado/social，各含平台定制热层+平台知识页+全量脚本+端点预置），清单 `build/dist/manifest-<ver>.json`；同一把 Account-SK 全端点通用，key 仍存用户级 `~/.sorftime/env`
+- **热层重构（渐进披露）**：SKILL.md 58KB→7KB——onboarding 话术/Walmart 工具表/TikTok 指南/内容质检/脚本指南全量下沉 `references/`（onboarding/gotchas/scripts-guide/content-quality + platforms/ 8 页）；方法论卡与闭环工作流原位保留
+- **TikTok 工具族服务端改名适配**：旧 7 工具全部下线，新 18 工具上线（`*_request`/`*_search_from_name` 规范）；同参等价改名进 mcp_client 自动映射，行为不等价的不映射（干净报错优于错参失败）；`tiktok_product_search` 已存在（30+ 筛选），新增店铺/达人/品牌/视频/话题标签五大搜索族
+- **新工具接入**（文档+实测标注）：`usage_query` 配额查询（无参，credit_left）/ `category_low_price_search` 低价商城类目分析 / `product_content` Listing+A+ 内容拆解 / `seller_search(_from_name)` 卖家搜索 / `quora_*` 三件套（挂 amazon 端点）——其中 seller/quora 实测数据铺量中（三验无数据，如实标注）
+- **参数口径跟新**：`product_search` 搜索参数 `search_name`→`keyword`；`keyword_detail` 站点参数统一为 `amz_site`（其余 keyword 族仍为 `keyword_support_site`）；`category_report_from_history` 已从端点下线
+- **新脚本**：`scripts/probe_endpoints.py`（9 端点探活+工具清单+配额；`--matrix` 再生 tool-matrix.md 按端点分组）；healthcheck 升级为端点感知（任意端点握手+伪工具 key 失效检测+credit_left 内嵌）；tool-matrix.md 按端点再生（113 工具带必填参数）
+- **Amazon 参数陷阱表按活 schema 重写**；mercado 端点已上线（0 工具，按账号数据包开通）与 social 端点（Reddit 三件套）入档
 ## [2026-09-20] — v3.7.0-channel.1（安全模型显性化）
 
 - **出站域名白名单**：bridge 新增 `ALLOWED_OUTBOUND_HOSTS=("mcp.sorftime.com",)` 与 `_assert_official_url()`——凭证仅发往官方 MCP 端点，任何非白名单主机立即抛错（代码级强制）
