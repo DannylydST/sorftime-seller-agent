@@ -100,18 +100,13 @@ def probe_endpoint(url, key):
 def call_tool(url, key, name, args):
     import urllib.request
     opener = _http()
-    session = {"sid": None}
 
     def rpc(payload):
         headers = {"Content-Type": "application/json",
                    "Accept": "application/json, text/event-stream"}
-        if session["sid"]:
-            headers["Mcp-Session-Id"] = session["sid"]
-        req = urllib.request.Request(url + "?key=" + key, data=json.dumps(payload).encode(),
-                                     headers=headers, method="POST")
-        resp = opener.open(req, timeout=60)
-        if not session["sid"]:
-            session["sid"] = resp.headers.get("mcp-session-id")
+        resp = opener.open(urllib.request.Request(
+            url + "?key=" + key, data=json.dumps(payload).encode(),
+            headers=headers, method="POST"), timeout=60)
         raw = resp.read().decode("utf-8", errors="replace")
         datas = [ln[5:].strip() for ln in raw.splitlines() if ln.startswith("data:")]
         text = "\n".join(datas) or raw
@@ -124,24 +119,30 @@ def call_tool(url, key, name, args):
                     return o
             except Exception:
                 pass
-        return json.loads(text)
+        try:
+            return json.loads(text)
+        except Exception:
+            return None  # 非 JSON 文本（服务端错误页等）——由调用方按 None 处理
 
-    rpc({"jsonrpc": "2.0", "id": 1, "method": "initialize",
-         "params": {"protocolVersion": "2025-03-26", "capabilities": {},
-                    "clientInfo": {"name": "sorftime-probe", "version": "4.0"}}})
-    rpc({"jsonrpc": "2.0", "method": "notifications/initialized", "params": {}})
-    res = rpc({"jsonrpc": "2.0", "id": 9, "method": "tools/call",
-               "params": {"name": name, "arguments": args}})
-    if not res or "result" not in res:
-        return None
-    contents = res["result"].get("content", [])
-    if not contents:
-        return None
-    text = contents[0].get("text", "")
     try:
-        return json.loads(text)
+        rpc({"jsonrpc": "2.0", "id": 1, "method": "initialize",
+             "params": {"protocolVersion": "2025-03-26", "capabilities": {},
+                        "clientInfo": {"name": "sorftime-probe", "version": "4.0"}}})
+        rpc({"jsonrpc": "2.0", "method": "notifications/initialized", "params": {}})
+        res = rpc({"jsonrpc": "2.0", "id": 9, "method": "tools/call",
+                   "params": {"name": name, "arguments": args}})
+        if not res or "result" not in res:
+            return None
+        contents = res["result"].get("content", [])
+        if not contents:
+            return None
+        text = contents[0].get("text", "")
+        try:
+            return json.loads(text)
+        except Exception:
+            return text
     except Exception:
-        return text
+        return None  # 配额查询失败不影响探活主流程
 
 
 def main():

@@ -1,4 +1,9 @@
 # Changelog
+## [2026-10-10] — v4.0.1（跨厂二审安全修复）
+
+- **端点解析安全镇流（单点收口）**：`get_mcp_url()` 对任何来源（环境变量 `SORFTIME_MCP_URL` / 包内 `config/platform.json` / 默认值）的解析结果强制 host 白名单（仅 `mcp.sorftime.com`），被篡改的 env/config 直接抛错阻断，凭证不再可能经新路径（healthcheck/probe/sync_manager）静默外发——与 bridge `_assert_official_url` 同一安全模型
+- **probe 配额查询加固**：`call_tool` 全链异常与非 JSON 响应防护，配额查询失败不影响 9 端点探活主流程
+- **构建器 fail-fast**：平台包 frontmatter 四处替换（name/description/trigger/version）失配即构建中止，杜绝包以错误身份静默产出
 ## [2026-10-10] — v4.0.0（MCP 按平台拆分适配 + 架构重构）
 
 - **平台拆分适配**：Sorftime MCP 拆分为 8 平台端点（amazon/walmart/shopee/tiktok/temu/1688/mercado/social），根端点保留全平台兼容（113 工具=8 端点并集，2026-10-10 实测）。端点解析链：`SORFTIME_MCP_URL` 环境变量 > 包内 `config/platform.json` > 根端点（`utils/env_config.get_mcp_url()`，bridge/sync_manager 统一走它）

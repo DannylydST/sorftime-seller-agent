@@ -64,6 +64,7 @@ def save_key(key: str) -> Path:
 
 
 _DEFAULT_MCP_URL = "https://mcp.sorftime.com"
+_ALLOWED_MCP_HOSTS = ("mcp.sorftime.com",)
 
 
 def get_mcp_url() -> str:
@@ -72,21 +73,34 @@ def get_mcp_url() -> str:
     Sorftime MCP 按平台拆分为 8 个独立端点（amazon/walmart/shopee/temu/tiktok/1688/
     mercado/social），根端点保留全平台兼容。平台分发包在 config/platform.json 预置
     各自端点；未预置的包（含本仓根本体 = 全平台版）走根端点，与拆分前行为一致。
+
+    安全镇流（单点收口）：无论来源是环境变量还是包内配置，解析结果只允许
+    mcp.sorftime.com 官方 host——key 只发官方端点，被篡改的 env/config 从这里
+    直接抛错阻断，而不是把凭证静默外发（与 bridge 的 _assert_official_url 同一模型）。
     """
     env_url = os.getenv("SORFTIME_MCP_URL", "").strip()
     if env_url:
-        return env_url
-    cfg = _SKILL_ROOT / "config" / "platform.json"
-    try:
-        if cfg.exists():
-            import json
-            data = json.loads(cfg.read_text(encoding="utf-8"))
-            url = str(data.get("mcp_url", "")).strip()
-            if url:
-                return url
-    except Exception:
-        pass
-    return _DEFAULT_MCP_URL
+        url = env_url
+    else:
+        url = ""
+        cfg = _SKILL_ROOT / "config" / "platform.json"
+        try:
+            if cfg.exists():
+                import json
+                data = json.loads(cfg.read_text(encoding="utf-8"))
+                url = str(data.get("mcp_url", "")).strip()
+        except Exception:
+            url = ""
+    if not url:
+        url = _DEFAULT_MCP_URL
+    from urllib.parse import urlparse
+    host = urlparse(url).hostname or ""
+    if host not in _ALLOWED_MCP_HOSTS:
+        raise RuntimeError(
+            f"blocked non-whitelisted MCP endpoint: {host or url!r}"
+            f" (allowed: {_ALLOWED_MCP_HOSTS}) — SORFTIME_MCP_URL / config/platform.json"
+            f" 只允许指向 mcp.sorftime.com 官方端点，凭证不外发第三方")
+    return url
 
 
 def has_key() -> bool:

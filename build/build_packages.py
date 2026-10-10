@@ -108,13 +108,21 @@ def replace_section(text: str, header: str, new_body: str) -> str:
     return pat.sub(lambda _: new_body, text, count=1)
 
 
+def _sub_or_die(text: str, pattern: str, repl: str, what: str) -> str:
+    """正则替换必须命中一次，失配即抛错——防止包以错误身份静默产出。"""
+    new, n = re.subn(pattern, repl, text, count=1, flags=re.M)
+    if n != 1:
+        raise RuntimeError(f"frontmatter 替换失配（{what}）——源 SKILL.md 结构已变化，构建中止")
+    return new
+
+
 def gen_platform_skill(platform: dict, version: str) -> str:
     text = read_root_skill()
-    # frontmatter 定制
-    text = re.sub(r"^name: sorftime-seller-agent$", f"name: {platform['pkg']}", text, flags=re.M)
-    text = re.sub(r'^description: ".*"$', f'description: "{platform["desc"]}"', text, flags=re.M)
-    text = re.sub(r'^trigger: ".*"$', f'trigger: "{platform["trigger"]}"', text, flags=re.M)
-    text = re.sub(r"^version: .+$", f"version: {version}", text, flags=re.M)
+    # frontmatter 定制（全部 fail-fast）
+    text = _sub_or_die(text, r"^name: sorftime-seller-agent$", f"name: {platform['pkg']}", "name")
+    text = _sub_or_die(text, r'^description: ".*"$', f'description: "{platform["desc"]}"', "description")
+    text = _sub_or_die(text, r'^trigger: ".*"$', f'trigger: "{platform["trigger"]}"', "trigger")
+    text = _sub_or_die(text, r"^version: .+$", f"version: {version}", "version")
     # 端点表 → 本平台版
     endpoint_body = (
         f"## 🌐 Platform Endpoint\n\n"
@@ -192,8 +200,7 @@ def build(platform_key: str, version: str) -> dict:
         encoding="utf-8")
     shutil.copy2(ROOT / "config" / "channel.json", cfg / "channel.json")
 
-    for name in ["SECURITY.md", "LICENSE", "CHANGELOG.md", "requirements.txt", ".env.example",
-                 ".gitignore"]:
+    for name in ["SECURITY.md", "LICENSE", "CHANGELOG.md", "requirements.txt", ".env.example"]:
         src = ROOT / name
         if src.exists():
             shutil.copy2(src, pkg_dir / name)
