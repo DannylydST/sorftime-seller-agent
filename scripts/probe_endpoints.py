@@ -21,6 +21,13 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+# 控制台输出编码健壮化（Windows GBK 终端/重定向流不中断）
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 _SKILL_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_SKILL_ROOT / "scripts"))
 from utils.env_config import load_env, get_key, get_mcp_url  # noqa: E402
@@ -44,7 +51,9 @@ _KEY_NAME = "SORFTIME_MCP_KEY"
 
 def _http():
     import urllib.request
-    return urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    # 标准代理解析：遵循 http_proxy/https_proxy/no_proxy 环境变量，未设置则直连——
+    # 与 bridge(httpx) 行为一致，适配需要代理出网的网络环境
+    return urllib.request.build_opener()
 
 
 def probe_endpoint(url, key):

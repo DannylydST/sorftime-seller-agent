@@ -80,9 +80,9 @@ PLATFORMS = {
         "related": "工具上线后用 `python3 scripts/probe_endpoints.py` 复查清单，再对照 `references/tool-matrix.md`",
     },
     "social": {
-        "pkg": "sorftime-social", "display": "海外社媒（Reddit）", "doc": "social.md",
-        "url": "https://mcp.sorftime.com/social", "tools": 4,
-        "desc": "Sorftime 海外社媒舆情助手 —— Reddit 市场情报智能体（专属端点 mcp.sorftime.com/social，4 工具）。产品词/品牌词搜帖、正文与热度、评论痛点挖掘，对接买家痛点方法论。Quora 舆情三件套在 amazon 端点（见 sorftime-amazon）。将任意 MCP 接入的 AI agent 变成海外社媒情报专家。",
+        "pkg": "sorftime-social", "display": "海外社媒（Reddit·Quora）", "doc": "social.md",
+        "url": "https://mcp.sorftime.com/social", "tools": 7,
+        "desc": "Sorftime 海外社媒舆情助手 —— Reddit + Quora 市场情报智能体（专属端点 mcp.sorftime.com/social，7 工具）。Reddit 产品词/品牌词搜帖、正文与热度、评论痛点挖掘；Quora 舆情三件套本端点与 amazon 端点双侧同挂。将任意 MCP 接入的 AI agent 变成海外社媒情报专家。",
         "trigger": "reddit/海外社媒/社媒舆情/老外怎么说/买家讨论/痛点挖掘/reddit 帖子/品牌舆情",
         "related": "痛点挖掘方法论 `references/methodology-cards/comprehensive/review-mining.md`；Quora 三件套挂 amazon 端点",
     },

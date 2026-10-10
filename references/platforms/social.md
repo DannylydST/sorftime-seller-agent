@@ -1,6 +1,6 @@
 # Overseas Social Media Guide（Reddit 社媒舆情）
 
-> Endpoint: `https://mcp.sorftime.com/social` · 4 tools · Reddit 舆情查询
+> Endpoint: `https://mcp.sorftime.com/social` · 7 tools · Reddit 舆情查询
 > 工具已实测有真数据（2026-10-10 `reddit_post_search {"search_name":"yoga mat"}` ✅）
 
 **边界提醒**：本端点只有 Reddit 三件套。**Quora 三件套（`quora_question_search` / `quora_question_request` / `quora_answer_request`）挂在 amazon 端点**（市场情报归类），不在本端点——用户找 Quora 工具时指向 Amazon 平台指南。

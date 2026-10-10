@@ -1,6 +1,6 @@
 # Sorftime MCP Tool Matrix（按平台端点分组）
 
-> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-10-10 10:48:49
+> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-10-10 16:20:57
 
 ## root(全平台兼容) — https://mcp.sorftime.com
 
@@ -21,7 +21,7 @@
 | `tiktok_product_search` | — |
 | `product_variations` | asin |
 | `walmart_keyword_search_results` | keyword |
-| `quora_question_request` | reddit_id |
+| `quora_question_request` | quora_id |
 | `shopee_product_trend` | product_id |
 | `shopee_del_favorite_keyword` | keyword |
 | `tiktok_category_request` | node_id |
@@ -97,7 +97,7 @@
 | `walmart_keyword_extends` | keyword |
 | `product_detail` | asin |
 | `category_keywords` | node_id |
-| `quora_answer_request` | reddit_id |
+| `quora_answer_request` | quora_id |
 | `category_report` | node_id |
 | `temu_product_trend` | product_id |
 | `keyword_list_from_history` | date |
@@ -134,7 +134,7 @@
 | `product_content` | asin |
 | `product_customers_say` | asin |
 | `search_categories_broadly` | — |
-| `quora_question_request` | reddit_id |
+| `quora_question_request` | quora_id |
 | `del_favorite_keyword` | keyword |
 | `product_trend` | asin |
 | `similar_product_feature` | product_name |
@@ -170,7 +170,7 @@
 | `potential_product` | — |
 | `product_search_from_name` | name |
 | `favorite_keyword` | keyword |
-| `quora_answer_request` | reddit_id |
+| `quora_answer_request` | quora_id |
 
 ## walmart — https://mcp.sorftime.com/walmart
 
@@ -204,23 +204,23 @@
 
 | 工具 | 必填参数 |
 |---|---|
-| `shopee_get_favorite_keyword` | — |
-| `shopee_change_favorite_keyword` | keyword, to_dict |
-| `shopee_product_request` | product_id |
-| `shopee_favorite_keyword` | keyword |
-| `shopee_product_trend` | product_id |
-| `shopee_del_favorite_keyword` | keyword |
 | `shopee_shop_request` | shop_id |
-| `shopee_product_search` | — |
-| `shopee_category_request` | node_id |
-| `shopee_category_tree` | — |
-| `shopee_category_search_from_name` | name |
-| `shopee_keyword_relation_results` | — |
-| `shopee_keyword_search` | — |
 | `shopee_product_search_from_name` | name |
-| `shopee_category_trend` | — |
+| `shopee_keyword_relation_results` | — |
+| `shopee_del_favorite_keyword` | keyword |
+| `shopee_favorite_keyword` | keyword |
+| `shopee_change_favorite_keyword` | keyword, to_dict |
+| `shopee_product_search` | — |
 | `common_usage_query` | — |
+| `shopee_product_request` | product_id |
+| `shopee_product_trend` | product_id |
+| `shopee_category_search_from_name` | name |
 | `shopee_get_favorite_keyword_dict` | — |
+| `shopee_category_trend` | — |
+| `shopee_get_favorite_keyword` | — |
+| `shopee_category_tree` | — |
+| `shopee_keyword_search` | — |
+| `shopee_category_request` | node_id |
 
 ## tiktok — https://mcp.sorftime.com/tiktok
 
@@ -289,11 +289,14 @@
 
 ## social — https://mcp.sorftime.com/social
 
-工具数：4
+工具数：7
 
 | 工具 | 必填参数 |
 |---|---|
+| `quora_question_request` | quora_id |
 | `reddit_comment_request` | reddit_id |
 | `reddit_post_search` | search_name |
+| `quora_question_search` | search_name |
 | `common_usage_query` | — |
 | `reddit_post_request` | reddit_id |
+| `quora_answer_request` | quora_id |

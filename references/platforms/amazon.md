@@ -1,6 +1,6 @@
 # Amazon Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/amazon` · 43 tools · Quora 市场情报三件套也挂在本端点
+> Endpoint: `https://mcp.sorftime.com/amazon` · 43 tools · Quora 市场情报三件套挂在本端点（与 social 端点双侧同挂）
 > Site param: `amz_site` — 14 sites: `US GB DE FR IN CA JP ES IT MX AE AU BR SA`（无 SG）
 
 ## Parameter Traps（调错第一原因，先看这张表）

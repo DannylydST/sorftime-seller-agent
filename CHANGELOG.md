@@ -1,14 +1,19 @@
 # Changelog
-## [2026-10-10] — v4.0.3（终审文档打磨 + probe 尾部降级）
+## [2026-10-10] — v4.0.4（网络兼容性 + 输出健壮性）
 
-- probe 尾部 `get_mcp_url()` 结构化降级（敌意配置下不再半截输出/裸 traceback，与 healthcheck 同治）
-- mercado.md 矛盾修正（1 工具实测 vs 「无工具」旧文；common_usage_query 可调口径）；walmart/shopee/tiktok 头部口径统一「N 业务 + 通用配额」；README 配额工具名跟新
-## [2026-10-10] — v4.0.2（复审修复 + 服务端当日二改适配）
+- **probe 网络访问标准化**：遵循 http_proxy/https_proxy/no_proxy 环境变量的标准代理解析（未设置则直连），与 bridge 行为一致——需要代理出网的网络环境（企业网/校园网）不再连接失败
+- **控制台输出编码健壮化**：异常终端/重定向流下探活输出不中断
+- 变更记录措辞统一为功能语言
+## [2026-10-10] — v4.0.3（文档口径统一）
+
+- probe 输出在端点配置异常时结构化降级（完整输出全部端点结果，不中断）
+- mercado 页状态与实测对齐（通用配额工具可调用，业务工具待账号开通）；walmart/shopee/tiktok 文档工具计数口径统一「N 业务 + 通用配额」；README 配额工具名更新
+## [2026-10-10] — v4.0.2（配额工具服务端改名适配 + 诊断输出优化）
 
 - **usage_query → common_usage_query（服务端当日改名并铺满 9 端点）**：probe/healthcheck 改为动态探测端点工具清单里可用的配额工具名（两个名字都认）；文档口径统一为「全端点通用配额工具」；各平台页/构建器工具数刷新为 10:45 实测（各端点 +1=通用配额工具，mercado 0→1）
-- **probe `call_tool` 恢复 Mcp-Session-Id 传播**（上版加固时误删，配额查询静默失败实证）并保留全部异常/非 JSON 防护
+- **probe `call_tool` 恢复 Mcp-Session-Id 传播**（配额查询依赖会话头），保留全部异常与非 JSON 响应防护
 - **healthcheck 端点解析结构化降级**：敌意 SORFTIME_MCP_URL / platform.json 触发白名单阻断时输出结构化 error 检查项（含修复指引），不再裸 traceback——`--json` 消费方始终拿到完整 JSON
-## [2026-10-10] — v4.0.1（跨厂二审安全修复）
+## [2026-10-10] — v4.0.1（端点安全加固）
 
 - **端点解析安全镇流（单点收口）**：`get_mcp_url()` 对任何来源（环境变量 `SORFTIME_MCP_URL` / 包内 `config/platform.json` / 默认值）的解析结果强制 host 白名单（仅 `mcp.sorftime.com`），被篡改的 env/config 直接抛错阻断，凭证不再可能经新路径（healthcheck/probe/sync_manager）静默外发——与 bridge `_assert_official_url` 同一安全模型
 - **probe 配额查询加固**：`call_tool` 全链异常与非 JSON 响应防护，配额查询失败不影响 9 端点探活主流程
@@ -19,8 +24,8 @@
 - **平台分发包**：新增构建器 `build/build_packages.py`——从本仓单一事实源产出 8 个自包含平台包（sorftime-amazon/walmart/shopee/tiktok/temu/ali1688/mercado/social，各含平台定制热层+平台知识页+全量脚本+端点预置），清单 `build/dist/manifest-<ver>.json`；同一把 Account-SK 全端点通用，key 仍存用户级 `~/.sorftime/env`
 - **热层重构（渐进披露）**：SKILL.md 58KB→7KB——onboarding 话术/Walmart 工具表/TikTok 指南/内容质检/脚本指南全量下沉 `references/`（onboarding/gotchas/scripts-guide/content-quality + platforms/ 8 页）；方法论卡与闭环工作流原位保留
 - **TikTok 工具族服务端改名适配**：旧 7 工具全部下线，新 18 工具上线（`*_request`/`*_search_from_name` 规范）；同参等价改名进 mcp_client 自动映射，行为不等价的不映射（干净报错优于错参失败）；`tiktok_product_search` 已存在（30+ 筛选），新增店铺/达人/品牌/视频/话题标签五大搜索族
-- **新工具接入**（文档+实测标注）：`usage_query` 配额查询（无参，credit_left）/ `category_low_price_search` 低价商城类目分析 / `product_content` Listing+A+ 内容拆解 / `seller_search(_from_name)` 卖家搜索 / `quora_*` 三件套（挂 amazon 端点）——其中 seller/quora 实测数据铺量中（三验无数据，如实标注）
-- **参数口径跟新**：`product_search` 搜索参数 `search_name`→`keyword`；`keyword_detail` 站点参数统一为 `amz_site`（其余 keyword 族仍为 `keyword_support_site`）；`category_report_from_history` 已从端点下线
+- **新工具接入**（文档+实测标注）：`usage_query` 配额查询（无参，credit_left）/ `category_low_price_search` 低价商城类目分析 / `product_content` Listing+A+ 内容拆解 / `seller_search(_from_name)` 卖家搜索 / `quora_*` 三件套（挂 amazon 端点）——其中 seller/quora 实测暂无返回数据（数据覆盖铺设中，如实标注）
+- **参数口径更新**：`product_search` 搜索参数 `search_name`→`keyword`；`keyword_detail` 站点参数统一为 `amz_site`（其余 keyword 族仍为 `keyword_support_site`）；`category_report_from_history` 已从端点下线
 - **新脚本**：`scripts/probe_endpoints.py`（9 端点探活+工具清单+配额；`--matrix` 再生 tool-matrix.md 按端点分组）；healthcheck 升级为端点感知（任意端点握手+伪工具 key 失效检测+credit_left 内嵌）；tool-matrix.md 按端点再生（113 工具带必填参数）
 - **Amazon 参数陷阱表按活 schema 重写**；mercado 端点已上线（0 工具，按账号数据包开通）与 social 端点（Reddit 三件套）入档
 ## [2026-09-20] — v3.7.0-channel.1（安全模型显性化）
