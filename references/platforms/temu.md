@@ -1,6 +1,6 @@
 # TEMU Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/temu` · 9 tools · 仅 US/EU 两站
+> Endpoint: `https://mcp.sorftime.com/temu` · 10 tools · 仅 US/EU 两站
 > Site param: `site` — 枚举 `Unknown US EU`，实际可用站点为 `US` / `EU` 两站（`Unknown` 是占位枚举值，别当站点用）
 
 ## Parameter Traps（调错第一原因，先看这张表）
@@ -40,6 +40,6 @@
 - TEMU 仅 **US + EU 两站**，没有 Amazon 那种 14 站矩阵；跨平台对比时注意站点口径不可比。
 - 产品名字段是 `product_name`（非 `title`）；`temu_category_request` 返回的 product_id + product_name 是通往趋势/详情查询的串联键。
 - `temu_category_search` 类目级筛选最丰富（20 组维度），做 TEMU 蓝海/竞类分析优先用它而不是产品级搜索。
-- 端点仅有 9 工具，无关键词工具、无评论工具、无卖家搜索工具——TEMU 侧的关键词/评论洞察需求走 Amazon 端点的类目与 review 方法类比推，或配合 social 端点舆情工具。
+- 端点仅 10 工具（9 业务 + 通用配额 `common_usage_query`），无关键词工具、无评论工具、无卖家搜索工具——TEMU 侧的关键词/评论洞察需求走 Amazon 端点的类目与 review 方法类比推，或配合 social 端点舆情工具。
 - MCP SDK 锁 1.x、响应 `{doc,data}` 包裹、中文叙事前缀等通用坑 → `references/gotchas.md`
 - 方法论卡（蓝海发现/竞品深挖/review mining 等 20 张）→ `references/methodology-cards/`

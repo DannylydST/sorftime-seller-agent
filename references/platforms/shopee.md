@@ -1,13 +1,13 @@
 # Shopee Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/shopee` · 16 tools · 纯前缀工具（`shopee_*`），无跨平台工具
+> Endpoint: `https://mcp.sorftime.com/shopee` · 17 tools · 纯前缀工具（`shopee_*`），无跨平台工具
 > Site param: `site` — 8 站点：**`VN ID SG TH MY TW PH BR`**（schema 默认值拼写为 `Unknown`）。⭐2026-10-10 实测：**不传 `site` 报 "Please specify the site"；传非法站点（如 `US`）报 "An error occurred"；传合法站点（如 `PH`）有真数据**——`site` 虽在多数工具标 optional，实际**必传合法枚举值**
 
 ## Parameter Traps（调错第一原因，先看这张表）
 
 | 概念 | 实际分布（2026-10-10 活 schema） |
 |------|------|
-| 站点 | 全部 16 工具共用 `site` 参数，枚举统一：`Unknown`/`VN`/`ID`/`SG`/`TH`/`MY`/`TW`/`PH`/`BR`。**无 US/JP 等站** |
+| 站点 | 全部 16 个业务工具共用 `site` 参数（另有通用配额工具 `common_usage_query` 不需站点），枚举统一：`Unknown`/`VN`/`ID`/`SG`/`TH`/`MY`/`TW`/`PH`/`BR`。**无 US/JP 等站** |
 | 产品 ID | `product_id`（`shopee_product_request`/`shopee_product_trend`） |
 | 店铺 ID | `shop_id`（`shopee_shop_request` 独一份） |
 | 类目 ID | `node_id`（`shopee_category_request` 必填；`shopee_category_tree`/`shopee_category_trend` 可选） |

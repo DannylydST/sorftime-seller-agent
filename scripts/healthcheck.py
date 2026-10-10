@@ -126,7 +126,6 @@ def check_key() -> dict:
 
 def check_mcp_connection() -> dict:
     key = get_key()
-    url = get_mcp_url()
     if not key:
         return {
             "name": "Sorftime Connect",
@@ -135,9 +134,21 @@ def check_mcp_connection() -> dict:
             "fix": "Configure the API Key first, then re-run healthcheck",
         }
 
+    # 端点解析可能因白名单镇流抛错（敌意 SORFTIME_MCP_URL / platform.json）——
+    # 诊断工具必须结构化降级，不能裸 traceback（--json 消费方要拿到 JSON）
+    try:
+        url = get_mcp_url()
+    except RuntimeError as e:
+        return {
+            "name": "Sorftime Connect",
+            "status": "error",
+            "detail": f"Endpoint blocked: {str(e)[:120]}",
+            "fix": "SORFTIME_MCP_URL / config/platform.json 只允许 mcp.sorftime.com 官方端点；改回官方端点后重跑",
+        }
+
     # Endpoint-aware: handshake + tools/list works on every endpoint (root and all
-    # platform splits). get_time/usage_query only exist on root+amazon, so tool
-    # calls are conditional on the endpoint's advertised tool list.
+    # platform splits). Quota tool is detected from the endpoint's advertised list
+    # (usage_query was renamed common_usage_query server-side mid-day; both accepted).
     try:
         from probe_endpoints import probe_endpoint, call_tool
         ok, tools, err = probe_endpoint(url, key)
@@ -160,8 +171,9 @@ def check_mcp_connection() -> dict:
                 "fix": "Key likely rotated — re-copy the Account-SK from open.sorftime.com/mcp",
             }
         detail = f"OK — {url} · {len(tools)} tools"
-        if "usage_query" in names:
-            q = call_tool(url, key, "usage_query", {})
+        quota_tool = next((t for t in ("common_usage_query", "usage_query") if t in names), None)
+        if quota_tool:
+            q = call_tool(url, key, quota_tool, {})
             if isinstance(q, dict):
                 credit = q.get("data", {}).get("credit_left")
                 if credit is not None:

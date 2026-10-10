@@ -54,7 +54,7 @@
 `potential_product` — 全参数可选：**不传 `search_name` = 全品类跨排名**，传 = 关键词域内。返回 `potential_index` 综合评分（相对值：低门槛×低广告×高利润加权）。⚠️ 高分不豁免类目风险——食品/保健/电子合规/季节品/授权品牌必须对照四层风险咨询制亮牌（永不隐藏，见 `references/scripts-guide.md`）。完整方法论 → `references/methodology-cards/tactical/invisible-profit.md`
 
 ### 通用
-`get_time`（服务器时间）· `usage_query`（**配额查询**，无参数，返回 `credit_left`——用户问余额/剩余次数就调它）
+`get_time`（服务器时间）· `common_usage_query`（**配额查询**，全端点通用，无参数，返回 `credit_left`——用户问余额/剩余次数就调它）
 
 ## Gotchas
 

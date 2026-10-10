@@ -1,4 +1,9 @@
 # Changelog
+## [2026-10-10] — v4.0.2（复审修复 + 服务端当日二改适配）
+
+- **usage_query → common_usage_query（服务端当日改名并铺满 9 端点）**：probe/healthcheck 改为动态探测端点工具清单里可用的配额工具名（两个名字都认）；文档口径统一为「全端点通用配额工具」；各平台页/构建器工具数刷新为 10:45 实测（各端点 +1=通用配额工具，mercado 0→1）
+- **probe `call_tool` 恢复 Mcp-Session-Id 传播**（上版加固时误删，配额查询静默失败实证）并保留全部异常/非 JSON 防护
+- **healthcheck 端点解析结构化降级**：敌意 SORFTIME_MCP_URL / platform.json 触发白名单阻断时输出结构化 error 检查项（含修复指引），不再裸 traceback——`--json` 消费方始终拿到完整 JSON
 ## [2026-10-10] — v4.0.1（跨厂二审安全修复）
 
 - **端点解析安全镇流（单点收口）**：`get_mcp_url()` 对任何来源（环境变量 `SORFTIME_MCP_URL` / 包内 `config/platform.json` / 默认值）的解析结果强制 host 白名单（仅 `mcp.sorftime.com`），被篡改的 env/config 直接抛错阻断，凭证不再可能经新路径（healthcheck/probe/sync_manager）静默外发——与 bridge `_assert_official_url` 同一安全模型

@@ -39,50 +39,50 @@ PLATFORMS = {
     },
     "walmart": {
         "pkg": "sorftime-walmart", "display": "Walmart", "doc": "walmart.md",
-        "url": "https://mcp.sorftime.com/walmart", "tools": 18,
-        "desc": "Sorftime Walmart 卖家助手 —— 沃尔玛市场情报与选品智能体（平台专属端点 mcp.sorftime.com/walmart，18 工具）。关键词研究、产品与变体分析、类目报告、流量词反查、收藏夹管理；美国站专属。将任意 MCP 接入的 AI agent 变成 Walmart 市场情报专家。",
+        "url": "https://mcp.sorftime.com/walmart", "tools": 19,
+        "desc": "Sorftime Walmart 卖家助手 —— 沃尔玛市场情报与选品智能体（平台专属端点 mcp.sorftime.com/walmart，19 工具）。关键词研究、产品与变体分析、类目报告、流量词反查、收藏夹管理；美国站专属。将任意 MCP 接入的 AI agent 变成 Walmart 市场情报专家。",
         "trigger": "沃尔玛/walmart/沃尔玛选品/walmart 选品/walmart 关键词/walmart 竞品/walmart 类目/walmart 产品分析/1P 自营/WFS/跨平台价差",
         "related": "与 Amazon 对比见方法论卡 `tactical/cross-platform-gap.md`（跨平台价差，需两平台数据）",
     },
     "shopee": {
         "pkg": "sorftime-shopee", "display": "Shopee", "doc": "shopee.md",
-        "url": "https://mcp.sorftime.com/shopee", "tools": 16,
-        "desc": "Sorftime Shopee 卖家助手 —— 虾皮市场情报与选品智能体（平台专属端点 mcp.sorftime.com/shopee，16 工具）。8 站点（MY/PH/VN/TH/ID/SG/TW/BR）关键词研究、产品搜索、类目趋势、本土店×跨境店对比。将任意 MCP 接入的 AI agent 变成 Shopee 市场情报专家。",
+        "url": "https://mcp.sorftime.com/shopee", "tools": 17,
+        "desc": "Sorftime Shopee 卖家助手 —— 虾皮市场情报与选品智能体（平台专属端点 mcp.sorftime.com/shopee，17 工具）。8 站点（MY/PH/VN/TH/ID/SG/TW/BR）关键词研究、产品搜索、类目趋势、本土店×跨境店对比。将任意 MCP 接入的 AI agent 变成 Shopee 市场情报专家。",
         "trigger": "虾皮/shopee/shopee 选品/shopee 关键词/shopee 类目/东南亚电商/本土店/跨境店对比",
         "related": "跨平台方法论卡见 `references/methodology-cards/`",
     },
     "temu": {
         "pkg": "sorftime-temu", "display": "TEMU", "doc": "temu.md",
-        "url": "https://mcp.sorftime.com/temu", "tools": 9,
-        "desc": "Sorftime TEMU 卖家助手 —— TEMU 市场情报与选品智能体（平台专属端点 mcp.sorftime.com/temu，9 工具）。US/EU 两站，类目多维筛选（40 个 min/max 参数）、产品与店铺分析、趋势追踪。将任意 MCP 接入的 AI agent 变成 TEMU 市场情报专家。",
+        "url": "https://mcp.sorftime.com/temu", "tools": 10,
+        "desc": "Sorftime TEMU 卖家助手 —— TEMU 市场情报与选品智能体（平台专属端点 mcp.sorftime.com/temu，10 工具）。US/EU 两站，类目多维筛选（40 个 min/max 参数）、产品与店铺分析、趋势追踪。将任意 MCP 接入的 AI agent 变成 TEMU 市场情报专家。",
         "trigger": "temu/TEMU 选品/temu 类目/temu 产品/temu 店铺/temu 趋势",
         "related": "跨平台方法论卡见 `references/methodology-cards/`",
     },
     "tiktok": {
         "pkg": "sorftime-tiktok", "display": "TikTok Shop", "doc": "tiktok.md",
-        "url": "https://mcp.sorftime.com/tiktok", "tools": 18,
-        "desc": "Sorftime TikTok Shop 卖家助手 —— TikTok 电商市场情报与选品智能体（平台专属端点 mcp.sorftime.com/tiktok，18 工具）。8 站点，产品多维搜索（30+ 筛选）、店铺/达人/品牌/视频/话题标签五大搜索族、类目树与趋势、228 叶子类目预计算榜单。将任意 MCP 接入的 AI agent 变成 TikTok Shop 市场情报专家。",
+        "url": "https://mcp.sorftime.com/tiktok", "tools": 19,
+        "desc": "Sorftime TikTok Shop 卖家助手 —— TikTok 电商市场情报与选品智能体（平台专属端点 mcp.sorftime.com/tiktok，19 工具）。8 站点，产品多维搜索（30+ 筛选）、店铺/达人/品牌/视频/话题标签五大搜索族、类目树与趋势、228 叶子类目预计算榜单。将任意 MCP 接入的 AI agent 变成 TikTok Shop 市场情报专家。",
         "trigger": "tiktok/TikTok Shop/抖音海外版/tiktok 选品/tiktok 达人/tiktok 店铺/tiktok 类目/tiktok 视频/话题标签/带货",
         "related": "达人×带货方法论见 `references/methodology-cards/`；本包含 `references/tiktok-rankings.json` 预计算榜单（tier-1 零调用读榜）",
     },
     "ali1688": {
         "pkg": "sorftime-ali1688", "display": "1688", "doc": "ali1688.md",
-        "url": "https://mcp.sorftime.com/1688", "tools": 6,
-        "desc": "Sorftime 1688 采购源助手 —— 工厂直采与供应链情报智能体（平台专属端点 mcp.sorftime.com/1688，6 工具）。关键词找货、多维筛选（实力商家/超级工厂/回购率/版权）、商品详情与 SKU 明细、反向图搜。亚马逊选品→1688 找货→利润测算一条龙。将任意 MCP 接入的 AI agent 变成 1688 采购情报专家。",
+        "url": "https://mcp.sorftime.com/1688", "tools": 7,
+        "desc": "Sorftime 1688 采购源助手 —— 工厂直采与供应链情报智能体（平台专属端点 mcp.sorftime.com/1688，7 工具）。关键词找货、多维筛选（实力商家/超级工厂/回购率/版权）、商品详情与 SKU 明细、反向图搜。亚马逊选品→1688 找货→利润测算一条龙。将任意 MCP 接入的 AI agent 变成 1688 采购情报专家。",
         "trigger": "1688/阿里巴巴批发/找货源/找工厂/供应商/实力商家/超级工厂/MOQ/起订量/采购/图搜找货/源头工厂",
         "related": "亚马逊端选品联动见 `references/platforms/amazon.md`（本包未含，需全平台版或 sorftime-amazon 包）；利润测算 `scripts/calculator.py`",
     },
     "mercado": {
         "pkg": "sorftime-mercado", "display": "Mercado Libre", "doc": "mercado.md",
-        "url": "https://mcp.sorftime.com/mercado", "tools": 0,
-        "desc": "Sorftime 美客多（Mercado Libre）助手 —— 拉美市场情报智能体（专属端点 mcp.sorftime.com/mercado）。端点已上线；工具按账号数据包逐步开通，开通前 tools/list 为空，用 scripts/probe_endpoints.py 可随时复查。",
+        "url": "https://mcp.sorftime.com/mercado", "tools": 1,
+        "desc": "Sorftime 美客多（Mercado Libre）助手 —— 拉美市场情报智能体（专属端点 mcp.sorftime.com/mercado）。端点已上线，当前含通用配额工具；业务工具按账号数据包逐步开通，用 scripts/probe_endpoints.py 可随时复查。",
         "trigger": "美客多/mercado libre/mercado/拉美电商/墨西哥电商/巴西电商",
         "related": "工具上线后用 `python3 scripts/probe_endpoints.py` 复查清单，再对照 `references/tool-matrix.md`",
     },
     "social": {
         "pkg": "sorftime-social", "display": "海外社媒（Reddit）", "doc": "social.md",
-        "url": "https://mcp.sorftime.com/social", "tools": 3,
-        "desc": "Sorftime 海外社媒舆情助手 —— Reddit 市场情报智能体（专属端点 mcp.sorftime.com/social，3 工具）。产品词/品牌词搜帖、正文与热度、评论痛点挖掘，对接买家痛点方法论。Quora 舆情三件套在 amazon 端点（见 sorftime-amazon）。将任意 MCP 接入的 AI agent 变成海外社媒情报专家。",
+        "url": "https://mcp.sorftime.com/social", "tools": 4,
+        "desc": "Sorftime 海外社媒舆情助手 —— Reddit 市场情报智能体（专属端点 mcp.sorftime.com/social，4 工具）。产品词/品牌词搜帖、正文与热度、评论痛点挖掘，对接买家痛点方法论。Quora 舆情三件套在 amazon 端点（见 sorftime-amazon）。将任意 MCP 接入的 AI agent 变成海外社媒情报专家。",
         "trigger": "reddit/海外社媒/社媒舆情/老外怎么说/买家讨论/痛点挖掘/reddit 帖子/品牌舆情",
         "related": "痛点挖掘方法论 `references/methodology-cards/comprehensive/review-mining.md`；Quora 三件套挂 amazon 端点",
     },
@@ -134,7 +134,7 @@ def gen_platform_skill(platform: dict, version: str) -> str:
         f"- 端点解析：环境变量 `SORFTIME_MCP_URL` > 本包 `config/platform.json`（已预置上面的端点）。"
         f"**同一把 Account-SK 全端点通用，配额共享**。\n"
         f"- 其他平台（Amazon/Walmart/Shopee/TikTok/TEMU/1688/Mercado/社媒）有独立端点与独立技能包；"
-        f"本包只管 {platform['display']}。配额查询：`usage_query`（amazon 端点专属，无参数返回 credit_left）。\n"
+        f"本包只管 {platform['display']}。配额查询：`common_usage_query`（全端点通用，无参数返回 credit_left）。\n"
     )
     text = replace_section(text, "🌐 Platform Endpoints（MCP 按平台拆分）", endpoint_body)
     # 路由表 → 本平台版

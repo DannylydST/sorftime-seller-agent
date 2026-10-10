@@ -100,13 +100,18 @@ def probe_endpoint(url, key):
 def call_tool(url, key, name, args):
     import urllib.request
     opener = _http()
+    session = {"sid": None}
 
     def rpc(payload):
         headers = {"Content-Type": "application/json",
                    "Accept": "application/json, text/event-stream"}
+        if session["sid"]:
+            headers["Mcp-Session-Id"] = session["sid"]  # tools/call 需要会话态（无 sid 配额查询静默失败实测）
         resp = opener.open(urllib.request.Request(
             url + "?key=" + key, data=json.dumps(payload).encode(),
             headers=headers, method="POST"), timeout=60)
+        if not session["sid"]:
+            session["sid"] = resp.headers.get("mcp-session-id")
         raw = resp.read().decode("utf-8", errors="replace")
         datas = [ln[5:].strip() for ln in raw.splitlines() if ln.startswith("data:")]
         text = "\n".join(datas) or raw
@@ -175,7 +180,11 @@ def main():
             print(f"{'✅' if ok else '❌'} {name:<18} {url:<42} tools={len(names)}{flag}"
                   + (f" err={err}" if err else ""))
 
-    quota = call_tool(ENDPOINTS["amazon"], key, "usage_query", {})
+    # 配额工具动态探测：服务端当日曾把 usage_query 改名 common_usage_query 并铺满全端点，
+    # 两个名字都认，以端点工具清单实际有的为准
+    amz_names = results.get("amazon", {}).get("tools", [])
+    quota_tool = next((t for t in ("common_usage_query", "usage_query") if t in amz_names), None)
+    quota = call_tool(ENDPOINTS["amazon"], key, quota_tool, {}) if quota_tool else None
     credit = None
     if isinstance(quota, dict):
         credit = quota.get("data", {}).get("credit_left")

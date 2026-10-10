@@ -1,6 +1,6 @@
 # Mercado Libre Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/mercado` · **0 tools**（2026-10-10 实测：当前账号下该端点未暴露任何工具）
+> Endpoint: `https://mcp.sorftime.com/mercado` · **1 tool（common_usage_query）**（2026-10-10 实测：当前账号下该端点未暴露任何工具）
 
 ## 当前状态
 

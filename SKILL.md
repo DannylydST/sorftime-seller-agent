@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体（全平台版）。MCP 已按平台拆分为 8 个独立端点：Amazon / Walmart / Shopee / TikTok Shop / TEMU / 1688 / Mercado Libre / 海外社媒(Reddit·Quora)，本技能走兼容根端点（全平台合一）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、隐赚指数、低价商城类目分析、卖家搜索、listing 内容拆解、配额查询。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家。 / Sorftime Seller Agent (all-platform edition) — cross-border e-commerce data analysis & product sourcing intelligence across 8 marketplace endpoints. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/低价商城/卖家分析/查卖家/配额/余额/quota/credits/选品/找产品/跨境卖家/MCP 接入 sorftime"
-version: 4.0.1
+version: 4.0.2
 user-invocable: true
 metadata:
   openclaw:
@@ -29,18 +29,18 @@ metadata:
 |------|------|:---:|------|
 | 全平台（兼容，本包默认） | `https://mcp.sorftime.com` | 113 | — |
 | Amazon | `https://mcp.sorftime.com/amazon` | 43 | `references/platforms/amazon.md` |
-| Walmart | `https://mcp.sorftime.com/walmart` | 18 | `references/platforms/walmart.md` |
-| Shopee | `https://mcp.sorftime.com/shopee` | 16 | `references/platforms/shopee.md` |
-| TikTok Shop | `https://mcp.sorftime.com/tiktok` | 18 | `references/platforms/tiktok.md` |
-| TEMU | `https://mcp.sorftime.com/temu` | 9 | `references/platforms/temu.md` |
-| 1688 | `https://mcp.sorftime.com/1688` | 6 | `references/platforms/ali1688.md` |
-| Mercado Libre | `https://mcp.sorftime.com/mercado` | 0* | `references/platforms/mercado.md` |
-| 海外社媒（Reddit·Quora） | `https://mcp.sorftime.com/social` | 3 | `references/platforms/social.md` |
+| Walmart | `https://mcp.sorftime.com/walmart` | 19 | `references/platforms/walmart.md` |
+| Shopee | `https://mcp.sorftime.com/shopee` | 17 | `references/platforms/shopee.md` |
+| TikTok Shop | `https://mcp.sorftime.com/tiktok` | 19 | `references/platforms/tiktok.md` |
+| TEMU | `https://mcp.sorftime.com/temu` | 10 | `references/platforms/temu.md` |
+| 1688 | `https://mcp.sorftime.com/1688` | 7 | `references/platforms/ali1688.md` |
+| Mercado Libre | `https://mcp.sorftime.com/mercado` | 1* | `references/platforms/mercado.md` |
+| 海外社媒（Reddit·Quora） | `https://mcp.sorftime.com/social` | 4 | `references/platforms/social.md` |
 
 - 端点解析优先级：环境变量 `SORFTIME_MCP_URL` > 技能包 `config/platform.json`（平台分发包预置）> 根端点。**同一把 Account-SK 全端点通用，配额共享**。
-- 工具数=2026-10-10 实测；mercado 端点已上线、工具按账号数据包逐步开通（0=当前账号未见）。
+- 工具数=2026-10-10 实测（服务端当日持续上新，以 `scripts/probe_endpoints.py` 实测为准）；各端点均含通用配额工具 `common_usage_query`，mercado 业务工具按账号数据包开通中。
 - Quora 三件套挂在 amazon 端点（市场情报归类），social 端点为 Reddit 三件套。
-- 配额查询：`usage_query`（amazon 端点，无参数，返回 `credit_left`）。用户问「还剩多少次/配额/余额」直接调它。
+- 配额查询：`common_usage_query`（全端点通用，无参数，返回 `credit_left`）。用户问「还剩多少次/配额/余额」直接调它。
 
 ## 🔴 Red Lines（红线，不随模型能力松绑）
 
@@ -53,7 +53,7 @@ metadata:
 1. **精确指令直接执行**：请求带明确工具/ASIN/关键词/平台/站点/输出格式（≥2 项）→ 直接调工具返回所求，不套流程、不换格式、不加包装。模糊探索型请求（「有什么机会」「值不值得做」）才走方法论卡与分层输出。
 2. **缺信息就问**：ASIN / 关键词 / 站点 / 平台不明确时问用户，禁止猜。
 3. **参数一次到位**：`mcp_client` 已内置参数校验+别名自动纠正（`search_name↔keyword`、`site↔amz_site` 等）；调用失败先对照该工具 schema 查一次参数名——各平台知识页有 traps 表，参数名不统一是 Sorftime 工具的已知特性（如 Amazon 站点参数同时存在 `amz_site`/`keyword_support_site`/`site` 三种，随工具而异）。
-4. **成本意识**：批量/重复查询走脚本（SQLite 缓存自动去重）；单点查询直接调。用户关心用量时 `usage_query` 查余量。
+4. **成本意识**：批量/重复查询走脚本（SQLite 缓存自动去重）；单点查询直接调。用户关心用量时 `common_usage_query` 查余量。
 5. **输出格式跟随用户**：要报告给报告，要原始 JSON 给 JSON，默认结构化表格；原始 JSON 不裸奔。
 
 ## Platform Knowledge Router

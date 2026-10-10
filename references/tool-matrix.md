@@ -1,6 +1,6 @@
 # Sorftime MCP Tool Matrix（按平台端点分组）
 
-> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-10-10 09:57:41
+> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-10-10 10:48:49
 
 ## root(全平台兼容) — https://mcp.sorftime.com
 
@@ -10,7 +10,6 @@
 |---|---|
 | `shopee_get_favorite_keyword` | — |
 | `ali1688_category_tree` | — |
-| `usage_query` | — |
 | `tiktok_shop_search` | — |
 | `potential_product` | — |
 | `tiktok_product_trend` | product_id |
@@ -119,6 +118,7 @@
 | `competitor_product_keywords` | asin |
 | `keyword_detail` | keyword |
 | `search_categories_broadly` | — |
+| `common_usage_query` | — |
 | `tiktok_shop_request` | shop_id |
 | `shopee_get_favorite_keyword_dict` | — |
 
@@ -143,9 +143,9 @@
 | `product_ranking_trend_by_keyword` | asin, keyword |
 | `keyword_search_results` | keyword |
 | `quora_question_search` | search_name |
-| `usage_query` | — |
 | `product_variations` | asin |
 | `category_search_from_top_node` | top_node |
+| `common_usage_query` | — |
 | `category_keywords` | node_id |
 | `keyword_detail` | keyword |
 | `change_favorite_keyword` | keyword, to_dict |
@@ -174,7 +174,7 @@
 
 ## walmart — https://mcp.sorftime.com/walmart
 
-工具数：18
+工具数：19
 
 | 工具 | 必填参数 |
 |---|---|
@@ -187,6 +187,7 @@
 | `walmart_get_favorite_keyword` | — |
 | `walmart_del_favorite_keyword` | keyword |
 | `walmart_keyword_detail` | keyword |
+| `common_usage_query` | — |
 | `walmart_favorite_keyword` | keyword |
 | `walmart_category_search_from_name` | name |
 | `walmart_category_report_by_node_id` | node_id |
@@ -199,7 +200,7 @@
 
 ## shopee — https://mcp.sorftime.com/shopee
 
-工具数：16
+工具数：17
 
 | 工具 | 必填参数 |
 |---|---|
@@ -218,11 +219,12 @@
 | `shopee_keyword_search` | — |
 | `shopee_product_search_from_name` | name |
 | `shopee_category_trend` | — |
+| `common_usage_query` | — |
 | `shopee_get_favorite_keyword_dict` | — |
 
 ## tiktok — https://mcp.sorftime.com/tiktok
 
-工具数：18
+工具数：19
 
 | 工具 | 必填参数 |
 |---|---|
@@ -231,6 +233,7 @@
 | `tiktok_video_tag_search` | tag_name |
 | `tiktok_category_search` | — |
 | `tiktok_category_tree` | — |
+| `common_usage_query` | — |
 | `tiktok_product_search_from_name` | — |
 | `tiktok_category_request` | node_id |
 | `tiktok_video_search_from_name` | — |
@@ -247,7 +250,7 @@
 
 ## temu — https://mcp.sorftime.com/temu
 
-工具数：9
+工具数：10
 
 | 工具 | 必填参数 |
 |---|---|
@@ -260,10 +263,11 @@
 | `temu_shop_request` | shop_id |
 | `temu_product_search_from_name` | name |
 | `temu_product_trend` | product_id |
+| `common_usage_query` | — |
 
 ## 1688 — https://mcp.sorftime.com/1688
 
-工具数：6
+工具数：7
 
 | 工具 | 必填参数 |
 |---|---|
@@ -273,20 +277,23 @@
 | `ali1688_similar_product` | search_name |
 | `ali1688_product_search_from_image` | image_url |
 | `ali1688_product_variations` | product_id |
+| `common_usage_query` | — |
 
 ## mercado — https://mcp.sorftime.com/mercado
 
-工具数：0
+工具数：1
 
 | 工具 | 必填参数 |
 |---|---|
+| `common_usage_query` | — |
 
 ## social — https://mcp.sorftime.com/social
 
-工具数：3
+工具数：4
 
 | 工具 | 必填参数 |
 |---|---|
 | `reddit_comment_request` | reddit_id |
 | `reddit_post_search` | search_name |
+| `common_usage_query` | — |
 | `reddit_post_request` | reddit_id |

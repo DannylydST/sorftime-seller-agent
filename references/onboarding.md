@@ -71,7 +71,7 @@ python3 scripts/install.py
 |------|------|
 | 去哪拿 Key | 渠道链接注册 → MCP 服务页 → 复制 Account-SK（本页上方表格） |
 | 怎么付费 | open.sorftime.com，人民币，新账号免费体验 |
-| 还剩多少配额 | 让 agent 调 `usage_query` 工具（amazon 端点，返回 credit_left）或跑 `scripts/probe_endpoints.py` |
+| 还剩多少配额 | 让 agent 调 `common_usage_query` 工具（全端点通用，返回 credit_left）或跑 `scripts/probe_endpoints.py` |
 | 换电脑怎么迁移 | 拷贝技能目录 → Python ≥3.10 → `install.py` 重建 venv → key 写 `~/.sorftime/env`（或环境变量） |
 
 ## 自动检测的 Agent 环境

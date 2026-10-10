@@ -41,4 +41,4 @@
 ## 缓存与限额
 
 - SQLite 缓存 `~/.sorftime-cache/`（Windows: `%LOCALAPPDATA%\sorftime-cache`），重复查询自动命中；**缓存是用户级共享**，多实例/多分支共用同一份
-- 配额全端点共享；`usage_query`（amazon 端点）查 `credit_left`；批量场景走脚本（内置节流+缓存），避免裸循环单点调用
+- 配额全端点共享；`common_usage_query`（全端点通用）查 `credit_left`；批量场景走脚本（内置节流+缓存），避免裸循环单点调用
