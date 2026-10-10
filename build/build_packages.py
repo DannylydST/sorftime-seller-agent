@@ -105,6 +105,9 @@ def replace_section(text: str, header: str, new_body: str) -> str:
     pat = re.compile(rf"(^## {re.escape(header)}\n)(.*?)(?=^## |\Z)", re.M | re.S)
     if not pat.search(text):
         raise RuntimeError(f"section not found: {header}")
+    nl = chr(10)
+    if not new_body.endswith(nl + nl):
+        new_body = new_body.rstrip(nl) + nl + nl
     return pat.sub(lambda _: new_body, text, count=1)
 
 
@@ -180,7 +183,7 @@ AI 会自动完成安装、验证并跑通第一条数据。喜欢手动：`pyth
 
 ## 也可以走官网一键配置
 
-官网「MCP 服务」页可按平台勾选（支持多选）生成配置指令。若你的 AI 已按官网指令配置了原生 MCP 服务（服务名与本包同名：`sorftime-{key}`），本技能自动作为知识层（平台工具文档 / 参数坑 / 选品方法论 / 批量脚本）配合使用，**无需再配 Key**。
+官网「MCP 服务」页可按平台勾选（支持多选）生成配置指令。若你的 AI 已按官网指令配置了原生 MCP 服务（服务名与本包同名：`sorftime-{key}`），本技能自动作为知识层（平台工具文档 / 参数坑 / 选品方法论）配合使用，数据查询走原生 MCP 工具，**无需再配 Key**；要用批量脚本（选品引擎/监控）时再跑一次 `install.py` 配本地 Key 即可。
 
 ## 常用
 
@@ -214,7 +217,7 @@ def write_platform_matrix(dst: Path, platform_key: str) -> None:
     out = (
         "# 工具清单（本包视角）\n\n"
         f"> **本包只接 {PLATFORMS[platform_key]['display']} 端点（`{target}`）**，下表只含本端点工具。\n"
-        "> 其他平台各有独立端点与技能包（`sorftime-amazon/walmart/shopee/temu/tiktok/ali1688/social`），"
+        f"> 其他平台各有独立端点与技能包（{"、".join(PLATFORMS[k]["pkg"] for k in PLATFORMS if k != platform_key)}），"
         "同一把 Account-SK 全端点通用——需要时安装对应平台包或总技能 `sorftime-seller-agent`，不要用本包直接调其他平台的工具。\n\n"
         + body
     )

@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体（全平台版）。MCP 已按平台拆分为 8 个独立端点：Amazon / Walmart / Shopee / TikTok Shop / TEMU / 1688 / Mercado Libre / 海外社媒(Reddit·Quora)，本技能走兼容根端点（全平台合一）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、隐赚指数、低价商城类目分析、卖家搜索、listing 内容拆解、配额查询。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家。 / Sorftime Seller Agent (all-platform edition) — cross-border e-commerce data analysis & product sourcing intelligence across 8 marketplace endpoints. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/低价商城/卖家分析/查卖家/配额/余额/quota/credits/选品/找产品/跨境卖家/MCP 接入 sorftime"
-version: 5.0.0
+version: 5.0.1
 user-invocable: true
 metadata:
   openclaw:
@@ -51,7 +51,7 @@ metadata:
 | **A · 宿主原生 MCP**（官网一键配置） | 用户已按官网「MCP 服务」页配置 `sorftime-<平台>` 系服务 | 宿主原生 MCP 工具（服务名如 `sorftime-amazon`/`sorftime-shopee`，streamableHttp） | 官网生成配置时已在 URL 里，**无需再配** |
 | **B · 技能内置 bridge**（默认） | 未配置原生服务 | 本技能 bridge（端点解析：环境变量 `SORFTIME_MCP_URL` > `config/platform.json` > 根端点） | `~/.sorftime/env` 或环境变量（install.py 一键写入） |
 
-**分流判定**：检测到宿主已配置 `mcp.sorftime.com` 系原生 MCP 服务（典型名 `sorftime-<platform>`、`sorftime-mcp`）→ 走通道 A：本技能自动作为**知识层**（平台工具文档 / 参数 traps / 选品方法论 / 批量脚本）配合，不再要求用户跑 install.py 或重复提供 Key；未检测到 → 通道 B，走 Onboarding。官方指令原文（含单选/多选形态）与执行细则 → `references/onboarding.md`。
+**分流判定**：检测到宿主已配置 `mcp.sorftime.com` 系原生 MCP 服务（典型名 `sorftime-<platform>`、`sorftime-mcp`）→ 走通道 A：本技能自动作为**知识层**（平台工具文档 / 参数 traps / 选品方法论）配合，数据查询经宿主原生 MCP 工具，不再要求用户跑 install.py 或重复提供 Key；未检测到 → 通道 B，走 Onboarding。**例外**：批量脚本（picker/monitor 等）内部经技能 bridge 取数，仍需本地 Key——用户要用脚本功能时再跑 `install.py` 配一次即可。官方指令原文（含单选/多选形态）与执行细则 → `references/onboarding.md`。
 
 ## 🔴 Red Lines（红线，不随模型能力松绑）
 

@@ -1,4 +1,8 @@
 # Changelog
+## [2026-10-10] — v5.0.1（通道 A 范围修正）
+
+- 通道 A（原生 MCP）知识层范围澄清：数据查询走宿主原生 MCP 工具；批量脚本（picker/monitor 等）内部经技能 bridge 取数、仍需本地 Key（届时跑一次 install.py 即可）——SKILL.md/onboarding/平台包 README 三处同步
+- onboarding 连通性验证示例改用全端点通用的 `common_usage_query`；平台包工具清单「其他平台」改为动态生成（含 mercado、不含本包）；生成节间空行修正；README 官方下载位表述如实（换链进行中）
 ## [2026-10-10] — v5.0.0（双通道接入 + 官网一键配置对齐 + 安装体验重做）
 
 - **双通道数据接入（自动分流）**：通道 A=宿主原生 MCP 服务（官网 MCP 页「一键配置」配置的 `sorftime-<平台>` 系 streamableHttp 服务，服务名与平台包同名）——已配置时本技能自动作为知识层（平台文档/参数 traps/选品方法论/批量脚本），不再要求重复配 Key；通道 B=技能内置 bridge（默认，install.py 一键配置）。官方指令原文（单选/多选两种形态）入 `references/onboarding.md`
