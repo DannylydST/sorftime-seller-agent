@@ -126,8 +126,6 @@ def gate_e2e(pack_script=None):
                     zo.write(Path(root, f), rel)
         must = ["SKILL.md", "requirements.txt", ".env.example", "scripts/install.py", "scripts/healthcheck.py",
                 "scripts/sorftime_bridge.py", "references/tool-matrix.md"]
-        if (ROOT / "config" / "channel.json").exists():
-            must.append("config/channel.json")  # channel edition only
         with zipfile.ZipFile(zp) as z:
             got = set(z.namelist())
             z.extractall(tmp / "x")

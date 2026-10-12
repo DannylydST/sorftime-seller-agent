@@ -19,8 +19,8 @@ Detect（用户消息里已有 Key？或环境已配置？）
 |------|------|
 | 注册（中国大陆） | https://open.sorftime.com → 手机号（+86）/ 微信扫码（新客免费体验），人民币付费 |
 | 注册（国际） | https://open-intl.sorftime.com → 邮箱 / Google 注册（免费体验额度），PayPal / Stripe 付费 |
-| 登录方式 | 手机号（+86）/ 微信扫码 / 短信验证码 |
-| MCP Key（Account-SK）位置 | 登录后 → 「MCP 服务」页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
+| 登录方式 | 大陆站：手机号（+86）/ 微信扫码 / 短信验证码；国际站：邮箱验证码 / Google 账号 |
+| MCP Key（Account-SK）位置 | 登录注册站 → 「MCP 服务」页（大陆 open.sorftime.com/mcp / 国际 open-intl.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
 | MCP 服务地址 | mcp.sorftime.com（streamable HTTP；按平台拆分端点见 SKILL.md 端点表） |
 | 付费 | 大陆站人民币：MCP 通用资源包 ￥99/3万次/1月 起（或连续包月）；国际站 PayPal / Stripe。两站配额均全端点共享 |
 | 客服 | 官网「联系客服」或微信客服 |
