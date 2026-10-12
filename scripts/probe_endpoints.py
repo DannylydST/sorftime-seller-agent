@@ -231,7 +231,7 @@ def write_matrix(results):
             lines += [f"探测失败：{entry.get('error', 'unknown')}", ""]
             continue
         if entry.get("pseudo_auth"):
-            lines += ["⚠️ 返回伪工具（Key 疑似被轮换失效）——到 open.sorftime.com/mcp 重新复制 Key", ""]
+            lines += ["⚠️ 返回伪工具（Key 疑似被轮换失效）——到你注册站的 MCP 页（open.sorftime.com/mcp 或 open-intl.sorftime.com/mcp）重新复制 Key", ""]
             continue
         lines += [f"工具数：{entry['count']}", "", "| 工具 | 必填参数 |", "|---|---|"]
         for t in entry.get("_full", []):

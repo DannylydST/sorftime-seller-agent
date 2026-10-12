@@ -168,7 +168,7 @@ def check_mcp_connection() -> dict:
                 "name": "Sorftime Connect",
                 "status": "error",
                 "detail": f"Key rejected (pseudo tools returned: {pseudo[:1]})",
-                "fix": "Key likely rotated — re-copy the Account-SK from open.sorftime.com/mcp",
+                "fix": "Key likely rotated — re-copy the Account-SK from the MCP page of your registration site (open.sorftime.com/mcp or open-intl.sorftime.com/mcp)",
             }
         detail = f"OK — {url} · {len(tools)} tools"
         quota_tool = next((t for t in ("common_usage_query", "usage_query") if t in names), None)

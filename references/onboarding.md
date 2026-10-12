@@ -13,7 +13,7 @@ Detect（用户消息里已有 Key？或环境已配置？）
 
 判定顺序：先看用户是否已给出 Key（形如 API key 的字符串），再看环境变量 `SORFTIME_MCP_KEY` / `~/.sorftime/env` 是否已配置，任一成立即走「有 Key」分支。注册引导**仅在 Key 缺失时出现**。
 
-## 平台注册与账号（国内站）
+## 平台注册与账号
 
 | 项目 | 说明 |
 |------|------|
@@ -83,8 +83,8 @@ python3 scripts/install.py
 
 | 症状 | 处置 |
 |------|------|
-| Key 报 401/NotAuthorization | 引导到「MCP 服务」页重新复制（key 可能被轮换——服务端轮换后 tools/list 会返回伪工具名，已发生过） |
-| test_passed: false | 检查 Key 是否复制完整（常见缺尾字符）→ 确认账号已开通 MCP 服务 → 检查到 open.sorftime.com 的网络 |
+| Key 报 401/NotAuthorization | 引导到注册站「MCP 服务」页重新复制（open/open-intl 两站均可；key 可能被轮换——服务端轮换后 tools/list 会返回伪工具名，已发生过） |
+| test_passed: false | 检查 Key 是否复制完整（常见缺尾字符）→ 确认账号已开通 MCP 服务 → 检查到注册站（open.sorftime.com / open-intl.sorftime.com）的网络 |
 | Windows 提示 `python3` 不是内部或外部命令 | Windows 命令行用 `python scripts/install.py`（python3 仅类 Unix 系统存在） |
 | bridge 启动报 "MCP 2.x is not yet supported" / AttributeError | `python3 scripts/install.py --upgrade` 降级到 MCP 1.x（版本锁见 references/gotchas.md） |
 | "Schema is X days old" | 工具清单随包发布；跑 `python3 scripts/sync_manager.py` 同步，或更新技能包 |

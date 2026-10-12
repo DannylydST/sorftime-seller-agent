@@ -1,5 +1,9 @@
 # Changelog
 
+## [2026-10-12] — v5.1.2（双站口径收尾）
+
+- 五处运行时取 Key 提示（healthcheck 401 修复指引 / bridge 首次提示 / mcp_client 两处 ONBOARDING 提示 / probe 伪工具提示）与 onboarding 排障表两行改双站口径；onboarding 节标题去「（国内站）」限定
+
 ## [2026-10-12] — v5.1.1（去渠道化补全：运行时脚本文案）
 
 - install.py 无 Key 引导与 healthcheck.py 修复指引的运行时输出改双站官方口径（原渠道链接与归属话术随包分发，审核 P0 修复）；tests/full_gate.py 清 channel.json 死分支；onboarding 注册表「登录方式/MCP Key 位置」两行补双站口径

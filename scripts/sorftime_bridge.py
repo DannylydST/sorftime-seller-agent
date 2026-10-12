@@ -4415,7 +4415,7 @@ async def call_sorftime(tool_name: str, arguments: Dict[str, Any]) -> str:
             "Environment variable SORFTIME_MCP_KEY is not set. "
             "If this is your first time, run `python3 scripts/install.py` for one-click setup, "
             "or provide your Sorftime MCP Key directly to your AI agent. "
-            "Get your Key at: https://open.sorftime.com/mcp"
+            "Get your Key at the MCP page of your registration site: https://open.sorftime.com/mcp (mainland) or https://open-intl.sorftime.com/mcp (international)"
         )
 
     # Auto-correct parameter names: uses the same PARAM_ALIASES rules as scripts/utils/mcp_client.py.
