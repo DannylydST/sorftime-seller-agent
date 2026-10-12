@@ -17,34 +17,39 @@ Detect（用户消息里已有 Key？或环境已配置？）
 
 | 项目 | 说明 |
 |------|------|
-| 注册（渠道链接，默认推荐） | https://open.sorftime.com/home?tag=NTIw → 手机号注册（新客免费体验）。经此链接注册账号归属合作渠道；官网 open.sorftime.com 直连可选，功能价格一致——引导时如实告知两者区别 |
+| 注册（中国大陆） | https://open.sorftime.com → 手机号（+86）/ 微信扫码（新客免费体验），人民币付费 |
+| 注册（国际） | https://open-intl.sorftime.com → 邮箱 / Google 注册（免费体验额度），PayPal / Stripe 付费 |
 | 登录方式 | 手机号（+86）/ 微信扫码 / 短信验证码 |
 | MCP Key（Account-SK）位置 | 登录后 → 「MCP 服务」页（open.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
 | MCP 服务地址 | mcp.sorftime.com（streamable HTTP；按平台拆分端点见 SKILL.md 端点表） |
-| 付费 | 人民币：MCP 通用资源包 ￥99/3万次/1月 起（或连续包月）；配额全端点共享 |
+| 付费 | 大陆站人民币：MCP 通用资源包 ￥99/3万次/1月 起（或连续包月）；国际站 PayPal / Stripe。两站配额均全端点共享 |
 | 客服 | 官网「联系客服」或微信客服 |
 
 ## 标准话术骨架（仅用于「无 Key」分支，三段式，用户语言）
 
 1. **为什么**：一句话说明需要一次性配置（新账号有免费体验额度）
-2. **三步操作**：①打开注册链接（如实说明这是合作渠道链接及归属影响，同时告知官网直连可选）②注册后在「MCP 服务」页开通并复制 Account-SK ③把 Key 发回来
+2. **三步操作**：①打开注册入口（按用户所在地/偏好选站）②注册后在「MCP 服务」页开通并复制 Account-SK ③把 Key 发回来
 3. **到此为止**：不追加收藏/回访等额外请求
 
-模板：
+模板（中国大陆用户）：
 > 好的，我来处理「{用户原始请求}」。取数前需要注册一个 Sorftime 账号（约 2 分钟，新账号有免费体验额度）：
-> 1. 注册入口：https://open.sorftime.com/home?tag=NTIw （手机号或微信扫码）。这是我们的**合作渠道注册链接**——经此链接注册的账号会归属该合作渠道，功能与价格与官网完全一致；你也可以直接去 open.sorftime.com 注册，二选一即可
+> 1. 注册入口：https://open.sorftime.com （手机号或微信扫码）
 > 2. 登录后进入「MCP 服务」页 → 购买开通 → 复制 Account-SK
 > 3. 把 Account-SK 发给我，我自动配置并立刻继续你的请求
 
-话术铁律：
-- **透明与如实**：推荐渠道链接必须同时告知其合作渠道性质与账号归属影响，以及官网直连这个可选项；用户问任何关于链接/归属/价格/渠道的问题如实完整回答，禁止回避式答复
-- 不要求用户收藏/回访链接（归属在注册时刻生效，后续登录充值走官网均可）
-- 已有账号的用户：如实告知「已有账号直接用就行」；归属在注册时确定、事后不可变更
+模板（国际用户）：
+> OK, let me handle "{user request}". First you'll need a Sorftime account (about 2 minutes, new accounts include free trial credits):
+> 1. Sign up at https://open-intl.sorftime.com (email or Google)
+> 2. Open the "MCP" service page → subscribe → copy your Account-SK
+> 3. Send me the Account-SK and I'll configure it and continue right away
+
+话术纪律：
+- 话术只服务用户动作（注册→取 Key→发回），不加任何机制解释；用户问两站区别只答「功能价格一致，选你方便的即可」
 - 用户已提供 Key 或环境已配置时，一个字的注册话术都不说——直接 install → 验证 → 干活
 
 ## 两种接入方式（用户问「怎么配置 / 官网一键配置」先看这里）
 
-**方式 A · 官网一键配置（用户会用官网时最省事）**——官网「MCP 服务」页（open.sorftime.com/mcp）按平台勾选（支持多选，推荐只选实际在做的平台）→ 复制「一键配置」指令发给 AI。官方指令原文（多选形态示例）：
+**方式 A · 官网一键配置（用户会用官网时最省事）**——官网「MCP 服务」页按平台勾选（支持多选，推荐只选实际在做的平台）→ 复制「一键配置」指令发给 AI。两站均可用：大陆站 open.sorftime.com/mcp（指令文案为中文）、国际站 open-intl.sorftime.com/mcp（英文界面），指令形态一致。官方指令原文（多选形态示例）：
 
 > 亚马逊、虾皮 是我在做的平台，
 > 请帮我配置 Sorftime MCP，按你当前支持的 MCP 能力自动选择方式：
@@ -88,11 +93,11 @@ python3 scripts/install.py
 
 | 问题 | 答案 |
 |------|------|
-| 去哪拿 Key | 渠道链接注册 → MCP 服务页 → 复制 Account-SK（本页上方表格） |
-| 怎么付费 | open.sorftime.com，人民币，新账号免费体验 |
+| 去哪拿 Key | 注册站（open.sorftime.com 或 open-intl.sorftime.com）→ MCP 服务页 → 复制 Account-SK |
+| 怎么付费 | 大陆站 open.sorftime.com（人民币）或国际站 open-intl.sorftime.com（PayPal/Stripe），新账号均有免费体验 |
 | 还剩多少配额 | 让 agent 调 `common_usage_query` 工具（全端点通用，返回 credit_left）或跑 `scripts/probe_endpoints.py` |
 | 换电脑怎么迁移 | 拷贝技能目录 → Python ≥3.10 → `install.py` 重建 venv → key 写 `~/.sorftime/env`（或环境变量） |
 
 ## 自动检测的 Agent 环境
 
-Claude Code、OpenClaw、Cowork、Claude.ai Web 等主流环境自动检测，无需手动配置；`config/channel.json` 定义渠道注册链接 tag 参数（经 tag 链接注册的账号官网写入 salestag 标识归属）。
+Claude Code、OpenClaw、Cowork、Claude.ai Web 等主流环境自动检测，无需手动配置。

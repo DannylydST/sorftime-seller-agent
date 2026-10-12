@@ -12,7 +12,7 @@
                               workflows；tiktok 包另带 rankings/categories JSON）
   scripts/                    按平台适用面过滤的脚本（专属引擎只进对应平台包；端点路由由 config/platform.json 预置）
   config/platform.json        {"platform","mcp_url","display_name"} ← get_mcp_url() 读这里
-  SECURITY.md/LICENSE/CHANGELOG.md/requirements.txt/.env.example/config/channel.json
+  SECURITY.md/LICENSE/CHANGELOG.md/requirements.txt/.env.example
 
 排除项：.venv/.git/.sync-backups/tests/__pycache__/build/dist 本身/.env（key 永不进包）。
 产出清单：dist/manifest-<version>.json（包名/大小/sha256/工具数）。
@@ -196,7 +196,7 @@ README_TEMPLATE = """# Sorftime {display} 卖家助手 · 快速上手
 | OpenClaw | active workspace 的 skills 目录 |
 | 其他支持 Agent Skills 的工具 | 该工具的技能目录（其文档会写） |
 
-**第 2 步 · 拿到你的 Key（Account-SK）**——注册/登录 https://open.sorftime.com （新账号有免费体验额度）→ 进入「MCP 服务」页 → 购买开通 → 复制 **Account-SK**。一次开通全平台可用，配额按实际调用次数计。
+**第 2 步 · 拿到你的 Key（Account-SK）**——注册入口两站任选：大陆 https://open.sorftime.com （手机号/微信，人民币）或国际 https://open-intl.sorftime.com （邮箱/Google，PayPal/Stripe），新账号均有免费体验 → 进入「MCP 服务」页 → 购买开通 → 复制 **Account-SK**。一次开通全平台可用，配额按实际调用次数计。
 
 **第 3 步 · 让 AI 配好**——直接对你的 AI 说：
 
@@ -317,7 +317,6 @@ def build(platform_key: str, version: str) -> dict:
         json.dumps({"platform": platform_key, "mcp_url": p["url"],
                     "display_name": p["display"]}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
-    shutil.copy2(ROOT / "config" / "channel.json", cfg / "channel.json")
 
     for name in ["SECURITY.md", "LICENSE", "CHANGELOG.md", "requirements.txt", ".env.example"]:
         src = ROOT / name

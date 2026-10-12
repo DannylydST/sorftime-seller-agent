@@ -1,4 +1,10 @@
 # Changelog
+## [2026-10-12] — v5.1.0（官方直营定位：去渠道化 + 国内外双站注册）
+
+- **官方直营定位确立**：移除渠道合作版全套引导（渠道注册链接 tag、归属说明话术、透明铁律、config/channel.json）——注册话术只服务用户动作（注册→取 Key→发回），两站区别只答「功能价格一致，选你方便的」
+- **双站注册**：大陆站 open.sorftime.com（手机号/微信、人民币）与国际站 open-intl.sorftime.com（邮箱/Google、PayPal/Stripe）并列为官方入口——SKILL.md/onboarding.md（双版三步话术模板）/README.md/平台包 README 模板四处同步
+- 方式 A（官网一键配置）补两站 MCP 页标注（open/open-intl 各有 /mcp，指令形态一致）
+- 话术纪律更新：不加机制解释；已有 Key 时零注册话术
 ## [2026-10-10] — v5.0.3（包内文档与脚本过滤对齐）
 
 - 平台包 SKILL.md Scripts 表按平台过滤（包内不含的引擎不再列出，杜绝死命令）；tiktok 包补 discover_tiktok 入口行
