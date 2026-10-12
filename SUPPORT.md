@@ -2,7 +2,7 @@
 
 ## Free Trial
 
-新账号在 [open.sorftime.com](https://open.sorftime.com) 注册可免费体验。手机号注册（支持微信扫码登录），无需信用卡。
+新账号免费体验：大陆站 [open.sorftime.com](https://open.sorftime.com)（手机号/微信注册，人民币）；国际站 [open-intl.sorftime.com](https://open-intl.sorftime.com)（email/Google 注册，PayPal/Stripe）。两站功能价格一致。
 
 ## Documentation
 
