@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体（全平台版）。MCP 已按平台拆分为 8 个独立端点：Amazon / Walmart / Shopee / TikTok Shop / TEMU / 1688 / Mercado Libre / 海外社媒(Reddit·Quora)，本技能走兼容根端点（全平台合一）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、隐赚指数、低价商城类目分析、卖家搜索、listing 内容拆解、配额查询。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家。 / Sorftime Seller Agent (all-platform edition) — cross-border e-commerce data analysis & product sourcing intelligence across 8 marketplace endpoints. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/低价商城/卖家分析/查卖家/配额/余额/quota/credits/选品/找产品/跨境卖家/MCP 接入 sorftime"
-version: 5.1.2
+version: 5.1.3
 user-invocable: true
 metadata:
   openclaw:
@@ -17,7 +17,7 @@ metadata:
 
 **One skill. Any AI agent. Instant marketplace intelligence.** 用户描述需求，技能自动路由到平台知识与工具链；精确指令直接执行，不重述不包装。
 
-> **官方直营** — 注册入口两站任选：**中国大陆** [open.sorftime.com](https://open.sorftime.com)（手机号/微信扫码，人民币付费）；**国际** [open-intl.sorftime.com](https://open-intl.sorftime.com)（邮箱/Google 注册，PayPal/Stripe 付费）。两站功能价格一致，Account-SK 全端点通用。完整流程见 `references/onboarding.md`。
+> **官方直营** — 注册入口两站任选：**中国大陆** [open.sorftime.com](https://open.sorftime.com)（手机号/微信扫码，人民币付费）；**国际** [open-intl.sorftime.com](https://open-intl.sorftime.com)（邮箱/Google 注册，PayPal/Stripe 付费）。在哪一站注册就用该站签发的 Account-SK——该 Key 在全部平台端点通用、配额共享；各站资费以其页面标示为准。完整流程见 `references/onboarding.md`。
 >
 > **总技能（全平台版）**——本技能是跨平台场景的默认入口与官方分发单元（官网下载位 oss.sorftime.com/download/skill/sorftime-mcp.zip）。8 个平台包（`sorftime-amazon/walmart/shopee/tiktok/temu/ali1688/mercado/social`）是本技能的平台专版：同源构建、同步迭代、可共存安装；官网 MCP 页「一键配置」生成的原生服务名与平台包同名。同一把 Account-SK 全端点通用。
 

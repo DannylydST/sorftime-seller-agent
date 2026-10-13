@@ -1,18 +1,17 @@
 # Changelog
 
-## [2026-10-12] — v5.1.2（双站口径收尾）
+## [2026-10-13] — v5.1.3（双站表述精度）
 
-- 五处运行时取 Key 提示（healthcheck 401 修复指引 / bridge 首次提示 / mcp_client 两处 ONBOARDING 提示 / probe 伪工具提示）与 onboarding 排障表两行改双站口径；onboarding 节标题去「（国内站）」限定
+- 双站注册表述统一为已验证口径：在哪一站注册就使用该站签发的 Account-SK，该 Key 在全部平台端点通用、配额共享，各站资费以其页面标示为准（SKILL.md / SUPPORT.md / onboarding.md 三处同步）
+- onboarding 话术纪律补充：资费差异问题引导用户查看各站页面，不代官方作价格承诺
 
-## [2026-10-12] — v5.1.1（去渠道化补全：运行时脚本文案）
+## [2026-10-12] — v5.1.0 ~ v5.1.2（官方直营 · 国内外双站注册）
 
-- install.py 无 Key 引导与 healthcheck.py 修复指引的运行时输出改双站官方口径（原渠道链接与归属话术随包分发，审核 P0 修复）；tests/full_gate.py 清 channel.json 死分支；onboarding 注册表「登录方式/MCP Key 位置」两行补双站口径
-## [2026-10-12] — v5.1.0（官方直营定位：去渠道化 + 国内外双站注册）
+- **官方直营注册入口**：注册话术只服务用户动作（注册 → 取 Account-SK → 交回配置），不含机制解释；已有 Key 时不出现任何注册引导
+- **双站并列**：大陆站 open.sorftime.com（手机号/微信扫码，人民币付费）与国际站 open-intl.sorftime.com（邮箱/Google 注册，PayPal/Stripe 付费）——SKILL.md、onboarding.md（国内中文/国际英文两版三步话术）、README.md、平台包 README 全部同步
+- **官网一键配置双站可用**：两站均设「MCP 服务」页（/mcp），按平台勾选生成的配置指令形态一致
+- **全链路口径一致**：安装引导、体检修复提示、首次运行提示、未配置提示、伪工具（Key 轮换）提示、排障表——凡涉及注册或取 Key 之处均为双站口径
 
-- **官方直营定位确立**：移除渠道合作版全套引导（渠道注册链接 tag、归属说明话术、透明铁律、config/channel.json）——注册话术只服务用户动作（注册→取 Key→发回），两站区别只答「功能价格一致，选你方便的」
-- **双站注册**：大陆站 open.sorftime.com（手机号/微信、人民币）与国际站 open-intl.sorftime.com（邮箱/Google、PayPal/Stripe）并列为官方入口——SKILL.md/onboarding.md（双版三步话术模板）/README.md/平台包 README 模板四处同步
-- 方式 A（官网一键配置）补两站 MCP 页标注（open/open-intl 各有 /mcp，指令形态一致）
-- 话术纪律更新：不加机制解释；已有 Key 时零注册话术
 ## [2026-10-10] — v5.0.3（包内文档与脚本过滤对齐）
 
 - 平台包 SKILL.md Scripts 表按平台过滤（包内不含的引擎不再列出，杜绝死命令）；tiktok 包补 discover_tiktok 入口行

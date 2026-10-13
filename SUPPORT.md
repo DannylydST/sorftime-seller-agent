@@ -2,7 +2,7 @@
 
 ## Free Trial
 
-新账号免费体验：大陆站 [open.sorftime.com](https://open.sorftime.com)（手机号/微信注册，人民币）；国际站 [open-intl.sorftime.com](https://open-intl.sorftime.com)（email/Google 注册，PayPal/Stripe）。两站功能价格一致。
+新账号免费体验：大陆站 [open.sorftime.com](https://open.sorftime.com)（手机号/微信注册，人民币）；国际站 [open-intl.sorftime.com](https://open-intl.sorftime.com)（email/Google 注册，PayPal/Stripe）。在哪一站注册就用该站签发的 Account-SK；各站资费以其页面标示为准。
 
 ## Documentation
 
