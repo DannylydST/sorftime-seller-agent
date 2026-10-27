@@ -1,14 +1,15 @@
 # Sorftime MCP Tool Matrix（按平台端点分组）
 
-> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-10-10 16:20:57
+> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-10-27 17:38:07
 
 ## root(全平台兼容) — https://mcp.sorftime.com
 
-工具数：118（2026-10-27 实测；walmart/shopee 各 +1 product_content、amazon +3 专利工具）
+工具数：118
 
 | 工具 | 必填参数 |
 |---|---|
 | `shopee_get_favorite_keyword` | — |
+| `patent_search_from_keyword` | keyword |
 | `ali1688_category_tree` | — |
 | `tiktok_shop_search` | — |
 | `potential_product` | — |
@@ -25,11 +26,13 @@
 | `shopee_product_trend` | product_id |
 | `shopee_del_favorite_keyword` | keyword |
 | `tiktok_category_request` | node_id |
+| `walmart_product_content` | product_id |
 | `shopee_shop_request` | shop_id |
 | `shopee_product_search` | — |
 | `ali1688_product_request` | product_id |
 | `category_tree` | — |
 | `temu_category_tree` | — |
+| `shopee_product_content` | product_id |
 | `category_name_search` | category_name |
 | `category_search_from_top_node` | top_node |
 | `tiktok_category_tree` | — |
@@ -39,8 +42,8 @@
 | `walmart_category_tree` | — |
 | `category_trend` | node_id |
 | `product_search_from_name` | name |
-| `get_time` | — |
 | `tiktok_category_search_from_name` | name |
+| `get_time` | — |
 | `product_content` | asin |
 | `ali1688_similar_product` | search_name |
 | `keyword_extends` | keyword |
@@ -49,11 +52,12 @@
 | `temu_product_request` | product_id |
 | `reddit_comment_request` | reddit_id |
 | `walmart_product_detail_by_product_id` | product_id |
-| `temu_product_search` | — |
+| `temu_product_search` | node_id, brand, seller_name |
 | `favorite_keyword` | keyword |
 | `shopee_category_tree` | — |
 | `keyword_list` | — |
 | `reddit_post_request` | reddit_id |
+| `patent_request` | publication_no |
 | `walmart_product_search_from_name` | name |
 | `reddit_post_search` | search_name |
 | `product_traffic_terms` | asin |
@@ -66,6 +70,7 @@
 | `get_favorite_keyword_dict` | — |
 | `similar_product_feature` | product_name |
 | `product_search` | — |
+| `patent_search_from_image` | image, query_mode |
 | `tiktok_category_trend` | node_id |
 | `category_products` | node_id |
 | `walmart_favorite_keyword` | keyword |
@@ -128,21 +133,21 @@
 
 | 工具 | 必填参数 |
 |---|---|
+| `patent_request` | publication_no |
 | `product_traffic_terms` | asin |
 | `category_tree` | — |
 | `category_trend` | node_id |
 | `product_content` | asin |
 | `product_customers_say` | asin |
 | `search_categories_broadly` | — |
-| `quora_question_request` | quora_id |
 | `del_favorite_keyword` | keyword |
 | `product_trend` | asin |
 | `similar_product_feature` | product_name |
+| `patent_search_from_image` | image, query_mode |
 | `keyword_trend` | keyword |
 | `product_report` | asin |
 | `product_ranking_trend_by_keyword` | asin, keyword |
 | `keyword_search_results` | keyword |
-| `quora_question_search` | search_name |
 | `product_variations` | asin |
 | `category_search_from_top_node` | top_node |
 | `common_usage_query` | — |
@@ -157,6 +162,7 @@
 | `category_report` | node_id |
 | `category_name_search` | category_name |
 | `product_search_from_history` | — |
+| `patent_search_from_keyword` | keyword |
 | `keyword_list_from_history` | date |
 | `product_search` | — |
 | `category_search_from_product_name` | product_name |
@@ -170,11 +176,10 @@
 | `potential_product` | — |
 | `product_search_from_name` | name |
 | `favorite_keyword` | keyword |
-| `quora_answer_request` | quora_id |
 
 ## walmart — https://mcp.sorftime.com/walmart
 
-工具数：19
+工具数：20
 
 | 工具 | 必填参数 |
 |---|---|
@@ -182,6 +187,7 @@
 | `walmart_get_favorite_keyword_dict` | — |
 | `walmart_keyword_list` | rank_min, rank_max |
 | `walmart_category_tree` | — |
+| `walmart_product_content` | product_id |
 | `walmart_product_variation_sales_by_product_id` | product_id |
 | `walmart_keyword_extends` | keyword |
 | `walmart_get_favorite_keyword` | — |
@@ -200,7 +206,7 @@
 
 ## shopee — https://mcp.sorftime.com/shopee
 
-工具数：17
+工具数：18
 
 | 工具 | 必填参数 |
 |---|---|
@@ -218,6 +224,7 @@
 | `shopee_get_favorite_keyword_dict` | — |
 | `shopee_category_trend` | — |
 | `shopee_get_favorite_keyword` | — |
+| `shopee_product_content` | product_id |
 | `shopee_category_tree` | — |
 | `shopee_keyword_search` | — |
 | `shopee_category_request` | node_id |
@@ -257,7 +264,7 @@
 | `temu_category_tree` | — |
 | `temu_category_request` | node_id |
 | `temu_product_request` | product_id |
-| `temu_product_search` | — |
+| `temu_product_search` | node_id, brand, seller_name |
 | `temu_category_search` | — |
 | `temu_category_search_from_name` | name |
 | `temu_shop_request` | shop_id |
@@ -271,13 +278,13 @@
 
 | 工具 | 必填参数 |
 |---|---|
-| `ali1688_category_tree` | — |
 | `ali1688_product_search` | — |
-| `ali1688_product_request` | product_id |
-| `ali1688_similar_product` | search_name |
+| `ali1688_category_tree` | — |
 | `ali1688_product_search_from_image` | image_url |
-| `ali1688_product_variations` | product_id |
 | `common_usage_query` | — |
+| `ali1688_similar_product` | search_name |
+| `ali1688_product_variations` | product_id |
+| `ali1688_product_request` | product_id |
 
 ## mercado — https://mcp.sorftime.com/mercado
 

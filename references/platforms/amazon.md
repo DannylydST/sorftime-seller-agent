@@ -54,7 +54,7 @@
 | `patent_search_from_image` | `image` | 图搜外观专利（450 积分，最多 100 条）。`image` 支持 URL/Base64（产品占比>80%、干净背景、jpg/png<4M）；**`query_mode` 实际必传**（1=智能联想推荐 / 2=以图搜图；不传返回 `null`，2026-10-27 实测）；可选 `country`/`loc_class_no`（如 `["07-01"]`）/`legal_status`/`product_keyword`/`applicant` |
 | `patent_request` | `publication_no` | 专利详情（150 积分；同一公告号同账号**首次查询计费、后续免费**）。返回：Title/PublicationNo/PatentType(4=外观)/Country/Inventor/Applicant/LOC·IPC·CPC·GBC 分类/LegalStatus/ApplicationDate/PublicationDate/EstimatedExpiryDate/Photos[] |
 
-> 专利数据源=智慧芽（zhihuiya）图链；`publication_no` 从两个搜索工具的结果里取（如 `CN308683395S`）。Quora 三件套不在本端点（见 social）。
+> 专利图链域名=zhihuiya.com（智慧芽，实测）；`publication_no` 从两个搜索工具的结果里取（如 `CN308683395S`）。「首次查询计费、后续免费」出自 MCP 工具描述原文。Quora 三件套不在本端点（见 social）。
 
 ### 隐赚指数（Sorftime 独家方法论）
 `potential_product` — 全参数可选：**不传 `search_name` = 全品类跨排名**，传 = 关键词域内。返回 `potential_index` 综合评分（相对值：低门槛×低广告×高利润加权）。⚠️ 高分不豁免类目风险——食品/保健/电子合规/季节品/授权品牌必须对照四层风险咨询制亮牌（永不隐藏，见 `references/scripts-guide.md`）。完整方法论 → `references/methodology-cards/tactical/invisible-profit.md`

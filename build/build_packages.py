@@ -84,7 +84,7 @@ PLATFORMS = {
         "url": "https://mcp.sorftime.com/social", "tools": 7,
         "desc": "Sorftime 海外社媒舆情助手 —— Reddit + Quora 市场情报智能体（专属端点 mcp.sorftime.com/social，7 工具）。Reddit 产品词/品牌词搜帖、正文与热度、评论痛点挖掘；Quora 三件套本端点与根端点提供（amazon 端点已不挂载）。将任意 MCP 接入的 AI agent 变成海外社媒情报专家。",
         "trigger": "reddit/海外社媒/社媒舆情/老外怎么说/买家讨论/痛点挖掘/reddit 帖子/品牌舆情",
-        "related": "痛点挖掘方法论 `references/methodology-cards/comprehensive/review-mining.md`；Quora 与 amazon 端点双侧同挂",
+        "related": "痛点挖掘方法论 `references/methodology-cards/comprehensive/review-mining.md`；Quora 三件套本端点与根端点提供（amazon 端点已不挂载，2026-10-27 实测）",
     },
 }
 
@@ -178,7 +178,7 @@ def gen_platform_skill(platform: dict, version: str, platform_key: str) -> str:
 
 
 def get_version_sync_note(tools: int) -> str:
-    return "2026-10-10 实测" if tools else "端点已上线，工具随账号数据包开通"
+    return "2026-10-27 实测" if tools else "端点已上线，工具随账号数据包开通"
 
 
 README_TEMPLATE = """# Sorftime {display} 卖家助手 · 快速上手

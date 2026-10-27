@@ -6,7 +6,13 @@
 - **Walmart / Shopee 各 +1 `*_product_content`**（单品内容素材：全图链接/产品属性/变体详情；Shopee 另含店铺优惠券与店铺位置）——walmart 19→20、shopee 17→18
 - **Amazon `product_trend` 新增 `DailySalesVolume`（日销量趋势）枚举**；`keyword_search_results` 补 `position_type`（0 全部/1 自然位/2 仅广告）
 - **Quora 归属修正**：amazon 端点已不再挂载 Quora 三件套（2026-10-27 实测），文档改为 social + 根端点提供
-- 全平台根端点工具数 113→**118**；9 个平台包同源重建
+- 全平台根端点工具数 113→**118**；8 个平台包同源重建
+
+## [2026-10-27] — v5.2.1（发布后审核修正）
+
+- `references/tool-matrix.md` 用 `scripts/probe_endpoints.py --matrix` 从服务端**重新再生**（此前仅改了计数行、表格仍为旧工具集：amazon 段残留 Quora 三件套、缺专利；walmart/shopee 仍 19/17）——现全段与活端点一致（root 118 / amazon 43 / walmart 20 / shopee 18 …）
+- builder 两处：social 包 `related` 残留「Quora 与 amazon 端点双侧同挂」改为现口径；平台包同步注记的实测日期由写死的 2026-10-10 改为 2026-10-27
+- 专利口径补出处：数据源=智慧芽（专利图链域名 zhihuiya.com 实测）；「同一公告号同账号首次查询计费、后续免费」出自 MCP 工具描述原文
 
 ## [2026-10-13] — v5.1.3（双站表述精度）
 
