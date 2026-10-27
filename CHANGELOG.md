@@ -8,6 +8,10 @@
 - **Quora 归属修正**：amazon 端点已不再挂载 Quora 三件套（2026-10-27 实测），文档改为 social + 根端点提供
 - 全平台根端点工具数 113→**118**；8 个平台包同源重建
 
+## [2026-10-27] — v5.2.2（根 SKILL 两处漏改）
+
+- 根 SKILL.md（手维护，非 builder 生成）：工具数注记 2026-10-10→2026-10-27；Quora 口径改为「根端点也提供，amazon 端点已不挂载」（与 amazon.md 一致）
+
 ## [2026-10-27] — v5.2.1（发布后审核修正）
 
 - `references/tool-matrix.md` 用 `scripts/probe_endpoints.py --matrix` 从服务端**重新再生**（此前仅改了计数行、表格仍为旧工具集：amazon 段残留 Quora 三件套、缺专利；walmart/shopee 仍 19/17）——现全段与活端点一致（root 118 / amazon 43 / walmart 20 / shopee 18 …）
