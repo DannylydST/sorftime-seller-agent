@@ -8,6 +8,10 @@
 - **Quora 归属修正**：amazon 端点已不再挂载 Quora 三件套（2026-10-27 实测），文档改为 social + 根端点提供
 - 全平台根端点工具数 113→**118**；8 个平台包同源重建
 
+## [2026-10-27] — v5.2.3（根 SKILL 路由行残留）
+
+- 根 SKILL.md「Platform Knowledge Router」Amazon 行去掉 Quora、补专利检索（与 44 行及 amazon.md 口径一致）
+
 ## [2026-10-27] — v5.2.2（根 SKILL 两处漏改）
 
 - 根 SKILL.md（手维护，非 builder 生成）：工具数注记 2026-10-10→2026-10-27；Quora 口径改为「根端点也提供，amazon 端点已不挂载」（与 amazon.md 一致）

@@ -2,7 +2,7 @@
 name: sorftime-seller-agent
 description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体（全平台版）。MCP 已按平台拆分为 8 个独立端点：Amazon / Walmart / Shopee / TikTok Shop / TEMU / 1688 / Mercado Libre / 海外社媒(Reddit·Quora)，本技能走兼容根端点（全平台合一）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、隐赚指数、低价商城类目分析、卖家搜索、listing 内容拆解、配额查询。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家。 / Sorftime Seller Agent (all-platform edition) — cross-border e-commerce data analysis & product sourcing intelligence across 8 marketplace endpoints. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/低价商城/卖家分析/查卖家/配额/余额/quota/credits/选品/找产品/跨境卖家/MCP 接入 sorftime"
-version: 5.2.2
+version: 5.2.3
 user-invocable: true
 metadata:
   openclaw:
@@ -71,7 +71,7 @@ metadata:
 
 动手前先读目标平台知识页（工具表 / 参数 traps / 数据坑 / 站点枚举，全在那里）：
 
-- **Amazon**（含 Quora、低价商城类目、卖家搜索）→ `references/platforms/amazon.md`
+- **Amazon**（含低价商城类目、卖家搜索、专利检索）→ `references/platforms/amazon.md`
 - **Walmart** → `references/platforms/walmart.md` ｜ **Shopee** → `references/platforms/shopee.md`
 - **TikTok Shop** → `references/platforms/tiktok.md` ｜ **TEMU** → `references/platforms/temu.md`
 - **1688 采购源** → `references/platforms/ali1688.md`（亚马逊+1688 联动选品：Amazon 卖什么 → 1688 找货，两页都读）
