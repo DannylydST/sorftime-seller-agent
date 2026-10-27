@@ -1,6 +1,6 @@
 # Walmart Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/walmart` · 19 tools（18 业务 + 通用配额）· 业务工具纯前缀（`walmart_*`）
+> Endpoint: `https://mcp.sorftime.com/walmart` · 20 tools（19 业务 + 通用配额）· 业务工具纯前缀（`walmart_*`）
 > 站点：**US 单一市场**——18 个业务工具无一有 `site` 参数， marketplace 硬编码美国，不需要也不接受站点参数；通用配额工具 `common_usage_query` 跨端点同款
 
 ## Parameter Traps（调错第一原因，先看这张表）
@@ -25,10 +25,11 @@
 | `walmart_keyword_extends` | `keyword` | 拓展词挖掘；`page` 可选 |
 | `walmart_keyword_search_from_name` | `name` | 按名搜词；`page` 可选 |
 
-### 产品（6）
+### 产品（7）
 | 工具 | 必填 | 说明 |
 |------|------|------|
 | `walmart_product_search_from_name` | `name` | 按产品名搜索；`page` 可选 |
+| `walmart_product_content` ⭐新（2026-10-27） | `product_id` | 单品内容素材：全图链接/产品属性/变体详情。listing 拆解与竞品素材分析用 |
 | `walmart_product_detail_by_product_id` | `product_id` | 产品详情（价格/销量/评分/品牌/属性），**含 `NodeTree` 字段可反查类目**：`["类目名","node_id","Date","Rank"]` |
 | `walmart_product_traffic_terms` | `product_id` | 流量词反查（含 `ShowShare` 曝光份额 + `RecentlyPosition`/`OrganicPosition`/`AdPosition` 排名位）；`page` 可选 |
 | `walmart_product_trend_by_product_id` | `product_id` | 历史趋势。**`trend_type` 虽为 optional 但不传服务端报错**（"please enter the trend type to query"）；枚举：`SalesVolume`/`SalesAmount`/`Price`/`Rank`/`Reviews`/`Star`/`Unknown`。**不能用中文**；`begin_date`/`end_date` 可选 |

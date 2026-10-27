@@ -4,7 +4,7 @@
 
 ## root(全平台兼容) — https://mcp.sorftime.com
 
-工具数：113
+工具数：118（2026-10-27 实测；walmart/shopee 各 +1 product_content、amazon +3 专利工具）
 
 | 工具 | 必填参数 |
 |---|---|

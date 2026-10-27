@@ -1,5 +1,13 @@
 # Changelog
 
+## [2026-10-27] — v5.2.0（专利三件套 + Product Content + 日销量趋势）
+
+- **Amazon 新增专利三件套**（2026-10-27 活 schema + CLI 真数据双验）：`patent_search_from_image`（图搜外观专利，450 积分/最多 100 条；`query_mode` 实际必传，不传返回 null）/ `patent_search_from_keyword`（关键词/公司名/人名/公告号/申请号查专利，60 积分/单页≤30，可按专利类型·法律状态·国家·申请人·分类过滤）/ `patent_request`（专利详情，150 积分、同一公告号同账号首次计费后续免费）；数据源智慧芽（zhihuiya），字段含 LOC/IPC/CPC/GBC 分类、法律状态、申请/公开/预估到期日与专利图组
+- **Walmart / Shopee 各 +1 `*_product_content`**（单品内容素材：全图链接/产品属性/变体详情；Shopee 另含店铺优惠券与店铺位置）——walmart 19→20、shopee 17→18
+- **Amazon `product_trend` 新增 `DailySalesVolume`（日销量趋势）枚举**；`keyword_search_results` 补 `position_type`（0 全部/1 自然位/2 仅广告）
+- **Quora 归属修正**：amazon 端点已不再挂载 Quora 三件套（2026-10-27 实测），文档改为 social + 根端点提供
+- 全平台根端点工具数 113→**118**；9 个平台包同源重建
+
 ## [2026-10-13] — v5.1.3（双站表述精度）
 
 - 双站注册表述统一为已验证口径：在哪一站注册就使用该站签发的 Account-SK，该 Key 在全部平台端点通用、配额共享，各站资费以其页面标示为准（SKILL.md / SUPPORT.md / onboarding.md 三处同步）

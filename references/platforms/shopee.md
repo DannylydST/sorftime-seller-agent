@@ -1,6 +1,6 @@
 # Shopee Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/shopee` · 17 tools（16 业务 + 通用配额）· 业务工具纯前缀（`shopee_*`），另有跨端点通用配额工具 `common_usage_query`
+> Endpoint: `https://mcp.sorftime.com/shopee` · 18 tools（17 业务 + 通用配额）· 业务工具纯前缀（`shopee_*`），另有跨端点通用配额工具 `common_usage_query`
 > Site param: `site` — 8 站点：**`VN ID SG TH MY TW PH BR`**（schema 默认值拼写为 `Unknown`）。⭐2026-10-10 实测：**不传 `site` 报 "Please specify the site"；传非法站点（如 `US`）报 "An error occurred"；传合法站点（如 `PH`）有真数据**——`site` 虽在多数工具标 optional，实际**必传合法枚举值**
 
 ## Parameter Traps（调错第一原因，先看这张表）
@@ -25,12 +25,13 @@
 
 收藏夹：`shopee_favorite_keyword`(`keyword`，可选 `dict`) · `shopee_get_favorite_keyword`（可选 `dict`/`page`） · `shopee_get_favorite_keyword_dict`（可选 `page`） · `shopee_change_favorite_keyword`(`keyword`,`to_dict`，可选 `from_dict`) · `shopee_del_favorite_keyword`(`keyword`，可选 `dict`)。**收藏夹工具返回裸数组**（非 `{doc,data}` 包裹）：add 返回 "Favorite succeeded" 的 error 格式 JSON；`get_favorite_keyword_dict` 返回 `["清单名",...]`；`get_favorite_keyword` 返回 `["关键词",...]`
 
-### 产品（4）
+### 产品（5）
 | 工具 | 必填 | 说明 |
 |------|------|------|
 | `shopee_product_search` | —（全可选，`site` 实际必传） | 多维筛选产品搜索：`node_id`、价格区间 `price_range_min/max`、月销区间 `month_sale_volume_range_min/max`、上架日期 `online_date_range_min/max`、评分/评论数/变体数区间、**`shop_location`**（1=本土店 2=跨境店——跨境可行性分析利器，对比两值下的结果量）、`shop_type`、`page`。**响应嵌套：`data.products[]`** 不是 `data[]` |
 | `shopee_product_search_from_name` | `name` | 按产品名搜索；`site`/`page` |
 | `shopee_product_request` | `product_id` | 产品详情；`site` |
+| `shopee_product_content` ⭐新（2026-10-27） | `product_id` | 单品内容素材：全图链接/店铺优惠券/店铺位置；`site` |
 | `shopee_product_trend` | `product_id` | 历史趋势；`query_start`/`query_end` 圈定范围（不传默认约 1 年）；`site` |
 
 ### 类目（4）

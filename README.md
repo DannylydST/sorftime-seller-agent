@@ -18,7 +18,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)]()
-[![MCP](https://img.shields.io/badge/MCP-113%20tools%20%C2%B7%208%20endpoints-orange)]()
+[![MCP](https://img.shields.io/badge/MCP-118%20tools%20%C2%B7%208%20endpoints-orange)]()
 [![Free Trial](https://img.shields.io/badge/Trial-Free-brightgreen)]()
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenClaw-purple)]()
 
@@ -30,7 +30,7 @@
 
 ## 🆕 What's New (October 10, 2026) — v4.0.0: Platform-Split Endpoints & Modular Packages
 
-- **🌐 MCP split by platform (8 endpoints)**: Sorftime MCP now ships one endpoint per platform — `mcp.sorftime.com/{amazon|walmart|shopee|tiktok|temu|1688|mercado|social}` — with the root endpoint kept as the all-platform compatible default (113 tools = exact union of the 8 endpoints, verified 2026-10-10). One Account-SK works across all endpoints with a shared quota. Endpoint resolution: `SORFTIME_MCP_URL` env > per-package `config/platform.json` > root.
+- **🌐 MCP split by platform (8 endpoints)**: Sorftime MCP now ships one endpoint per platform — `mcp.sorftime.com/{amazon|walmart|shopee|tiktok|temu|1688|mercado|social}` — with the root endpoint kept as the all-platform compatible default (118 tools = exact union of the 8 endpoints, verified 2026-10-27). One Account-SK works across all endpoints with a shared quota. Endpoint resolution: `SORFTIME_MCP_URL` env > per-package `config/platform.json` > root.
 - **📦 Platform packages via a single-source builder**: `build/build_packages.py` generates 8 self-contained skill packages (`sorftime-amazon`, `sorftime-walmart`, `sorftime-shopee`, `sorftime-tiktok`, `sorftime-temu`, `sorftime-ali1688`, `sorftime-mercado`, `sorftime-social`) from this repo — each with a platform-tailored hot layer, its own platform knowledge page, and a pre-wired endpoint. Fix once, rebuild all.
 - **🧠 Knowledge restructured for progressive disclosure**: SKILL.md shrinks 58KB → 7KB; onboarding scripts, per-platform tool tables, gotchas, content QA and script guides move into `references/` (8 new `references/platforms/*.md` pages). The model reads what it needs, when it needs it.
 - **🎵 TikTok suite fully renamed server-side (breaking)**: the old 7 tools are retired; 18 new tools ship under the `*_request` / `*_search_from_name` convention — now with product search (30+ filters) plus five new search families: **shops, authors, brands, videos, hashtags**. Same-args renames are auto-remapped; behavior-changed tools fail cleanly instead of mis-calling.

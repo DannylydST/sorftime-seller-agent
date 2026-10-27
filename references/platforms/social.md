@@ -3,7 +3,7 @@
 > Endpoint: `https://mcp.sorftime.com/social` · 7 tools（Reddit 三件套 + Quora 三件套 + 通用配额工具）
 > 实测有真数据（2026-10-10：`reddit_post_search {"search_name":"yoga mat"}` ✅；social 端点 Quora 三件套由服务端当日下发）
 
-**边界说明**：Reddit 三件套与 Quora 三件套都在本端点；**Quora 三件套与 amazon 端点双侧同挂**（两侧任选其一调用，配额共享）。
+**边界说明**：Reddit 三件套与 Quora 三件套都在本端点；Quora 三件套另在根端点（兼容）提供。**2026-10-27 实测 amazon 端点已不再挂载 Quora 三件套**（此前说法作废）。
 
 ## Parameter Traps（调错第一原因，先看这张表）
 
@@ -24,7 +24,7 @@
 | `reddit_post_request` | `reddit_id` | 取帖子正文与热度数据（返回字段以实测为准——**待实测**） |
 | `reddit_comment_request` | `reddit_id` | 取帖子评论（`page` 分页，每页 20 条；返回字段**待实测**） |
 
-### Quora 三件套（与 amazon 端点双侧同挂）
+### Quora 三件套（本端点 + 根端点）
 | 工具 | 必填 | 说明 |
 |------|------|------|
 | `quora_question_search` | `search_name` | 按关键词/品牌搜 Quora 问题，可选 `post_type`/`main_sentiment`/`page`；拿到问题 ID 供下游两件使用 |
