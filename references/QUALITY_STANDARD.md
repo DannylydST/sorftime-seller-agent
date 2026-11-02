@@ -177,7 +177,7 @@ playwright-cli eval "() => document.querySelectorAll('.el-checkbox__label').leng
 playwright-cli eval "() => document.querySelectorAll('button').length"
 
 # 4. Check whether checkpoint exists
-ls ~/.claude/skills/sorftime-explorer/progress/amazon/{module}/checkpoint.json
+ls ~/.zcode/skills/sorftime-explorer/progress/amazon/{module}/checkpoint.json
 ```
 
 ---

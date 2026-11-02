@@ -28,6 +28,17 @@
 
 ---
 
+## 🆕 What's New (October 27, 2026) — v5.0–v5.2: Patent Suite, Dual-Site Registration & Dual-Channel Access
+
+- **⚖️ Amazon patent suite (v5.2.0)**: 3 live-verified tools — `patent_search_from_image` (design-patent image search, up to 100 hits with similarity scoring; `query_mode` effectively required), `patent_search_from_keyword` (keyword / company / inventor / publication-number search, filterable by patent type, legal status, country, applicant, classification), and `patent_request` (full detail by publication number — LOC/IPC/CPC classes, legal status, dates, patent figures). Data via Zhihuiya.
+- **📦 Richer product & keyword data (v5.2.0)**: `walmart_product_content` and `shopee_product_content` (complete image sets, attributes, variant details; Shopee adds shop coupons & location); `product_trend` gains `DailySalesVolume`; `keyword_search_results` gains `position_type` (all / organic / ads only). Root endpoint: 113 → **118 tools**.
+- **🌏 Official dual-site registration (v5.1)**: mainland [open.sorftime.com](https://open.sorftime.com) (phone/WeChat, CNY) and international [open-intl.sorftime.com](https://open-intl.sorftime.com) (email/Google, PayPal/Stripe). Register on whichever site suits you — its Account-SK works across ALL platform endpoints with a shared quota; each site's pricing is shown on its own page.
+- **🔌 Dual-channel data access (v5.0.0)**: Channel A — one-key configure the official `sorftime-<platform>` native MCP services from the site's MCP 服务 page; this skill auto-detects them and serves as the knowledge layer (data queries need no local key; batch scripts still want a one-time key via install.py). Channel B — the built-in bridge via `install.py` (default). Auto-routed; no config juggling.
+- **🧱 Same-source platform packages**: all 8 platform editions rebuild from this single repo (fix once, rebuild all); each ships a user README with a 3-step quickstart.
+- **[Full changelog →](CHANGELOG.md)**
+
+---
+
 ## 🆕 What's New (October 10, 2026) — v4.0.0: Platform-Split Endpoints & Modular Packages
 
 - **🌐 MCP split by platform (8 endpoints)**: Sorftime MCP now ships one endpoint per platform — `mcp.sorftime.com/{amazon|walmart|shopee|tiktok|temu|1688|mercado|social}` — with the root endpoint kept as the all-platform compatible default (118 tools = exact union of the 8 endpoints, verified 2026-10-27). One Account-SK works across all endpoints with a shared quota. Endpoint resolution: `SORFTIME_MCP_URL` env > per-package `config/platform.json` > root.
