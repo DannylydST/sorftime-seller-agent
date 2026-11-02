@@ -4,6 +4,47 @@
 
 ---
 
+## 0. Branch Sync Targets (every release — run `scripts/sync_github.sh`)
+
+| Target | Rule |
+|--------|------|
+| `origin/channel` | The release branch — every commit lands here first |
+| `origin/main` | Default branch = public-facing mirror of channel. Keep fast-forwarded: `git push origin channel:main` |
+| `cn/channel` | China mirror repo (`sorftime-seller-agent-cn`) — same commits |
+| `cn/main` | Default branch of the cn repo — mirror of channel |
+
+One command after each release: `bash scripts/sync_github.sh` (pushes all 4 targets, prints remote tips — all four must point at the same commit).
+
+If `origin/main` rejects the push (protected branch, non-fast-forward): lift protection → push → restore the exact rules.
+
+```bash
+gh api -X DELETE repos/DannylydST/sorftime-seller-agent/branches/main/protection
+git push origin channel:main --force-with-lease
+gh api -X PUT repos/DannylydST/sorftime-seller-agent/branches/main/protection --input - <<'EOF'
+{
+  "required_pull_request_reviews": {
+    "dismiss_stale_reviews": true,
+    "require_code_owner_reviews": true,
+    "required_approving_review_count": 1
+  },
+  "required_status_checks": null,
+  "restrictions": null,
+  "enforce_admins": false,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "required_linear_history": false,
+  "required_conversation_resolution": false,
+  "lock_branch": false,
+  "block_creations": false,
+  "allow_fork_syncing": false
+}
+EOF
+```
+
+Known failure mode (2026-10-27): a release pushed only `origin/channel`; `origin/main` stayed 44 commits behind showing an August README, and the cn repo missed 4 commits — marketplace and GitHub diverged silently. The 4-target script closes this gap.
+
+---
+
 ## 1. README.md
 
 | Check | Detail |
@@ -19,6 +60,7 @@
 | Check | Detail |
 |-------|--------|
 | ☐ Description | Max **350 chars**. Must mention key differentiators. Update via `gh repo edit` |
+| ☐ Counts in description | Tool/endpoint counts must match the current release (e.g. `118 MCP tools · 8 platform endpoints`) |
 | ☐ Topics/Tags | Max **20**. When adding a new tag, remove one. Evaluate overlap (e.g. `product-research` vs `amazon-product-research`) |
 | ☐ Website/Homepage | Should point to `open.sorftime.com` |
 
