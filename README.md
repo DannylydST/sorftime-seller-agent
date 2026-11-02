@@ -318,6 +318,7 @@ Yes — all 14 Amazon sites: US, GB, DE, FR, IT, ES, JP, CA, MX, AU, IN, AE, SA,
 ## 📖 Documentation
 
 - **[Wiki](https://github.com/DannylydST/sorftime-seller-agent/wiki)** — Platform guides, methodology cards, troubleshooting, glossary
+- **[📚 Product Selection Methodology (Multi-Platform)](https://github.com/DannylydST/sorftime-seller-agent/wiki/Product-Selection-Methodology)** — The unified seller framework: shelf vs. interest-based e-commerce, resource screen → full-set ranking → validation → 3-scenario ROI → build → monitor & exit. Includes live Nov 2026 cases (iPhone 17 case CPC 2.2× in 19 months, Covers 10× seasonality, TikTok cleaning-brush creator matrices)
 - **[⚡ Loop & Goal Templates](https://github.com/DannylydST/sorftime-seller-agent/wiki/Loop-Goal-Command-Templates)** — 58 automation recipes: daily monitoring, weekly refresh, monthly Hidden Profit Index scans
 - **[SKILL.md](SKILL.md)** — Full skill reference: tools, parameters, gotchas
 - **[CHANGELOG.md](CHANGELOG.md)** — Version history
