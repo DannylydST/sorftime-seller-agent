@@ -3,7 +3,7 @@
 > Endpoint: `https://mcp.sorftime.com/social` · 7 tools（Reddit 三件套 + Quora 三件套 + 通用配额工具）
 > 实测有真数据（2026-10-10：`reddit_post_search {"search_name":"yoga mat"}` ✅；social 端点 Quora 三件套由服务端当日下发）
 
-**边界说明**：Reddit 三件套与 Quora 三件套都在本端点；Quora 三件套另在根端点（兼容）提供。**2026-10-27 实测 amazon 端点已不再挂载 Quora 三件套**（此前说法作废）。
+**边界说明**：Reddit 三件套与 Quora 三件套都在本端点；Quora 三件套另在根端点（兼容）提供。amazon 端点 2026-10-27 曾摘下 Quora 三件套、**2026-11-06 重新挂载**（服务端口径有反复，以当日实测为准）。
 
 ## Parameter Traps（调错第一原因，先看这张表）
 

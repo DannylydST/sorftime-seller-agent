@@ -82,9 +82,9 @@ PLATFORMS = {
     "social": {
         "pkg": "sorftime-social", "display": "海外社媒（Reddit·Quora）", "doc": "social.md",
         "url": "https://mcp.sorftime.com/social", "tools": 7,
-        "desc": "Sorftime 海外社媒舆情助手 —— Reddit + Quora 市场情报智能体（专属端点 mcp.sorftime.com/social，7 工具）。Reddit 产品词/品牌词搜帖、正文与热度、评论痛点挖掘；Quora 三件套本端点与根端点提供（amazon 端点已不挂载）。将任意 MCP 接入的 AI agent 变成海外社媒情报专家。",
+        "desc": "Sorftime 海外社媒舆情助手 —— Reddit + Quora 市场情报智能体（专属端点 mcp.sorftime.com/social，7 工具）。Reddit 产品词/品牌词搜帖、正文与热度、评论痛点挖掘；Quora 三件套本端点、根端点与 amazon 端点均提供。将任意 MCP 接入的 AI agent 变成海外社媒情报专家。",
         "trigger": "reddit/海外社媒/社媒舆情/老外怎么说/买家讨论/痛点挖掘/reddit 帖子/品牌舆情",
-        "related": "痛点挖掘方法论 `references/methodology-cards/comprehensive/review-mining.md`；Quora 三件套本端点与根端点提供（amazon 端点已不挂载，2026-10-27 实测）",
+        "related": "痛点挖掘方法论 `references/methodology-cards/comprehensive/review-mining.md`；Quora 三件套本端点、根端点与 amazon 端点均提供（amazon 端点 2026-11-06 重新挂载，以当日实测为准）",
     },
 }
 
@@ -177,8 +177,12 @@ def gen_platform_skill(platform: dict, version: str, platform_key: str) -> str:
     return text
 
 
+# 每次发版更新为当次 probe_endpoints 实测日期（防止分发物携带过期溯源日期）
+PROBE_DATE = "2026-11-06"
+
+
 def get_version_sync_note(tools: int) -> str:
-    return "2026-10-27 实测" if tools else "端点已上线，工具随账号数据包开通"
+    return f"{PROBE_DATE} 实测" if tools else "端点已上线，工具随账号数据包开通"
 
 
 README_TEMPLATE = """# Sorftime {display} 卖家助手 · 快速上手

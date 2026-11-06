@@ -46,7 +46,7 @@
 
 ### 卖家搜索 ⭐新（工具已上线，数据铺量中——2026-10-10 三种合法参数实测均返回 "No data available"，如实告知用户）
 `seller_search` — 40+ 筛选维度（中国卖家/产品数/品牌数/Top10 占坑数/月销/FBM 数/A+ 数/无品牌占比/均价/评论/变体/在线日期/feedback），`node_id` 圈定类目。`seller_search_from_name`(`query_type` 1=按卖家名 2=按品牌)。
-`seller_detail`(`name` 必填,`query_type`,`amz_seller_site`) — 卖家档案详情：名称/国籍地区/上线时间/在售商品数/feedback 数量/省市等（**2026-11-06 上线，数据铺量中——多组入参实测 "No data available"，如实告知用户**）。
+`seller_detail`(`name` 必填,`query_type`,`amz_seller_site`) — 卖家档案详情：名称/国籍地区/上线时间/在售商品数/feedback 数量/省市等（计费以实际扣减为准，工具描述未标注；**2026-11-06 上线，数据铺量中——多组入参实测 "No data available"，如实告知用户**）。
 
 ### 专利（3）⭐新（2026-10-27 上线；外观侵权排查/竞品专利组合分析）
 | 工具 | 必填 | 说明 |
