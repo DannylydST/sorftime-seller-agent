@@ -32,8 +32,8 @@ DIST = ROOT / "build" / "dist"
 PLATFORMS = {
     "amazon": {
         "pkg": "sorftime-amazon", "display": "Amazon", "doc": "amazon.md",
-        "url": "https://mcp.sorftime.com/amazon", "tools": 43,
-        "desc": "Sorftime Amazon 卖家助手 —— 亚马逊市场情报与选品智能体（平台专属端点 mcp.sorftime.com/amazon，43 工具）。产品搜索与 ASIN 深拆、关键词研究、类目报告、隐赚指数选品⭐、低价商城(Haul)类目分析、卖家搜索、Listing 内容与 A+ 拆解、专利检索（关键词/图搜/详情）、配额查询。将任意 MCP 接入的 AI agent 变成 Amazon 市场情报专家。",
+        "url": "https://mcp.sorftime.com/amazon", "tools": 48,
+        "desc": "Sorftime Amazon 卖家助手 —— 亚马逊市场情报与选品智能体（平台专属端点 mcp.sorftime.com/amazon，48 工具）。产品搜索与 ASIN 深拆、关键词研究（含自然语言找词）、类目报告、隐赚指数选品⭐、低价商城(Haul)类目分析、卖家搜索与档案、Listing 内容与 A+ 拆解、专利检索（关键词/图搜/详情）、Quora 问答情报、配额查询。将任意 MCP 接入的 AI agent 变成 Amazon 市场情报专家。",
         "trigger": "亚马逊/amazon/ASIN/asin 拆解/选品/找产品/爆款/竞品/竞品分析/关键词/流量词/反查关键词/长尾词/类目/类目分析/市场分析/蓝海/隐赚指数/利润测算/FBA 费用/差评/买家痛点/评论分析/低价商城/Haul/卖家分析/查卖家/专利/侵权排查/外观专利/配额/余额/listing 审计/A+ 内容/product research/keyword research/competitor analysis/blue ocean",
         "related": "1688 找货联动见 `references/platforms/ali1688.md`（本包未含，需全平台版或 sorftime-ali1688 包）；跨平台价差卡（Amazon×Walmart）见方法论卡",
     },
