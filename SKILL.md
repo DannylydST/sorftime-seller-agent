@@ -1,8 +1,8 @@
 ---
 name: sorftime-seller-agent
-description: "Sorftime 卖家助手 —— 跨境电商数据分析与选品智能体（全平台版）。MCP 已按平台拆分为 8 个独立端点：Amazon / Walmart / Shopee / TikTok Shop / TEMU / 1688 / Mercado Libre / 海外社媒(Reddit·Quora)，本技能走兼容根端点（全平台合一）。覆盖选品、竞品分析、关键词优化、利润测算、ASIN 深度拆解、蓝海发现、隐赚指数、低价商城类目分析、卖家搜索、listing 内容拆解、配额查询。将任意接入 MCP 的 AI agent（Claude Code、Cursor、WorkBuddy、OpenClaw 等）变成 Sorftime 市场情报专家。 / Sorftime Seller Agent (all-platform edition) — cross-border e-commerce data analysis & product sourcing intelligence across 8 marketplace endpoints. Turns any MCP-enabled AI agent into a Sorftime marketplace intelligence expert."
+description: "Activate for Sorftime 卖家助手: 跨境电商数据分析与选品（8 个 MCP 端点），Amazon/Shopee/Temu/TikTok 等平台选品、竞品、市场分析任务。"
 trigger: "sorftime/seller agent/product sourcing/competitor analysis/keyword research/profit calculation/market intelligence/ASIN 拆解/blue ocean/隐赚指数/review mining/listing audit/go-no-go/选品/找产品/找爆款/产品调研/产品发现/市场机会/市场分析/市场全景/类目分析/值不值得做/竞品/竞品分析/分析这个ASIN/反查关键词/流量词/关键词研究/长尾词/算利润/利润测算/盈亏平衡/FBA费用/看这个产品值不值得做/差评/买家痛点/蓝海/蓝海类目/市场缺口/选品工作流/跨境电商/亚马逊选品/低价商城/卖家分析/查卖家/配额/余额/quota/credits/选品/找产品/跨境卖家/MCP 接入 sorftime"
-version: 5.2.3
+version: 5.2.4
 user-invocable: true
 metadata:
   openclaw:
@@ -29,8 +29,8 @@ metadata:
 
 | 平台 | 端点 | 工具数 | 平台知识 |
 |------|------|:---:|------|
-| 全平台（兼容，本包默认） | `https://mcp.sorftime.com` | 118 | — |
-| Amazon | `https://mcp.sorftime.com/amazon` | 43 | `references/platforms/amazon.md` |
+| 全平台（兼容，本包默认） | `https://mcp.sorftime.com` | 120 | — |
+| Amazon | `https://mcp.sorftime.com/amazon` | 48 | `references/platforms/amazon.md` |
 | Walmart | `https://mcp.sorftime.com/walmart` | 20 | `references/platforms/walmart.md` |
 | Shopee | `https://mcp.sorftime.com/shopee` | 18 | `references/platforms/shopee.md` |
 | TikTok Shop | `https://mcp.sorftime.com/tiktok` | 19 | `references/platforms/tiktok.md` |
@@ -40,8 +40,8 @@ metadata:
 | 海外社媒（Reddit·Quora） | `https://mcp.sorftime.com/social` | 7 | `references/platforms/social.md` |
 
 - 端点解析优先级：环境变量 `SORFTIME_MCP_URL` > 技能包 `config/platform.json`（平台分发包预置）> 根端点。**同一把 Account-SK 全端点通用，配额共享**。
-- 工具数=2026-10-27 实测（服务端持续上新，以 `scripts/probe_endpoints.py` 实测为准）；各端点均含通用配额工具 `common_usage_query`，mercado 业务工具按账号数据包开通中。
-- social 端点含 Reddit 三件套 + Quora 三件套；根端点也提供 Quora 三件套（**amazon 端点已不挂载**，2026-10-27 实测）。
+- 工具数=2026-11-06 实测（服务端持续上新，以 `scripts/probe_endpoints.py` 实测为准）；各端点均含通用配额工具 `common_usage_query`，mercado 业务工具按账号数据包开通中。
+- social 端点含 Reddit 三件套 + Quora 三件套；根端点与 amazon 端点均提供 Quora 三件套（服务端 2026-10-27 曾从 amazon 摘下、2026-11-06 重新挂回，以当日实测为准）。
 - 配额查询：`common_usage_query`（全端点通用，无参数，返回 `credit_left`）。用户问「还剩多少次/配额/余额」直接调它。
 
 ## 🔌 数据通道（两种接入，自动分流）

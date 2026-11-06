@@ -1,10 +1,10 @@
 # Sorftime MCP Tool Matrix（按平台端点分组）
 
-> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-10-27 17:38:07
+> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-11-06 09:06:10
 
 ## root(全平台兼容) — https://mcp.sorftime.com
 
-工具数：118
+工具数：120
 
 | 工具 | 必填参数 |
 |---|---|
@@ -76,6 +76,7 @@
 | `walmart_favorite_keyword` | keyword |
 | `walmart_keyword_detail` | keyword |
 | `temu_category_search` | — |
+| `seller_detail` | name |
 | `walmart_keyword_list` | rank_min, rank_max |
 | `category_low_price_search` | — |
 | `shopee_category_search_from_name` | name |
@@ -102,6 +103,7 @@
 | `walmart_keyword_extends` | keyword |
 | `product_detail` | asin |
 | `category_keywords` | node_id |
+| `keyword_search_from_name` | — |
 | `quora_answer_request` | quora_id |
 | `category_report` | node_id |
 | `temu_product_trend` | product_id |
@@ -129,17 +131,19 @@
 
 ## amazon — https://mcp.sorftime.com/amazon
 
-工具数：43
+工具数：48
 
 | 工具 | 必填参数 |
 |---|---|
 | `patent_request` | publication_no |
 | `product_traffic_terms` | asin |
 | `category_tree` | — |
+| `seller_detail` | name |
 | `category_trend` | node_id |
 | `product_content` | asin |
 | `product_customers_say` | asin |
 | `search_categories_broadly` | — |
+| `quora_question_request` | quora_id |
 | `del_favorite_keyword` | keyword |
 | `product_trend` | asin |
 | `similar_product_feature` | product_name |
@@ -148,6 +152,7 @@
 | `product_report` | asin |
 | `product_ranking_trend_by_keyword` | asin, keyword |
 | `keyword_search_results` | keyword |
+| `quora_question_search` | search_name |
 | `product_variations` | asin |
 | `category_search_from_top_node` | top_node |
 | `common_usage_query` | — |
@@ -163,6 +168,7 @@
 | `category_name_search` | category_name |
 | `product_search_from_history` | — |
 | `patent_search_from_keyword` | keyword |
+| `keyword_search_from_name` | — |
 | `keyword_list_from_history` | date |
 | `product_search` | — |
 | `category_search_from_product_name` | product_name |
@@ -176,6 +182,7 @@
 | `potential_product` | — |
 | `product_search_from_name` | name |
 | `favorite_keyword` | keyword |
+| `quora_answer_request` | quora_id |
 
 ## walmart — https://mcp.sorftime.com/walmart
 
@@ -183,26 +190,26 @@
 
 | 工具 | 必填参数 |
 |---|---|
-| `walmart_product_search_from_name` | name |
-| `walmart_get_favorite_keyword_dict` | — |
-| `walmart_keyword_list` | rank_min, rank_max |
-| `walmart_category_tree` | — |
+| `walmart_keyword_search_results` | keyword |
 | `walmart_product_content` | product_id |
-| `walmart_product_variation_sales_by_product_id` | product_id |
-| `walmart_keyword_extends` | keyword |
-| `walmart_get_favorite_keyword` | — |
-| `walmart_del_favorite_keyword` | keyword |
-| `walmart_keyword_detail` | keyword |
-| `common_usage_query` | — |
-| `walmart_favorite_keyword` | keyword |
 | `walmart_category_search_from_name` | name |
 | `walmart_category_report_by_node_id` | node_id |
-| `walmart_keyword_search_results` | keyword |
-| `walmart_keyword_search_from_name` | name |
+| `walmart_category_tree` | — |
+| `walmart_product_detail_by_product_id` | product_id |
+| `walmart_product_search_from_name` | name |
 | `walmart_product_trend_by_product_id` | product_id |
+| `walmart_favorite_keyword` | keyword |
+| `walmart_keyword_detail` | keyword |
+| `walmart_keyword_list` | rank_min, rank_max |
+| `walmart_get_favorite_keyword` | — |
+| `walmart_keyword_search_from_name` | name |
 | `walmart_change_favorite_keyword` | keyword, to_dict |
 | `walmart_product_traffic_terms` | product_id |
-| `walmart_product_detail_by_product_id` | product_id |
+| `walmart_get_favorite_keyword_dict` | — |
+| `walmart_product_variation_sales_by_product_id` | product_id |
+| `walmart_keyword_extends` | keyword |
+| `walmart_del_favorite_keyword` | keyword |
+| `common_usage_query` | — |
 
 ## shopee — https://mcp.sorftime.com/shopee
 
@@ -210,24 +217,24 @@
 
 | 工具 | 必填参数 |
 |---|---|
-| `shopee_shop_request` | shop_id |
-| `shopee_product_search_from_name` | name |
-| `shopee_keyword_relation_results` | — |
-| `shopee_del_favorite_keyword` | keyword |
-| `shopee_favorite_keyword` | keyword |
-| `shopee_change_favorite_keyword` | keyword, to_dict |
-| `shopee_product_search` | — |
-| `common_usage_query` | — |
-| `shopee_product_request` | product_id |
-| `shopee_product_trend` | product_id |
-| `shopee_category_search_from_name` | name |
-| `shopee_get_favorite_keyword_dict` | — |
-| `shopee_category_trend` | — |
 | `shopee_get_favorite_keyword` | — |
+| `shopee_change_favorite_keyword` | keyword, to_dict |
+| `shopee_product_request` | product_id |
+| `shopee_favorite_keyword` | keyword |
+| `shopee_product_trend` | product_id |
+| `shopee_del_favorite_keyword` | keyword |
+| `shopee_shop_request` | shop_id |
+| `shopee_product_search` | — |
 | `shopee_product_content` | product_id |
-| `shopee_category_tree` | — |
-| `shopee_keyword_search` | — |
 | `shopee_category_request` | node_id |
+| `shopee_category_tree` | — |
+| `shopee_category_search_from_name` | name |
+| `shopee_keyword_relation_results` | — |
+| `shopee_keyword_search` | — |
+| `shopee_product_search_from_name` | name |
+| `shopee_category_trend` | — |
+| `common_usage_query` | — |
+| `shopee_get_favorite_keyword_dict` | — |
 
 ## tiktok — https://mcp.sorftime.com/tiktok
 
@@ -261,16 +268,16 @@
 
 | 工具 | 必填参数 |
 |---|---|
-| `temu_category_tree` | — |
-| `temu_category_request` | node_id |
-| `temu_product_request` | product_id |
 | `temu_product_search` | node_id, brand, seller_name |
-| `temu_category_search` | — |
-| `temu_category_search_from_name` | name |
 | `temu_shop_request` | shop_id |
 | `temu_product_search_from_name` | name |
-| `temu_product_trend` | product_id |
+| `temu_product_request` | product_id |
+| `temu_category_tree` | — |
 | `common_usage_query` | — |
+| `temu_product_trend` | product_id |
+| `temu_category_search_from_name` | name |
+| `temu_category_search` | — |
+| `temu_category_request` | node_id |
 
 ## 1688 — https://mcp.sorftime.com/1688
 
@@ -302,8 +309,8 @@
 |---|---|
 | `quora_question_request` | quora_id |
 | `reddit_comment_request` | reddit_id |
+| `reddit_post_request` | reddit_id |
 | `reddit_post_search` | search_name |
 | `quora_question_search` | search_name |
-| `common_usage_query` | — |
-| `reddit_post_request` | reddit_id |
 | `quora_answer_request` | quora_id |
+| `common_usage_query` | — |

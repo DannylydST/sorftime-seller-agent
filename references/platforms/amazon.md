@@ -1,6 +1,6 @@
 # Amazon Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/amazon` · 43 tools（40 原生 + 3 专利，2026-10-27 实测）· Quora 三件套已迁 social 端点（根端点仍含）
+> Endpoint: `https://mcp.sorftime.com/amazon` · 48 tools（40 原生 + 3 专利 + 2 新工具 + 3 Quora 重挂，2026-11-06 实测）· Quora 三件套 2026-10-27 曾迁 social、2026-11-06 重新挂回本端点
 > Site param: `amz_site` — 14 sites: `US GB DE FR IN CA JP ES IT MX AE AU BR SA`（无 SG）
 
 ## Parameter Traps（调错第一原因，先看这张表）
@@ -35,8 +35,8 @@
 | `competitor_product_keywords` | `asin` | 竞品关键词曝光位 |
 | `product_customers_say` | `asin` | "Customers Say" 买家声音摘要（站点参数 `site`） |
 
-### 关键词（11）
-`keyword_detail`(`keyword`,`amz_site`) 单词详情 · `keyword_extends`(`keyword`) 拓展词 · `keyword_search_results`(`keyword`,`position_type`：0=全部 1=自然位(默认) 2=仅广告) 关键词下产品 · `keyword_trend`(`keyword`,`type`) · `keyword_list` / `keyword_list_from_history`(`date`) 热词榜（`rank_min/max`、`search_volume_min/max` 过滤） · 收藏夹 5 件套（`favorite_keyword` / `get_favorite_keyword` / `get_favorite_keyword_dict` / `change_favorite_keyword` / `del_favorite_keyword`，站点参数 `keyword_support_site`）
+### 关键词（12）
+`keyword_detail`(`keyword`,`amz_site`) 单词详情 · `keyword_extends`(`keyword`) 拓展词 · `keyword_search_results`(`keyword`,`position_type`：0=全部 1=自然位(默认) 2=仅广告) 关键词下产品 · `keyword_trend`(`keyword`,`type`) · `keyword_list` / `keyword_list_from_history`(`date`) 热词榜（`rank_min/max`、`search_volume_min/max` 过滤） · `keyword_search_from_name`(`name`,`keyword_support_site`,`page`) 自然语言找词（描述产品→匹配热搜词，2 积分/次，20 条/页；**数据铺量中——2026-11-06 多组入参实测 "No data available"，如实告知用户**） · 收藏夹 5 件套（`favorite_keyword` / `get_favorite_keyword` / `get_favorite_keyword_dict` / `change_favorite_keyword` / `del_favorite_keyword`，站点参数 `keyword_support_site`）
 
 ### 类目（9）
 `category_report`(`node_id`) 类目 Top100 销量报告 · `category_trend`(`node_id`,`trend_index`) · `category_name_search`(`category_name`) · `category_search_from_top_node`(`top_node`) · `category_search_from_product_name`(`product_name`) · `search_categories_broadly` 多维宽搜 · `category_tree` · `category_products`(`node_id`) ⭐新 类目下产品 · `category_keywords`(`node_id`)（实测常无数据）
@@ -46,6 +46,7 @@
 
 ### 卖家搜索 ⭐新（工具已上线，数据铺量中——2026-10-10 三种合法参数实测均返回 "No data available"，如实告知用户）
 `seller_search` — 40+ 筛选维度（中国卖家/产品数/品牌数/Top10 占坑数/月销/FBM 数/A+ 数/无品牌占比/均价/评论/变体/在线日期/feedback），`node_id` 圈定类目。`seller_search_from_name`(`query_type` 1=按卖家名 2=按品牌)。
+`seller_detail`(`name` 必填,`query_type`,`amz_seller_site`) — 卖家档案详情：名称/国籍地区/上线时间/在售商品数/feedback 数量/省市等（**2026-11-06 上线，数据铺量中——多组入参实测 "No data available"，如实告知用户**）。
 
 ### 专利（3）⭐新（2026-10-27 上线；外观侵权排查/竞品专利组合分析）
 | 工具 | 必填 | 说明 |
@@ -54,7 +55,7 @@
 | `patent_search_from_image` | `image` | 图搜外观专利（450 积分，最多 100 条）。`image` 支持 URL/Base64（产品占比>80%、干净背景、jpg/png<4M）；**`query_mode` 实际必传**（1=智能联想推荐 / 2=以图搜图；不传返回 `null`，2026-10-27 实测）；可选 `country`/`loc_class_no`（如 `["07-01"]`）/`legal_status`/`product_keyword`/`applicant` |
 | `patent_request` | `publication_no` | 专利详情（150 积分；同一公告号同账号**首次查询计费、后续免费**）。返回：Title/PublicationNo/PatentType(4=外观)/Country/Inventor/Applicant/LOC·IPC·CPC·GBC 分类/LegalStatus/ApplicationDate/PublicationDate/EstimatedExpiryDate/Photos[] |
 
-> 专利图链域名=zhihuiya.com（智慧芽，实测）；`publication_no` 从两个搜索工具的结果里取（如 `CN308683395S`）。「首次查询计费、后续免费」出自 MCP 工具描述原文。Quora 三件套不在本端点（见 social）。
+> 专利图链域名=zhihuiya.com（智慧芽，实测）；`publication_no` 从两个搜索工具的结果里取（如 `CN308683395S`）。「首次查询计费、后续免费」出自 MCP 工具描述原文。Quora 三件套 2026-11-06 重新挂回本端点（social 端点仍含，见 social.md）。
 
 ### 隐赚指数（Sorftime 独家方法论）
 `potential_product` — 全参数可选：**不传 `search_name` = 全品类跨排名**，传 = 关键词域内。返回 `potential_index` 综合评分（相对值：低门槛×低广告×高利润加权）。⚠️ 高分不豁免类目风险——食品/保健/电子合规/季节品/授权品牌必须对照四层风险咨询制亮牌（永不隐藏，见 `references/scripts-guide.md`）。完整方法论 → `references/methodology-cards/tactical/invisible-profit.md`

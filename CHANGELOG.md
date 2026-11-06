@@ -1,5 +1,13 @@
 # Changelog
 
+## [2026-11-06] — v5.2.4（自然语言找词 + 卖家档案 + Quora 重挂 amazon）
+
+- **Amazon 新增 `keyword_search_from_name`**（自然语言找词：描述产品→匹配热搜词摘要数组，2 积分/次、20 条/页；参数 `name`/`keyword_support_site`/`page`）。2026-11-06 活 schema 验证通过；数据铺量中——6 组合法入参实测均返回 "No data available"（含 site=US 与描述性长词），按 v4.0.0 seller_search 先例如实标注，不冒充可用。
+- **Amazon 新增 `seller_detail`**（卖家档案：名称/国籍地区/上线时间/在售商品数/feedback 数量/省市等；参数 `name` 必填、`query_type`、`amz_seller_site`）。同上：schema 已验、数据铺量中（Gaiam/Anker/Amazon 多组实测 "No data available"）。
+- **Quora 三件套重新挂回 amazon 端点**（服务端 2026-10-27 摘除、2026-11-06 重新挂载，`probe_endpoints.py --matrix` 当日实测；social 端点不变）。v5.2.0 的「amazon 已不挂载」口径按当日事实更新。
+- 工具数：根端点 118→**120**、amazon 43→**48**（40 原生 + 3 专利 + 2 新 + 3 Quora）；其余端点不变（walmart 20 / shopee 18 / tiktok 19 / temu 10 / 1688 7 / mercado 1 / social 7）。tool-matrix 已从服务端再生（Sync time 2026-11-06 09:06）。
+- 来源：根/平台端点 `tools/list` 活探针 + `tools/call` 实测（2026-11-06）；本次为 drift 巡检自动触发发版（无广场需求单）。
+
 ## [2026-10-27] — v5.2.0（专利三件套 + Product Content + 日销量趋势）
 
 - **Amazon 新增专利三件套**（2026-10-27 活 schema + CLI 真数据双验）：`patent_search_from_image`（图搜外观专利，450 积分/最多 100 条；`query_mode` 实际必传，不传返回 null）/ `patent_search_from_keyword`（关键词/公司名/人名/公告号/申请号查专利，60 积分/单页≤30，可按专利类型·法律状态·国家·申请人·分类过滤）/ `patent_request`（专利详情，150 积分、同一公告号同账号首次计费后续免费）；数据源智慧芽（zhihuiya），字段含 LOC/IPC/CPC/GBC 分类、法律状态、申请/公开/预估到期日与专利图组
