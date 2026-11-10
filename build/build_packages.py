@@ -178,7 +178,7 @@ def gen_platform_skill(platform: dict, version: str, platform_key: str) -> str:
 
 
 # 每次发版更新为当次 probe_endpoints 实测日期（防止分发物携带过期溯源日期）
-PROBE_DATE = "2026-11-06"
+PROBE_DATE = "2026-11-10"
 
 
 def get_version_sync_note(tools: int) -> str:

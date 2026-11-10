@@ -28,6 +28,14 @@
 
 ---
 
+## 🆕 What's New (November 10, 2026) — v5.2.5: Keyword Parameter Fix & Static-Schema Sync
+
+- **🐛 Fixed reverse parameter rewrite**: the bridge was rewriting the current `keyword` parameter of `product_search` to the retired `search_name` (stale static schema + over-eager alias), which the server silently ignored and returned an unrelated default best-seller list. `keyword` now passes through untouched; legacy `search_name` callers are still auto-corrected to `keyword`.
+- **🧹 9 tool schemas regenerated from the live server** (`product_search`, `product_search_from_history`, `product_trend`, `keyword_trend`, `category_report`, `*_search_from_name`, `ali1688_product_search`) — plus a 30-day freshness guard on the local schema cache and `audit_static_schemas.py` (static vs live drift gate) so this class of staleness can't hide again.
+- Tool counts unchanged (root 120 · amazon 48). **[Full changelog →](CHANGELOG.md)**
+
+---
+
 ## 🆕 What's New (November 6, 2026) — v5.2.4: Natural-Language Keyword Search & Seller Profiles
 
 - **🔍 `keyword_search_from_name`** (Amazon, 2 credits): describe a product in natural language and get matched trending keywords (20 per page). Live schema-verified; data coverage is backfilling (returns "No data available" for now — reported honestly).

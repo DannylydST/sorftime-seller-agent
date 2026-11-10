@@ -166,21 +166,28 @@ def _load_schemas() -> dict:
             except Exception:
                 continue
 
-    # Fallback: extract from bridge source code
+    # Fallback: extract from bridge source code via ast.
+    # 旧 regex 回退对 Python 字面量表永不匹配（静默提取 0 工具）；保鲜期让「全超龄→回退」
+    # 成为常态场景，回退失效=别名自愈整体失效，故改为 ast 提取（2026-11-10 v5.2.5）。
     if not schemas:
-        import re
-        with open(BRIDGE_SCRIPT, encoding="utf-8") as f:
-            content = f.read()
-        for m in re.finditer(r'"name":\s*"(\w+)"', content):
-            name = m.group(1)
-            start = m.start()
-            block = content[start:start + 3000]
-            schema_m = re.search(r'"inputSchema":\s*(\{.*?"required":\s*\[[^\]]*\]\s*\}\s*\})', block, re.DOTALL)
-            if schema_m:
+        import ast
+        try:
+            tree = ast.parse(open(BRIDGE_SCRIPT, encoding="utf-8").read())
+        except SyntaxError:
+            tree = None
+        if tree:
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.Dict):
+                    continue
+                kv_keys = {k.value for k in node.keys if isinstance(k, ast.Constant)}
+                if "name" not in kv_keys or "inputSchema" not in kv_keys:
+                    continue
                 try:
-                    schemas[name] = json.loads(schema_m.group(1))
-                except json.JSONDecodeError:
-                    pass
+                    lit = ast.literal_eval(node)
+                except Exception:
+                    continue
+                if isinstance(lit.get("name"), str) and isinstance(lit.get("inputSchema"), dict):
+                    schemas[lit["name"]] = lit["inputSchema"]
 
     _SCHEMA_CACHE = schemas
     return schemas
