@@ -207,11 +207,6 @@ _FALLBACK_CORE_TOOLS = [
                     "type": "string",
                     "default": ""
                 },
-                "supplier_name": {
-                    "description": "Fuzzy-match products by supplier name.",
-                    "type": "string",
-                    "default": ""
-                },
                 "supplier_type": {
                     "description": "Filter by supplier type, single choice. 1: Powerful merchant, 2: Super factory.",
                     "type": "integer",
@@ -461,11 +456,21 @@ _FALLBACK_CORE_TOOLS = [
             "type": "object",
             "properties": {
                 "node_id": {
-                    "description": "Sub-category node_id, query this specific sub-category data; data type: string.",
+                    "description": "Category NodeId. Example:7073960011",
                     "type": "string"
                 },
+                "query_start": {
+                    "description": "Query start date, format yyyy-MM-dd. Optional. Combine historical Top100 products, maximum available for nearly 2 years. Valid span: 3-40 days. Example:2026-08-01",
+                    "type": "string",
+                    "default": ""
+                },
+                "query_date": {
+                    "description": "Query end date, format yyyy-MM-dd. Optional. Combine historical Top100 products, latest available up to 2 days before current date. Valid span: 3-40 days. Example:2026-08-10",
+                    "type": "string",
+                    "default": ""
+                },
                 "amz_site": {
-                    "description": "Amazon marketplace site. ",
+                    "description": "Amazon marketplace site. Allowed: US、GB、DE、FR、IN、CA、JP、ES、IT、MX、AE、AU、BR、SA.",
                     "type": "string",
                     "enum": [
                         "Unknow",
@@ -1425,6 +1430,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "The keyword to query.",
                     "type": "string"
                 },
+                "type": {
+                    "description": "Granularity:1=Weekly(consume 10, no CPC trend);2=Monthly(consume5, default). Note:MCP type reversed vs API(API:1=month,2=week). MCP will auto map.",
+                    "type": "integer",
+                    "default": 2
+                },
                 "keyword_support_site": {
                     "description": "Amazon marketplace site.",
                     "type": "string",
@@ -1726,129 +1736,304 @@ _FALLBACK_CORE_TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
-                "seasonal_popular_product": {
-                    "description": "Optional: filter products that are in peak season in the specified month. Defaults to Both.",
+                "amz_site": {
+                    "description": "Amazon marketplace site. Allowed: US、GB、DE、FR、IN、CA、JP、ES、IT、MX、AE、AU、BR、SA.",
                     "type": "string",
                     "enum": [
-                        "Both",
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "August",
-                        "September",
-                        "October",
-                        "November",
-                        "December"
+                        "Unknow",
+                        "US",
+                        "GB",
+                        "DE",
+                        "FR",
+                        "IN",
+                        "CA",
+                        "JP",
+                        "ES",
+                        "IT",
+                        "MX",
+                        "AE",
+                        "AU",
+                        "BR",
+                        "SA"
                     ],
-                    "default": "Both"
+                    "default": "Unknow"
+                },
+                "keyword": {
+                    "description": "Search hot-selling products by ABA keywords (ABA keywords only for now). Example: Power Bank",
+                    "type": "string",
+                    "default": ""
+                },
+                "price_range_min": {
+                    "description": "Minimum selling price filter (val >= set value). Example: 20.00",
+                    "type": "number",
+                    "default": 0
+                },
+                "price_range_max": {
+                    "description": "Maximum selling price filter (val <= set value). Example: 50.00",
+                    "type": "number",
+                    "default": 0
+                },
+                "page": {
+                    "description": "Pagination query, 20 items per page, default value 1 (pagination starts at 1, not 0).",
+                    "type": "integer",
+                    "default": 1
+                },
+                "asin": {
+                    "description": "Query similar products based on ASIN (Note: this does NOT query only this ASIN. Call product_detail if you need this single product). Example: B0CVM8TXHP",
+                    "type": "string",
+                    "default": ""
+                },
+                "node_id": {
+                    "description": "Query based on category (not limited to subcategories). Example: 3743561",
+                    "type": "string",
+                    "default": ""
                 },
                 "brand": {
-                    "description": "Optional: filter products of the specified brand.",
+                    "description": "Search hot-selling products by brand. Example: Anker",
                     "type": "string",
                     "default": ""
                 },
                 "seller_name": {
-                    "description": "Optional: filter products of the specified seller.",
+                    "description": "Search hot-selling products by seller name. Example: AnkerDirect",
                     "type": "string",
                     "default": ""
                 },
-                "search_name": {
-                    "description": "Optional: search related products by this name.",
+                "seller_id": {
+                    "description": "Search hot-selling products by seller SellerId. Example: A294P4X9EWVXLJ",
                     "type": "string",
                     "default": ""
                 },
-                "property_name": {
-                    "description": "Optional: filter products whose title or attributes contain the specified property.",
+                "attribute_name": {
+                    "description": "Search products containing specified terms in product title or attributes (matches products with target words in title or product attributes). Example: 10000mAh",
                     "type": "string",
                     "default": ""
                 },
-                "price_min": {
-                    "description": "Optional: filter products with selling price greater than or equal to this value.",
-                    "type": "number",
-                    "default": -9999
-                },
-                "price_max": {
-                    "description": "Optional: filter products with selling price less than or equal to this value.",
-                    "type": "number",
-                    "default": -9999
-                },
-                "month_sales_volume_min": {
-                    "description": "Optional: filter products with monthly sales volume greater than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "month_sales_volume_max": {
-                    "description": "Optional: filter products with monthly sales volume less than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "ratings_min": {
-                    "description": "Optional: filter products with star rating greater than or equal to this value.",
-                    "type": "number",
-                    "default": -9999
-                },
-                "ratings_max": {
-                    "description": "Optional: filter products with star rating less than or equal to this value.",
-                    "type": "number",
-                    "default": -9999
-                },
-                "ratings_count_min": {
-                    "description": "Optional: filter products with review count greater than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "ratings_count_max": {
-                    "description": "Optional: filter products with review count less than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "subcategory_sales_volume_rank_min": {
-                    "description": "Optional: filter products whose sales volume rank in the subcategory is greater than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "subcategory_sales_volume_rank_max": {
-                    "description": "Optional: filter products whose sales volume rank in the subcategory is less than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "delivery_type": {
-                    "description": "Optional: filter products by fulfillment method. Allowed values: `Both` (default, no filter), `FBM` (seller-fulfilled), `FBA` (any product using Amazon FBA, including seller-shipped and third-party like 1688), `AmzFBA` (third-party seller using Amazon FBA, e.g. 1688).",
+                "peak_selling_season": {
+                    "description": "Filter seasonal products, only return products whose peak selling season includes the specified months. Separate multiple months with commas. Example: 2,3,4",
                     "type": "string",
-                    "enum": [
-                        "Both",
-                        "FBM",
-                        "FBA",
-                        "AmzFBA"
-                    ],
-                    "default": "Both"
+                    "default": ""
                 },
-                "variation_count_min": {
-                    "description": "Optional: filter products whose variation (child ASIN) count is greater than or equal to this value.",
+                "shipping_type": {
+                    "description": "Filter products by fulfillment method. Example: FBA",
+                    "type": "string",
+                    "default": ""
+                },
+                "month_sale_volume_range_min": {
+                    "description": "Minimum monthly sales volume filter (val >= set value). Example: 500",
                     "type": "integer",
-                    "default": -9999
+                    "default": 0
                 },
-                "variation_count_max": {
-                    "description": "Optional: filter products whose variation (child ASIN) count is less than or equal to this value.",
+                "month_sale_volume_range_max": {
+                    "description": "Maximum monthly sales volume filter (val <= set value). Example: 1000",
                     "type": "integer",
-                    "default": -9999
+                    "default": 0
                 },
-                "sortby_potential_index": {
-                    "description": "Optional: if true, sort by the product's potential index from high to low.",
-                    "type": "boolean",
-                    "default": False
+                "online_date_range_min": {
+                    "description": "Lower bound of product launch date. Date format: yyyy-MM-dd. Example: 2025-01-01",
+                    "type": "string",
+                    "default": ""
+                },
+                "online_date_range_max": {
+                    "description": "Upper bound of product launch date. Date format: yyyy-MM-dd. Example: 2026-01-01",
+                    "type": "string",
+                    "default": ""
+                },
+                "star_range_min": {
+                    "description": "Minimum star rating filter. Example: 4.0",
+                    "type": "number",
+                    "default": 0
+                },
+                "star_range_max": {
+                    "description": "Maximum star rating filter. Example: 4.8",
+                    "type": "number",
+                    "default": 0
+                },
+                "comment_count_range_min": {
+                    "description": "Minimum review count filter. Example: 50",
+                    "type": "integer",
+                    "default": 0
+                },
+                "comment_count_range_max": {
+                    "description": "Maximum review count filter. Example: 500",
+                    "type": "integer",
+                    "default": 0
+                },
+                "sub_category_rank_range_min": {
+                    "description": "Minimum subcategory rank filter (actual rank, rank #1 = value 1). Example: 1",
+                    "type": "integer",
+                    "default": 0
+                },
+                "sub_category_rank_range_max": {
+                    "description": "Maximum subcategory rank filter (actual rank, rank #100 = value 100). Example: 100",
+                    "type": "integer",
+                    "default": 0
+                },
+                "variation_count_range_min": {
+                    "description": "Minimum variant count filter. Example: 1",
+                    "type": "integer",
+                    "default": 0
+                },
+                "variation_count_range_max": {
+                    "description": "Maximum variant count filter. Example: 10",
+                    "type": "integer",
+                    "default": 0
+                },
+                "category_rank_range_min": {
+                    "description": "Minimum main category rank filter (actual rank, rank #1 = value 1). Example: 1",
+                    "type": "integer",
+                    "default": 0
+                },
+                "category_rank_range_max": {
+                    "description": "Maximum main category rank filter (actual rank, rank #100 = value 100). Example: 100",
+                    "type": "integer",
+                    "default": 0
+                }
+            }
+        },
+    },
+    {
+        "name": "product_search_from_history",
+        "description": """Search historical product data on the Amazon platform to view top-selling products in a past period. Sorted by monthly sales volume in descending order by default. (可通过 sorftime_raw_call 透传调用)""",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "search_time": {
+                    "description": "Historical month for snapshot lookup, format yyyy-MM. Max 2 years retrospective starting at 2024-01. Example:2026-08",
+                    "type": "string",
+                    "default": ""
                 },
                 "page": {
-                    "description": "The page index of the query result. Defaults to page 1. Each page returns 20 records.",
+                    "description": "Pagination query, 20 items per page, default value 1 (pagination starts at 1, not 0).",
                     "type": "integer",
                     "default": 1
                 },
+                "asin": {
+                    "description": "Query similar products based on ASIN (Note: this does NOT query only this ASIN). Example: B0CVM8TXHP",
+                    "type": "string",
+                    "default": ""
+                },
+                "node_id": {
+                    "description": "Query based on category (not limited to subcategories). Example: 3743561",
+                    "type": "string",
+                    "default": ""
+                },
+                "brand": {
+                    "description": "Search hot-selling products by brand. Example: Anker",
+                    "type": "string",
+                    "default": ""
+                },
+                "seller_name": {
+                    "description": "Search hot-selling products by seller name. Example: AnkerDirect",
+                    "type": "string",
+                    "default": ""
+                },
+                "seller_id": {
+                    "description": "Search hot-selling products by seller SellerId. Example: A294P4X9EWVXLJ",
+                    "type": "string",
+                    "default": ""
+                },
+                "keyword": {
+                    "description": "Search hot-selling products by ABA keywords (ABA keywords only for now). Example: Power Bank",
+                    "type": "string",
+                    "default": ""
+                },
+                "attribute_name": {
+                    "description": "Search products containing specified terms in product title or attributes. Example:10000mAh",
+                    "type": "string",
+                    "default": ""
+                },
+                "peak_selling_season": {
+                    "description": "Filter seasonal products, multiple months separated by comma. Example:2,3,4",
+                    "type": "string",
+                    "default": ""
+                },
+                "shipping_type": {
+                    "description": "Filter products by fulfillment method. Example:FBA",
+                    "type": "string",
+                    "default": ""
+                },
+                "price_range_min": {
+                    "description": "Minimum selling price filter (val >= set value). Example:20.00",
+                    "type": "number",
+                    "default": 0
+                },
+                "price_range_max": {
+                    "description": "Maximum selling price filter (val <= set value). Example:50.00",
+                    "type": "number",
+                    "default": 0
+                },
+                "month_sale_volume_range_min": {
+                    "description": "Minimum monthly sales volume filter (val >= set value). Example:500",
+                    "type": "integer",
+                    "default": 0
+                },
+                "month_sale_volume_range_max": {
+                    "description": "Maximum monthly sales volume filter (val <= set value). Example:1000",
+                    "type": "integer",
+                    "default": 0
+                },
+                "online_date_range_min": {
+                    "description": "Lower bound of product launch date. Date format yyyy-MM-dd. Example:2025-01-01",
+                    "type": "string",
+                    "default": ""
+                },
+                "online_date_range_max": {
+                    "description": "Upper bound of product launch date. Date format yyyy-MM-dd. Example:2026-01-01",
+                    "type": "string",
+                    "default": ""
+                },
+                "star_range_min": {
+                    "description": "Minimum star rating filter. Example:4.0",
+                    "type": "number",
+                    "default": 0
+                },
+                "star_range_max": {
+                    "description": "Maximum star rating filter. Example:4.8",
+                    "type": "number",
+                    "default": 0
+                },
+                "comment_count_range_min": {
+                    "description": "Minimum review count filter. Example:50",
+                    "type": "integer",
+                    "default": 0
+                },
+                "comment_count_range_max": {
+                    "description": "Maximum review count filter. Example:500",
+                    "type": "integer",
+                    "default": 0
+                },
+                "sub_category_rank_range_min": {
+                    "description": "Minimum subcategory rank filter (actual rank). Example:1",
+                    "type": "integer",
+                    "default": 0
+                },
+                "sub_category_rank_range_max": {
+                    "description": "Maximum subcategory rank filter (actual rank). Example:100",
+                    "type": "integer",
+                    "default": 0
+                },
+                "variation_count_range_min": {
+                    "description": "Minimum variant count filter. Example:1",
+                    "type": "integer",
+                    "default": 0
+                },
+                "variation_count_range_max": {
+                    "description": "Maximum variant count filter. Example:10",
+                    "type": "integer",
+                    "default": 0
+                },
+                "category_rank_range_min": {
+                    "description": "Minimum main category rank filter (actual rank). Example:1",
+                    "type": "integer",
+                    "default": 0
+                },
+                "category_rank_range_max": {
+                    "description": "Maximum main category rank filter (actual rank). Example:100",
+                    "type": "integer",
+                    "default": 0
+                },
                 "amz_site": {
-                    "description": "Amazon marketplace site. ",
+                    "description": "Amazon marketplace site. Allowed: US、GB、DE、FR、IN、CA、JP、ES、IT、MX、AE、AU、BR、SA.",
                     "type": "string",
                     "enum": [
                         "Unknow",
@@ -1873,102 +2058,6 @@ _FALLBACK_CORE_TOOLS = [
         },
     },
     {
-        "name": "product_search_from_history",
-        "description": """Search historical product data on the Amazon platform to view top-selling products in a past period. Sorted by monthly sales volume in descending order by default. (可通过 sorftime_raw_call 透传调用)""",
-        "inputSchema": {
-            "type": "object",
-            "properties": {
-                "search_time": {
-                    "description": "The period to search, in yyyy-MM format (year-month).",
-                    "type": "string"
-                },
-                "search_name": {
-                    "description": "Optional: search related products by this name.",
-                    "type": "string",
-                    "default": ""
-                },
-                "price_min": {
-                    "description": "Optional: filter products with selling price greater than or equal to this value.",
-                    "type": "number",
-                    "default": -9999
-                },
-                "price_max": {
-                    "description": "Optional: filter products with selling price less than or equal to this value.",
-                    "type": "number",
-                    "default": -9999
-                },
-                "month_sales_volume_min": {
-                    "description": "Optional: filter products with monthly sales volume greater than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "month_sales_volume_max": {
-                    "description": "Optional: filter products with monthly sales volume less than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "ratings_min": {
-                    "description": "Optional: filter products with star rating greater than or equal to this value.",
-                    "type": "number",
-                    "default": -9999
-                },
-                "ratings_max": {
-                    "description": "Optional: filter products with star rating less than or equal to this value.",
-                    "type": "number",
-                    "default": -9999
-                },
-                "ratings_count_min": {
-                    "description": "Optional: filter products with review count greater than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "ratings_count_max": {
-                    "description": "Optional: filter products with review count less than or equal to this value.",
-                    "type": "integer",
-                    "default": -9999
-                },
-                "delivery_type": {
-                    "description": "Optional: filter products by fulfillment method. Allowed values: `Both` (default, no filter), `FBM` (seller-fulfilled), `FBA` (any product using Amazon FBA, including seller-shipped and third-party like 1688), `AmzFBA` (third-party seller using Amazon FBA, e.g. 1688).",
-                    "type": "string",
-                    "enum": [
-                        "Both",
-                        "FBM",
-                        "FBA",
-                        "AmzFBA"
-                    ],
-                    "default": "Both"
-                },
-                "page": {
-                    "description": "The page index of the query result. Defaults to page 1. Each page returns 20 records.",
-                    "type": "integer",
-                    "default": 1
-                },
-                "amz_site": {
-                    "description": "Amazon marketplace site.",
-                    "type": "string",
-                    "enum": [
-                        "Unknow",
-                        "US",
-                        "GB",
-                        "DE",
-                        "FR",
-                        "CA",
-                        "JP",
-                        "ES",
-                        "IT",
-                        "MX",
-                        "AE",
-                        "SA"
-                    ],
-                    "default": "Unknow"
-                }
-            },
-            "required": [
-                "search_time"
-            ]
-        },
-    },
-    {
         "name": "product_search_from_name",
         "description": """earch products on the Amazon platform by name, returning up to 20 products each call. (可通过 sorftime_raw_call 透传调用)""",
         "inputSchema": {
@@ -1977,6 +2066,11 @@ _FALLBACK_CORE_TOOLS = [
                 "name": {
                     "description": "The product name to search for.",
                     "type": "string"
+                },
+                "query_type": {
+                    "description": "Query type, default value 1. 1=Search products by name; 2=Search products by inclusive keywords (all keywords must match); 3=Search products by brand; 4=Search products by seller",
+                    "type": "integer",
+                    "default": 1
                 },
                 "page": {
                     "description": "The page index of the query result. Defaults to page 1.",
@@ -2061,23 +2155,16 @@ _FALLBACK_CORE_TOOLS = [
             "type": "object",
             "properties": {
                 "asin": {
-                    "description": "Product ASIN.",
+                    "description": "Product ASIN. Example: B0CVM8TXHP",
                     "type": "string"
                 },
-                "product_trend_type": {
-                    "description": "Product trend type to query. Allowed values: SalesVolume (monthly sales volume), SalesAmount (monthly sales amount), Price, Rank (main category ranking), BsrRank (subcategory ranking);  Defaults to SalesVolume.",
+                "type": {
+                    "description": "Trend dimension, default SalesVolume. Enum: SalesVolume=Monthly sales volume trend; SalesAmount=Monthly sales amount trend; Price=Price trend; ListPrice=Original list price trend; Rank=Main category monthly rank trend; BsrRank=Subcategory BSR daily rank trend; ReviewCount=Review count trend; Star=Star rating trend;DailySalesVolume=It indicates the sales quantity of the ASIN on Amazon's platform for the corresponding date; AsinSalesVolume=ASIN-level monthly sales volume (only current asin itself, separate child variations).",
                     "type": "string",
-                    "enum": [
-                        "SalesVolume",
-                        "SalesAmount",
-                        "Price",
-                        "Rank",
-                        "BsrRank"
-                    ],
                     "default": "SalesVolume"
                 },
                 "amz_site": {
-                    "description": "Amazon marketplace site. ",
+                    "description": "Amazon marketplace site. Allowed: US、GB、DE、FR、IN、CA、JP、ES、IT、MX、AE、AU、BR、SA.",
                     "type": "string",
                     "enum": [
                         "Unknow",
@@ -3818,8 +3905,13 @@ _FALLBACK_CORE_TOOLS = [
             "type": "object",
             "properties": {
                 "product_id": {
-                    "description": "Product ID.",
+                    "description": "The product ID to query. Example: 1729487740917617322.",
                     "type": "string"
+                },
+                "type": {
+                    "description": "type=1 weekly (costs 10 credits); type=2 monthly (default, costs 5 credit).",
+                    "type": "integer",
+                    "default": 2
                 },
                 "site": {
                     "description": "TikTok site.",
@@ -4287,6 +4379,11 @@ _FALLBACK_CORE_TOOLS = [
                 },
                 "page": {
                     "description": "The page index of the query result. Defaults to page 1.",
+                    "type": "integer",
+                    "default": 1
+                },
+                "query_type": {
+                    "description": "Query method: 1=Query products by name(default), 2=Query products by seller, 3=Query products by brand. Defaults to 1 when not provided.",
                     "type": "integer",
                     "default": 1
                 }

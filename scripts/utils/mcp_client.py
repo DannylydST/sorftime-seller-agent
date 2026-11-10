@@ -5,6 +5,7 @@ Stable, direct, no mcporter registration needed
 
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import datetime
@@ -48,8 +49,10 @@ GAPS_LOG = get_cache_dir() / "unsupported-requests.log"
 # Format: {alias: [possible correct param names]}, matched against Schema for confirmation.
 PARAM_ALIASES = {
     # Search term / keyword
+    # 现行名在前、废弃名兜底在后：别名纠正只允许「旧名→新名」方向（search_name→keyword），
+    # 禁止把现行 keyword 反向改写成废弃 search_name（2026-11-10 Kimi Code 报障回归）
     "search_name":     ["keyword", "category_name", "product_name", "search_name"],
-    "keyword":         ["search_name", "category_name", "product_name", "keyword"],
+    "keyword":         ["category_name", "product_name", "search_name"],
     "category_name":   ["keyword", "search_name", "product_name", "category_name"],
     "product_name":    ["keyword", "search_name", "category_name", "product_name"],
     # Site
@@ -121,19 +124,38 @@ def _looks_empty(data) -> bool:
 _SCHEMA_CACHE: dict = None
 
 
+SCHEMA_STORE_MAX_AGE_DAYS = 30  # schema-store 超龄即弃用回退静态表（2026-11-10 Kimi Code 报障：9-07 缓存静默过期压过正确静态表）
+
+
+def _schema_store_fresh(f: Path) -> bool:
+    """schema 文件是否在保鲜期内（按文件名时间戳或 mtime）"""
+    m = re.search(r"schema-(\d{8}_\d{6})\.json", f.name)
+    ts = None
+    if m:
+        try:
+            ts = datetime.strptime(m.group(1), "%Y%m%d_%H%M%S")
+        except ValueError:
+            pass
+    if ts is None:
+        ts = datetime.fromtimestamp(f.stat().st_mtime)
+    return (datetime.now() - ts).days <= SCHEMA_STORE_MAX_AGE_DAYS
+
+
 def _load_schemas() -> dict:
     """Load inputSchema for all tools from schema-store or bridge source"""
     global _SCHEMA_CACHE
     if _SCHEMA_CACHE is not None:
         return _SCHEMA_CACHE
 
-    # Prefer schema-store (most up-to-date)
+    # Prefer schema-store (most up-to-date) — 超龄文件跳过，防止过期缓存压过随包发布的静态表
     schema_store = get_cache_dir() / "schema-store"
     schemas = {}
     if schema_store.exists():
         for f in sorted(schema_store.glob("schema-*.json"), reverse=True):
+            if not _schema_store_fresh(f):
+                continue
             try:
-                with open(f) as fh:
+                with open(f, encoding="utf-8") as fh:
                     data = json.load(fh)
                 for tool in data.get("tools", []):
                     name = tool.get("name", "")
@@ -147,7 +169,7 @@ def _load_schemas() -> dict:
     # Fallback: extract from bridge source code
     if not schemas:
         import re
-        with open(BRIDGE_SCRIPT) as f:
+        with open(BRIDGE_SCRIPT, encoding="utf-8") as f:
             content = f.read()
         for m in re.finditer(r'"name":\s*"(\w+)"', content):
             name = m.group(1)

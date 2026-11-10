@@ -1,5 +1,17 @@
 # Changelog
 
+## [2026-11-10] — v5.2.5（product_search 参数反向改写根治 + 静态 schema 全量对齐线上）
+
+- **根因修复（Kimi Code 报障）**：桥接曾把现行参数 `keyword` 反向改写为废弃 `search_name`（`product_search`），服务端静默忽略后返回默认热销榜——看似成功、数据与请求无关。三层齐修：
+  1. `sorftime_bridge.py` 静态 schema 与线上 tools/list 再生对齐（`product_search` 27 参数、`product_search_from_history` 28 参数，均以 `keyword` 为现行名）；
+  2. `mcp_client.py` PARAM_ALIASES 纠正候选序——别名纠正只允许「旧名→新名」方向（search_name→keyword），现行名不再降级到废弃名；
+  3. schema-store 缓存加 30 天保鲜期，超龄快照自动弃用回退静态表（本机实测 9-07 过期缓存曾压过正确静态表）。
+- **同款漂移全量清零**：新增 `scripts/audit_static_schemas.py`（静态表 vs 线上参数集审计，drift 退出码 2），首跑揪出 7 个工具同款滞留（`product_trend` 的 `product_trend_type→type` 改名、`product_search_from_name`/`walmart_product_search_from_name` 缺 `query_type`、`category_report` 缺日期参数等），全部同步线上版，审计清零。
+- **修复附带**：`_load_schemas` 文件读取补 `encoding="utf-8"`（Windows GBK 默认曾致中文 schema 读取崩溃）。
+- **回归**：规范化单测 8 项全过（keyword 原样保留/from_history 同款/legacy 显式兼容/3 个线上合法 search_name 工具不误改/新参数入表）；真实 MCP 验收 `product_search {"keyword":"ice maker","amz_site":"US"}` 返回 20 条冰格·制冰类相关商品，无 `keyword→search_name` 日志，无默认热销榜。
+- 线上三个本就使用 `search_name` 的工具（potential_product / ali1688_similar_product / reddit_post_search）不受影响，实测未误改。
+- 工具数无变化（root 120 / amazon 48）。
+
 ## [2026-11-06] — v5.2.4（自然语言找词 + 卖家档案 + Quora 重挂 amazon）
 
 - **Amazon 新增 `keyword_search_from_name`**（自然语言找词：描述产品→匹配热搜词摘要数组，2 积分/次、20 条/页；参数 `name`/`keyword_support_site`/`page`）。2026-11-06 活 schema 验证通过；数据铺量中——6 组合法入参实测均返回 "No data available"（含 site=US 与描述性长词），按 v4.0.0 seller_search 先例如实标注，不冒充可用。
