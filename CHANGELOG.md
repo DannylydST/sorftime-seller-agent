@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-11-10] — v5.2.6（分发包去二进制 · SkillHub 兼容）
+
+- **根包剔除 2 张流程图 PNG**（`references/workflows/workflow-flowchart-CN/EN.png`）：官方 SkillHub 上传闸禁一切二进制文件；两图在包内零引用（流程图文档 `flowchart-CN/EN.md` 本身为 mermaid 文本版，智能体消费的就是文本），剔除零内容损失。根包 92→90 文件，全包零二进制。
+- 平台包与 GitHub 仓不受影响（GitHub 可载二进制，PNG 留仓供在线浏览）；广场同步上架 90 文件变体。
+- 功能与 v5.2.5 完全一致（工具数 root 120 / amazon 48）。
+
 ## [2026-11-10] — v5.2.5（product_search 参数反向改写根治 + 静态 schema 全量对齐线上）
 
 - **根因修复（Kimi Code 报障）**：桥接曾把现行参数 `keyword` 反向改写为废弃 `search_name`（`product_search`），服务端静默忽略后返回默认热销榜——看似成功、数据与请求无关。三层齐修：
