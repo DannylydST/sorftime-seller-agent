@@ -74,8 +74,8 @@ PLATFORMS = {
     },
     "mercado": {
         "pkg": "sorftime-mercado", "display": "Mercado Libre", "doc": "mercado.md",
-        "url": "https://mcp.sorftime.com/mercado", "tools": 1,
-        "desc": "Sorftime 美客多（Mercado Libre）助手 —— 拉美市场情报智能体（专属端点 mcp.sorftime.com/mercado）。端点已上线，当前含通用配额工具；业务工具按账号数据包逐步开通，用 scripts/probe_endpoints.py 可随时复查。",
+        "url": "https://mcp.sorftime.com/mercado", "tools": 2,
+        "desc": "Sorftime 美客多（Mercado Libre）助手 —— 拉美市场情报智能体（专属端点 mcp.sorftime.com/mercado，2 工具）。关键词搜品（实时、20 条/页、巴西站）已上线，数据按账号数据包开通；配额查询可用，scripts/probe_endpoints.py 随时复查。",
         "trigger": "美客多/mercado libre/mercado/拉美电商/墨西哥电商/巴西电商",
         "related": "工具上线后用 `python3 scripts/probe_endpoints.py` 复查清单，再对照 `references/tool-matrix.md`",
     },
@@ -178,7 +178,7 @@ def gen_platform_skill(platform: dict, version: str, platform_key: str) -> str:
 
 
 # 每次发版更新为当次 probe_endpoints 实测日期（防止分发物携带过期溯源日期）
-PROBE_DATE = "2026-11-10"
+PROBE_DATE = "2026-11-19"
 
 
 def get_version_sync_note(tools: int) -> str:

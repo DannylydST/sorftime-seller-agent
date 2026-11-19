@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-11-19] — v5.2.7（Mercado Libre 首个业务工具上线）
+
+- **Mercado 端点首个业务工具 `mercado_product_search_from_keyword`**（关键词搜品，实时查询、20 条/页、仅巴西站 site=401；参数 `keyword` 必填/`page`/`site`，不传 site 报「Please specify the site」）。2026-11-19 活 schema 验证；当前账号数据包未开——实测返回 "No data available"，如实标注（mercado.md 预写的复查清单已照单执行）。
+- 工具数：mercado 端点 1→**2**，根端点 120→**121**，其余端点不变。tool-matrix 已从服务端再生。
+- 来源：每日保健 drift 巡检自动触发（root 120→121），无广场需求单。
+
 ## [2026-11-10] — v5.2.6（分发包去二进制 · SkillHub 兼容）
 
 - **根包剔除 2 张流程图 PNG**（`references/workflows/workflow-flowchart-CN/EN.png`）：官方 SkillHub 上传闸禁一切二进制文件；两图在包内零引用（流程图文档 `flowchart-CN/EN.md` 本身为 mermaid 文本版，智能体消费的就是文本），剔除零内容损失。根包 92→90 文件，全包零二进制。

@@ -1,12 +1,17 @@
 # Mercado Libre Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/mercado` · 1 tool（2026-10-10 实测）
+> Endpoint: `https://mcp.sorftime.com/mercado` · 2 tools（1 业务 + 通用配额，2026-11-19 实测）
 
 ## 当前状态
 
-- 端点已上线并可连通；当前账号仅见通用配额工具 `common_usage_query`（实测可调，返回 credit_left），业务工具按账号数据包逐步开通。
-- **业务工具调用前先探活**：`common_usage_query` 可直接调；其余业务工具在清单未出现前不要调（方法不存在错误，且可能被服务端记录为异常请求）。
-- 用户问到 Mercado Libre 数据能力时，如实告知「端点已就绪、工具尚未对当前账号开通」，不要虚构工具或参数。
+- 端点已上线并可连通；通用配额工具 `common_usage_query` 可直接调（返回 credit_left）。
+- **首个业务工具 `mercado_product_search_from_keyword` 已在工具清单出现**（2026-11-19 活 schema 验证）；当前账号数据包未开——实测返回 "No data available"，如实告知用户「工具已上线、数据待账号数据包开通」，不要虚构返回内容。
+- 业务工具调用前先探活：工具清单未出现的业务方法不要调（方法不存在错误，且可能被服务端记录为异常请求）。
+
+## Tool Reference
+
+### 商品（1）
+`mercado_product_search_from_keyword`(`keyword` 必填,`page`,`site`) — Mercado Libre 关键词搜品，实时查询，20 条/页；**仅巴西站（site=401）**，不传 `site` 报「Please specify the site」（2026-11-19 实测）。
 
 ## 工具开通后怎么复查
 
