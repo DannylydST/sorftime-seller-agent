@@ -40,7 +40,7 @@ metadata:
 | 海外社媒（Reddit·Quora） | `https://mcp.sorftime.com/social` | 7 | `references/platforms/social.md` |
 
 - 端点解析优先级：环境变量 `SORFTIME_MCP_URL` > 技能包 `config/platform.json`（平台分发包预置）> 根端点。**同一把 Account-SK 全端点通用，配额共享**。
-- 工具数=2026-11-06 实测（服务端持续上新，以 `scripts/probe_endpoints.py` 实测为准）；各端点均含通用配额工具 `common_usage_query`，mercado 业务工具已上线首件（关键词搜品），当前账号数据包未开、调用暂返回 No data。
+- 工具数=2026-11-19 实测（服务端持续上新，以 `scripts/probe_endpoints.py` 实测为准）；各端点均含通用配额工具 `common_usage_query`，mercado 业务工具已上线首件（关键词搜品），当前账号数据包未开、调用暂返回 No data。
 - social 端点含 Reddit 三件套 + Quora 三件套；根端点与 amazon 端点均提供 Quora 三件套（服务端 2026-10-27 曾从 amazon 摘下、2026-11-06 重新挂回，以当日实测为准）。
 - 配额查询：`common_usage_query`（全端点通用，无参数，返回 `credit_left`）。用户问「还剩多少次/配额/余额」直接调它。
 
