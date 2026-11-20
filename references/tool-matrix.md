@@ -1,10 +1,10 @@
 # Sorftime MCP Tool Matrix（按平台端点分组）
 
-> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-11-19 09:01:47
+> 由 `scripts/probe_endpoints.py --matrix` 从服务端再生。Sync time: 2026-11-20 09:01:54
 
 ## root(全平台兼容) — https://mcp.sorftime.com
 
-工具数：121
+工具数：123
 
 | 工具 | 必填参数 |
 |---|---|
@@ -102,7 +102,7 @@
 | `shopee_category_tree` | — |
 | `walmart_keyword_search_from_name` | name |
 | `get_favorite_keyword_dict` | — |
-| `keyword_list` | — |
+| `keyword_list` | keyword_category |
 | `temu_category_search_from_name` | name |
 | `walmart_product_trend_by_product_id` | product_id |
 | `reddit_post_request` | reddit_id |
@@ -111,11 +111,13 @@
 | `tiktok_product_search` | — |
 | `tiktok_product_trend` | product_id |
 | `keyword_extends` | keyword |
+| `product_sp_ad_structure` | asin |
 | `walmart_change_favorite_keyword` | keyword, to_dict |
 | `tiktok_author_request` | author_id |
 | `ali1688_product_variations` | product_id |
 | `potential_product` | — |
 | `tiktok_brand_search_from_name` | — |
+| `category_products_extended_report` | node_id |
 | `temu_category_search` | — |
 | `shopee_keyword_search` | — |
 | `product_search_from_name` | name |
@@ -132,7 +134,7 @@
 
 ## amazon — https://mcp.sorftime.com/amazon
 
-工具数：48
+工具数：50
 
 | 工具 | 必填参数 |
 |---|---|
@@ -176,11 +178,13 @@
 | `category_products` | node_id |
 | `category_low_price_search` | — |
 | `get_favorite_keyword_dict` | — |
-| `keyword_list` | — |
+| `keyword_list` | keyword_category |
 | `product_reviews` | asin |
 | `get_time` | — |
 | `keyword_extends` | keyword |
+| `product_sp_ad_structure` | asin |
 | `potential_product` | — |
+| `category_products_extended_report` | node_id |
 | `product_search_from_name` | name |
 | `favorite_keyword` | keyword |
 | `quora_answer_request` | quora_id |
@@ -218,24 +222,24 @@
 
 | 工具 | 必填参数 |
 |---|---|
-| `shopee_get_favorite_keyword` | — |
-| `shopee_change_favorite_keyword` | keyword, to_dict |
-| `shopee_product_request` | product_id |
-| `shopee_favorite_keyword` | keyword |
-| `shopee_product_trend` | product_id |
-| `shopee_del_favorite_keyword` | keyword |
 | `shopee_shop_request` | shop_id |
-| `shopee_product_search` | — |
-| `shopee_product_content` | product_id |
-| `shopee_category_request` | node_id |
-| `shopee_category_tree` | — |
-| `shopee_category_search_from_name` | name |
-| `shopee_keyword_relation_results` | — |
-| `shopee_keyword_search` | — |
 | `shopee_product_search_from_name` | name |
-| `shopee_category_trend` | — |
+| `shopee_keyword_relation_results` | — |
+| `shopee_del_favorite_keyword` | keyword |
+| `shopee_favorite_keyword` | keyword |
+| `shopee_change_favorite_keyword` | keyword, to_dict |
+| `shopee_product_search` | — |
 | `common_usage_query` | — |
+| `shopee_product_request` | product_id |
+| `shopee_product_trend` | product_id |
+| `shopee_category_search_from_name` | name |
 | `shopee_get_favorite_keyword_dict` | — |
+| `shopee_category_trend` | — |
+| `shopee_get_favorite_keyword` | — |
+| `shopee_product_content` | product_id |
+| `shopee_category_tree` | — |
+| `shopee_keyword_search` | — |
+| `shopee_category_request` | node_id |
 
 ## tiktok — https://mcp.sorftime.com/tiktok
 
@@ -269,16 +273,16 @@
 
 | 工具 | 必填参数 |
 |---|---|
-| `temu_category_tree` | — |
-| `temu_category_request` | node_id |
-| `temu_product_request` | product_id |
 | `temu_product_search` | node_id, brand, seller_name |
-| `temu_category_search` | — |
-| `temu_category_search_from_name` | name |
 | `temu_shop_request` | shop_id |
 | `temu_product_search_from_name` | name |
-| `temu_product_trend` | product_id |
+| `temu_product_request` | product_id |
+| `temu_category_tree` | — |
 | `common_usage_query` | — |
+| `temu_product_trend` | product_id |
+| `temu_category_search_from_name` | name |
+| `temu_category_search` | — |
+| `temu_category_request` | node_id |
 
 ## 1688 — https://mcp.sorftime.com/1688
 
@@ -300,8 +304,8 @@
 
 | 工具 | 必填参数 |
 |---|---|
-| `mercado_product_search_from_keyword` | keyword |
 | `common_usage_query` | — |
+| `mercado_product_search_from_keyword` | keyword |
 
 ## social — https://mcp.sorftime.com/social
 

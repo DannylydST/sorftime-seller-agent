@@ -1,5 +1,13 @@
 # Changelog
 
+## [2026-11-20] — v5.2.8（SP 广告结构 + 类目扩展报告 + 热词榜类目过滤）
+
+- **Amazon 新增 `product_sp_ad_structure`**（竞品 SP 广告结构反推：`asin` 必填/`page`/`site`，返回关键词/广告组/campaign 及首次记录时间）。2026-11-20 实测**有真数据**（瑜伽垫 ASIN 返回完整 doc 结构）。
+- **Amazon 新增 `category_products_extended_report`**（类目市场快照：聚合 Best Sellers Top100+月销门槛以上 listing，非实时产品数据；`node_id` 必填/`rank_range`/`amz_site`）。同日实测调用报服务端错误，如实标注待服务端修复。
+- **热词族新增 `keyword_category` 过滤参数**（`keyword_list` / `keyword_list_from_history` / `category_keywords` 三工具）：按关键词类目过滤、多类目英文逗号分隔；取值见官方分类表（schema 未内嵌枚举）；调用需带 `keyword_support_site`。桥接静态表三工具已同步线上版。
+- 工具数：根端点 121→**123**、amazon 48→**50**，其余端点不变。tool-matrix 已从服务端再生。
+- 来源：每日保健双 drift 巡检自动触发（工具级 +2 / 参数级 +1），无广场需求单。
+
 ## [2026-11-19] — v5.2.7（Mercado Libre 首个业务工具上线）
 
 - **Mercado 端点首个业务工具 `mercado_product_search_from_keyword`**（关键词搜品，实时查询、20 条/页、仅巴西站 site=401；参数 `keyword` 必填/`page`/`site`，不传 site 报「Please specify the site」）。2026-11-19 活 schema 验证；当前账号数据包未开——实测返回 "No data available"，如实标注（mercado.md 预写的复查清单已照单执行）。

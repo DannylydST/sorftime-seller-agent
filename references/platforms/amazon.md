@@ -1,6 +1,6 @@
 # Amazon Platform Guide
 
-> Endpoint: `https://mcp.sorftime.com/amazon` · 48 tools（40 原生 + 3 专利 + 2 新工具 + 3 Quora 重挂，2026-11-06 实测）· Quora 三件套 2026-10-27 曾迁 social、2026-11-06 重新挂回本端点
+> Endpoint: `https://mcp.sorftime.com/amazon` · 50 tools（2026-11-20 实测；+2：SP 广告结构 / 类目扩展报告；+3 工具新增 keyword_category 过滤）· Quora 三件套 2026-10-27 曾迁 social、2026-11-06 重新挂回本端点
 > Site param: `amz_site` — 14 sites: `US GB DE FR IN CA JP ES IT MX AE AU BR SA`（无 SG）
 
 ## Parameter Traps（调错第一原因，先看这张表）
@@ -36,10 +36,10 @@
 | `product_customers_say` | `asin` | "Customers Say" 买家声音摘要（站点参数 `site`） |
 
 ### 关键词（12）
-`keyword_detail`(`keyword`,`amz_site`) 单词详情 · `keyword_extends`(`keyword`) 拓展词 · `keyword_search_results`(`keyword`,`position_type`：0=全部 1=自然位(默认) 2=仅广告) 关键词下产品 · `keyword_trend`(`keyword`,`type`) · `keyword_list` / `keyword_list_from_history`(`date`) 热词榜（`rank_min/max`、`search_volume_min/max` 过滤） · `keyword_search_from_name`(`name`,`keyword_support_site`,`page`) 自然语言找词（描述产品→匹配热搜词，2 积分/次，20 条/页；**数据铺量中——2026-11-06 多组入参实测 "No data available"，如实告知用户**） · 收藏夹 5 件套（`favorite_keyword` / `get_favorite_keyword` / `get_favorite_keyword_dict` / `change_favorite_keyword` / `del_favorite_keyword`，站点参数 `keyword_support_site`）
+`keyword_detail`(`keyword`,`amz_site`) 单词详情 · `keyword_extends`(`keyword`) 拓展词 · `keyword_search_results`(`keyword`,`position_type`：0=全部 1=自然位(默认) 2=仅广告) 关键词下产品 · `keyword_trend`(`keyword`,`type`) · `keyword_list` / `keyword_list_from_history`(`date`) 热词榜（`rank_min/max`、`search_volume_min/max` 过滤；2026-11-20 新增 `keyword_category` 按关键词类目过滤，多类目英文逗号分隔，取值见官方分类表——schema 未内嵌枚举；需带 `keyword_support_site`） · `keyword_search_from_name`(`name`,`keyword_support_site`,`page`) 自然语言找词（描述产品→匹配热搜词，2 积分/次，20 条/页；**数据铺量中——2026-11-06 多组入参实测 "No data available"，如实告知用户**） · 收藏夹 5 件套（`favorite_keyword` / `get_favorite_keyword` / `get_favorite_keyword_dict` / `change_favorite_keyword` / `del_favorite_keyword`，站点参数 `keyword_support_site`）
 
-### 类目（9）
-`category_report`(`node_id`) 类目 Top100 销量报告 · `category_trend`(`node_id`,`trend_index`) · `category_name_search`(`category_name`) · `category_search_from_top_node`(`top_node`) · `category_search_from_product_name`(`product_name`) · `search_categories_broadly` 多维宽搜 · `category_tree` · `category_products`(`node_id`) ⭐新 类目下产品 · `category_keywords`(`node_id`)（实测常无数据）
+### 类目（10）
+`category_report`(`node_id`) 类目 Top100 销量报告 · `category_trend`(`node_id`,`trend_index`) · `category_name_search`(`category_name`) · `category_search_from_top_node`(`top_node`) · `category_search_from_product_name`(`product_name`) · `search_categories_broadly` 多维宽搜 · `category_tree` · `category_products`(`node_id`) ⭐新 类目下产品 · `category_keywords`(`node_id`,`keyword_category`)（实测常无数据） · `category_products_extended_report`(`node_id` 必填,`rank_range`,`amz_site`) ⭐新（2026-11-20）类目市场快照（聚合 Best Sellers Top100+月销门槛以上 listing，非实时产品数据；实测调用报服务端错误，待服务端修复）
 
 ### 低价商城 ⭐新（2026-10-10 实测有真数据）
 `category_low_price_search` — 低价商城类目搜索，全参数可选。返回每个类目的低价带产品数/低价带月销/全类目月销/均价/评分/评论数/新品占比/自营占比/第三方占比/平均重量(0.01lb)/体积(0.01in³)/上架天数等。**低价商城(Haul)选品与竞店分析的核心工具**，配合 `average_weight/volume` 过滤可精确锁定轻小件。
@@ -59,6 +59,9 @@
 
 ### 隐赚指数（Sorftime 独家方法论）
 `potential_product` — 全参数可选：**不传 `search_name` = 全品类跨排名**，传 = 关键词域内。返回 `potential_index` 综合评分（相对值：低门槛×低广告×高利润加权）。⚠️ 高分不豁免类目风险——食品/保健/电子合规/季节品/授权品牌必须对照四层风险咨询制亮牌（永不隐藏，见 `references/scripts-guide.md`）。完整方法论 → `references/methodology-cards/tactical/invisible-profit.md`
+
+### 广告（1）⭐新（2026-11-20 上线，实测有真数据）
+`product_sp_ad_structure`(`asin` 必填,`page`,`site`) — 竞品 SP（Sponsored Products）广告结构：返回该 ASIN 及其变体投放的关键词/广告组/campaign 及首次记录时间，可重建竞品广告打法（doc 字段：asin/keyword/ad_group_id/campaign_id/first_record_time…）。
 
 ### 通用
 `get_time`（服务器时间）· `common_usage_query`（**配额查询**，全端点通用，无参数，返回 `credit_left`——用户问余额/剩余次数就调它）

@@ -404,6 +404,11 @@ _FALLBACK_CORE_TOOLS = [
                         "SA"
                     ],
                     "default": "Unknow"
+                },
+                "keyword_category": {
+                    "description": "Filter by keyword categories, returning only keywords that include any of the selected categories. Multiple categories are separated by English commas. Values and definitions are as shown in the table below.  |\r\n\r\n```keyword_category``` Values and Definitions:\r\n\r\n- Core term: A primary noun that can independently refer to a product or category, without additional modifying signals. Examples: toilet paper, air fryer, couch\r\n- Scene words: Describe the location, occasion, time, and activity. Example:核心词,属性词, beach towel, office chair\r\nTarget audience terms: Refers to the intended users or recipients. Examples: gifts for women, kids' toothpaste, dog bed\r\n- Brand terms: brand, product line, series, IP name. Examples: iPhone case, owala, Spider-Man\r\n- Attribute words: objective features such as color, size, material, function, etc. Examples: red corset top, oversized comforter, waterproof case\r\n- Pain point words: problem-solving, benefits, price-related decision signals. Examples: non-slip mat, affordable air fryer, leak-proof bottle\r\n- Comparative terms: Competitor comparison, alternative selection. Examples: Dyson vs. Shark, Vitamix alternative\r\n- Evaluation terms: Review, ranking, and reference decision-making terms for product selection. Examples: air fryer review, best air fryer\r\n- Others: No business meaning, unrecognizable, invalid spam words. Examples: ca, s, xxx-videos\r\n- 示例：核心词,属性词\r\n- Rules: Multiple categories are separated by English commas; when multiple categories are passed, filtering follows the OR logic, returning keywords that include any of the selected categories.",
+                    "type": "string",
+                    "default": ""
                 }
             },
             "required": [
@@ -1262,6 +1267,10 @@ _FALLBACK_CORE_TOOLS = [
         "inputSchema": {
             "type": "object",
             "properties": {
+                "keyword_category": {
+                    "description": "Filter by keyword categories, returning only keywords that include any of the selected categories. Multiple categories are separated by English commas. Values and definitions are as shown in the table below.  |\r\n\r\n```keyword_category``` Values and Definitions:\r\n\r\n- Core term: A primary noun that can independently refer to a product or category, without additional modifying signals. Examples: toilet paper, air fryer, couch\r\n- Scene words: Describe the location, occasion, time, and activity. Example:核心词,属性词, beach towel, office chair\r\nTarget audience terms: Refers to the intended users or recipients. Examples: gifts for women, kids' toothpaste, dog bed\r\n- Brand terms: brand, product line, series, IP name. Examples: iPhone case, owala, Spider-Man\r\n- Attribute words: objective features such as color, size, material, function, etc. Examples: red corset top, oversized comforter, waterproof case\r\n- Pain point words: problem-solving, benefits, price-related decision signals. Examples: non-slip mat, affordable air fryer, leak-proof bottle\r\n- Comparative terms: Competitor comparison, alternative selection. Examples: Dyson vs. Shark, Vitamix alternative\r\n- Evaluation terms: Review, ranking, and reference decision-making terms for product selection. Examples: air fryer review, best air fryer\r\n- Others: No business meaning, unrecognizable, invalid spam words. Examples: ca, s, xxx-videos\r\n- 示例：核心词,属性词\r\n- Rules: Multiple categories are separated by English commas; when multiple categories are passed, filtering follows the OR logic, returning keywords that include any of the selected categories.",
+                    "type": "string"
+                },
                 "keyword_support_site": {
                     "description": "Amazon marketplace site.",
                     "type": "string",
@@ -1308,7 +1317,10 @@ _FALLBACK_CORE_TOOLS = [
                     "type": "integer",
                     "default": -9999
                 }
-            }
+            },
+            "required": [
+                "keyword_category"
+            ]
         },
     },
     {
@@ -1366,6 +1378,11 @@ _FALLBACK_CORE_TOOLS = [
                     "description": "Optional: filter keywords whose monthly search volume is less than or equal to this value.",
                     "type": "integer",
                     "default": -9999
+                },
+                "keyword_category": {
+                    "description": "Filter by keyword categories, returning only keywords that include any of the selected categories. Multiple categories are separated by English commas. Values and definitions are as shown in the table below.  |\r\n\r\n```keyword_category``` Values and Definitions:\r\n\r\n- Core term: A primary noun that can independently refer to a product or category, without additional modifying signals. Examples: toilet paper, air fryer, couch\r\n- Scene words: Describe the location, occasion, time, and activity. Example:核心词,属性词, beach towel, office chair\r\nTarget audience terms: Refers to the intended users or recipients. Examples: gifts for women, kids' toothpaste, dog bed\r\n- Brand terms: brand, product line, series, IP name. Examples: iPhone case, owala, Spider-Man\r\n- Attribute words: objective features such as color, size, material, function, etc. Examples: red corset top, oversized comforter, waterproof case\r\n- Pain point words: problem-solving, benefits, price-related decision signals. Examples: non-slip mat, affordable air fryer, leak-proof bottle\r\n- Comparative terms: Competitor comparison, alternative selection. Examples: Dyson vs. Shark, Vitamix alternative\r\n- Evaluation terms: Review, ranking, and reference decision-making terms for product selection. Examples: air fryer review, best air fryer\r\n- Others: No business meaning, unrecognizable, invalid spam words. Examples: ca, s, xxx-videos\r\n- 示例：核心词,属性词\r\n- Rules: Multiple categories are separated by English commas; when multiple categories are passed, filtering follows the OR logic, returning keywords that include any of the selected categories.",
+                    "type": "string",
+                    "default": ""
                 }
             },
             "required": [

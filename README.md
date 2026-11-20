@@ -18,13 +18,22 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)]()
-[![MCP](https://img.shields.io/badge/MCP-121%20tools%20%C2%B7%208%20endpoints-orange)]()
+[![MCP](https://img.shields.io/badge/MCP-123%20tools%20%C2%B7%208%20endpoints-orange)]()
 [![Free Trial](https://img.shields.io/badge/Trial-Free-brightgreen)]()
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenClaw-purple)]()
 
 <p align="center">
   <img src="assets/company-intro.png" alt="Sorftime — The most comprehensive overseas e-commerce data company globally. 97% market segment coverage across global platforms. Real-time consumer trend insights from social media. Core philosophy: marketplace data reflects transactions that already happened, social media reveals demand that is brewing." width="100%">
 </p>
+
+---
+
+## 🆕 What's New (November 20, 2026) — v5.2.8: SP Ad Structure & Category Snapshot
+
+- **📢 `product_sp_ad_structure`** (Amazon): reverse-engineer a competitor's Sponsored Products ads — keywords, ad groups, campaigns and first-seen timestamps by ASIN. Live-verified with real data.
+- **📊 `category_products_extended_report`** (Amazon): category market snapshot aggregating Best Sellers Top100 + listings above a monthly-sales threshold (not real-time; server-side error on call for now — reported honestly).
+- **🏷️ `keyword_category` filter** added to `keyword_list` / `keyword_list_from_history` / `category_keywords` — filter trending keywords by category (comma-separated, per the official category table).
+- Root endpoint: 121 → **123 tools**; amazon: 48 → **50**. **[Full changelog →](CHANGELOG.md)**
 
 ---
 
