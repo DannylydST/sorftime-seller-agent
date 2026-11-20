@@ -200,7 +200,7 @@ README_TEMPLATE = """# Sorftime {display} 卖家助手 · 快速上手
 | OpenClaw | active workspace 的 skills 目录 |
 | 其他支持 Agent Skills 的工具 | 该工具的技能目录（其文档会写） |
 
-**第 2 步 · 拿到你的 Key（Account-SK）**——注册入口两站任选：大陆 https://open.sorftime.com （手机号/微信，人民币）或国际 https://open-intl.sorftime.com （邮箱/Google，PayPal/Stripe），新账号均有免费体验 → 进入「MCP 服务」页 → 购买开通 → 复制 **Account-SK**。一次开通全平台可用，配额按实际调用次数计。
+**第 2 步 · 拿到你的 Key（Account-SK）**——注册入口两站任选：大陆 https://open.sorftime.com （手机号/微信，人民币）或国际 https://open-intl.sorftime.com （邮箱/Google，PayPal/Stripe），新账号免费体验包 200 积分 / 7 天（优惠码 500 积分 / 7 天）→ 进入「MCP 服务」页 → 购买开通 → 复制 **Account-SK**。一次开通全平台可用，用量按积分计费、各通道通用。
 
 **第 3 步 · 让 AI 配好**——直接对你的 AI 说：
 

@@ -93,7 +93,7 @@
 | OpenClaw | your active workspace's skills directory |
 | Other Agent-Skills-compatible tools | that tool's skills directory |
 
-**2. Get your Account-SK** — sign up / log in at the entrance convenient for you: mainland China [open.sorftime.com](https://open.sorftime.com) (phone/WeChat, CNY) or international [open-intl.sorftime.com](https://open-intl.sorftime.com) (email/Google, PayPal/Stripe); both grant free trial credits → open the **MCP 服务** page → subscribe → copy the Account-SK. One subscription covers all platforms; quota is metered per call.
+**2. Get your Account-SK** — sign up / log in at the entrance convenient for you: mainland China [open.sorftime.com](https://open.sorftime.com) (phone/WeChat, CNY) or international [open-intl.sorftime.com](https://open-intl.sorftime.com) (email/Google, PayPal/Stripe); both grant a free trial package (200 credits / 7 days; 500 credits / 7 days with a promo code) → open the **MCP 服务** page → subscribe → copy the Account-SK. One subscription covers all platforms; usage is billed in credits across all channels (1 Request = 5 credits on former Request-metered endpoints).
 
 **3. Tell your AI**: *"Configure Sorftime for me, my key is <paste Account-SK>"* — it installs, verifies, and runs your first query. Manual alternative: `python scripts/install.py --key <KEY>` (Windows: use `python`, not `python3`).
 
@@ -142,7 +142,7 @@ Prefer the official one-click path? The **MCP 服务** page generates a copy-pas
 ## ⚡ Quick Start
 
 ### 1. Create a free account
-**注册/Registration**: 大陆 [open.sorftime.com](https://open.sorftime.com)（手机号/微信，人民币）· International [open-intl.sorftime.com](https://open-intl.sorftime.com)（email/Google, PayPal/Stripe）。新账号均有免费体验。
+**注册/Registration**: 大陆 [open.sorftime.com](https://open.sorftime.com)（手机号/微信，人民币）· International [open-intl.sorftime.com](https://open-intl.sorftime.com)（email/Google, PayPal/Stripe）。新账号免费体验包 200 积分 / 7 天（优惠码 500 积分 / 7 天），用量按积分计费、各通道通用。
 
 ### 2. Install
 ```bash
@@ -329,7 +329,7 @@ python3 scripts/healthcheck.py # Verify
 Yes. Built by [@DannylydST](https://github.com/DannylydST) at Sorftime Data Technology. Connects to Sorftime's official MCP API at [open.sorftime.com](https://open.sorftime.com).
 
 **Q: Is it really free?**
-新账号可**免费体验** — 无需信用卡。高用量卖家/机构可通过人民币购买更高档位。
+新账号免费体验包 **200 积分 / 7 天**（优惠码 **500 积分 / 7 天**）— 无需信用卡。高用量卖家/机构可通过人民币购买更高档位。
 
 **Q: Which AI agents can I use?**
 Any MCP-compatible agent: **Claude Code, Codex (OpenAI), Cursor, OpenClaw, Hermes, Pi**, and more. `install.py` auto-detects your environment.

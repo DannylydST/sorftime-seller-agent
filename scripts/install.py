@@ -99,7 +99,7 @@ def prompt_key(cli_key: str = "") -> str:
     print("    注册入口（官方直营，两站任选）：")
     print("      大陆: https://open.sorftime.com  （手机号/微信扫码，人民币付费）")
     print("      国际: https://open-intl.sorftime.com  （email/Google 注册，PayPal/Stripe 付费）")
-    print("    新账号均有免费体验；注册后到 MCP 服务页购买开通并复制 Account-SK")
+    print("    新账号免费体验包 200 积分 / 7 天（优惠码 500 积分 / 7 天）；注册后到 MCP 服务页购买开通并复制 Account-SK")
     key = input("    Enter your Sorftime MCP Key: ").strip()
     if not key:
         print("    ❌ Key cannot be empty")

@@ -2,7 +2,7 @@
 
 ## Free Trial
 
-新账号免费体验：大陆站 [open.sorftime.com](https://open.sorftime.com)（手机号/微信注册，人民币）；国际站 [open-intl.sorftime.com](https://open-intl.sorftime.com)（email/Google 注册，PayPal/Stripe）。在哪一站注册就用该站签发的 Account-SK；各站资费以其页面标示为准。
+新账号免费体验：大陆站 [open.sorftime.com](https://open.sorftime.com)（手机号/微信注册，人民币）；国际站 [open-intl.sorftime.com](https://open-intl.sorftime.com)（email/Google 注册，PayPal/Stripe）。在哪一站注册就用该站签发的 Account-SK；各站资费以其页面标示为准。免费体验包：200 积分 / 7 天（优惠码 500 积分 / 7 天）；用量按积分计费、API / CLI / MCP 各通道通用（原 Request 计量端点 1 Request = 5 积分）。
 
 ## Documentation
 

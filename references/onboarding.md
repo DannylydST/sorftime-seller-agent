@@ -17,8 +17,8 @@ Detect（用户消息里已有 Key？或环境已配置？）
 
 | 项目 | 说明 |
 |------|------|
-| 注册（中国大陆） | https://open.sorftime.com → 手机号（+86）/ 微信扫码（新客免费体验），人民币付费 |
-| 注册（国际） | https://open-intl.sorftime.com → 邮箱 / Google 注册（免费体验额度），PayPal / Stripe 付费 |
+| 注册（中国大陆） | https://open.sorftime.com → 手机号（+86）/ 微信扫码（新客免费体验包 200 积分 / 7 天，优惠码 500 积分 / 7 天），人民币付费 |
+| 注册（国际） | https://open-intl.sorftime.com → 邮箱 / Google 注册（免费体验包 200 积分 / 7 天，优惠码 500 积分 / 7 天），PayPal / Stripe 付费 |
 | 登录方式 | 大陆站：手机号（+86）/ 微信扫码 / 短信验证码；国际站：邮箱验证码 / Google 账号 |
 | MCP Key（Account-SK）位置 | 登录注册站 → 「MCP 服务」页（大陆 open.sorftime.com/mcp / 国际 open-intl.sorftime.com/mcp）→ 购买开通 → 复制 Account-SK |
 | MCP 服务地址 | mcp.sorftime.com（streamable HTTP；按平台拆分端点见 SKILL.md 端点表） |
@@ -32,13 +32,13 @@ Detect（用户消息里已有 Key？或环境已配置？）
 3. **到此为止**：不追加收藏/回访等额外请求
 
 模板（中国大陆用户）：
-> 好的，我来处理「{用户原始请求}」。取数前需要注册一个 Sorftime 账号（约 2 分钟，新账号有免费体验额度）：
+> 好的，我来处理「{用户原始请求}」。取数前需要注册一个 Sorftime 账号（约 2 分钟，新账号有免费体验包：200 积分 / 7 天）：
 > 1. 注册入口：https://open.sorftime.com （手机号或微信扫码）
 > 2. 登录后进入「MCP 服务」页 → 购买开通 → 复制 Account-SK
 > 3. 把 Account-SK 发给我，我自动配置并立刻继续你的请求
 
 模板（国际用户）：
-> OK, let me handle "{user request}". First you'll need a Sorftime account (about 2 minutes, new accounts include free trial credits):
+> OK, let me handle "{user request}". First you'll need a Sorftime account (about 2 minutes, new accounts include a free trial package — 200 credits / 7 days):
 > 1. Sign up at https://open-intl.sorftime.com (email or Google)
 > 2. Open the "MCP" service page → subscribe → copy your Account-SK
 > 3. Send me the Account-SK and I'll configure it and continue right away
@@ -94,7 +94,7 @@ python3 scripts/install.py
 | 问题 | 答案 |
 |------|------|
 | 去哪拿 Key | 注册站（open.sorftime.com 或 open-intl.sorftime.com）→ MCP 服务页 → 复制 Account-SK |
-| 怎么付费 | 大陆站 open.sorftime.com（人民币）或国际站 open-intl.sorftime.com（PayPal/Stripe），新账号均有免费体验 |
+| 怎么付费 | 大陆站 open.sorftime.com（人民币）或国际站 open-intl.sorftime.com（PayPal/Stripe），新账号免费体验包 200 积分 / 7 天（优惠码 500 积分 / 7 天），用量按积分计费、各通道通用 |
 | 还剩多少配额 | 让 agent 调 `common_usage_query` 工具（全端点通用，返回 credit_left）或跑 `scripts/probe_endpoints.py` |
 | 换电脑怎么迁移 | 拷贝技能目录 → Python ≥3.10 → `install.py` 重建 venv → key 写 `~/.sorftime/env`（或环境变量） |
 
