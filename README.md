@@ -18,13 +18,20 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey)]()
-[![MCP](https://img.shields.io/badge/MCP-123%20tools%20%C2%B7%208%20endpoints-orange)]()
+[![MCP](https://img.shields.io/badge/MCP-124%20tools%20%C2%B7%208%20endpoints-orange)]()
 [![Free Trial](https://img.shields.io/badge/Trial-Free-brightgreen)]()
 [![Agent-Agnostic](https://img.shields.io/badge/Agent-Claude%20%7C%20Codex%20%7C%20Cursor%20%7C%20OpenClaw-purple)]()
 
 <p align="center">
   <img src="assets/company-intro.png" alt="Sorftime — The most comprehensive overseas e-commerce data company globally. 97% market segment coverage across global platforms. Real-time consumer trend insights from social media. Core philosophy: marketplace data reflects transactions that already happened, social media reveals demand that is brewing." width="100%">
 </p>
+
+---
+
+## 🆕 What's New (November 21, 2026) — v5.2.10: Category Realtime Product List
+
+- **📊 `category_products_extended`** (Amazon): realtime product list of a category — for analyzing both the overall market and the long tail. Live schema-verified; data backfilling (returns "No data available" for now — reported honestly).
+- Root endpoint: 123 → **124 tools**; amazon: 50 → **51**. **[Full changelog →](CHANGELOG.md)**
 
 ---
 

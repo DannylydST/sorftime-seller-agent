@@ -1,5 +1,11 @@
 # Changelog
 
+## [2026-11-21] — v5.2.10（类目实时产品列表）
+
+- **Amazon 新增 `category_products_extended`**（类目实时产品列表：`node_id` 必填/`page`/`amz_site`，分析类目大盘与长尾市场；`category_products_extended_report` 的实时姊妹件）。2026-11-21 活 schema 验证；实测返回 "No data available"，数据回填中如实标注。
+- 工具数：根端点 123→**124**、amazon 50→**51**，其余端点不变。tool-matrix 已从服务端再生。
+- 来源：每日保健 drift 巡检自动触发（root 123→124），无广场需求单。
+
 ## [2026-11-20] — v5.2.9（全平台积分结算口径 · R-20261120-001）
 
 - **计费口径切换（王童需求单）**：全平台开放数据（API / CLI / MCP）用量统一以「积分」结算、各通道通用。免费体验包：**200 积分 / 7 天**（无优惠码）、**500 积分 / 7 天**（有优惠码）——README / SUPPORT / references/onboarding.md / 平台包模板（builder）/ install.py / healthcheck.py 全部同步。
