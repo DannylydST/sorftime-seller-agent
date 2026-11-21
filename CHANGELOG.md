@@ -4,6 +4,7 @@
 
 - **Amazon 新增 `category_products_extended`**（类目实时产品列表：`node_id` 必填/`page`/`amz_site`，分析类目大盘与长尾市场；`category_products_extended_report` 的实时姊妹件）。2026-11-21 活 schema 验证；实测返回 "No data available"，数据回填中如实标注。
 - 工具数：根端点 123→**124**、amazon 50→**51**，其余端点不变。tool-matrix 已从服务端再生。
+- **`category_products` 必填参数收紧**（活 schema 2026-11-21：`node_id` → `node_id`+`query_start`+`query_date` 三必填，历史区间起止 yyyy-MM-dd）；amazon.md 已同步。参数级审计只比参数名集合不比必填性，此收紧由审核官直连活 schema 抓出。
 - 来源：每日保健 drift 巡检自动触发（root 123→124），无广场需求单。
 
 ## [2026-11-20] — v5.2.9（全平台积分结算口径 · R-20261120-001）
